@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/top_bar" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/publish_date"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" 
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:id="@+id/tvTitle"/>
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_back_bg"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/recommend_date"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnPreview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_signup_bg"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/preview"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:id="@+id/rlEditDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray" >
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dip"
+                android:fadingEdge="none"
+                android:scrollbars="none" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="12dip"
+                    android:paddingRight="12dip" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dip"
+                        android:background="@drawable/edittextbg"
+                        android:gravity="center_vertical"
+                        android:minHeight="40dip"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="70dip"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="@string/Subject"
+                            android:textColor="@color/font_blue"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:id="@+id/dateTitleEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dip"
+                            android:background="@color/white"
+                            android:imeOptions="actionNext"
+                            android:singleLine="true"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:layout_marginTop="16dip"
+                        android:background="@drawable/item_first_normal"
+                        android:gravity="center_vertical" >
+
+                        <TextView
+                            android:layout_width="70dip"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="@string/Time"
+                            android:textColor="@color/font_blue"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/timeTextView"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dip"
+                            android:layout_weight="1"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lllocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:background="@drawable/item_middle_normal"
+                        android:gravity="center_vertical" >
+
+                        <TextView
+                            android:layout_width="70dip"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="@string/Adress"
+                            android:textColor="@color/font_blue"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:id="@+id/localEditText"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dip"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:imeOptions="actionNext"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:background="@drawable/item_middle_normal"
+                        android:gravity="center_vertical" >
+
+                        <TextView
+                            android:layout_width="70dip"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="@string/firstNum"
+                            android:textColor="@color/font_blue"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:id="@+id/existPersonCountEditText"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dip"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:background="@drawable/item_middle_normal"
+                        android:gravity="center_vertical" >
+
+                        <TextView
+                            android:layout_width="70dip"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="@string/wantNum"
+                            android:textColor="@color/font_blue"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:id="@+id/wantPersonCountEditText"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dip"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:background="@drawable/item_middle_normal"
+                        android:gravity="center_vertical" >
+
+                        <TextView
+                            android:layout_width="70dip"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="@string/Treat"
+                            android:textColor="@color/font_blue"
+                            android:textSize="14sp" />
+
+                        <RadioGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="30dip"
+                            android:layout_marginLeft="15dip"
+                            android:layout_marginRight="10dip"
+                            android:orientation="horizontal" >
+
+                            <RadioButton
+                                android:id="@+id/rbAA"
+                                style="@style/radiobutton1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/rb_treat_filter_left"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:singleLine="true"
+                                android:text="@string/aa"
+                                android:textColor="@color/color_radiobutton"
+                                android:textSize="14sp" />
+
+                            <RadioButton
+                                android:id="@+id/rbMyTreat"
+                                style="@style/radiobutton1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/rb_treat_filter_middle"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:singleLine="true"
+                                android:text="@string/my_treat"
+                                android:textColor="@color/color_radiobutton"
+                                android:textSize="14sp" />
+
+                            <RadioButton
+                                android:id="@+id/rbNone"
+                                style="@style/radiobutton1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/rb_treat_filter_right"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:singleLine="true"
+                                android:text="@string/free"
+                                android:textColor="@color/color_radiobutton"
+                                android:textSize="14sp" />
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/item_last_normal"
+                        android:gravity="center_vertical"
+                        android:minHeight="40dip" >
+
+                        <TextView
+                            android:layout_width="70dip"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="@string/detail"
+                            android:textColor="@color/font_blue"
+                            android:textSize="14sp" />
+
+                        <EditText
+                            android:id="@+id/detailPlanEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dip"
+                            android:background="@color/white"
+                            android:gravity="top"
+                            android:hint="@string/askfor_date_describe"
+                            android:imeOptions="actionNext"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:minLines="4" >
+                        </EditText>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dip"
+                        android:background="@drawable/edittextbg"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/ivDatePhoto"
+                            android:layout_width="60dip"
+                            android:layout_height="60dip"
+                            android:layout_marginLeft="10dip"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/camera" 
+                            />
+
+                        <TextView
+                            android:id="@+id/tvDatePhoto"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dip"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:text="@string/askfor_date_photo"
+                            android:textSize="14sp" 
+                            android:textColor="@color/font_gray"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dip"
+                            android:layout_marginRight="5dip"
+                            android:src="@drawable/arrow_right" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llSinaWeibo"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dip"
+                        android:layout_marginTop="8dip"
+                        android:background="@drawable/edittextbg"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone" >
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/share_weibo"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/cbSinaWeibo"
+                            style="@style/MyCheckBox"
+                            android:layout_width="18dip"
+                            android:layout_height="18dip"
+                            android:layout_marginRight="10dip"
+                            android:checked="true" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/sendButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="24dip"
+                        android:layout_marginTop="24dip"
+                        android:background="@drawable/btn_signup_bg"
+                        android:paddingLeft="20dip"
+                        android:paddingRight="20dip"
+                        android:text="@string/publish_date"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlDatePreview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/ivPreDatePhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tvDateTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:layout_marginRight="5dip"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dip" >
+
+                    <TextView
+                        android:id="@+id/tvDateTimeInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="130dip"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvDateLocationInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dip" >
+
+                    <TextView
+                        android:id="@+id/tvDatePersonNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="130dip"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvDateWhoPay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvDateBodyInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dip"
+                    android:layout_marginTop="5dip"
+                    android:layout_marginLeft="5dip"
+                    android:layout_marginRight="5dip"
+                    android:lineSpacingExtra="3dip"
+                    android:maxLines="5"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>

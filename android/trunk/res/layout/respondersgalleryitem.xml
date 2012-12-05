@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="3dip"
+    android:paddingRight="3dip"
+    android:paddingTop="5dip" >
+
+    <ImageView
+        android:id="@+id/ivUserProfilePhoto"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:background="@drawable/corners_bg"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxWidth="50dip"
+        android:text="Jenny"
+        android:textColor="@color/half_translucent_black"
+        android:textSize="14sp"
+        android:id="@+id/tvUserName" />
+
+</LinearLayout>

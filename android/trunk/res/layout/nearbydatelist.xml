@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/top_bar"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/latest_activity"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" 
+        android:layout_alignParentTop="true"
+        android:id="@+id/tvDateTitle"/>
+
+    <com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshListView
+        android:id="@+id/lvNearbyDate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tvDateTitle"
+        android:fadingEdge="none" 
+        android:background="@color/white"/>
+
+</RelativeLayout>

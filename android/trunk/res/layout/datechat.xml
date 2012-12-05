@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lingzhimobile.tongqu.view.ResizableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llDateChat"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+
+        <ImageView
+            android:id="@+id/ivDatePhoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/nearbyheaderview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/top_bar" >
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/btn_back_bg"
+                    android:text="@string/back"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tvUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:text="@string/message"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnConfirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/btn_signup_bg"
+                    android:text="@string/rate"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+            <com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshListView
+                android:id="@+id/chathistoryListView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:cacheColorHint="#00000000"
+                android:divider="@color/transparent"
+                android:dividerHeight="1.0px"
+                android:drawSelectorOnTop="false"
+                android:fadingEdgeLength="0.0sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/date_edit_background"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip" >
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_weight="1"
+            android:background="@drawable/date_chat_box"
+            android:ems="10"
+            android:hint="@string/ask_details_plan"
+            android:maxLines="5"
+            android:minHeight="30dip"
+            android:textSize="14sp" >
+        </EditText>
+
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="50dip"
+            android:layout_height="30dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:background="@drawable/btn_signup_bg"
+            android:text="@string/send"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</com.lingzhimobile.tongqu.view.ResizableLayout>

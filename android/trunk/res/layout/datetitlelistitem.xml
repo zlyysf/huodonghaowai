@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/datetitlelistitembg"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvSubjectType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_gray"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:paddingTop="3dip"
+        android:paddingBottom="3dip"
+        android:text="Type"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tvDateTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:paddingBottom="10dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:paddingTop="10dip"
+        android:text="看电影去"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+</LinearLayout>

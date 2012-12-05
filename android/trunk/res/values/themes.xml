@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ThemeActivity" mce_bogus="1">
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="ThemeActivity1" mce_bogus="1">
+        <item name="android:windowAnimationStyle">@style/AnimationActivity1</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    
+
+</resources>

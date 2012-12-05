@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="6dip" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="5dip"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="58dip"
+            android:layout_height="58dip" >
+
+            <ImageView
+                android:id="@+id/ivUserProfilePhoto"
+                android:layout_width="54dip"
+                android:layout_height="54dip"
+                android:background="@drawable/corners_bg"
+                android:layout_centerInParent="true" />
+            <ImageView android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:id="@+id/ivUnreadMessage"/>
+        </RelativeLayout>
+
+        <com.lingzhimobile.tongqu.view.AutoResizeTextView
+            android:id="@+id/nameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ellipsize="end"
+            android:maxWidth="50dip"
+            android:singleLine="true"
+            android:textColor="@color/black" 
+            android:text="Name"
+            />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dip"
+        
+        android:orientation="vertical">
+        <TextView android:layout_width="match_parent"
+            android:layout_height="56dip"
+            android:maxLines="3"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:text="With the latest Lion security update,  ..."
+            android:id="@+id/tvUserMessage"/>
+        <TextView android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@color/font_gray"
+            android:text="3 days ago"
+            android:textSize="12sp"
+            android:layout_marginTop="5dip"
+            android:id="@+id/tvUserMessageTime"/>
+    </LinearLayout>
+
+</LinearLayout>
