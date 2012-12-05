@@ -4,6 +4,7 @@ var util = require('util');
 
 var redis = require('../lib/redis');
 var handy = require('../lib/handy');
+var config = require('../lib/config');
 
 /**
  * to get multi-line string value in the comment in the fun's codes
@@ -72,7 +73,8 @@ for(var i=2; i<process.argv.length; i++){
 
 var params = nameValuePairs;
 console.log("params="+util.inspect(params,false,100));
-var store = redis.create();
+var envSpecialConfig = config.getEnvConfig();
+var store = redis.create(envSpecialConfig.dataRedisPort);
 store.getRawDataByQuery(params,function(err,dataArray){
   if (err) {
     handy.handleError({err:err});

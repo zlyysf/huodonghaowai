@@ -5,6 +5,7 @@ var util = require('util');
 var redis = require("redis");
 
 var handy = require("./handy");
+var tool = require("./tool");
 var logger = require('./logger');
 var config = require('./config');
 var shuffle = require('./shuffle');
@@ -12,12 +13,12 @@ var shuffle = require('./shuffle');
 
 exports = module.exports = Redis;
 
-exports.create = function() {
-  return new Redis();
+exports.create = function(port) {
+  return new Redis(port);
 };
 
-function Redis() {
-  this.client = redis.createClient();
+function Redis(port) {
+  this.client = redis.createClient(port);
 };
 
 Redis.prototype.client = null;
@@ -2572,7 +2573,7 @@ Redis.prototype.getUser = function(params, callback) {
     else return self.handleError({err:err});
   }
   var userId = params.userId;
-  var paramsForGetUsers = handy.cloneObject(params);
+  var paramsForGetUsers = tool.cloneObject(params);
   delete paramsForGetUsers.userId;
   paramsForGetUsers.userIds = [userId];
   paramsForGetUsers.req = req;
@@ -4016,7 +4017,7 @@ Redis.prototype.getUserPhotoIds = function(params, callback) {
 //    getUserPhotoIdsKey = userAuditPassedPhotosKey;
 //  }
 
-  var lparams = handy.cloneObject(params);
+  var lparams = tool.cloneObject(params);
   delete lparams.userId;
   delete lparams.getSelf;
   lparams.zsetKey = getUserPhotoIdsKey;
@@ -4867,7 +4868,7 @@ Redis.prototype.getMadeDateIdsD = function(params, callback) {
   }
   var gender = params.gender;
   var madeDatesKey = "madeDates:"+gender;
-  var paramsSub = handy.cloneObject(params);
+  var paramsSub = tool.cloneObject(params);
   delete paramsSub.gender;
   paramsSub.zsetKey = madeDatesKey;
   self.getDateIdsOnZset(paramsSub,function(err,dateIdAndScoreData){
@@ -4931,7 +4932,7 @@ Redis.prototype.getUserDateIds = function(params, callback) {
     if (callback) return callback(err);
     else return self.handleError({err:err});
   }
-  var paramsSub = handy.cloneObject(params);
+  var paramsSub = tool.cloneObject(params);
   delete paramsSub.userId;
   delete paramsSub.dateType;
   paramsSub.zsetKey = getUserDatesKey;
@@ -4973,7 +4974,7 @@ Redis.prototype.getSchoolDateIds = function(params, callback) {
 //  }
   var schoolId = params.schoolId;
   var gender = params.gender;
-  var paramsSub = handy.cloneObject(params);
+  var paramsSub = tool.cloneObject(params);
   delete paramsSub.schoolId;
   delete paramsSub.gender;
   if (schoolId){
@@ -5040,7 +5041,7 @@ Redis.prototype.getSchoolDates = function(params, callback) {
       return;
     }
 
-    var getDatesWithDetailParams = handy.cloneObject(params);
+    var getDatesWithDetailParams = tool.cloneObject(params);
     getDatesWithDetailParams.dateIds = dateIds;
     delete getDatesWithDetailParams.schoolId;
     delete getDatesWithDetailParams.gender;
@@ -5448,7 +5449,7 @@ Redis.prototype.getUserDatesWithDetailByFieldCompare = function(params, callback
     var dateIds = dateIdAndScoreData.dateIds;
     var scores = dateIdAndScoreData.scores;
 
-    var getDatesWithDetailParams = handy.cloneObject(params);
+    var getDatesWithDetailParams = tool.cloneObject(params);
     delete getDatesWithDetailParams.userId;
     delete getDatesWithDetailParams.count;
     delete getDatesWithDetailParams.cutOffTime;
@@ -6149,7 +6150,7 @@ Redis.prototype.getDatesResponders = function(params, callback) {
           if (responderHash){
             var responderUserIdx = i/itemCmdCount;
             var responderUser = responderUsers[responderUserIdx];
-            handy.copyFields({srcObj:responderUser,destObj:responderHash});
+            tool.copyFields({srcObj:responderUser,destObj:responderHash});
             if ("senderConfirmed" in responderHash){
               responderHash.senderConfirmed = handy.convertToBool(responderHash.senderConfirmed);
             }
@@ -6286,7 +6287,7 @@ Redis.prototype.getUserDateConversationRefs = function(params, callback) {
   }
   var userId = params.userId;
   var userDateConversationsKey = "user:"+userId+":dateConversations";
-  var lparams = handy.cloneObject(params);
+  var lparams = tool.cloneObject(params);
   delete lparams.userId;
   lparams.zsetKey = userDateConversationsKey;
   self.getValuesOnSortedSetByTime(lparams, function(err,valueAndScoreData){
@@ -6520,13 +6521,13 @@ Redis.prototype.getUserDateConversations = function(params, callback) {
       if (callback) return callback(null,null);
       else return ;
     }
-    var lparams = handy.cloneObject(params);
+    var lparams = tool.cloneObject(params);
     delete lparams.count;
     delete lparams.cutOffTime;
     delete lparams.start;
     delete lparams.getDataDirection;
     delete lparams.excludeExpired;
-    handy.copyFields({srcObj:dateUserPairAndScoreData, destObj:lparams, overrideSameName:null});
+    tool.copyFields({srcObj:dateUserPairAndScoreData, destObj:lparams, overrideSameName:null});
     self.getDateConversationsOfUser(lparams,function(err,conversations){
       if (err) return callback(err);
       return callback(null,conversations);
@@ -6582,7 +6583,7 @@ Redis.prototype.getDateMessageIds = function(params, callback) {
     directionFromLateToEarly = false;
   var dateMessagesKey = 'chat:date:'+dateId+':user:'+userId+':targetUser:'+targetUserId;
 
-  var lparams = handy.cloneObject(params);
+  var lparams = tool.cloneObject(params);
   delete lparams.dateId;
   delete lparams.userId;
   delete lparams.targetUserId;

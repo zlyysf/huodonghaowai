@@ -2,6 +2,7 @@ var assert = require('assert');
 var util = require('util');
 var redis = require('../lib/redis');
 var handy = require('../lib/handy');
+var config = require('../lib/config');
 
 /**
  * to get multi-line string value in the comment in the fun's codes
@@ -46,7 +47,8 @@ for(var i=2; i<process.argv.length; i++){
   }
 }
 
-var store = redis.create();
+var envSpecialConfig = config.getEnvConfig();
+var store = redis.create(envSpecialConfig.dataRedisPort);
 var params = {};
 if (isClearAll){
   params.all = true;

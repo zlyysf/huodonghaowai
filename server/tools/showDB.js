@@ -4,6 +4,7 @@ var util = require('util');
 
 var redis = require('../lib/redis');
 var handy = require('../lib/handy');
+var config = require('../lib/config');
 
 /**
  * to get multi-line string value in the comment in the fun's codes
@@ -93,7 +94,8 @@ if(isAll){
   }
 }
 
-var store = redis.create();
+var envSpecialConfig = config.getEnvConfig();
+var store = redis.create(envSpecialConfig.dataRedisPort);
 store.getData(params,function(err,kvHash){
   if (err) {
     handy.handleError({err:err});

@@ -5,6 +5,7 @@ var tls = require('tls');
 var fs = require('fs');
 
 var handy = require('./handy');
+var tool = require("./tool");
 var logger = require('./logger');
 var config = require('./config');
 exports = module.exports = Notification;
@@ -1619,12 +1620,10 @@ Notification.prototype.connectApns = function(params,callback){
     }
   }
 
-  var applePushNotificationServiceHost = config.config.applePushNotificationServiceHost_prod;
-  var apnsCertFilePath = config.config.apnsCertFilePath_prod;
-  if (config.config.usage == 'dev'){
-    applePushNotificationServiceHost = config.config.applePushNotificationServiceHost_dev;
-    apnsCertFilePath = config.config.apnsCertFilePath_dev;
-  }
+  var specialEnvConfig = config.getEnvConfig();
+  var applePushNotificationServiceHost = specialEnvConfig.applePushNotificationServiceHost;
+  var apnsCertFilePath = specialEnvConfig.apnsCertFilePath;
+
   var applePushNotificationServicePort = config.config.applePushNotificationServicePort;
   var apnsSslPassphrase = config.config.apnsSslPassphrase;
 
@@ -1743,7 +1742,7 @@ Notification.prototype.buildApnsPayloadData = function (params){
     var payloadObj;
 
     var alertText = null; //dataObj.message is used for aps.alert
-    var payloadCustomObjWithoutMessage = handy.cloneObject(dataObj);
+    var payloadCustomObjWithoutMessage = tool.cloneObject(dataObj);
     if (payloadCustomObjWithoutMessage.message){
       alertText = payloadCustomObjWithoutMessage.message;
       delete payloadCustomObjWithoutMessage.message;
@@ -1755,7 +1754,7 @@ Notification.prototype.buildApnsPayloadData = function (params){
       return payloadObj;
     }
 
-    var payloadCustomObjWithoutMessageText = handy.cloneObject(payloadCustomObjWithoutMessage);
+    var payloadCustomObjWithoutMessageText = tool.cloneObject(payloadCustomObjWithoutMessage);
     var messageText = null;
     if (payloadCustomObjWithoutMessageText.messageText){
       messageText = payloadCustomObjWithoutMessageText.messageText;

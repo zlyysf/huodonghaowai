@@ -11,6 +11,7 @@ var needle = require('needle');
 
 
 var handy = require('../lib/handy');
+var tool = require('../lib/tool');
 var gconfig = require('../lib/config');
 
 var server = require('../lib/server');
@@ -59,14 +60,14 @@ var backConfigDefaultValue = exports.backConfigDefaultValue = function (){
     throw new Error("gconfigSimpleBack != null");
   }
   gconfigSimpleBack = {};
-  handy.copyFields({srcObj:gconfig.config,destObj:gconfigSimpleBack,overrideSameName:true});
+  tool.copyFields({srcObj:gconfig.config,destObj:gconfigSimpleBack,overrideSameName:true});
 };
 
 var setConfigDefaultValue = exports.setConfigDefaultValue = function (){
   if (gconfigSimpleBack == null){
     throw new Error("gconfigSimpleBack == null");
   }else{
-    handy.copyFields({srcObj:gconfigSimpleBack,destObj:gconfig.config,overrideSameName:true});
+    tool.copyFields({srcObj:gconfigSimpleBack,destObj:gconfig.config,overrideSameName:true});
   }
 };
 
@@ -92,7 +93,7 @@ function setHeaderOptionOfSession(headerOption,previousHeaders){
   if (!sessionId) return headerOption;
   var sessionHeaderOption = generateHeaderOptionOfSession(sessionId);
   if (!headerOption)  return sessionHeaderOption;
-  handy.copyFields({srcObj:sessionHeaderOption, destObj:headerOption, overrideSameName:true});
+  tool.copyFields({srcObj:sessionHeaderOption, destObj:headerOption, overrideSameName:true});
   return headerOption;
 };
 function setHeaderOptionOfSessionFromPrevious(headerOption){
@@ -127,7 +128,8 @@ var initStore = exports.initStore = function(params,cbFun){
   var excludeFilter = keepC2dmAuth?'cachedValue':null;
   var c2dmAuth = params.c2dmAuth;// gconfig.gC2dmAuth;
 
-  var store = redis.create();
+  var envSpecialConfig = gconfig.getEnvConfig();
+  var store = redis.create(envSpecialConfig.dataRedisPort);
   store.clean({all:cleanAll, excludeFilter:excludeFilter},function(err){
     assert.ifError(err);
     if(keepC2dmAuth){
@@ -355,7 +357,7 @@ var runPRApiWithUploadPhoto = exports.runPRApiWithUploadPhoto = function(params,
 
   var postDataObj = params.postDataObj;
   var imageFilePath = postDataObj.image;
-  var jsonData = handy.cloneObject(postDataObj);
+  var jsonData = tool.cloneObject(postDataObj);
   delete jsonData.image;
   if(imageFilePath) jsonData.image = {file: imageFilePath, content_type: 'application/octet-stream'};
 
@@ -775,8 +777,8 @@ var createClientSocketWithBindUser = exports.createClientSocketWithBindUser = fu
       var socketId = retClientWebsocketInfo.webSocket.sid;
       runUserBind({host:host,port:port, userId:userId,socketId:socketId},function(outDataUserBind){
         var outData = {};
-        handy.copyFields({srcObj:retClientWebsocketInfo, destObj:outData, overrideSameName:false});
-        handy.copyFields({srcObj:outDataUserBind, destObj:outData, overrideSameName:false});
+        tool.copyFields({srcObj:retClientWebsocketInfo, destObj:outData, overrideSameName:false});
+        tool.copyFields({srcObj:outDataUserBind, destObj:outData, overrideSameName:false});
         handy.log('blue', "createClientSocketWithBindUser exit");
         if (cbFun) cbFun(outData);
         return;

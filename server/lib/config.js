@@ -1,6 +1,6 @@
 var path = require('path');
 var util = require('util');
-
+var tool = require("./tool");
 
 var constants = exports.constants = {
     noLimit : 0, // =0 means no limit, >0 means limit existing
@@ -28,14 +28,60 @@ var config = exports.config = {
     usage: 'prod', //'dev'  // affect applePushNotificationServiceHost and apnsCertFilePath
     productName : '同去',//'PrettyRich',
 
-    port:4000,
-    securePort:4010,
+    prodEnv:{
+      host:'42.121.122.47',//'ec2-23-23-144-110.compute-1.amazonaws.com',
+      port:3000,
+      securePort:3010,
+      applePushNotificationServiceHost : 'gateway.push.apple.com',
+      apnsCertFilePath : path.join(__dirname,'../static/cert/apns_product.pem'),
+      dataRedisPort : 6479,
+      webSessionRedisPort : 6480
+    },
+    devEnv:{
+      host:'42.121.122.47',//'ec2-23-23-144-110.compute-1.amazonaws.com',
+      port:4000,
+      securePort:4010,
+      applePushNotificationServiceHost : 'gateway.sandbox.push.apple.com',
+      apnsCertFilePath : path.join(__dirname,'../static/cert/apns_development.pem'),
+      dataRedisPort : 6379,
+      webSessionRedisPort : 6380
+    },
+//    host_prod:'ec2-23-23-144-110.compute-1.amazonaws.com',
+//    host_dev:'ec2-23-21-136-120.compute-1.amazonaws.com',
+//    port:4000,
+//    securePort:4010,
+    cloudStorage:{
+      currentStorage : 'aliyunOss',//'aliyunOss',//'amazonS3',
+      isInCloud : true,//false,
+
+      amazonS3 : {
+        //s3url : "http://s3.amazonaws.com/ysf1",
+        toBucketUrl : "http://s3.amazonaws.com/ysf1",
+        host: 's3.amazonaws.com',
+        bucketName : 'ysf1',
+        objectFolderPath_prod : "folderp",
+        objectFolderPath_dev : "folder1",//"fold1",//"folder1",
+        accessKeyId : 'AKIAJRXAW33HC3IZJIVA',
+        secretAccessKey : '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'
+      },
+      aliyunOss : {
+        toBucketUrl : "http://oss.aliyuncs.com/ysf1",
+        hostInner : 'oss-internal.aliyuncs.com', //storage.aliyun.com
+        hostOutside : 'oss.aliyuncs.com',
+        bucketName : 'ysf1',
+        objectFolderPath_prod : "folderp",
+        objectFolderPath_dev : "folder1",
+        accessKeyId : 'HNhptJzwZfzgTW6z',
+        secretAccessKey : '0qgyHuS5n1nU3xe4rxLP8aPrkaRQQd'
+      }
+    },
+
     https_keyFilePath : path.join(__dirname,'../static/https/privatekey.pem'),
     https_certFilePath : path.join(__dirname,'../static/https/certificate.pem'),
 
     sessionAge : 30*24*60*60*1000,  // app session age. in milliseconds
     webSessionAge : 30*60*1000,  // in milliseconds
-    webSessionRedisPort : 6380,
+//    webSessionRedisPort : 6380,
 
     //autoAuditPhoto : true,
     autoComplementNearbyHotPhotos : true,
@@ -376,47 +422,16 @@ var config = exports.config = {
     c2dmMailPwd : '0e83439cad8e8462d6273d5021aa6126',  //encrypted
     c2dmMessageSizeLimit : 1024,
 
-//    applePushNotificationServiceHost : 'gateway.sandbox.push.apple.com',
-//    apnsCertFilePath : path.join(__dirname,'../static/cert/apns_development.pem'),
-    applePushNotificationServiceHost_dev : 'gateway.sandbox.push.apple.com',
-    apnsCertFilePath_dev : path.join(__dirname,'../static/cert/apns_development.pem'),
-    applePushNotificationServiceHost_prod : 'gateway.push.apple.com',
-    apnsCertFilePath_prod : path.join(__dirname,'../static/cert/apns_product.pem'),
+//    applePushNotificationServiceHost_dev : 'gateway.sandbox.push.apple.com',
+//    apnsCertFilePath_dev : path.join(__dirname,'../static/cert/apns_development.pem'),
+//    applePushNotificationServiceHost_prod : 'gateway.push.apple.com',
+//    apnsCertFilePath_prod : path.join(__dirname,'../static/cert/apns_product.pem'),
     applePushNotificationServicePort : 2195,
     apnsSslPassphrase : 'VVDk12@a',
     apnsPayloadLengthLimit : 256, //in bytes
     apnsDeviceTokenLength : 32,
 
-    cloudStorage:{
-      currentStorage : 'amazonS3',//'aliyunOss',//'amazonS3',
-      isInCloud : true,//false,
 
-      amazonS3 : {
-        //s3url : "http://s3.amazonaws.com/ysf1",
-        toBucketUrl : "http://s3.amazonaws.com/ysf1",
-        host: 's3.amazonaws.com',
-        bucketName : 'ysf1',
-        objectFolderPath_prod : "folderp",
-        objectFolderPath_dev : "folder1",//"fold1",//"folder1",
-        accessKeyId : 'AKIAJRXAW33HC3IZJIVA',
-        secretAccessKey : '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'
-      },
-      aliyunOss : {
-        toBucketUrl : "http://oss.aliyuncs.com/ysf1",
-        hostInner : 'oss-internal.aliyuncs.com', //storage.aliyun.com
-        hostOutside : 'oss.aliyuncs.com',
-        bucketName : 'ysf1',
-        objectFolderPath_prod : "folderp",
-        objectFolderPath_dev : "folder1",
-        accessKeyId : 'HNhptJzwZfzgTW6z',
-        secretAccessKey : '0qgyHuS5n1nU3xe4rxLP8aPrkaRQQd'
-      }
-    },
-
-
-
-    host_prod:'ec2-23-23-144-110.compute-1.amazonaws.com',
-    host_dev:'ec2-23-21-136-120.compute-1.amazonaws.com',
 //    noreplyMailAccount : 'noreply@prettyri.ch',
 //    noreplyMailAccountPwd : '76bc5d9c9ceb4e22b72d752e8294a5b4',//encrypted
     noreplyMailAccount : 'tongqusupport@yasofon.com',
@@ -440,12 +455,17 @@ var config = exports.config = {
 
 };
 
-var getHost = exports.getHost = function(){
+
+var getEnvConfig = exports.getEnvConfig = function(){
   if (config.usage == 'prod'){
-    return config.host_prod;
+    return config.prodEnv;
   }else{
-    return config.host_dev;
+    return config.devEnv;
   }
+};
+
+var getHost = exports.getHost = function(){
+  return getEnvConfig().host;
 };
 
 var getCloudStorageInfo = exports.getCloudStorageInfo = function(){
@@ -526,24 +546,8 @@ var configLocalPath = path.join(__dirname,'./configLocal.js');
 if (path.existsSync(configLocalPath)){
   var configLocal = require(configLocalPath);
 
-  var copyFields = function(params){
-    var srcObj = params.srcObj;
-    var destObj = params.destObj;
-    var overrideSameName = params.overrideSameName;
-    if (!srcObj || !destObj)
-      return ;
-    for(field in srcObj){
-      var val = srcObj[field];
-      if (destObj[field] !== undefined && !overrideSameName){
-        continue;
-      }else{
-        destObj[field] = val;
-      }
-    }
-  };//copyFields
-
   console.log("before config.usage="+util.inspect(config.usage,false,2));
-  copyFields({destObj:config, srcObj:configLocal.config, overrideSameName:true});
+  tool.copyFieldsDeepOnlyForObject({destObj:config, srcObj:configLocal.config, overrideSameName:true});
   console.log("after copyFields, config.usage="+util.inspect(config.usage,false,2));
 }//if (path.existsSync(configLocalPath))
 

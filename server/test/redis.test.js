@@ -11,11 +11,11 @@ var printExit = function (err, data) {
 };
 
 
-
+var envSpecialConfig = config.getEnvConfig();
 
 
 var clearDB = function (next) {
-  var r = redis.create();
+  var r = redis.create(envSpecialConfig.dataRedisPort);
   r.client.flushdb(function(){
     //quit must be nested in
     r.quit();
@@ -30,7 +30,7 @@ var utestGetRegionalRecentPhotoIds = function (params,next) {
   handy.log('blue', "running utestGetRegionalRecentPhotoIds");
 
 
-  var r = redis.create();
+  var r = redis.create(envSpecialConfig.dataRedisPort);
   r.getRegionalRecentPhotoIds({cityLocation:"CN+Beijing+Beijing",count:100,cutOffTime:null,targetGender:'male',type:'new'},function(err,photoIds){
     assert.ifError(err);
 
@@ -48,7 +48,7 @@ var utestGetRegionalHotPhotoIds = function (params,next) {
   //var paramsGet = {cityLocation:"CN+Beijing+Beijing",count:10,start:'11',targetGender:'male',type:'hot'};
   var paramsGet = {cityLocation:"CN+Beijing+Beijing",count:3,start:'1',targetGender:'male',type:'hot'};
 
-  var r = redis.create();
+  var r = redis.create(envSpecialConfig.dataRedisPort);
   r.getRegionalHotPhotoIds(paramsGet,function(err,photoIds){
     assert.ifError(err);
 
@@ -63,7 +63,7 @@ var utestGetRegionalHotPhotoIds = function (params,next) {
 
 var utest_shiftToNotifyDate = function (params,next) {
   handy.log('blue', "running utest_shiftToNotifyDate");
-  var r = redis.create();
+  var r = redis.create(envSpecialConfig.dataRedisPort);
   var span1Hour = 60*60*1000;
   var span2Hour = 2*60*60*1000;
   var timeNowUtc = handy.getNowOfUTCdate().getTime();
@@ -218,7 +218,7 @@ var utest_shiftToNotifyDate = function (params,next) {
 
 var utest_shiftToNotifyDate2 = function (params,next) {
   handy.log('blue', "running utest_shiftToNotifyDate2");
-  var r = redis.create();
+  var r = redis.create(envSpecialConfig.dataRedisPort);
   var span1Hour = 60*60*1000;
   var span2Hour = 2*60*60*1000;
   var timeNowUtc = handy.getNowOfUTCdate().getTime();
@@ -383,7 +383,7 @@ var utest_shiftToNotifyDate2 = function (params,next) {
 
 var utest_markDatesNotifyInfo = function (params,next) {
   handy.log('blue', "running utest_markDatesNotifyInfo");
-  var r = redis.create();
+  var r = redis.create(envSpecialConfig.dataRedisPort);
   var params = {datesNotifyInfo:[
         {dateId:1, haveSendNotificationForSender:false, haveSendNotificationForResponder:false},
         {dateId:2, haveSendNotificationForSender:false},
@@ -488,7 +488,7 @@ var utest_markDatesNotifyInfo = function (params,next) {
 
 var utest_getDateIdsOnZset = function (params,next) {
   handy.log('blue', "running utest_getDateIdsOnZset");
-  var r = redis.create();
+  var r = redis.create(envSpecialConfig.dataRedisPort);
   var span1Hour = 60*60*1000;
   var span2Hour = 2*60*60*1000;
   var timeNowUtc = handy.getNowOfUTCdate().getTime();
@@ -718,7 +718,7 @@ var utest_getDateIdsOnZset = function (params,next) {
 
 var utest_getUserIdByFieldsValueRegexp = function (params,next) {
   handy.log('blue', "running utest_getUserIdByFieldsValueRegexp");
-  var r = redis.create();
+  var r = redis.create(envSpecialConfig.dataRedisPort);
 
 
   handy.pipeline(

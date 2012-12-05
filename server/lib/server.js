@@ -27,6 +27,7 @@ var solr = require('./solr');
 var auth = require('./auth');
 
 var handy = require('./handy');
+var tool = require("./tool");
 var shuffle = require('./shuffle');
 var logger = require('./logger');
 var cloudStorage = require('./cloudStorage');
@@ -40,7 +41,8 @@ function Server () {
 
   self.threadPeriodicCheckIntervalId = null;
 
-  self.store = redis.create();
+  var envSpecialConfig = config.getEnvConfig();
+  self.store = redis.create(envSpecialConfig.dataRedisPort);
   self.auth = auth.create();
   self.notification = notification.create();
   self.notification.init({store:self.store});
@@ -63,7 +65,7 @@ function Server () {
 //        }
 //    });
 
-  self.sessionRedisStore = new RedisStore({port:config.config.webSessionRedisPort});
+  self.sessionRedisStore = new RedisStore({port:envSpecialConfig.webSessionRedisPort});
   var expressSessionOptions = {secret:'keyboard cat',
       cookie:{maxAge:config.config.webSessionAge},
       store:self.sessionRedisStore };
@@ -390,7 +392,7 @@ function Server () {
 
 Server.prototype.listen = function (port,securePort) {
   var self = this;
-  logger.logDebug("server listen entered");
+  logger.logDebug("server listen entered, port="+port+", securePort="+securePort);
   self.app.listen(port);
   self.secureApp.listen(securePort);
   logger.logInfo("server starts listening at port " + self.app.address().port+", securePort "+self.secureApp.address().port);
@@ -912,18 +914,15 @@ Server.prototype._requestResetPassword = function(params, callback) {
 //             '<p><a href="https://localhost:4010/web/resetPassword?rpi='+resetPwdInfo+'">reset password</a></p>'
 //    };
 
-    var resetPwdUrlInfo = handy.cloneObject(fromUrlInfo);
-    handy.copyFields({overrideSameName:true,destObj:resetPwdUrlInfo,srcObj:{
+    var resetPwdUrlInfo = tool.cloneObject(fromUrlInfo);
+    tool.copyFields({overrideSameName:true,destObj:resetPwdUrlInfo,srcObj:{
       protocol:"http", host:null, port:config.config.port, pathname:"/web/resetPassword",search:"?rpi="+resetPwdInfo,query:null
     }});
     delete resetPwdUrlInfo.host;//if host exist, hostname no use. even host be null, hostname no use.
     delete resetPwdUrlInfo.query;
     var resetPwdUrl = url.format(resetPwdUrlInfo);
     if (!resetPwdUrlInfo.hostname){
-      var serverHost = config.config.host_dev;
-      if (config.config.usage == 'prod'){
-        serverHost = config.config.host_prod;
-      }
+      var serverHost = config.getHost();
       //resetPwdUrl = "https://"+serverHost+":4010/web/resetPassword?rpi="+resetPwdInfo;
       resetPwdUrl = "http://"+serverHost+":"+config.config.port+"/web/resetPassword?rpi="+resetPwdInfo;
     }
@@ -997,7 +996,7 @@ Server.prototype.logIn = function(req, res) {
   needPrimaryPhoto:true,primaryPhotoFields:['userId','photoPath']},function(err,userObj){
     if (err) return self.handleError({err:err,req:req,res:res});
     var userId = userObj.userId;
-    var retUserObj = handy.cloneObject(userObj);
+    var retUserObj = tool.cloneObject(userObj);
     var httpRetData = {status:'success',result:retUserObj};
 //    var httpRetData = {status:'success',result:{
 //        userId:userId, name:userObj.name, height:userObj.height, gender:userObj.gender
@@ -1668,7 +1667,7 @@ Server.prototype.updateProfile = function(req, res) {
   }
 
   var params = {userId:userId};
-  handy.copyFields({srcObj:req.body, destObj:params});
+  tool.copyFields({srcObj:req.body, destObj:params});
   params.req = req;
   self._updateProfileForTextField(params, function(err){
     if (err) return self.handleError({err:err,req:req,res:res});
@@ -1763,7 +1762,7 @@ Server.prototype.updateProfileWithPhoto = function(req, res) {
     //var photoId = null;
     //if (uploadPhotoInfo) photoId = uploadPhotoInfo.photoId;
     var paramsUpdateProfile =  {userId:userId};
-    handy.copyFields({srcObj:req.body, destObj:paramsUpdateProfile});
+    tool.copyFields({srcObj:req.body, destObj:paramsUpdateProfile});
     paramsUpdateProfile.req = req;
     self._updateProfileForTextField(paramsUpdateProfile, function(err){
       if (err) return self.handleError({err:err,req:req,res:res});
@@ -1945,7 +1944,7 @@ Server.prototype.createDate = function(req, res) {
   var messagePrefix = 'in Server.createDate, ';
   var userId = req.session.userId;
   var params = {req:req,userId:userId};
-  handy.copyFields({srcObj:req.body, destObj:params});
+  tool.copyFields({srcObj:req.body, destObj:params});
   self._createDate(params,function(err,createDateInfo){
     if (err) return self.handleError({err:err,req:req,res:res});
     var httpRetData = {status:'success',result:createDateInfo};
@@ -2130,10 +2129,10 @@ Server.prototype.createDateWithPhoto = function(req, res) {
     var photoId = null;
     if (uploadPhotoInfo) photoId = uploadPhotoInfo.photoId;
     var paramsCreateDate = {userId:userId, photoId:photoId};
-    handy.copyFields({srcObj:req.body, destObj:paramsCreateDate});
+    tool.copyFields({srcObj:req.body, destObj:paramsCreateDate});
     self._createDate(paramsCreateDate,function(err,createDateInfo){
       if (err) return self.handleError({err:err,req:req,res:res});
-      var resultObj = handy.cloneObject(createDateInfo);
+      var resultObj = tool.cloneObject(createDateInfo);
       if (uploadPhotoInfo) resultObj.photoId = photoId;
 
       var httpRetData = {status:'success',result:resultObj};
@@ -3828,7 +3827,7 @@ Server.prototype.viewRegionList = function(req, res) {
       regions = regionsInfo.regions;
       regionsCreatedPhotoCount = regionsInfo.regionsCreatedPhotoCount;
     }
-    handy.copyFields({srcObj:{regions:regions, regionsCreatedPhotoCount:regionsCreatedPhotoCount},
+    tool.copyFields({srcObj:{regions:regions, regionsCreatedPhotoCount:regionsCreatedPhotoCount},
       destObj:pageParams, overrideSameName:true});
     res.render('audit/regionList.ejs', pageParams);
     return;
@@ -3871,8 +3870,8 @@ Server.prototype.viewRegionStatePhotoList = function(req, res) {
   function handleParams(cbFun){
     logger.logDebug("Server.viewRegionStatePhotoList, handleParams, req.query="+util.inspect(req.query,false,100)+",\nreq.body="+util.inspect(req.body,false,100));
     params = {};
-    handy.copyFields({srcObj:req.query,destObj:params,overrideSameName:true});
-    handy.copyFields({srcObj:req.body,destObj:params,overrideSameName:true});
+    tool.copyFields({srcObj:req.query,destObj:params,overrideSameName:true});
+    tool.copyFields({srcObj:req.body,destObj:params,overrideSameName:true});
     logger.logDebug("Server.viewRegionStatePhotoList entered, params="+util.inspect(params,false,100));
     var pageLibs = {util:util};
     pageParams = {layout:false, libs:pageLibs, err:null,errors:null, redirectUrl:null,
@@ -3907,7 +3906,7 @@ Server.prototype.viewRegionStatePhotoList = function(req, res) {
       pageIndex++;
     }
 
-    handy.copyFields({srcObj:{region:region, photoStateType:photoStateType, startDate:startDate, endDate:endDate, pageIndex:pageIndex, pageSize:pageSize},
+    tool.copyFields({srcObj:{region:region, photoStateType:photoStateType, startDate:startDate, endDate:endDate, pageIndex:pageIndex, pageSize:pageSize},
       destObj:pageParams, overrideSameName:true});
     return cbFun(null);
   };//handleParams
@@ -4085,8 +4084,8 @@ Server.prototype.viewBroadcastSystemMessage = function(req, res) {
 
   function handleParams(cbFun){
     params = {};
-    handy.copyFields({srcObj:req.query,destObj:params,overrideSameName:true});
-    handy.copyFields({srcObj:req.body,destObj:params,overrideSameName:true});
+    tool.copyFields({srcObj:req.query,destObj:params,overrideSameName:true});
+    tool.copyFields({srcObj:req.body,destObj:params,overrideSameName:true});
     //logger.logDebug("Server.viewBroadcastSystemMessage entered, params="+handy.inspectWithoutBig(params));
     var pageLibs = {util:util};
     pageParams = {layout:false, libs:pageLibs, err:null,errors:null, redirectUrl:null,
@@ -4167,7 +4166,7 @@ Server.prototype.viewBroadcastSystemMessage = function(req, res) {
         self.notification.sendNotificationForSystemBroadMessage({userIds:userIds, messageText:messageText},function(err,sendInfo){
           if (err) return cbFun(err);
           var broadcastInfo = {broadcastId:broadcastObj.broadcastId};
-          handy.copyFields({srcObj:sendInfo,destObj:broadcastInfo});
+          tool.copyFields({srcObj:sendInfo,destObj:broadcastInfo});
           return cbFun(null,broadcastInfo);
         });//sendNotificationForSystemBroadMessage
       });//createBroadcast
@@ -4231,8 +4230,8 @@ Server.prototype.viewResetPassword = function(req, res) {
 
   function parseRequestParams(cbFun){
     requestParams = {};
-    handy.copyFields({srcObj:req.query,destObj:requestParams,overrideSameName:true});
-    handy.copyFields({srcObj:req.body,destObj:requestParams,overrideSameName:true});
+    tool.copyFields({srcObj:req.query,destObj:requestParams,overrideSameName:true});
+    tool.copyFields({srcObj:req.body,destObj:requestParams,overrideSameName:true});
     //logger.logDebug("Server.viewResetPassword entered, requestParams="+util.inspect(requestParams,false,100));
     var pageLibs = {util:util};
     pageParams = {layout:false, libs:pageLibs, err:null,errors:null, redirectUrl:null,
@@ -4365,8 +4364,8 @@ Server.prototype.viewRequestResetPassword = function(req, res) {
 
   function parseRequestParams(cbFun){
     requestParams = {};
-    handy.copyFields({srcObj:req.query,destObj:requestParams,overrideSameName:true});
-    handy.copyFields({srcObj:req.body,destObj:requestParams,overrideSameName:true});
+    tool.copyFields({srcObj:req.query,destObj:requestParams,overrideSameName:true});
+    tool.copyFields({srcObj:req.body,destObj:requestParams,overrideSameName:true});
     logger.logDebug("Server.viewRequestResetPassword parseRequestParams, requestParams="+util.inspect(requestParams,false,100));
     var pageLibs = {util:util};
     pageParams = {layout:false, libs:pageLibs, err:null,errors:null, redirectUrl:null,
@@ -4454,8 +4453,8 @@ Server.prototype.viewDisableUser = function(req, res) {
 
   function parseRequestParams(cbFun){
     requestParams = {};
-    handy.copyFields({srcObj:req.query,destObj:requestParams,overrideSameName:true});
-    handy.copyFields({srcObj:req.body,destObj:requestParams,overrideSameName:true});
+    tool.copyFields({srcObj:req.query,destObj:requestParams,overrideSameName:true});
+    tool.copyFields({srcObj:req.body,destObj:requestParams,overrideSameName:true});
     logger.logDebug("Server.viewDisableUser parseRequestParams, requestParams="+util.inspect(requestParams,false,100));
     var pageLibs = {util:util};
     pageParams = {layout:false, libs:pageLibs, err:null,errors:null, redirectUrl:null, rootUrl:config.getCloudStorageInfo().toBucketUrl,
@@ -4530,7 +4529,7 @@ Server.prototype.viewDisableUser = function(req, res) {
         userObj.primaryPhotoPaths = photoResizedPathes.s;
         userObj.primaryPhotoPathfw = photoResizedPathes.fw;
       }
-      handy.copyFields({srcObj:{userId:userObj.userId, emailAccount:userObj.emailAccount, user:userObj},
+      tool.copyFields({srcObj:{userId:userObj.userId, emailAccount:userObj.emailAccount, user:userObj},
         destObj:pageParams, overrideSameName:true});
       self.store.getUserPhotos({req:req,userId:userId, getSelf:true, count:config.config.userPhotoLooseLimit,
       photoFields:['photoId','state','photoPath']},function(err,photos){
@@ -4542,7 +4541,7 @@ Server.prototype.viewDisableUser = function(req, res) {
           photoObj.photoPaths = photoResizedPathes.s;
           photoObj.photoPathfw = photoResizedPathes.fw;
         }//for
-        handy.copyFields({srcObj:{photos:photos}, destObj:pageParams, overrideSameName:true});
+        tool.copyFields({srcObj:{photos:photos}, destObj:pageParams, overrideSameName:true});
         return cbFun(null);
       });//getUserPhotos
     });//getUser
@@ -4633,8 +4632,8 @@ Server.prototype.viewAdminLogIn = function(req, res) {
 
   function parseRequestParams(cbFun){
     requestParams = {};
-    handy.copyFields({srcObj:req.query,destObj:requestParams,overrideSameName:true});
-    handy.copyFields({srcObj:req.body,destObj:requestParams,overrideSameName:true});
+    tool.copyFields({srcObj:req.query,destObj:requestParams,overrideSameName:true});
+    tool.copyFields({srcObj:req.body,destObj:requestParams,overrideSameName:true});
     //logger.logDebug("Server.viewAdminLogIn parseRequestParams, requestParams="+util.inspect(requestParams,false,100));
     var pageLibs = {util:util};
     pageParams = {layout:false, libs:pageLibs, err:null,errors:null, redirectUrl:null, rootUrl:config.getCloudStorageInfo().toBucketUrl,
@@ -4763,8 +4762,8 @@ Server.prototype.viewFunctionList = function(req, res) {
 
   function parseRequestParams(cbFun){
     requestParams = {};
-    handy.copyFields({srcObj:req.query,destObj:requestParams,overrideSameName:true});
-    handy.copyFields({srcObj:req.body,destObj:requestParams,overrideSameName:true});
+    tool.copyFields({srcObj:req.query,destObj:requestParams,overrideSameName:true});
+    tool.copyFields({srcObj:req.body,destObj:requestParams,overrideSameName:true});
     logger.logDebug("Server.viewFunctionList parseRequestParams, requestParams="+util.inspect(requestParams,false,100));
     var pageLibs = {util:util};
     pageParams = {layout:false, libs:pageLibs, err:null,errors:null, redirectUrl:null, rootUrl:config.getCloudStorageInfo().toBucketUrl,
@@ -4858,7 +4857,7 @@ Server.prototype.viewQueryUserData = function(req, res) {
   };//renderPage
 
   function doAction(cbFun){
-    var params = handy.cloneObject(requestParams);
+    var params = tool.cloneObject(requestParams);
     params.req = req;
     self.store.getBusinessUsersDataByQuery(params,function(err,users){
       if (err) return cbFun(err);
@@ -4920,7 +4919,7 @@ Server.prototype.viewRunMethod = function(req, res) {
   };//renderPage
 
   function doAction(cbFun){
-    var params = handy.cloneObject(requestParams);
+    var params = tool.cloneObject(requestParams);
     params.req = req;
     self._runMethod(params, function(err,retInfo){
       if (err) return cbFun(err);
@@ -4962,8 +4961,8 @@ Server.prototype.adminWebLogOut = function(req, res) {
 
   function parseRequestParams(cbFun){
     requestParams = {};
-    handy.copyFields({srcObj:req.query,destObj:requestParams,overrideSameName:true});
-    handy.copyFields({srcObj:req.body,destObj:requestParams,overrideSameName:true});
+    tool.copyFields({srcObj:req.query,destObj:requestParams,overrideSameName:true});
+    tool.copyFields({srcObj:req.body,destObj:requestParams,overrideSameName:true});
     logger.logDebug("Server.adminWebLogOut parseRequestParams, requestParams="+util.inspect(requestParams,false,100));
     var pageLibs = {util:util};
     pageParams = {layout:false, libs:pageLibs, err:null,errors:null, redirectUrl:null};
@@ -5103,7 +5102,7 @@ Server.prototype.getConfig = function(req, res) {
   if (req.body)  getAll = req.body.getAll;
   if (getAll == null)  getAll = req.query.getAll;
   getAll = handy.convertToBool(getAll);
-  var config2 = handy.cloneObject(config.config);
+  var config2 = tool.cloneObject(config.config);
   if (getAll){
     var httpRetData = {status:'success',result:config2};
     self.returnDataFromResponse({res:res,req:req,data:httpRetData});
@@ -5202,7 +5201,7 @@ Server.prototype.storeGetUserIdsByQuery = function(req, res) {
   var self = this;
   //logger.logDebug("Server.storeGetUserIdsByQuery entered, params in body="+util.inspect(req.body,false,100));
   var messagePrefix = 'in Server.storeGetUserIdsByQuery, ';
-  var params = handy.cloneObject(req.body);
+  var params = tool.cloneObject(req.body);
   params.req = req;
   self.store.getUserIdsByQuery(params,function(err,userIds){
     if (err) return self.handleError({err:err,req:req,res:res});
@@ -5221,7 +5220,7 @@ Server.prototype.disableUser = function(req, res) {
   var self = this;
   //logger.logDebug("Server.disableUser entered, params in body="+util.inspect(req.body,false,100));
   var messagePrefix = 'in Server.disableUser, ';
-  var params = handy.cloneObject(req.body);
+  var params = tool.cloneObject(req.body);
   var userId = params.userId;
   if (params.disableUser){
     self.store.disableUser({req:req,userId:userId},function(err){

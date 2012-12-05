@@ -39,7 +39,8 @@ function initWorker(params,cbFun) {
   var clearAuth = params.clearAuth;
   config.config.logLevel = 3;//debug //2;//info
 
-  var redisStore = redis.create();
+  var envSpecialConfig = config.getEnvConfig();
+  var redisStore = redis.create(envSpecialConfig.dataRedisPort);
   if(clearAuth){
     redisStore.setC2dmAuth({auth:null});
   }

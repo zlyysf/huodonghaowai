@@ -186,6 +186,24 @@ cp ../../soft/redis-2.6.5/redis.conf redis.conf
 echo "../../soft/redis-2.6.5/src/redis-server ./redis.conf &" > startRedis.sh
 echo "../../soft/redis-2.6.5/src/redis-cli -p 6380" > runRedisCli.sh
 
+后来又加了两个redis库
+cd /mnt/d20/runData
+mkdir redisDataProd redisSessionProd
+cd redisDataProd
+cp ../redisData/redis.conf redis.conf
+  modified below place:
+    port 6479
+echo "../../soft/redis-2.6.5/src/redis-server ./redis.conf &" > startRedis.sh
+echo "../../soft/redis-2.6.5/src/redis-cli -p 6479" > runRedisCli.sh
+
+cd /mnt/d20/runData/redisSessionProd
+cp ../redisSession/redis.conf redis.conf
+  modified below place:
+    port 6480
+echo "../../soft/redis-2.6.5/src/redis-server ./redis.conf &" > startRedis.sh
+echo "../../soft/redis-2.6.5/src/redis-cli -p 6480" > runRedisCli.sh
+
+
 firewall set ，注意amazon的云主机是通过网页设置的
 看来没设置防火墙
 yum install iptables 发现防火墙已经装了

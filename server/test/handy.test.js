@@ -7,6 +7,7 @@ var util = require('util');
 
 var config = require('../lib/config');
 var handy = require('../lib/handy');
+var tool = require('../lib/tool');
 //var logger = require('../lib/logger');
 
 
@@ -293,17 +294,17 @@ function test_copyFieldsDeepOnlyForObject(){
   var src1 = {a:1 , b:'b'};
   var dest1 = {a:2, c:3};
   console.log("origin dest1="+util.inspect(dest1,false,100));
-  handy.copyFieldsDeepOnlyForObject({srcObj:src1, destObj:dest1, overrideSameName:false});
+  tool.copyFieldsDeepOnlyForObject({srcObj:src1, destObj:dest1, overrideSameName:false});
   console.log("dest1="+util.inspect(dest1,false,100));
-  handy.copyFieldsDeepOnlyForObject({srcObj:src1, destObj:dest1, overrideSameName:true});
+  tool.copyFieldsDeepOnlyForObject({srcObj:src1, destObj:dest1, overrideSameName:true});
   console.log("dest1="+util.inspect(dest1,false,100));
 
   var src2 = {f1:1, f2:'b', f3:{f31:1, f32:'b'}, f4:{f41:{}}};
   var dest2 = {f1:'a', f5:5, f3:{f31:2, f33:'a'}};
   console.log("origin dest2="+util.inspect(dest2,false,100));
-  handy.copyFieldsDeepOnlyForObject({srcObj:src2, destObj:dest2, overrideSameName:false});
+  tool.copyFieldsDeepOnlyForObject({srcObj:src2, destObj:dest2, overrideSameName:false});
   console.log("dest2="+util.inspect(dest2,false,100));
-  handy.copyFieldsDeepOnlyForObject({srcObj:src2, destObj:dest2, overrideSameName:true});
+  tool.copyFieldsDeepOnlyForObject({srcObj:src2, destObj:dest2, overrideSameName:true});
   console.log("dest2="+util.inspect(dest2,false,100));
 
 };//test_copyFieldsDeepOnlyForObject

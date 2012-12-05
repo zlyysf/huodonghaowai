@@ -5,6 +5,7 @@ var util = require('util');
 var path = require('path');
 
 var handy = require('../lib/handy');
+var tool = require("../lib/tool");
 var config = require('../lib/config');
 var server = require('../lib/server');
 var redis = require('../lib/redis');
@@ -63,8 +64,9 @@ var gUploadPhotoPath = path.join(__dirname,"./resourceFile/draw.png");
 
 var host = 'localhost';
 //var host = 'ec2-50-17-172-94.compute-1.amazonaws.com';
-var port = config.config.port;//4000;
-var securePort = config.config.securePort;//4010;
+var envSpecialConfig = config.getEnvConfig();
+var port = envSpecialConfig.port;//4000;
+var securePort = envSpecialConfig.securePort;//4010;
 
 var waitMsTimeOfSoon = 10;
 var waitMsTimeOfConnectApns = 3000;
@@ -1524,8 +1526,8 @@ function busDateBasic1(params,cbFun){
   var dateDate4 = dateDate0+4*24*60*60*1000;
   handy.pipeline(
       function(next){
-        var lparams = handy.cloneObject(params);
-        handy.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
         busPrepare4User(lparams,function(outData){
           user4Info1 = outData;
           userIdM1 = outData.userInfoMale1.registerOutData.result.userId;
@@ -2200,8 +2202,8 @@ function busActiveApplyingDates1(params,cbFun){
   var dateDate4 = dateDate0+4*24*60*60*1000;
   handy.pipeline(
       function(next){
-        var lparams = handy.cloneObject(params);
-        handy.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
         busPrepare4User(lparams,function(outData){
           user4Info1 = outData;
           userIdM1 = outData.userInfoMale1.registerOutData.result.userId;
@@ -2736,8 +2738,8 @@ function busDateActiveResponders1(params,cbFun){
   var dateDate4 = dateDate0+4*24*60*60*1000;
   handy.pipeline(
       function(next){
-        var lparams = handy.cloneObject(params);
-        handy.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
         busPrepare4User(lparams,function(outData){
           user4Info1 = outData;
           userIdM1 = outData.userInfoMale1.registerOutData.result.userId;
@@ -3070,8 +3072,8 @@ function busDateActiveResponders2(params,cbFun){
   var dateDate4 = dateDate0+4*24*60*60*1000;
   handy.pipeline(
       function(next){
-        var lparams = handy.cloneObject(params);
-        handy.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
         busPrepare4User(lparams,function(outData){
           user4Info1 = outData;
           userIdM1 = outData.userInfoMale1.registerOutData.result.userId;
@@ -3310,8 +3312,8 @@ function busGetNearbyDatesA1(params,cbFun){
   var dateDate_4 = dateDate0-4*24*60*60*1000;
   handy.pipeline(
       function(next){
-        var lparams = handy.cloneObject(params);
-        handy.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
         busPrepare4User(lparams,function(outData){
           user4Info1 = outData;
           userIdM1 = outData.userInfoMale1.registerOutData.result.userId;
@@ -3537,8 +3539,8 @@ function busGetDates1(params,cbFun){
   var dateDate_4 = dateDate0-4*24*60*60*1000;
   handy.pipeline(
       function(next){
-        var lparams = handy.cloneObject(params);
-        handy.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
         busPrepare4User(lparams,function(outData){
           user4Info1 = outData;
           userIdM1 = outData.userInfoMale1.registerOutData.result.userId;
@@ -3801,8 +3803,8 @@ function busGetNearbyDates1(params,cbFun){
   var dateDate1 = dateDate0+1*24*60*60*1000;
   handy.pipeline(
       function(next){
-        var lparams = handy.cloneObject(params);
-        handy.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy',
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy',
           latlng1:latlngNS1,latlng2:latlngNS2,latlng3:latlngNS1,latlng4:latlngNS2},destObj:lparams});
         busPrepare4User(lparams,function(outData){
           user4Info1 = outData;
@@ -3818,8 +3820,8 @@ function busGetNearbyDates1(params,cbFun){
         });//busPrepare4User
       },
       function(next){
-        var lparams = handy.cloneObject(params);
-        handy.copyFields({srcObj:{name1:'Edward',name2:'Ford',name3:'Georgia',name4:'Helen',
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Edward',name2:'Ford',name3:'Georgia',name4:'Helen',
           latlng1:latlngNS3,latlng2:latlngNS4,latlng3:latlngNS3,latlng4:latlngNS4},destObj:lparams});
         busPrepare4User(lparams,function(outData){
           user4Info2 = outData;
@@ -4070,8 +4072,8 @@ function busCreateDateAndSendToNearbyUser1(params,cbFun){
   var dateDate1 = dateDate0+1*24*60*60*1000;
   handy.pipeline(
       function(next){
-        var lparams = handy.cloneObject(params);
-        handy.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy',
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy',
           latlng1:latlngNS1,latlng2:latlngNS2,latlng3:latlngNS1,latlng4:latlngNS2},destObj:lparams});
         busPrepare4User(lparams,function(outData){
           user4Info1 = outData;
@@ -4087,8 +4089,8 @@ function busCreateDateAndSendToNearbyUser1(params,cbFun){
         });//busPrepare4User
       },
       function(next){
-        var lparams = handy.cloneObject(params);
-        handy.copyFields({srcObj:{name1:'Edward',name2:'Ford',name3:'Georgia',name4:'Helen',
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Edward',name2:'Ford',name3:'Georgia',name4:'Helen',
           latlng1:latlngNS3,latlng2:latlngNS4,latlng3:latlngNS3,latlng4:latlngNS4},destObj:lparams});
         busPrepare4User(lparams,function(outData){
           user4Info2 = outData;
@@ -4210,8 +4212,8 @@ function busGetMadeDates(params,cbFun){
   handy.pipeline(
       function(next){
         console.log("\nmade users 1 batch");
-        var lparams = handy.cloneObject(params);
-        handy.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy',
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy',
           region1:madeRegion,region2:madeRegion,region3:madeRegion,region4:madeRegion},destObj:lparams});
         busPrepare4User(lparams,function(outData){
           user4Info1 = outData;
@@ -4228,8 +4230,8 @@ function busGetMadeDates(params,cbFun){
       },
       function(next){
         console.log("\nmade users 2 batch");
-        var lparams = handy.cloneObject(params);
-        handy.copyFields({srcObj:{name1:'Edward',name2:'Ford',name3:'Georgia',name4:'Helen',
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Edward',name2:'Ford',name3:'Georgia',name4:'Helen',
           region1:madeRegion,region2:madeRegion,region3:madeRegion,region4:madeRegion},destObj:lparams});
         busPrepare4User(lparams,function(outData){
           user4Info2 = outData;
@@ -7727,8 +7729,8 @@ l r2  f a
   handy.pipeline(
       function(next){
         var localParams = {};
-        handy.copyFields({srcObj:params,destObj:localParams});
-        handy.copyFields({srcObj:p4userParams1,destObj:localParams});
+        tool.copyFields({srcObj:params,destObj:localParams});
+        tool.copyFields({srcObj:p4userParams1,destObj:localParams});
         busPrepare4User(localParams,function(outData){
           userIdM1 = outData.userInfoMale1.registerOutData.result.userId;
           userIdM2 = outData.userInfoMale2.registerOutData.result.userId;
@@ -7739,8 +7741,8 @@ l r2  f a
       },
       function(next){
         var localParams = {};
-        handy.copyFields({srcObj:params,destObj:localParams});
-        handy.copyFields({srcObj:p4userParams2,destObj:localParams});
+        tool.copyFields({srcObj:params,destObj:localParams});
+        tool.copyFields({srcObj:p4userParams2,destObj:localParams});
         busPrepare4User(localParams,function(outData){
           userIdM5 = outData.userInfoMale1.registerOutData.result.userId;
           userIdM6 = outData.userInfoMale2.registerOutData.result.userId;
@@ -7751,8 +7753,8 @@ l r2  f a
       },
       function(next){
         var localParams = {notUploadPhoto:true};
-        handy.copyFields({srcObj:params,destObj:localParams});
-        handy.copyFields({srcObj:p4userParams3,destObj:localParams});
+        tool.copyFields({srcObj:params,destObj:localParams});
+        tool.copyFields({srcObj:p4userParams3,destObj:localParams});
         busPrepare4User(localParams,function(outData){
           userIdM9 = outData.userInfoMale1.registerOutData.result.userId;
           userIdM10 = outData.userInfoMale2.registerOutData.result.userId;
@@ -8093,8 +8095,8 @@ function busDealPhoto1(params,cbFun){
     var photoIdU1_1, photoIdU2_1, photoIdU3_1, photoIdU4_1, photoIdU1_2, photoIdU1_3;
     handy.pipeline(
         function(next){
-          var lparams = handy.cloneObject(params);
-          handy.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
+          var lparams = tool.cloneObject(params);
+          tool.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
           busPrepare4User(lparams,function(outData){
             user4Info1 = outData;
             userIdM1 = outData.userInfoMale1.registerOutData.result.userId;
@@ -8309,8 +8311,8 @@ function busMiscellaneousApis1(params,cbFun){
   var emailAccountM1, emailAccountM2, emailAccountF3, emailAccountF4;
   handy.pipeline(
       function(next){
-        var lparams = handy.cloneObject(params);
-        handy.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy'},destObj:lparams});
         busPrepare4User(lparams,function(outData){
           user4Info1 = outData;
           userIdM1 = outData.userInfoMale1.registerOutData.result.userId;
@@ -8431,13 +8433,13 @@ testlib.backConfigDefaultValue();
 
 //testJustStartStopServer();
 //testRegister1LocalBothSides({disableNotification:true,uploadReally:false},null);
-testUploadPhoto1LocalBothSides({disableNotification:true,uploadReally:false},null);
+//testUploadPhoto1LocalBothSides({disableNotification:true,uploadReally:false},null);
 
 //testSession1LocalBothSides({disableNotification:true,uploadReally:false},null);
 //testCountInvitingUser1LocalBothSides({disableNotification:true},null);
 //testUpdateLocation1LocalBothSides({disableNotification:true},null);
 //testMiscellaneousApis1LocalBothSides({disableNotification:true},null);
-//testDateBasic1LocalBothSides({disableNotification:true,uploadReally:false},null);
+testDateBasic1LocalBothSides({disableNotification:true,uploadReally:false},null);
 //testActiveApplyingDates1LocalBothSides({disableNotification:true},null);
 //testDateActiveResponders1LocalBothSides({disableNotification:true},null);
 //testDateActiveResponders2LocalBothSides({disableNotification:true},null);

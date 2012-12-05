@@ -21,8 +21,9 @@ process.title = "nodePrettyRichServer"; //to support ps -ef | grep node , ps -ef
 
 
 var runServer = exports.runServer = function(params){
-  var port = config.config.port;
-  var securePort = config.config.securePort;
+  var envSpecialConfig = config.getEnvConfig();
+  var port = envSpecialConfig.port;
+  var securePort = envSpecialConfig.securePort;
   var s = new server ();
   s.listen(port,securePort);
 };//runServer
