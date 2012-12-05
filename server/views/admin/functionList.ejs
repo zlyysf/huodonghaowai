@@ -1,0 +1,29 @@
+
+<html>
+  <head>
+    <style>
+      li.z1item {
+        display:block;
+      }
+      li.inlineitem {
+        display:inline;
+      }
+    </style>
+    <script type="text/javascript" >
+    </script>
+  </head>
+
+  <body>
+    <%- partial('../errorPage.ejs') %>
+      <p>welcome: <%= userName %></p>
+      <h1>Function List</h1>
+      <ul>
+        <li class="z1item"> <a href='/web/regionList'>audit photos by region</a></li>
+        <li class="z1item"> <a href='/web/broadcastSystemMessage'>broadcast system message</a></li>
+        <li class="z1item"> <a href='/web/disableUser'>disable user</a></li>
+        <li class="z1item"> <a href='/adminWeb/logOut'>log out</a></li>
+      </ul>
+  </body>
+</html>
+
+

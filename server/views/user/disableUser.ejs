@@ -1,0 +1,82 @@
+<%
+
+%>
+
+<html>
+  <head>
+    <style>
+      li.z1item {
+        display:block;
+      }
+      li.inlineitem {
+        display:inline;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <%- partial('../errorPage.ejs') %>
+    <%if (actionSuccess){%>
+        <div> <p>action successfully done.</p>
+        </div>
+    <%}%>
+    <h1>Get User Info:</h1>
+    <form method="post">
+        <ul>
+            <li class="z1item">
+              user email:<input type="text" name="emailAccount" value="<%= emailAccount %>"/>
+              user Id:<input type="text" name="userId" value="<%= userId %>"/>
+            </li>
+
+            <li class="z1item">
+              <input type="submit" name="showUser" value="Show User Info"/>
+              <input type="submit" name="disableUser" value="Disable User"/>
+              <input type="submit" name="enableUser" value="Enable User"/>
+            </li>
+        </ul>
+    </form>
+
+        <%if (user!=null){%>
+            <h1>User Info:</h1>
+            <table>
+              <tr><td>user id:</td><td><%= user.userId %></td></tr>
+              <tr><td>email:</td><td><%= user.emailAccount %></td></tr>
+              <tr><td>name:</td><td><%= user.name %></td></tr>
+              <tr><td>gender:</td><td><%= user.gender %></td></tr>
+              <tr><td>height(cm):</td><td><%= user.height %></td></tr>
+              <tr><td>device type:</td><td><%= user.deviceType %></td></tr>
+              <tr><td>city:</td><td><%= user.cityLocation %></td></tr>
+              <tr><td>primary photo:</td>
+                <td>
+                  <%if (user.primaryPhotoId!=null){
+                      var photoUrl = rootUrl+"/"+user.primaryPhotoPaths;
+                  %>
+                      <%= user.primaryPhotoId %>
+                      <img src="<%= photoUrl %>" />
+                  <%}%>
+                </td>
+              </tr>
+              <tr><td>disabled:</td><td><%= user.disabled %></td></tr>
+            </table>
+        <%}%>
+
+        <%if (photos!=null){%>
+            <h1>Photos Info:</h1>
+            <ul>
+              <%for(var i=0; i<photos.length; i++){
+                  var photo=photos[i];
+                  var photoUrl = rootUrl+"/"+photo.photoPaths;
+              %>
+                  <li>
+                    <%= photo.state %>
+                    <img src="<%= photoUrl %>" />
+                  </li>
+              <%}%>
+            </ul>
+        <%}%>
+
+  </body>
+</html>
+
+

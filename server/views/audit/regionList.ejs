@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <style>
+      li.z1item {
+        display:block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Users</h1>
+    <ul id="regions">
+    <%if (regions != null){
+        var dtNow = new Date();
+        var dtWeekAgo = new Date(dtNow.getTime()-7*24*60*60*1000);
+        var dt = dtWeekAgo;
+        var startDate = dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate();
+        for(var i=0; i<regions.length; i++){
+          var region=regions[i];
+          var regionCreatedPhotoCount = regionsCreatedPhotoCount[i];
+          //var wholeUrl = "/web/regionCreatedPhotoList?region="+encodeURIComponent(region);
+          var wholeUrl = "/web/regionStatePhotoList?region="+encodeURIComponent(region)
+            +"&photoStateType=auditPassed"+"&startDate="+encodeURIComponent(startDate);
+    %>
+          <li class="z1item"> <a href='<%= wholeUrl %>'><%= region %></a> photo count: <%= regionCreatedPhotoCount %></li>
+    <%  }//for
+      }//if
+    %>
+    </ul>
+  </body>
+</html>
+
+

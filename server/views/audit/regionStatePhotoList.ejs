@@ -1,0 +1,124 @@
+<%
+    var selectPhotoStates = ['created','auditPassed','auditDenied'];
+    var pageCount = Math.ceil(totalCount*1.0/pageSize);
+%>
+
+<html>
+  <head>
+    <style>
+      li.z1item {
+        display:block;
+      }
+      li.inlineitem {
+        display:inline;
+      }
+    </style>
+    <script type="text/javascript" >
+      function funCheckAll(){
+          var d = document;
+          var items=d.getElementsByName("checkedPhotoId");
+          var itemall = d.getElementById("checkAll");
+          for(var i=0;i<items.length;i++){
+              items[i].checked=itemall.checked;
+          }
+      }
+    </script>
+  </head>
+
+  <body>
+    <%- partial('../errorPage.ejs') %>
+
+    <h1>Filter and Pager</h1>
+    <div>total count:<%= totalCount %></div>
+    <form method="post">
+        <ul>
+            <input type="hidden" name="region" value="<%= region %>">
+            <li class="inlineitem">region:<%= region %></li>
+            <li class="z1item"></li>
+            <li class="inlineitem">startDate:<input type="text" name="startDate" value="<%= startDate %>"/></li>
+            <li class="inlineitem">endDate:<input type="text" name="endDate" value="<%= endDate %>"/></li>
+
+            <li class="z1item"></li>
+            <li class="inlineitem">photoStateType:
+              <select name="photoStateType">
+                <%for(var i=0; i<selectPhotoStates.length; i++){
+                    var photoState=selectPhotoStates[i];
+                    if(photoState == photoStateType){
+                      %><option selected="selected" value="<%= photoState %>"><%= photoState %></option><%
+                    }else{
+                      %><option value="<%= photoState %>"><%= photoState %></option><%
+                    }
+                  }%>
+              </select>
+            </li>
+
+            <li class="z1item"></li>
+            <li class="inlineitem">pageCount:<%= pageCount %></li>
+            <li class="inlineitem">pageSize:<input type="text" name="pageSize" value="<%= pageSize %>"/></li>
+            <li class="z1item"></li>
+            <li class="inlineitem">
+                <%if (pageIndex>0){%>
+                    <input type="submit" name="prevPage" value="prevPage"/>-|-
+                <%}%>
+                <input type="submit" name="gotoPage" value="gotoPage"/>pageIndex:<input type="text" name="pageIndex" value="<%= pageIndex %>"/>
+                <%if (pageIndex<pageCount-1){%>
+                -|-<input type="submit" name="nextPage" value="nextPage"/>
+                <%}%>
+            </li>
+        </ul>
+    </form>
+
+    <h1>Users</h1>
+    <div>total count:<%= totalCount %></div>
+    <div><input type="checkbox" name="checkAll" id="checkAll"  onClick="funCheckAll()"/>CheckAll</div>
+    <form method="post">
+        <ul>
+            <input type="hidden" name="region" value="<%= region %>">
+            <li class="inlineitem">region:<%= region %></li>
+            <li class="z1item"></li>
+            <input type="hidden" name="startDate" value="<%= startDate %>">
+            <li class="inlineitem">startDate:<%= startDate %></li>
+            <input type="hidden" name="endDate" value="<%= endDate %>">
+            <li class="inlineitem">endDate:<%= endDate %></li>
+            <li class="z1item"></li>
+            <input type="hidden" name="photoStateType" value="<%= photoStateType %>">
+            <li class="inlineitem">photoStateType:<%= photoStateType %></li>
+            <li class="z1item"></li>
+            <input type="hidden" name="pageIndex" value="<%= pageIndex %>">
+            <li class="inlineitem">pageIndex:<%= pageIndex %></li>
+            <input type="hidden" name="pageSize" value="<%= pageSize %>">
+            <li class="inlineitem">pageSize:<%= pageSize %></li>
+
+        </ul>
+        <ul id="photos">
+        <%if (photos!=null){
+            for(var i=0; i<photos.length; i++){
+              var photo=photos[i];
+              var photoUrl = rootUrl+"/"+photo.photoPaths;
+        %>
+            <li>
+              <div>
+                <input type="hidden" name="photoId" value="<%= photo.photoId %>">
+                <ul>
+                  <li class="inlineitem"><input type="checkbox" name="checkedPhotoId" value="<%= photo.photoId %>" /></li>
+                  <li class="inlineitem">current state:<%= photo.state %></li>
+                  <li class="inlineitem">Passed:
+                    <select name="passed">
+                        <option value="true">Yes</option>
+                        <option value="false">NO</option>
+                    </select>
+                  </li>
+                  <li class="inlineitem">Description:<input type="text" name="description"/></li>
+                  <img src="<%= photoUrl %>" />
+                </ul>
+              </div>
+            </li>
+          <%}
+          }%>
+        <li class="z1item"><input type="submit" name="batchAudit" value="batchAudit"/></li>
+        </ul>
+    </form>
+  </body>
+</html>
+
+

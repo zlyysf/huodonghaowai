@@ -1,0 +1,31 @@
+
+<html>
+  <head>
+    <style>
+      li.z1item {
+        display:block;
+      }
+      li.inlineitem {
+        display:inline;
+      }
+    </style>
+    <script type="text/javascript" >
+    </script>
+  </head>
+
+  <body>
+    <%- partial('../errorPage.ejs') %>
+
+        <h1>Admin LogIn</h1>
+        <form method="post">
+          <ul>
+            <li class="z1item">user name:<input type="text" name="userName" value=""/></li>
+            <li class="z1item">password:<input type="password" name="password"/></li>
+            <li class="z1item"><input type="submit" name="login" value="log in"/></li>
+          </ul>
+        </form>
+
+  </body>
+</html>
+
+

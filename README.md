@@ -1,2 +1,1 @@
-huodonghaowai
-=============
+there are 4 folder, server, android, iphone, ui.

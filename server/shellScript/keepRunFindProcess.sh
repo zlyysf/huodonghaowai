@@ -1,0 +1,1 @@
+ps -ef | egrep 'nodePrettyRich|node' | egrep -v egrep

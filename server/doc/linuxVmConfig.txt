@@ -1,0 +1,280 @@
+
+zlyyasfon / ...
+
+http://i.aliyun.com/dashboard/instance?spm=0.0.0.31.9Cg0uN&type=vm&inst_id=AY121128010924c897598
+
+服务器名称：  AY121128010924c897598   操作系统：   CentOS 6.2 64位
+外网IP：   42.121.122.47   内网IP：   10.135.25.1
+创建时间：   2012-11-28  到期时间：   2013-02-28
+
+root / xxxxxxxxxx
+ysf / xxxxxxxxxx
+
+added ysf to sudoers
+在ysf用户下执行，基本都要用到sudo.
+Linux 系统挂载数据盘  http://help.aliyun.com/manual?spm=0.0.0.109.VFULDb&helpId=271
+  fdisk -l
+     /dev/xvdb
+
+
+建立 /mnt/d20 ，chown 为 ysf:ysf
+
+在root用户下执行
+echo '/dev/xvdb1  /mnt/d20 ext3    defaults    0  0' >> /etc/fstab
+
+sudo mount -a
+df -h
+但是发现普通用户ysf在 /mnt/d20 里面 还是不可写。
+后来，在mount之后，再修改 /mnt/d20 的文件权限值为777，然后普通用户ysf就可以在 /mnt/d20 里面建立目录之类的了。而且，修改 /mnt/d20 的 777 看来只需一次，以后再umount , mount 也可以了。
+
+
+
+
+sudo yum install php
+sudo yum install httpd httpd-devel
+
+
+vi /etc/httpd/conf/httpd.conf
+ServerRoot "/etc/httpd"
+Listen 80
+Include conf.d/*.conf
+User apache
+Group apache
+DocumentRoot "/var/www/html"
+<Directory "/var/www/html">
+
+ vi /etc/httpd/conf.d/php.conf
+
+
+sudo gpasswd -a ysf apache
+sudo chgrp -R apache /var/www/html
+sudo chown apache:apache /var/www/html
+sudo chmod g+rw /var/www/html
+这时以普通用户ysf进入 /var/www/html ， 写文件，如 touch a。仍报无权限。这时，让ysf重新登录即可。
+
+groups apache
+groups ysf
+
+
+sudo yum install libpng-devel
+sudo yum install libjpeg-devel
+sudo yum install gd
+sudo yum install php-gd
+
+http://42.121.122.47/phpinfo.php
+
+
+
+sudo yum install gcc gcc-c++
+Error: Package: glibc-headers-2.12-1.80.el6_3.6.x86_64 (updates)
+           Requires: kernel-headers >= 2.2.1
+Error: Package: glibc-headers-2.12-1.80.el6_3.6.x86_64 (updates)
+           Requires: kernel-headers
+ You could try using --skip-broken to work around the problem
+** Found 1 pre-existing rpmdb problem(s), 'yum check' output follows:
+kernel-2.6.32-220.13.1.el6.x86_64 has missing requires of kernel-firmware >= ('0', '2.6.32', '220.13.1.el6')
+
+
+http://www.nonb.cn/
+阿里云安装GCC时报错,
+系统是CentOS 6.2 64位.安装gcc都报错
+yum -y install gcc
+yum -y install gcc-c++
+yum install make
+-- 或者
+yum groupinstall "Development Tools"
+-- 或者
+yum install gcc gcc-c++ kernel-devel
+报错如下
+Error: Package: glibc-headers-2.12-1.80.el6_3.6.x86_64 (updates)
+           Requires: kernel-headers >= 2.2.1
+Error: Package: glibc-headers-2.12-1.80.el6_3.6.x86_64 (updates)
+           Requires: kernel-headers
+ You could try using --skip-broken to work around the problem
+** Found 1 pre-existing rpmdb problem(s), 'yum check' output follows:
+kernel-2.6.32-220.13.1.el6.x86_64 has missing requires of kernel-firmware >= ('0', '2.6.32', '220.13.1.el6')
+解决方法：
+
+打开yum配置文件
+vim /etc/yum.conf
+找到
+exclude=kernel*
+改成
+# exclude=kernel*
+保存即可
+
+
+
+
+sudo yum install gcc gcc-c++
+sudo yum groupinstall "Development Tools"
+
+sudo yum install tcl-devel tcl
+这应该就不用再make tcl8511-src.zip来支持redis了。
+
+sudo yum -y install gcc automake autoconf libtool make  已经在前面装了
+
+sudo yum install openssl-devel
+
+mkdir node_modules
+
+注意下面安装node.js及npm的步骤取消。因为后来发现express的当前最新版3.0.3与2.x版的变化太大，只得降级node.js到0.6x，请参考后面的node.js环境降级过程直接安装0.6x的环境。
+取node.js的最新版， wget http://nodejs.org/dist/v0.8.15/node-v0.8.15.tar.gz ，
+解压 tar -xzvf node-v0.8.15.tar.gz 编译安装，README中3个典型步骤
+取redis的最新版， wget http://redis.googlecode.com/files/redis-2.6.5.tar.gz 编译安装后, make test, 都通过。
+
+
+npm install awssum
+npm install connect-redis
+npm install express
+npm install mongodb
+npm install nodemailer
+npm install redis
+npm install connect-form
+npm install ejs
+npm install i18n
+npm install needle
+npm install node-syslog
+npm install socket.io
+
+npm install xml2js
+npm install request
+npm install mime
+npm install step
+
+sudo yum install git    竟已经装了
+sudo yum install git-svn git-email git-gui gitk
+
+git config --global color.ui true
+
+
+sudo vi /etc/hosts
+加一行:      1.202.75.171   ysfCentSrv      其中的 ip 通过特定邮件取得。
+ssh://lianyuzhang@ysfcentsrv/home/git/server
+
+cd /mnt/d20
+mkdir gitTongqu
+cd gitTongqu
+git clone ssh://lianyuzhang@ysfcentsrv/home/git/server
+
+cd /mnt/d20/gitTongqu/server/php
+cp -R imageDeal /var/www/html/
+
+
+do redis config:
+cd /mnt/d20
+mkdir runData
+cd runData
+mkdir redisData redisSession
+cd redisData
+cp ../../soft/redis-2.6.5/redis.conf redis.conf
+  modified below place:
+    appendonly yes
+touch startRedis.sh
+  add the line: ../../soft/redis-2.6.5/src/redis-server ./redis.conf &
+touch runRedisCli.sh
+  add the line: ../../soft/redis-2.6.5/src/redis-cli
+
+cd /mnt/d20
+cd runData/redisSession
+cp ../../soft/redis-2.6.5/redis.conf redis.conf
+  modified below place:
+    pidfile /var/run/redisSession.pid
+    port 6380
+    comment all save lines, such as "#save 900 1"
+    dbfilename dumpSession.rdb
+echo "../../soft/redis-2.6.5/src/redis-server ./redis.conf &" > startRedis.sh
+echo "../../soft/redis-2.6.5/src/redis-cli -p 6380" > runRedisCli.sh
+
+firewall set ，注意amazon的云主机是通过网页设置的
+看来没设置防火墙
+yum install iptables 发现防火墙已经装了
+参考    http://bbs.aliyun.com/read.php?tid=107407    http://bbs.v9zz.com/node/43
+iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -j REJECT
+iptables -A FORWARD -j REJECT
+
+service iptables save      注意必须加这一个才能在   /etc/sysconfig/iptables   看到内容
+less /etc/sysconfig/iptables
+service iptables restart   可以发现生效了
+
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 6379 -j ACCEPT
+iptables -A INPUT -p tcp --dport 6380 -j ACCEPT
+service iptables save
+service iptables restart
+先加一批再加一批的方式不行。由于规则在不同顺序的位置作用不同。还是直接编辑文件为好。
+
+可能新建（或修改） /etc/sysconfig/iptables ，输入类似下列内容。然后 service iptables restart 。应该即可.
+# Generated by iptables-save v1.4.7 on Thu Nov 29 11:57:28 2012
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -s 127.0.0.1/32 -d 127.0.0.1/32 -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 6379 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 6380 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 27017 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 28017 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 3000 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 3183 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 3690 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 4000 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 4010 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 4090 -j ACCEPT
+-A INPUT -j REJECT --reject-with icmp-port-unreachable
+-A FORWARD -j REJECT --reject-with icmp-port-unreachable
+-A OUTPUT -j ACCEPT
+COMMIT
+# Completed on Thu Nov 29 11:57:28 2012
+
+chkconfig --level 345 iptables on
+
+
+初步确认了    redis2.4 db file (dump.rdb) can be used by redis2.6
+
+
+
+在测试同去代码时发现   express3.0.3 版本变化太大，得回退node.js和express版本
+通过 npm info express 发现 express2.5.9 是express2x中的最高版本，再看 express2.5.9 中的 package.json，发现对于 node.js 的依赖版本是 ">= 0.4.1 < 0.7.0".
+再去http://nodejs.org/dist/ 发现node.js 0.6x中v0.6.21是最高，使用之， http://nodejs.org/dist/v0.6.21/node-v0.6.21.tar.gz ，编译安装覆盖前面的高版本。
+把以前npm安装的东西都删光，再执行如下命令。
+npm install express@2.5.9
+npm install awssum
+npm install connect-redis
+npm install mongodb
+npm install nodemailer
+npm install redis
+npm install connect-form
+npm install ejs
+npm install i18n
+npm install needle
+npm install node-syslog@1.1.3
+npm install socket.io
+
+
+
+经过后台脚本测试和两个安卓手机测试，发照片，发c2dm的push及普通功能都正常。后来测了apple的push也正常。
+
+
+
+
+
+
+
+
+
+
+
+to be researched
+[22180] 28 Nov 21:43:24.834 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+
+
+
+

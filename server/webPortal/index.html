@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<meta charset="UTF-8" />
+<html>
+  <head>
+    <title>同去网</title>
+    <style>
+      /*
+      because css do not deal wrong name attribute, so we can change the name of the attribute to comment it.
+      */
+      div.main{
+        /*
+        background-color:green;
+        */
+        position:relative;
+        left:10%;
+        top:0px;
+        width:80%;
+        min-width:1200px;
+      }
+      img.mainImg{
+        display:block;
+        position:absolute;
+        right:50px;
+        top:-150px;
+      }
+
+      div.headPart{
+        /*
+        background-color:blue;
+        */
+        height:200px;
+        position:relative;
+        left:0px;
+        top:0px;
+      }
+      .titleIcon{
+        display:block;
+        height:200px;
+        width:114px;
+        position:absolute;
+        left:40px;
+        top:0px;
+        /*
+        background-color:orange;
+        */
+        border-radius:20px;
+        background-image:url("titleIcon.png");
+        background-repeat:no-repeat;
+        background-position: center;
+      }
+      .titleTxtAsImg{
+        display:block;
+        height:200px;
+        width:190px;
+        position:absolute;
+        left:195px;
+        top:0px;
+
+        background-image:url("tongqu.png");
+        background-repeat:no-repeat;
+        background-position: center;
+
+        /*
+        background-color:pink;
+        */
+      }
+      .title{
+        display:block;
+        position:absolute;
+        left:200px;
+        top:50px;
+        height:150px;
+        width:250px;
+        text-align : center;
+        line-height:150px;
+        font-size:60px;
+        /*
+        background-color:pink;
+        */
+      }
+
+      span.title2{
+        display:block;
+        height:150px;
+        width:150px;
+
+        position:absolute;
+        left:350px;
+        top:100px;
+        /*
+
+        */
+        background-color:orange;
+        border-radius:20px;
+      }
+
+
+      div.bodyPart{
+
+
+        /*
+        background-color:red;
+
+
+        background-image:url("mobile1.png");
+        background-repeat:no-repeat;
+        background-position:right;
+
+        height:100%;
+        width:100%;
+        z-index : 100;
+
+
+        left:0px;
+        top:0px;
+
+        */
+        position:relative;
+
+        CMmin-width:1200px;
+
+        /*
+        */
+        background-color:orange;
+        background: -moz-linear-gradient(left, #fe9b00, #e25000);
+        background: -webkit-gradient( linear, left top, right bottom, from(#fe9b00), to(#e25000));
+      }
+
+      span.content{
+        display:block;
+        height:450px;
+        width:600px;
+
+        /*
+        display:block;
+        position:absolute; X
+
+        */
+        position:relative;
+        left:40px;
+        top:40px;
+
+        font-size:24px;
+        color:white;
+        font-family:"adobe黑体std";
+      }
+      .asdiv{
+        display:block;
+      }
+      .txtTitleL2 {
+        font-size:30px;
+        font-weight : bold;
+      }
+
+      a.btnDown{
+        display:block;
+        text-decoration:none;
+
+        height:75px;
+        width:264px;
+
+        CMbackground-color:orange;
+        CMbackground: -moz-linear-gradient(left, #f6a724, #ee7105);
+        CMbackground: -webkit-gradient( linear, left top, right bottom, from(#f6a724), to(#ee7105));
+        background-image:url("btnDownBg.png");
+        background-repeat:no-repeat;
+        background-position: 0% 0%;
+        border-width : none;
+        XX-moz-box-shadow: 15px 15px 15px gray;
+        XX-webkit-box-shadow: 15px 15px 15px gray;
+
+        CMborder-radius:24px;
+        color:white;
+
+        XXmargin:10px;
+        XXpadding : 10px;
+        XXpadding : 10px 10px 10px 10px;
+
+        XXpadding-left:10px;
+        XXpadding-right:10px;
+        XXpadding-top:10px;
+        XXpadding-bottom:10px;
+      }
+
+      a.btnAndroid{
+        position:absolute;
+        left:40px;
+        bottom:50px;
+      }
+      .btnAndroidContent{
+        /*
+        background-color:pink;
+        */
+
+        margin-left:35px;
+        margin-top:8px;
+        margin-right:0px;
+        margin-bottom:0px;
+      }
+
+      a.btnIphone{
+        position:absolute;
+        left:320px;
+        bottom:50px;
+      }
+
+      .btnIphoneContent{
+        /*
+        background-color:pink;
+        */
+        margin-left:32px;
+        margin-top:8px;
+        margin-right:0px;
+        margin-bottom:0px;
+      }
+
+      .txtAppVer{
+        font-size:24px;
+      }
+      .txtDownload{
+        font-size:18px;
+      }
+
+      div.footPart{
+        /*
+        padding-top:170px;
+        background-color:blue;
+        */
+
+        height:30px;
+        text-align : center;
+        font-size:12px;
+        margin-top:170px;
+      }
+    </style>
+  </head>
+<!--
+ -->
+  <body>
+    <div class="main">
+      <div class="headPart">
+        <span class="titleIcon"></span>
+        <span class="titleTxtAsImg"></span>
+      </div>
+      <div class="bodyPart">
+        <img class="mainImg" src="mobile99.png"/>
+        <span class="content">
+          <span class="asdiv">上自习，选修课，跑步，打羽毛球，购物...
+            <br/>你依旧还是孤单一个人，找不到同去的人么？
+            <br/> 想多交些一起的朋友么？
+            <br/>
+            <br/>加入<span class="txtTitleL2">同去</span>吧，中国第一个为大学生组织个性化
+            <br/>活动的手机平台。</span>
+        </span>
+        <a class="btnDown btnAndroid" href="tongqu.apk">
+          <table class="btnAndroidContent" ><tr>
+            <td><img src="androidIcon.png"/></td>
+            <td style="padding-left:10px"> <div class="txtAppVer">Android 版 </div> <div>Apk 下载</div>
+            </td>
+          </tr></table>
+        </a>
+        <a class="btnDown btnIphone" href="">
+          <table class="btnIphoneContent" ><tr>
+            <td><img src="iphoneIcon.png"/></td>
+            <td style="padding-left:10px"> <div class="txtAppVer">iPhone 版 </div> <div>App Store 下载</div>
+            </td>
+          </tr></table>
+        </a>
+      </div>
+      <div class="footPart">
+                零知互动（北京）科技有限公司
+      </div>
+    </div>
+  </body>
+</html>
+
+
+
+

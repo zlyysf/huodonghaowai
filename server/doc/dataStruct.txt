@@ -1,0 +1,2107 @@
+Some Questions
+目前的一些情况：
+	region还是用的常量。
+	
+	TODO 检查userId与targetUserId及dateId的联系。
+	TODO 是否支持再次审核。比如审核没通过的照片是否应该让它再审核再通过。以及审核通过的让它不通过。----先不用
+	
+	TODO sender已经confirm了某人，还有人回复response，这时不发系统消息及相关。
+	
+	TODO 支持上传多张图片
+	
+	
+	凡是涉及到积分的api还要尽量返回积分的当前值。
+	
+getFeed在后台支持存在一定的漏洞。参见getFeed中的说明。  简单化处理即可。
+
+关于sendDate与积分的问题。如果用户花了发给10个人的积分，但是所找到的人不足10人，这时积分扣多少？目前仍然是扣对应于10人的积分。要不要弄一个积分与发送人数的函数？   先不用。
+
+关于积分的问题：
+	用户在confirmDate时的扣积分和返还积分的解决办法。
+	目前只在redis中处理，由于没有事务，做了更多的简化。
+	目前的实现是前一个user做了confirm时不扣积分，后一个user做了才两个一起扣。因为，如果responder1做了confirm，但sender是confirm了responder2的，responder1的还得返还，麻烦，在这里做了简化。
+	这里还没有做事后返还积分的支持。
+
+关于photo上传到s3再由后端服务器作resize的问题。目前不是直接在s3上做的resize，而是先拉到后端本地存为文件，再resize为其他文件，再上传到s3.这样磁盘性能很有问题。
+解决思路有两个：
+一个是找找不存到文件，直接在内存中操作后网络传输的方法。考虑php的另外的库或另外的语言。
+一个是前端做resize传多个文件，即同一photo的不同尺寸。
+Todo 高级：
+传photo的性能。传photo使用队列。
+
+API DATA
+由于要为以后的注册作准备，这里要根据deviceId生成userId，然后一般的api都使用userId。
+Photo的alreadyLiked的标记只在大图中显示，小图中不必了。
+
+
+注意所有的需要传输密码的api需要使用https连接，端口是4010，与http的4000的端口不一样。
+
+logIn(https)
+In: 
+{ emailAccount, password, deviceType(android|iphone), deviceId,
+}
+Out:
+{ status:success|fail, 
+  result:{userId, name, gender, primaryPhotoId, primaryPhotoPath,
+    height, school, studentNO, department, bloodGroup, constellation, hometown, educationalStatus, description, goodRateCount
+  }
+}
+注意login之后，每次其他的api调用需要传递userId。
+关于session的说明。目前后台有user.lastSessionActiveTime来支持，在每次api调用时，后台会比较当前调用时间和user.lastSessionActiveTime，如果差距大到一定范围外，则认为session过期，否则session没过期，没过期时刷新lastSessionActiveTime。
+目前session使用express提供的cookie方式。这样，login之后，userId用不着传了，
+logOut(http)
+In: 
+{ userId}
+Out:
+{ status:success|fail
+}
+注意当logOut时，会清除user的appToken，以防止notification发送过来。但是还是有缺陷，当session过期时还是能够发送过来，目前暂且容忍这个问题。
+另外，检查session是否过期的代码也会做同样的清除。从而，如果session过期，而只要有一次普通api调用，之后就不会收到notification。现在session使用express提供的cookie方式，待确认是否还能保持现在的清除逻辑 TODO。
+register(https)
+没有学号，以后认证功能再看。
+In: 
+{ emailAccount, password, inviteCode(optional), name, height, gender, school, studentNO, deviceType(android|iphone), deviceId,
+	latlng(optional), region(is a json object)(optional), geolibType(=ios| android| google| googleV3)(optional)
+}
+当 region=madeRegion 时，表明这个用户是造出来的一个假用户。
+Out:
+{ status:success|fail, result:{userId, credit }
+}
+关于注册的一些说明。目前v1.1版决定是用户必须要注册进来才能正常使用各种功能。如果不注册，可以看很有限的东西。注册目前只使用email注册。
+这与v1.0版有了很大的不同。从而，deviceId是用不着了。
+
+
+resetPassword(https)
+In: 
+{ userId, oldPassword, newPassword}
+Out:
+{ status:success|fail, result:{ }
+}
+generateInviteCode
+In: 
+{ count, expireDays(optional, integer, unit in day)}
+Out:
+{ status:success|fail , result:{inviteCode:'aa', inviteCodes:[]}
+}
+当count>1时，只有inviteCodes有值；否则，只有inviteCode有值。
+如果是系统用户，要求expireDays必须有值。
+目前暂定系统用户的邀请码的使用次数不限，只有过期期限。而普通用户的邀请码只能使用一次，而且还有过期期限的限制。但如果不传过期期限，则没有这个限制。
+
+getNearbyDates
+In:
+{userId, targetGender(optional), cutOffTime(optional), start, count, latlng, region(is a json object),  geolibType(=android| googleV3)}
+targetGender在匿名用户时默认为female，可以切换male或female。但是如果用户登录后，就只显示异性的date。
+excludeSelfDate和excludeExpired选项必有且固定为true。
+目前没有，但如果需求需要，还可以提供countryCode, state, city的过滤条件，以及radius 。radius 的单位是 kilometre。
+目前不分性别取了。注意可能把自己发的也取到。
+目前是从现在往未来(从小到大)取数据。
+Out: 
+{ status:success|fail, 
+	result:{
+        totalCount ,
+        dates:[
+            { dateId, 
+              senderId(与sender.userId相同，一直存在，也是为了支持其他地方的判断), 
+              sender{ userId, name, primaryPhotoPath,primaryPhotoId}（当userId!=senderId时，会有sender对象）,
+              createTime, latlng, region, geolibType, countyLocation,  
+              dateDate, orderScore, whoPay, address, wantPersonCount, existPersonCount, money, monetaryunit, title, description, candidateId(date的sender当前所confirm的user), finalCandidateId(if exist, then confirmed == true),doubleConfirmed, finalConfirmed, alreadyStopped, photoId, photoPath
+            }
+        ],dateCount(just for debug)
+	}
+}
+注意显示date的地区需要到区县一级，如果可能的话，即现在的countyLocation。
+注意date的信息中没有当前用户作为responder的信息。经过和前端讨论，限制从nearby date进入到的聊天界面的功能以简化功能，比如不能rate等。从而不必加那些该用户作为responder的信息，比如senderConfirmed, haveBeenRated, haveRate。
+
+在v1.2版已经取消getNearbyPhotos
+getNearbyPhotos(D)
+对于type=new的，使用cutOffTime, count。
+    返回的photo的顺序是按createTime从晚到早（从未来到历史）。
+	关于cutOffTime，一般是传最后一张photo的createTime，后台取时会根据这个时间往早取count+1个photo，这最后一张photo仍然会被取回来，但排除掉这张一般能取count个不重复且连续的photo。但是仍然在小概率下存在问题，当这个createTime对应多张photo时，取回来的count+1个photo可能包含2张或以上的重复的photo，仍然不足count个非重复的。
+	目前前端暂定传cutOffTime-1(ms)来取，这样是可能会漏掉几张，但能保证非重复，另外注意现在返回的是count个，而不是以前的count+1个。所有类似的其他api都是如此改法。
+对于type=hot的，只能使用count, start。存在问题是后取回来的数据难免有重复，需要前端注意。
+这里传了region，会将它更新相应user的region等信息。
+关于targetGender，是用在userId没有给的时候，目前需求允许匿名浏览。当userId有了，就使用user的异性作为targetGender，参数targetGender就无效了。而且，如果userId没有，则认为targetGender有效，当targetGender没有值时，默认值是female。 而且，当targetGender有效时，此时需求规定type必定是hot，从而可以不传type参数。
+考虑到目前用户极少，取照片时往往取不到一页。这时会往一个globalRegion的地区加一些假用户假照片，当取hot或者new的第一页不足一页时再从这些假照片取。注意不仅是在匿名浏览，登录后也一样。
+In: 
+{   userId(optional), targetGender(optional),
+	type:new|hot, latlng, region(is a json object),  geolibType(=ios|android|google | googleV3)
+	cutOffTime, count, start
+}
+Out:
+{ status:success|fail, 
+	result:{ photos:
+        [
+	        {
+	            photoId, createTime, photoPath, width,height,likeCount,
+	            user{ userId, name, primaryPhotoId, primaryPhotoPath }
+            }
+        ]
+	}
+}
+likePhoto(D)
+前端会控制不能自己like自己的photo。
+与积分和notification的相关事项没有了。
+当用户第一次由于photo被like而得到积分的时候会发notification。
+likePhoto时会导致被like的photo的owner加积分，但是由于不是自己加积分，不应该返回。
+但目前为了调试方便，仍然返回photoOwnerCreditDelta.
+一般发notification是一个非重要操作，是不必要在api返回时返回它的信息。并且正常情况时发notification时是一个并发操作，不可能与api一起返回结果。但目前为了调试方便，改为了顺序操作，从而在 notificationErr能给出与notification相关的错误信息，notificationErr是单个error。注意这个notification与本人无关，是通知photo的owner。
+In:
+{userId, photoId, type=like|unlike}
+Out: 
+{ status:success|fail, 
+	result:{
+        photoId, likeCount, photoOwnerCreditDelta, notificationErr
+	}
+}
+
+Newsfeed已经取消了
+getUser
+注意：这里的photoCount在取自己的信息和取别人的信息时其意义有差别。取自己的是取没有被deleted的photo的count，取别人的是取被auditPass的photo的count。
+In:
+{userId,targetUserId}
+Out: 
+{ status:success|fail, 
+	result:{
+        userId, gender, name, height, school, studentNO, department, bloodGroup, constellation, hometown, educationalStatus, description, primaryPhotoId, primaryPhotoPath, photoCount, followerCount, likeCount, credit(at primary profile), alreadyFollowed, goodRateCount
+        photos[
+            { photoId, createTime, photoPath,width,height, likeCount
+            }
+        ]
+	}
+}
+updateProfile
+在原型界面上有姓名和学校字段，经过确认，这两个字段不改。
+至于学号，后来得到确认需要放在register处。
+In:
+{height, department, description, educationalStatus, bloodGroup, constellation, hometown}
+注意：这些传入的参数，遵照只传更新部分的原则，没改的不传。不传的意思是没有这个字段，而不是把这个字段设置成null值或其他。
+Out: 
+{ status:success|fail, 	
+}
+updateProfileWithPhoto
+与updateProfile类似，多了一个传图片文件参数以设置用户头像的功能
+In:
+{  height, department, description, educationalStatus, bloodGroup, constellation, hometown,    imgWidth,imgHeight 以及 key=image的文件
+}
+Out: 
+{ status:success|fail, 
+	result:{
+        photoId,photoPath
+	}
+}
+
+
+
+getPhotos
+需要区分是本人get还是其他人get。
+其他人get时只取auditPassed的photos。
+本人get时，除了deleted的，其他都需要取。
+关于 cutOffTime 和 count 的说明参见 getNearbyPhotos
+In:
+{userId,targetUserId, cutOffTime, count}
+Out: 
+{ status:success|fail, 
+	result:{
+        photos[
+            { photoId, photoPath, width,height,likeCount, createTime, alreadyLiked ,state 
+            }
+        ]
+	}
+}
+getPhoto
+In:
+{userId,photoId}
+Out: 
+{ status:success|fail, 
+	result:{       
+        photoId, photoPath,width,height, likeCount, alreadyLiked,state
+	}
+}
+reportUser
+In:
+{userId, targetUserId, description}
+Out: 
+{ status:success|fail, 
+	result:{
+            reportId
+	}
+}
+createDate(Deleted)
+In:
+{   latlng, region(is a json object), geolibType(=ios|android|google | googleV3), dateDate(begin，注意需要是UTC时间), address, whoPay(0-发送者付费, 1-接收者付费, 2-AA, 3-Not relate fee), money, monetaryunit, title,description, wantPersonCount, existPersonCount
+}
+Out: 
+{ status:success|fail, 
+	result:{
+        dateId, 
+	}
+}
+createDateWithPhoto
+与createDate类似，多了一个传图片文件参数的功能
+In:
+{   latlng, region(is a json object), geolibType(=ios|android|google | googleV3), dateDate(begin，注意需要是UTC时间), address, whoPay(0-发送者付费, 1-接收者付费, 2-AA, 3-Not relate fee), money, monetaryunit, title,description, wantPersonCount, existPersonCount
+    width,height 以及 key=image的文件
+}
+Out: 
+{ status:success|fail, 
+	result:{
+        dateId, photoId
+	}
+}
+
+
+
+
+getDates
+
+
+In:
+{userId, type(onlyActiveSend| onlyActiveRespond| schedule| invited | applying), getDataDirection(optional, fromEarlyToLate | fromLateToEarly, default value is fromLateToEarly), cutOffTime(optional), count}
+注意type=onlyActiveSend|onlyActiveRespond时，是按active程度来排序(顺序是从晚到早，从现在到过去，从大到小)；而type=schedule时，是按dateDate来排序（顺序是从早到晚，从过去到未来，从小到大）。
+当按照dateDate来排序且getDataDirection=fromEarlyToLate并且cutOffTime没有值时，excludeExpired=true才有效，其作用是取尚未过期的date，以支持sendDate的选取。
+
+当要求取回的dates是按照dateDate排序时。需要对于参数中 的cutOffTime 特别说明。
+由于不同date在dateDate相同的机率很大，以前使用时间排序的方法遇到很大问题，当时
+是认为出现时间相同到同一毫秒级别的对象的概率很小很小。当同一dateDate上有很多个date时，翻页不可行，跳一毫秒会漏掉很多。
+一个思路是使用 dateDate的毫秒值 拼接 固定位数的某个不重复数字 作为新的排序值。
+目前由于后台数据结构的zset中的score值的精度有限，只支持约17位的整数，18位的整数会被转化为浮点数而丢失精度导致无法分辨个位的加1的变化。
+这里根据dateDate的特殊情况——即一般是到半小时的整数倍，改为使用 dateDate的10分钟倍数（7位，当2286年前时） 拼接 9位userId（多于9位截到9位，目前写死在代码中，因为不是可以动态配置的）来作为排序值，或score值。
+这样能支持取回的dates按照dateDate由晚到早排序，以及以取回的最后一条date的score值上-1得到的新score值来取下一页的数据能达到无重复无丢失（极小的概率才会丢失）的效果。
+所以cutOffTime已经不是一个time值了，而是一个合成值，准确的说是redis中的zset中的score值，这点需要注意。后台会将这个score值取出来放在date中的orderScore中。
+
+Out: 
+{ status:success|fail, 
+	result:{
+        user:{userId,primaryPhotoPath}
+        dates[
+            {   dateId, (if senderId= self, be sended, else received), createTime,
+                senderId(与sender.userId相同，一直存在，也是为了支持其他地方的判断), sender{ userId, name, primaryPhotoPath,primaryPhotoId}（当userId!=senderId时，必有sender对象）,
+                latlng, region, countyLocation, dateDate, orderScore, whoPay, address, wantPersonCount, existPersonCount, title, description, candidateId(date的sender当前所confirm的user), finalCandidateId(if exist, then confirmed == true), doubleConfirmed, respondTime, finalConfirmed, alreadyStopped, photoId, photoPath
+                dateResponderCount (这里目前是数字类型), confirmedPersonCount(注意只有当取自己的dates才有效),
+                responders [ (接收方响应后，发起方才能点confirm，然后是接收方confirm)
+                    { responderId, userId(与responderId相同), name, primaryPhotoId,primaryPhotoPath,
+                        confirmed, senderConfirmed,
+                        latestMessage
+                            { messageId,  messageText, senderId, receiverId, createTime
+                            }
+                        haveUnViewedMessage, haveBeenRated, haveRate(这两个have标识的主语都是当前的responder)
+                    }
+                ] （现在responders 是按active来排序的了）
+
+                confirmedResponders:[], unconfirmedResponders:[] (格式同responders ，这里当date是自己创建的才有效，如果不是自己创建的，使用responders )
+                unViewedConversationCount,(根据responderItem.haveUnViewedMessage计算出来)
+            }
+        ],dateCount(just for debug)
+
+	}
+}
+
+getDateConversations
+In:
+{userId, cutOffTime(可选), count,getDataDirection(可选,fromEarlyToLate | fromLateToEarly, 默认值是fromLateToEarly)}
+Out: 
+{ status:success|fail, 
+	result:{
+        user:{userId,primaryPhotoPath},
+        conversations[
+            {
+                dateId,
+                date{
+                    dateId, senderId, createTime, latlng, region, geolibType,  countyLocation, dateDate, whoPay, money, monetaryunit, title, description, finalCandidateId
+                    },
+                targetUserId,
+                targetUser{userId, name, primaryPhotoId,primaryPhotoPath},
+                latestMessage{ messageId, messageText, createTime, senderId, receiverId},
+haveUnViewedMessage, haveBeenRated, haveRate
+            }
+        ]
+	}
+}
+
+
+
+
+getMessageHistory
+cutOffTime 对应于 message的createTime。配合getDataDirection可以从给定时间点往未来或往历史取count条数据。
+如果不传cutOffTime，根据getDataDirection是取最晚或最早的count条数据。
+返回结果会根据getDataDirection的值来相应排序。
+
+目前前端分页取message的方式是（假定getDataDirection=fromLateToEarly），第一次不传cutOffTime取第一页。第二次以上次取到最后一条message的createTime减掉1ms为cutOffTime取第二页。
+这里有个假设是在一个聊天会话中出现createTime相同的多个message的可能性极小。这样才能既不重复又不漏的分页取数据。
+但是，现在有系统自动生成提示消息，在紧跟着用户发一条消息后生成提示消息，这样那个可能性就很大了。目前的解决方法是延迟1ms再发系统消息，以保证连发消息时其createTime不同。
+目前根据前端开发的意见暂且认为，当取了消息列表，也就认为对应的用户看了这些消息。
+In:
+{userId, dateId, targetUserId, cutOffTime(可选), count,getDataDirection(可选,fromEarlyToLate | fromLateToEarly, 默认值是fromLateToEarly)}
+Out: 
+{ status:success|fail, 
+	result:{
+        messages[
+            { messageId, messageText, createTime,
+                sender{ userId, name, primaryPhotoId,primaryPhotoPath }
+            }
+        ]
+	}
+}
+
+getMessage
+其中的userId, dateId, targetUserId与getMessageHistory中的同名参数的意义完全相同。
+注意userId和targetUserId不会出现系统用户，虽然这条消息可能是系统消息。
+In:
+{userId, dateId, targetUserId, messageId}
+Out: 
+{ status:success|fail, 
+	result:{
+        messageId, messageText, createTime,
+        sender{ userId, name, primaryPhotoId,primaryPhotoPath }
+	}
+}
+
+sendMessage
+In:
+{userId, dateId, targetUserId, messageText}
+Out: 
+{ status:success|fail, 
+	result:{
+        messageId,createTime,  
+        notificationErr,
+	}
+}
+一般发notification是一个非重要操作，是不必要在api返回时返回它的信息。并且正常情况时发notification时是一个并发操作，不可能与api一起返回结果。但目前为了调试方便，改为了顺序操作，从而在 notificationErr能给出与notification相关的错误信息，notificationErr是单个error。notificationErr2是指系统消息的notification。
+目前认为用户在发message时已经看完了所有的消息。
+setDateConversationViewed
+也许没有单独调用的机会，先保留在此......
+In:
+{userId, dateId, targetUserId,}
+Out: 
+{ status:success|fail	
+}
+注意当sendMessage时默认会做这个动作，以免发message的sender还被标记message未读
+confirmDate
+注意Confirm后，后台要发系统消息，并且这个系统消息只能由对方看。
+目前系统消息的发送者的userId是system，以此来判断。
+
+现在confirmDate只是sender对某个responder做confirm，可以confirm多个。
+
+In:
+{userId, dateId, targetUserId, beCancel}
+Out: 
+{ status:success|fail, 
+	result:{
+        confirmTime (当beCancel为true时没有值), 
+        notificationErr,
+        sysMessageToResponder:{messageId,createTime},
+    }
+}
+一般发notification是一个非重要操作，是不必要在api返回时返回它的信息。并且正常情况时发notification时是一个并发操作，不可能与api一起返回结果。但目前为了调试方便，改为了顺序操作，从而在 notificationErr能给出与notification相关的错误信息，notificationErr是单个error。
+目前，sender做confirm，会有一条系统消息发给对方，sysMessageToResponder用来存这条消息的相关信息。
+
+现在取消stopDate了。新的逻辑是活动时间过期的Date，不可以新人回复申请，发起人也不可以再加入人或排除已加入的人， 已有的1对1的聊天也可以继续发言。不过由于目前取附近date已经排除了活动时间过期的Date，代码可以不用改什么地方。
+stopDate(D)
+一个date被stop之后，不让回message，搜索可以搜到。
+
+In:
+{userId, dateId}
+Out: 
+{ status:success|fail, 
+	result:{
+    }
+}
+
+rate
+In:
+{dateId, targetUserId, type=good|bad}
+Out: 
+{ status:success|fail, 
+	result:{
+        targetUserGoodRateCount
+    }
+}
+updateLocation
+In:
+{userId, latlng, region(is a json object), geolibType(=ios|android|google| googleV3)}
+Out: 
+{ status:success|fail, 
+}
+参考Region(metadata)中的说明。
+
+注意在所有可能更新user的location的地方都会update在solr上的user类型的doc。
+	
+	
+uploadPhoto
+最新的情况
+	是不用前端先直接传photo到s3，再调uploadPhoto传photo的路径。
+	而是由本api支持传图片文件，及其他参数，在后台再传文件到s3.
+	目前不用担心photoName的唯一性问题。后台会在文件名前加上userId和当前时间以保证唯一性。
+	目前photoPath的前面部分的url是 https://s3.amazonaws.com/ysf1/folder1/ ，会及时再修改。注意这个photoPath实际上是photoName，是部分路径，而不是全路径。
+	目前后台对于上传图片的略缩图处理是：按规定生成一个方形的小略缩图和一个固定宽度的略缩图。然后都传到S3上。小方形略缩图的尺寸是128*128，固定宽度略缩图的宽度是208，分别用s(small),fw(fixed width)来表示。
+	其文件名生成规则是：在扩展名的.号前加s或fw。假设原尺寸的文件名是 abcd.jpg 则s的名称是abcds.jpg, fw的名称是abcdfw.jpg。
+	对于图片的resize处理是，假定原图片是一个矩形框，目标尺寸是一个矩形框，则先在原图片的中间区域剪裁出一个与目标矩形框等比例的最大内接矩形框，然后再缩放到目标矩形框。
+	图片的width和height目前仍然需要前端传过来。以后会改进去掉这2个参数。
+	
+	关于feed中的photo的解决方案。
+	暂定按时间分，间距在一定时间（比如一小时）内上传的两张photo会归入到一个feed，多张photo，每前后两张photo的间距都在规定间距内的，一般情况下会归入到一个feed。对一个feed中photo的最大数量做了限制，目前暂定8张。
+	这时，前端不用传feedId了。由后端根据规则控制feed中的photos。
+	
+	注意要遵守未审核通过的照片不能让其他人看到的规则。
+上传photo时会生成feed，但不会把它加到followers的newsfeed中去，直到审核通过才加入。还有漏洞，当审核通过了，在规定间距内又传了照片，这时会归到那个feed，这时要注意在取feed中的photos过滤photo的状态。
+
+user在uploadPhoto时生成的feed及photo不能被其他user看到，必须审核通过才行。这里在v1.1版做了自动审核通过动作，有选项控制。将会实现audit界面把已经审核通过的改为不通过。
+一个feed包括多个photo，在RedisDB Data--Feed中有对于facebook的调查情况。
+
+注意 setPrimary 只有在自动审核照片配置选项为true时有效。
+In:
+{userId, width,height 以及 key=image的文件, setPrimary}  
+参考curl命令 curl -F "image=@/mnt/hgfs/zly/t/tpic/IMG_0087-moo-m.JPG" --form-string "userId=1" --form-string "width=200" --form-string "height=149" --url "http://localhost:4000/user/uploadPhoto"
+Out: 
+{ status:success|fail, 
+	result:{
+            photoId, firstUpload(bool), photoPath......
+	}
+}
+deletePhoto
+逻辑删除。  当是primary photo时不让删，必须改成普通的才能删
+用户在删除photo时，需要让其他follower也看不到这条feed，准确的说是看不到相应feed中的photo。这是用AllPossibleFollower的数据结构来支持的。
+当一个feed中可能有多个photo时，会只删掉这个feed对于那个photo的引用，直到引用删完才删feed。
+In:
+{userId, photoId}
+Out: 
+{ status:success|fail, 
+	result:{ creditDelta, credit(current value)
+	}
+}
+
+setPrimaryPhoto
+	必须是自己的且已审核通过的照片才能设置为primary photo。
+	如果重复设置，成功返回。
+In:
+{userId, photoId}
+Out: 
+{ status:success|fail, 
+}
+signIn
+这个天是按照UTC天来算的。
+这个api由于每天都会被调用，目前也用于支持统计每天活跃用户数。
+In:
+{}
+Out: 
+{ status:success|fail, result:{beDailyFirst:false}
+}
+
+updateAppToken
+用于iphone的app注册自己的apple push notification service的deviceToken，以及android的app注册c2dm的appToken.
+In:
+{userId,appToken(可为空，为空时表示清除)}
+Out: 
+{ status:success|fail
+}
+getSentingSMS
+取要发出的短信的内容.
+In:
+{type:'invite'(目前只有一个值invite)}
+Out: 
+{ status:success|fail, result:{text:'aaa'}
+}
+当type为'invite'时，text包含 邀请码，android app的下载地址，iphone app的下载地址。
+getActivitySubjects
+取常用活动主题
+In:
+{language: chinese | english (默认值为english )}
+Out: 
+{ status:success|fail, result:{subjects:['aaa','bbb']}
+}
+getActivityTypes
+取常用活动类型。目前只有两级。
+In:
+{language: chinese | english (默认值为english )}
+Out: 
+{ status:success|fail, result:{
+	types:[
+	    {level1:'a', level2:['a1','a2'], level2Autotext:['a1','a2']},
+	    {level1:'b', level2:['b1','b2'], level2Autotext:['a1','a2']}
+	]}
+}
+其中 level2 与 level2Autotext 中的内容是一一对应的。
+
+
+
+About Notifications
+目前是用google的c2dm和apple的apns来分别给android手机和iphone发notification。
+需要先在google和apple那边有所配置，需要android和apple的负责人提供支持。
+需要调用updateAppToken来往后台服务器注册手机设备信息，这个手机上的app才可能收到notification。
+目前在下列情况下会发notification：
+	用户发送date时，接收者需要收到notification；
+	date的发送者和某接收者两方，其中一方做了confirmDate的动作后，另一方需要收到notification；
+	date的发送者和某接收者两方在聊天时；
+	一个用户的photo被别人第一次like时，这个用户需要收到notification。
+从而，分别用如下type值来表示：sendDate，confirmDate，sendMessage，firstGetCreditForPhotoBeLiked。
+发出来的notification是一个json的字符串，
+格式分别如下，认为前端会像tagged那样在app中存消息模板再根据具体notification拼出具体的消息，那么，后台将返回如下内容，注意每个json对象中的message或messageText的属性是主要给iphone的alert属性用的：
+   { type: 'sendDate',
+     dateId: '1',
+     userId:'123', -- 做send动作的user。不存在system.
+     userName:'Adam',-- 做send动作的user
+     message(only for iphone, apns.alert):'XXX send you a date'
+   }
+   {  type: 'confirmDate',
+      dateId: '1',
+      doubleConfirmed:false,  (注意doubleConfirmed和dateSenderId有很强的联系，当doubleConfirmed为true时，不传dateSenderId，即没有dateSenderId这个字段；当doubleConfirmed为false时，不传doubleConfirmed，只传dateSenderId。这两个字段是前台用于判断在哪个地方显示date的充要信息，但为了尽量缩小notification的长度，经分析，两个字段可以简化成一个字段发过来。)
+      dateSenderId:'123',       
+      userId:'123', -- 做confirm动作的user。不存在system.
+      userName:'Adam',-- 做confirm动作的user,
+      messageId , 
+      createTime(of the message), 
+      message(if be iphone, on apns.alert):'紧跟着发的系统message的文本（可能被截断）。由于在confirm date时，不管是第一次confirm还是第二次confirm，都会发系统message，本来发message都会给notification，但是这里confirm date的动作也会导致发notification，经讨论决定只发一个notification。在这个notification包含两个的内容，主要是把系统消息的文本拿来替代以前XXX confirm a date字样。'
+   }
+{  type: 'cancelDate',
+      dateId: '1',     
+      userId:'123', -- 做cancel动作的user，即sender。不存在system.
+      userName:'Adam',-- 做confirm动作的user,
+      messageId , 
+      createTime(of the message), 
+      message(if be iphone, on apns.alert):'紧跟着发的系统message的文本（可能被截断）。'
+   }
+
+Responder: msg1
+System: Hi , sender, Please chat with Responder ... (前端使用后台通过notification传的文本)
+Sender:  msg2
+Responder: msg3
+
+(when sender click confirm btn)System -> to responder: Hi , targetUser, doConfirmUser has confirm ....(前端使用后台通过notification传的文本)   （当confirm date时，图标人名用prettyrich）
+Responder: msg4
+Sender:  msg5
+(when responder click confirm btn)System -> to Sender: Hi, targetUser, congratutions, doConfirmUser has also confirmed ....(前端使用后台通过notification传的文本)（当confirm date时，图标人名用prettyrich）
+(when responder click confirm btn)System -> to responder: 建议后台不发notification，前端自行拼出跟后端一样的消息。（图标人名用prettyrich，消息中的人名是本人，前端应该已经有本人的信息。）
+一个总结，当是confirm date时，图标人名都用prettyrich。
+有个相关问题，当以后通过取消息历史再显示这些消息时，系统发的消息的图标人名上还存在着如何判断并显示prettyrich的问题。目前有解决办法，是让系统用户的名称就叫prettyrich，这样前端只管取出来显示，不需要判断后显示。
+
+   { type: 'sendMessage',
+     dateId: '1',
+     doubleConfirmed:false,  (注意doubleConfirmed和dateSenderId有很强的联系，当doubleConfirmed为true时，不传dateSenderId，即没有dateSenderId这个字段；当doubleConfirmed为false时，不传doubleConfirmed，只传dateSenderId。这两个字段是前台用于判断在哪个地方显示date的充要信息，但为了尽量缩小notification的长度，经分析，两个字段可以简化成一个字段发过来。)
+     dateSenderId:'123',  
+     dateResponderId:'aaa'
+     userId:'123',-- 做send动作的user。如果是系统发的消息，则是system.
+     userName:'Adam',-- 做send动作的user。如果是系统发的消息，则是system.
+     messageId ,
+     createTime, 
+     messageText(if being iphone, on apns.alert): 'MMMMMMM' ，
+     message(only for iphone, apns.alert):'XXX sent you a message'
+   }
+messageText 可能会被截短，最后有 ... 的字样。
+V1.2版取消了当responder第一次回message此时要发的一个系统消息和相关的notification。
+当responder第一次回message此时会发一个系统消息和相关的notification，此时与系统消息相关的notification仍是sendMessage的type，只是其中的message字段有所变化，如下
+   { type: 'sendMessage',
+     dateId: '1',
+     userId:'123',-- 做send动作的user。如果是系统发的消息，则是system.
+     userName:'Adam',-- 做send动作的user。如果是系统发的消息，则是system.
+     messageId ,
+     createTime, 
+     messageText: 'MMMMMMM' ，
+     message(only for iphone, apns.alert):'XXX responded to your date'
+   }
+
+
+   { type: 'firstGetCreditForPhotoBeLiked',
+     message(if be iphone, on apns.alert):'Congratulations. You have just earned 1 credit, because people like your photo. The more people like your photos, the more credit you will earn.'
+   }现在没有积分的概念了，这个去掉
+   { type: 'photoFirstApproved',
+     message(if be iphone, on apns.alert):'Congratulations! Your profile photo is approved. You have now the full power of our app, such as like a photo, follow a user, create and find your date, etc.'
+   }现在这个notification不发了。由于现在是auto audit，而不是人工audit，这张照片以后有可能被denied而让用户迷惑。
+   { type: 'notifyDateInAdvance',
+     dateId: '1',
+     message : 'Hi ABC, you have a date with XX in 2 hours. Don't forget it!'
+   }
+   { type: 'systemBroadMessage',
+     message: 'admin user input any message'
+   }
+
+----
+
+About Credit
+1. Increase credit	
+	+ signing up       +100 
+	+ uploading photo （每张照片固定积分）+1
+	+ photo being liked（未来每张照片因此得到的积分有上限）+ log2(N)=m，m>=1时，N代表被like次数，从而第一次加积分是N=2时。
+	+ times of signing in （每天） +1
+	
+2. Decrease credit
+	+ posting date request to some users.         10persons（-3）        20persons（-5）        40persons（-7） 	
+	+ posting date request to one specific user.     -1
+	+ starting responding to a date       -1
+	+ double confirming a date （扣两个人的）  -10
+About system message
+	根据mockup，目前有4处系统提示消息。
+	当date的responder开始与sender聊天时要发给sender一个提示消息。目前要求这个提示消息要在responder回复的第一条message之前发，这样，sender看date列表中各个会话中的最新消息才会是某个responder发的，这样更符合情理一些。而且，虽然有规定避免同一时间多次发notification，但这里暂定都发，即发2个了。
+	当date被confirm时，系统要给对方一个date已经得到confirm的消息。
+	当date被双方都confirm时，要分别给双方发不同的消息。
+	系统发的message也要注意发notification。除非已经有别的notification同时发出去，那就不用发了。
+	现在是sender第一次做confirm，这时还需要给sender发一个系统消息，只是不用发notification。
+About User Limit
+	一个用户没有审核通过的照片的话，不能算一个正常的用户。很多功能不能使用，不能like，不能follow，不能发date，也不能收date（不能收到别人群发的date）。    
+	当这样的用户自己看自己的profile页面时，前端给张默认图片作为primaryPhoto即可。
+About API Returned Error 
+当api操作不成功时，以下信息将会返回，{status:'fail', code:1234, message:'abcd', result{request:{url}, inParams:{}, err:{..}}}。
+其中status为'fail'时表示有error，此时code和message是error的相关信息。当后台的logLevel为debug时，其中result.err会有值，为object类型。
+result.inParams放的是传给api的参数信息。
+关于error的code和message的清单，可以参考 svn://ysfcentsrv/prettyrich/server/trunk/lib/config.js 文件。
+目前初步把error分为业务的和代码的两类。code在20000以上的error是业务类的。
+About Audit Photo Web Page
+可以访问 http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/web/regionList 
+About Credit change(D)
+1. Increase credit	
+	+ signing up       +100 
+	+ uploading photo （每张照片固定积分）+1
+	+ photo being liked（未来每张照片因此得到的积分有上限）+ log2n
+	+ times of signing in （每天一次。每次app打开的时候） +1
+	
+2. Decrease credit
+	+ posting date request to some users.         10persons（-3）        20persons（-5）        40persons（-7） 	
+	+ posting date request to one specific user. （缺少mockup）-1
+	+ starting responding to a date       -1
+	+ double confirming a date （扣两个人的）  -10
+About user bind Facebook account or Email(D)
+当一部device，
+	先用了一段时间，再绑定fb等帐号。之后需要强制login，并且有logout。
+	直接注册fb等帐号。之后需要强制login，并且有logout。
+当切换device，在device2上绑定fb等帐号，
+	如果，device2没有用过，是通过fb来login，此时，device2对于后台无任何记录。之后需要强制login，并且有logout。
+	如果，device2已经用过。如果已经对应于一个未绑定fb等的user，这时一旦绑定，以前的那个未绑定user就很可能会被丢掉，除非这个app卸载掉重装。此时应该提示，是否需要把当前这个未绑定user绑定到另一个fb之类的帐号。一旦用户确认绑定在device1上的fb之类的帐号，需要强制login，并且有logout。这时，如果没有logout，可能有两个device用同一个fb帐号（如果不做唯一性login的支持是没法避免的）。
+	    此时得看看登录的session如何支持。
+
+
+user
+    userId, deviceId
+    bind3rdAccount, account3rdType
+    
+device
+    deviceId, userId
+
+
+假定login的api为 login(deviceId, accountSuchAsFacebook, possiblePwd) return userId
+而addDevice(deviceId)  return existed, userId, name, height, gender, primaryPhotoId, primaryPhotoPath 以及 accountSuchAsFacebook or haveBind3rdAccount.
+而 bindUserWith3rdAccount(deviceId,userId,account3rdSuchAsFacebook)
+    这里会检查一个userId绑定多个fb帐号，不允许。
+    
+
+前端app没有user的基本信息时，会拿deviceId调addDevice取得userId及user的其他基本信息。userId是新增的或已有的。前端应该会在本地保存user的基本信息。----这时对应于前端新安装app或重装app
+    当用户没有绑定任何fb等帐号。（用户可能是新增的或已有的。）可拿userId进行后续调用。这对应于原来的支持不注册即可使用app的逻辑。
+    当用户绑定了某个fb帐号。此时没有用户已经login的信息（这部分如何处理待研究）。此时需要用户做login的动作。
+        用户使用对应于deviceId的user的fb帐号login，
+            后端不用做太多事，前端需要保存用户的一些基本信息。
+        用户使用不对应于deviceId的user的fb帐号login，
+            后端需要改变deviceId和userId的对应关系，前端需要保存用户的一些基本信息。
+    当用户直接login时，这时如果先调用addDevice可能会生成一个userId，这样浪费了，且导致统计不准。需要前端注意在login之前不要调用addDevice。或者改变addDevice的逻辑，在有需要的时候才新建user。这需要跟前端确认一下......
+        登录成功后，前端需要保存用户的一些基本信息。
+
+
+前端app已有保存下来的user的基本信息时，（至少包括userId，user是否有绑定）。这对应于用户使用过一段时间的app。此时可能需要用户做login的动作。
+    如果user没有bind。不需login。直接使用userId进行后续调用。但是看来后端需要在每个api都先检查用户是否有绑定，可否直接登录的条件，以免暂存的数据不同步的问题。
+        但是，如果现在用户想做bind操作。
+            如果用户bind一个已经与其他用户bind的fb帐号，报错。
+            如果用户bind一个没有与其他用户bind的fb帐号，成功。前端需要保存用户的一些基本信息。
+        如果现在用户想做login操作，—----这对应于用户在另一台已经使用过一段时间的device上登录。由于当前的非登录用户可能以后再也无法访问，这时需要前端提示用户是否先bind到其他fb之类的帐号。
+            如果用户改变主意不做login操作，一切不变。
+            如果用户确定要做login操作，
+                会把deviceId对应到fb帐号对应的userId，这样可能有多个deviceId对应到同一个user或同一个fb帐号。这相当于同一个用户可以在多个地点同时登录系统，看看要不要做控制做唯一登录......
+            
+    如果user有bind，
+        如果存在session，且session没有过期，则不需要登录。直接使用userId进行后续调用。但是看来后端需要在每个api都做类似上面的检查。
+        否则，强制用户login。用户可以拿任意一个fb之类的帐号登录，一旦登录成功，前端需要记录新的user的基本信息。
+
+
+
+Some bugs fixed
+	done检查为何date能发给自己,应该是旧的deviceToken的问题。 
+	done检查积分不够为何还能发date。问题出在javascript的+操作符上。字符串与数字相加，目前是进行字符串的拼接，而不是字符串转为数字做数学运算。
+	done user删除刚创建的photo后，在审核界面还能看到。
+	Done sendDate不能发sender已经confirm过的date。目前只是在send时检查报错，而不是取dates时过滤。至于过滤，将来TODO
+	最近发现引用photo的城市与user所在的当前城市不一定同步，导致一些问题，比如user上传照片后未等审核通过，其城市已经变了，这时在audit的页面上就一直能看到这个photo，即使把它审核通过了也还能看到。现在改为让引用photo的城市与user所在的当前城市保持同步。即当user改变城市时，会把user所有的未delete的photo都改变其引用的城市。
+	
+Web Page 
+requestResetPassword
+Url : http://localhost:4000/web/requestResetPassword
+也支持api访问，可以使用如下curl命令， curl -H "Content-Type: application/json" -X POST -d '{"emailAccount":"user1@abc.com","returnFormat":"json"}' http://localhost:4000/web/requestResetPassword
+
+resetPassword
+Url: https://localhost:4010/web/resetPassword?rpi=xyz
+
+RedisDB Data
+Id Keys
+user
+photo
+audit
+feed
+report
+date
+creditTransaction
+message
+
+InviteCode
+inviteCode    hash
+	codeCount, 
+	codeValue+"User" 字段(字段名称是由codeValue转为大写后加"User"后缀，值是userId，表明这个code是被谁创建的), codeValue+"Valid"字段(the value is '1' or '0', '1' means isValid or haveNotUsed), codeValue+"ExpireTime"字段(the value is of same type that Date.getTime returned)
+	
+每一个inviteCode是一个加密字符串，解密后由 invite+userId+timeAsLong+seq 这四部分组成，中间用空格隔开。
+每一个inviteCode是一个5位的随机字符串，由字母和数字构成，不分大小写.
+User
+user:userId    hash
+userId, emailAccount, password(encrypted), name(nickname), height(cm), gender, school,  schoolId, studentNO, department, bloodGroup, constellation, hometown, description, educationalStatus(undergraduate, postgraduate, doctorStudent), 
+createTime, lastLoginTime, lastLogoutTime(这里对应不了session过期的情况), primaryPhotoId, deviceType(android|iphone), regDeviceId, currentDeviceId
+    latlng, region(json格式的字符串表示的含有多个属性及多层属性的对象),geolibType(用于解析region), cityLocation, countyLocation（是根据region内容取到county层级的地区的计算结果，大致为country+state+city+county，但是如果country或city取不到的话，也可能是更大的区域，详细的可参考region中的说明）, lastRegionUpdateTime
+	likeCount(其所有照片被like的总数), reportCount, goodRateCount, badRateCount
+	  
+	credit(v1.2版去掉了积分概念), 
+	appToken(有apple的deviceToken和android的appToken，根据长度来区分，apple的deviceToken是32个字节，用16进制表示是64个字符，以后也许用deviceType来区分更好),
+	不能存photoCount，因为有好几个状态及需求，还是去取count保险
+	referrerId(是被谁邀请的)，createInviteCodeCount(假定创建了一般就使用，这里可以作为已经发出的邀请码数量值),
+	disabled(目前很简单。只是不让user logIn),
+	beMade(假造的，是为了支持匿名访问取nearby的date列表时，给一些假用户的date)
+User3rdAccount
+后台先不管这个功能，前端那边处理即可。Facebook的帐号每次都让用户输入。
+User3rdAccount:accountName    hash
+	accountName, userId, createTime, type(facebook, for now only 1 type...), password(encrypted)
+EmailToUser
+emailToUser    hash
+	Each email is a field, userId is field value.
+	
+UserPhotos
+user:userId:photos         sorted set        Store photoId
+存储Photo.state!=deleted的所有photo。
+UserAuditPassedPhotos(D)
+user:userId:auditPassedPhotos         sorted set        Store photoId
+存储Photo.state==auditPassed的，其他user只能看到这些。
+UserDeletedPhotos
+user:userId:deletedPhotos         sorted set        Store photoId
+存储Photo.state==deleted的。
+
+Photo
+photo:photoId    hash
+	photoId, userId, createTime, state(created, auditPassed, auditDenied, deleted), photoPath( 相对路径, 主要就只是photoName，参见uploadPhoto中的说明），
+    width,height,feedId,
+	likeCount, alreadyLikedByOther(用于支持第一次被别人like时发notification),
+	
+	
+Date
+目前对于date的double confirm变成了发送方单方confirm了。很多标记位要修改或去掉了。
+目前date的约会意义需要改变为活动了。发起者可以confirm多个人，并且可以停止活动。
+date:dateId    hash
+	dateId, senderId(also creator), createTime,
+	latlng, region(参考user中的同名字段),geolibType,  cityLocation,countyLocation(参考user中的同名字段), 
+	dateDate(viz. Begin date, 使用UTC时间), address, whoPay(0-sender, 1-receiver, 2-AA, 3-No fee), money, monetaryunit(need metadata), description, title, existPersonCount, wantPersonCount, 
+	candidateId(date的sender当前所confirm的user, 目前在业务逻辑上限制date sender只能confirm一个人，可以用这个判断是否已经有confirm的), 
+	finalCandidateId(最初是为了支持可以confirm多个用的。if it has value, it means the date has been confirmed by both), 
+	finalConfirmed(与finalCandidateId的值是同步的), doubleConfirmed(与finalCandidateId的值是同步的),  alreadyStopped(用以标记一个活动是否停止征友，不能使用finalConfirmed，因为可能没有confirm)
+	senderConfirmTimeByResponderN(N will be replaced by responderId)(如果这个field存在，表示某个responder已经被confirm了), 
+	senderLastConfirmTime(如果这个field存在，表示至少confirm过一个responder),  
+	
+	haveSendNotificationForBothSide, haveSendNotificationForSender, haveSendNotificationForResponder  (用以记录对于一个doubleConfirm的date，系统是否已经发送过提醒约会的通知)
+	sendCount 可以通过计算 DateReceivers 的count得出，不必单独设置一个属性。
+	badRateCount, goodRateCount(这是对于sender的。由于可以confirm多个人)，
+	photoId
+
+	
+目前取消了senddate的功能，dateRecievers也就没有了
+DateReceivers(D)
+date:dateId:receivers       set        Store receiverIds
+DateResponders(may be deleted)
+date:dateId:responders       set        Store responderIds
+与DateReceivers是分开的，可以把DateReceivers看作是被动接收date，而DateResponders是主动联系date。它们合起来就是date的除发送者外的所有相关者。
+DateActiveResponders
+date:dateId:activeResponders       sorted set        Store responderIds
+与DateResponders的不同点在于这里是按各个responder所对应的conversation的最后一次动作的时间来排序。考虑到某边用户做了特定动作时会导致发出一条系统message且只发给一边的情况，这里暂不支持像conversation那样分两边，而是任意一条message（都对应一个动作）都会导致两边的active更新。
+DateResponder
+这里的DateResponder实际上是date-otherside，otherside包括了receiver和responder,即除date发送者外的所有相关者。
+这里记录的是一个date conversation的全面的信息。与下面的UserDateConversations相比，除了侧重点不一样，范围也不一样。没有回复消息，在UserDateConversations中没有，在这里可能有(因为这里还有其他字段)。
+date:dateId:responder:responderId    hash
+	dateId, responderId, confirmed, confirmTime, senderConfirmed, senderConfirmTime,
+	beReceived（用以区分这个信息是属于receiver的还是responder的），
+	responderHasReplied(用于支持当responder第一次回复时要扣积分的规则) , responderFirstReplied(支持applying的date列表)，
+	由于message有只给聊天中的单方看的需求。这里用一个latestMessageId解决不了问题，还是去DateMessages中取latest MessageId合适。
+	senderLastViewChatTime, responderLastViewChatTime(用以判断chat中是否存在未读的message，这与相应的DateMessages中的最后一条message的时间比较即可得出),
+	badRate, goodRate,(自己被rate的情况)  badRateSender, goodRateSender, (对sender的rate情况)
+UserDates
+user:userId:dates       sorted set        Store dateIds
+包括user发出的和收到的回复的所有的dates
+注意需要主要按date的dateDate排序而不是createTime。
+目前需求主要是按照active来排序，从而，以前按照dateDate来排序的几个sorted set有待取消，包括UserDates, UserDoubleConfirmDates, UserSendDates, UserReceiveDates. 或者是有待增加以active来排序的sorted set。目前对于这几种情况的active排序的支持是全部取出UserActiveDates的date再比较筛选的，这样比较费性能。
+UserDoubleConfirmDates(D)
+user:userId:doubleConfirmDates       sorted set        Store dateIds
+user发出的dates
+注意需要主要按date的dateDate排序而不是createTime。
+UserScheduleDates(D)
+user:userId:scheduleDates       sorted set        Store dateIds
+Schedule date是已经confirmed 的date。User是date的参与者，即既可能是sender，也可能是responder。
+主要按date的dateDate排序。
+UserInvitedDates
+user:userId:invitedDates       sorted set        Store dateIds
+Invited date是别人发的且已经被别人confirmed 的date。User是date的responder。
+主要按date的dateDate排序。
+
+
+UserSendDates(D)
+user:userId:sendDates       sorted set        Store dateIds
+user发出的dates
+注意需要主要按date的dateDate排序而不是createTime。
+UserReceiveDates(D)
+user:userId:receiveDates       sorted set        Store dateIds
+user发出的dates
+注意需要主要按date的dateDate排序而不是createTime。
+UserActiveDates(D)
+user:userId:activeDates       sorted set        Store dateIds
+与UserDates包含相同的dates，只是排序方式不一样。会以每个date最近一次发生某种活动的时间排序。初始值是date的createTime或send date时的time。之后凡有send Message和confirm Date都会导致date的active time的更新。
+UserActiveSendDates
+user:userId:activeSendDates       sorted set        Store dateIds
+user发出的dates
+按date的active程度来排序。
+UserActiveReceiveDates(D)
+user:userId:receiveDates       sorted set        Store dateIds
+user发出的dates
+按date的active程度来排序。注意receive的与respond的是分开的，对于receive的进行respond是不会把那个date放到respond中的。可以认为receive的是被动收到，respond的是主动联系的。
+UserActiveRespondDates
+user:userId:activeRespondDates       sorted set        Store dateIds
+user发出的dates
+按date的active程度来排序。注意receive的与respond的是分开的。
+UserActiveApplyingDates
+user:userId:activeApplyingDates       sorted set        Store dateIds
+Applying date是别人发的且没被别人confirmed (包括被cancel的)的date。User是date的responder。是UserActiveRespondDates的一个子集。
+按date的active程度来排序。
+
+
+AllDoubleConfirmDates(D)
+allDoubleConfirmDates       sorted set        Store dateIds
+用以支持系统给快到时间的double confirmed的date的双方发通知。注意这里的score是用dateDate。
+AllFinalConfirmDates(D)
+allFinalConfirmDates       sorted set        Store dateIds
+用以支持系统给快到时间的final confirmed(其实目前也就一次confirm)的date的双方发通知。注意这里的score是用dateDate。
+
+目前不发通知了。
+AllScheduleDates(D)
+allScheduleDates       sorted set        Store dateIds
+用以支持系统给快到时间的scheduled(至少有一次confirm)的date的双方发通知。注意这里的score是用dateDate。
+
+AllDates
+alldates:all        sorted set    store dateIds
+alldates:male        sorted set    store dateIds
+alldates:female        sorted set    store dateIds
+以dateDate为序。
+
+SchoolDates
+准备支持搜索同校的dates，搜未过期的。搜附近的date的功能先去掉。
+school:schoolId:dates:all        sorted set    store dateIds
+school:schoolId:dates:male        sorted set    store dateIds
+school:schoolId:dates:female        sorted set    store dateIds
+以dateDate为序。
+
+MadeUsers(D)
+madeUsers:male       sorted set        Store userIds
+madeUsers:female       sorted set        Store userIds
+存虚假的user数据
+
+
+
+MadeDates(D)
+madeDates:male        sorted set        Store dateIds
+madeDates:female        sorted set        Store dateIds
+存虚假的date数据
+
+
+UserDate
+user:userId:date:dateId    hash
+	userId, dateId, type(send,receive),createTime, deleted, 
+TODO 检查是否还有用
+
+UserDateConversations
+user:userId:dateConversations       sorted set        Store a string as key which format is dateId+targetUserId .
+根据active程度（一般是会话中最近的一条消息的时间）来排序。
+可能包括user所有的（所有参与的）date，只要属于自己的conversation有message存在。
+注意考虑到下面的DateMessages，一个Conversation对应两个DateMessages集合。
+
+DateMessages
+chat:date:dateId:user:userId:targetUser:targetUserId      sorted set        Store messageIds。
+	存的是某个date中，发date的用户与回应的某用户的聊天记录。注意在聊天的会话过程中，这里不分是谁发的date，而是自己的是user，对方是targetUser。
+	本来可以考虑只存一份数据（通过规定dateSender在前或userId较小的在前都行），但是由于有些message是只由聊天的单方看到，比如一方点了确认，系统发给另一方的通知消息，一份数据不能解决这个需求（就算加了字段，取时也费事）。从而，这里存的message不一定只是由这两个人发的，也可能sendId是系统用户的Id。
+    通过 userId 找到 他的所有 dates，每个date中提取出 targetUserId,然后能 根据 dateId+selfUserId+targetUserId 取到这个date中与某个人chat的messageIds，进一步取到 messages。
+Message
+message:messageId    hash  
+	messageId, messageText, dateId, senderId, receiverId, createTime
+	senderId指message的发送者，也是创建者。这里对于系统发的消息不使用type，而使用系统用户的senderId，这里暂定系统用户的id为字符串system。
+Following(D)
+following:user:userId        set    store userIds , who are followed by the user
+Follower(D)
+follower:user:userId        set    store userIds , who are following to the user
+AllPossibleFollower(D)
+allPossibleFollower:user:userId        set    store userIds , who are following to the user or had followed to the user
+用于支持删photo时引起的删feed。另有办法是每一个feed可以存一个follower集合，删feed时可以精确删除。但是这样导致存储占用过多。
+Like(D)
+like:photo:photoId        set    store userIds , who like the photo
+To support alreadyLiked flag
+
+Feed(D)
+feed:feedId    hash
+	feedId, createTime,lastUpdateTime, type(uploadPhoto),userId,photoIds(用逗号分隔)
+	lastUpdateTime目前规定是feed中最近一张被审核通过的photo的createTime。从而，在feed创建时，此时是第一张photo被创建时即创建feed，此时lastUpdateTime还没有值。lastUpdateTime目前的作用是规定feed在FollowingFeeds中的顺序。
+	注意在审核动作时，可能同一feed中的先传的photo后审核通过，此时要注意去取到feed的lastUpdateTime，比较当前photo的createTime，以其中的较晚值来更新FollowingFeeds，这样才能避免feed排序下降的问题和早的照片不更新FollowingFeeds导致新的follower看不到feed的问题。
+	不过，这时存在follow一个user之后，这个user被follow之前的feed也会被这个follower看到。
+	
+	关于一个feed中多个photo的问题。研究了一下facebook。
+	目前的情况是，通过网页传一次就是一个feed。
+	而通过手机传，传了11张也还是一个feed（可以看到userZ added 11 new photos的字样），其中最大间隔估计有10分钟，而且还发过文本状态和用网页传过photo,显示的photo是前两张和最后一张，在一个格子里，但它的时间应该是传第一张的时间，因为发过其他东西再用手机传photo，这个feed并不会移动到最前面,而是还在原来的位置，有可能第一眼就看不到这个feed了。过了一两个小时又用手机传了一次，这次是新起了一个feed。
+	这里暂定处理逻辑是第一次传照片时，取到feedId，后面如果再在某时限内传photo，就把feedId传回去，这样能明确保证多个photo在同一个feed。而且，合并到某个已有feed时更新其所有关注该用户的人的FollowingFeeds，根据当前时间将这个feed前移。有个问题是当关注该用户的人很多时，这个计算量可能很大，也许facebook不移动也是为了省掉这部分计算量。目前考虑的一点解决办法是把时限缩短，如一个小时之类的，甚至更短。
+
+一种有问题的情况是，
+用户a关注用户1和用户2，用户1上传photo11时，会生成一个feed11，当用户2没有传photo时，用户1又传了一个photo12，此时会添加到feed11中。当用户2传了photo21生成feed21后，用户1再传photo13，此时会生成一个新的feed13.
+问题之处在于，因为用户1在用户a关注的时候需要与用户2比较，而当用户1被用户b关注时又需要与用户3，4等等比较。在原始feed只有一份的情况下，这个问题无法解决。除非一个用户的上传照片动作生成多份feed。
+
+FollowingFeeds(D)
+User 所关注的其他users的feeds
+user:userId:feeds       sorted set       Store feedIds
+
+Audit(D)
+audit:auditId    hash
+    auditId, photoId, createTime, photoOwnerId, auditUserId, state(auditPassed,auditDenied,暂且跟photo的state的某些取值统一), description
+
+Report
+report:reportId    hash
+	reportId, reporterId, reporteeId(对人report而不是对图片等), createTime, description
+Broadcast
+broadcast:broadcastId    hash
+	broadcastId,messageText,userFilters(Json str represent a object) , createTime
+	
+由于现在取消了群发date，而是publish date。RegionNormalUsers没有用了。
+RegionNormalUsers(D)
+用以支持 sendDate时找user。但目前没有sendDate了。但是要给附近的用户发notification，虽然是暂定用solr来进行位置搜索。但也不排除使用本有序集。 
+由于对user有限制，当一个user连一张审核通过的照片都没有时，需要对其进行限制。其中的一条是这样的user不能收到别的user群发的date。这里保存了所有正常的没有被限制的user的清单。
+目前是在审核照片时把用户插入到某个地区的对应集合，而在审核照片拒绝时发现某用户连一张审核通过的照片都没有时会把该用户从所在地区的对应集合中删掉。但是由于用户的地区很可能改变，所以在updateLocation时会同步这些数据，以使删除时所操作的用户与地区的对应关系是有效的。
+region:cityLocation:normalUsers:male    sorted set    store userIds
+region:cityLocation:normalUsers:female    sorted set    store userIds
+countyregion:countyLocation:normalUsers:male    sorted set    store userIds
+countyregion:countyLocation:normalUsers:female    sorted set    store userIds
+这里的前缀region实际应该是cityregion，是为了兼容以前的数据结构。
+这里的cityLocation或countyLocation是较长的文本，格式形如 country+administrative_area_level_1+administrative_area_level_2  或 country+administrative_area_level_1+administrative_area_level_2+administrative_area_level_3，不排除它们相等的情况，参考Region中的说明。
+
+
+
+
+
+现在照片不与位置挂钩了，RegionCreatedPhotos, RegionAuditPassedPhotos, RegionAuditDeniedPhotos 得去掉了。得想别的途径来支持照片的审核页面。
+AllCreatedPhotos
+allCreatedPhotos    sorted set    store photoIds
+根据创建时间排序
+AllAuditPassedPhotos(D)
+allAuditPassedPhotos    sorted set    store photoIds
+根据创建时间排序
+
+AllAuditDeniedPhotos(D)
+allAuditDeniedPhotos    sorted set    store photoIds
+根据创建时间排序
+
+
+
+
+RegionCreatedPhotos(D)
+region:cityLocation:createdPhotos    sorted set    store photoIds
+用以支持 audit photo。
+RegionAuditPassedPhotos(D)
+region:cityLocation:auditPassedPhotos    sorted set    store photoIds
+目前暂定一开始让photo自动审核通过，之后再审核拒绝已通过的，这样RegionCreatedPhotos很可能用不着了。
+RegionAuditDeniedPhotos(D)
+region:cityLocation:auditDeniedPhotos    sorted set    store photoIds
+用以支持 audit photo。
+
+由于目前取消了查看附近的照片，而是看附近的date。RegionNewPhotos和RegionHotPhotos用不着了。
+RegionNewPhotos(D)
+region:cityLocation:newPhotos:male    sorted set    store photoIds
+region:cityLocation:newPhotos:female    sorted set    store photoIds
+用以支持 getNearbyPhotos。
+RegionHotPhotos(D)
+region:cityLocation:hotPhotos:male    sorted set    store photoIds
+region:cityLocation:hotPhotos:female    sorted set    store photoIds
+用以支持 getNearbyPhotos。
+Region(metadata)
+regionToCounty    set    包括1-4级区域
+regionToCity    set    包括1-3级区域
+set 中的每一个值是一个某层级的region，全路径表示，每一层级的region都会存到这里面。从而，这个set的内容实际是一个森林。各国家应该是每棵树的根节点，然后省、市、县或州、市、county，根据地理api所返回位置的区域层级而定。
+
+由于iphone和android用经纬度调各自的api解析到的地理信息的格式不太一样。
+另外在某些需求中需要显示到区县一级的信息，这里对如何解析数据提取出各级地区以及拼接成唯一地区标识作了规定说明，注意这个规定更多的是根据一部分实际数据内容分析得出的，存在着修改可能。
+这里可能取到4级区域，即国、省、市、县，或者这里用area_level_1，area_level_2，area_level_3，area_level_4来表示。
+而各级区域的唯一标识一般是用+号拼接从顶层区域到本身的所有级区域，比如第4级区域的唯一标识一般是area_level_1+area_level_2+area_level_3+area_level_4。
+如果area_level_N没有值，则不连接；如果两个相邻的area同名，则合并成一个area。
+这是考虑到如下情况：
+    一般情况下，area_level_1和area_level_2都有值，而area_level_3和area_level_4可能没有值。
+    也有一些意外情况，如 area_level_2可能与 area_level_3 同名；或者area_level_3不存在，但area_level_4存在。
+    甚至，api1取回的数据有area_level_3和area_level_4，而api2取回的数据缺area_level_3或area_level_4，这种情况只能不管了。
+另外，如果只是显示用，可以取别的字段。如Geocoding API (V3)中可以取formatted_address数据，而android api可以取addressLines数据。
+
+对于iphone的返回结果，1到4级区域分别是 CountryCode , State , City , SubLocality ,参考Google api V3。
+对于Google api，会取 country_code + region + city。
+对于Google api V3 ,1到4级区域分别是 obj.address_components[item index where "country" in "types"].short_name , obj.address_components[item index where "administrative_area_level_1" in "types"].long_name , obj.address_components[item index where "locality" in "types"].long_name , obj.address_components[item index where "sublocality" in "types"].long_name .
+对于Android api，1到4级区域分别是  countryCode , admin , locality, Address.addressLines[1].split(',')[0]。
+
+更详细的一些情况：
+
+对于google的Geocoding API (V3)，
+	其文档中提到的administrative_area_level_2和administrative_area_level_3一般不出现，而且administrative_area_level_2与formatted_address有对应不上的情况，所以不用。
+	其中的locality与administrative_area_level_2有时同名，有时不同名。而且不同名的时候，locality与formatted_address对应得上而administrative_area_level_2与formatted_address对应不上，跟据几个采样点，如555 Bailey Ave San Jose, CA 95141 的例子以及google 文档上的1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA的例子，故此不用administrative_area_level_2而是locality作为第3级区域。
+	另外administrative_area_level_2和administrative_area_level_3一般不出现。而sublocality出现频率比administrative_area_level_3的高，且足够准确。故此用sublocality为第四级区域。
+
+一些特例：
+    （1）如 New York，在Geocoding API (V3)上有area_level_2和area_level_3且同名，而在android api上没有 area_level_3，这样如果不合并同名，会导致同一地区有不同表示。
+    （2）如San Jose，在android api上locality与Address.addressLines[1].split(',')[0]同名，而在Geocoding API (V3)上只有area_level_3没有area_level_4，此时也需要合并同名。
+另外
+    对于Beijing时，在Geocoding API (V3)上和在android api上都是area_level_2与area_level_3同名，也不算例外了。
+    对于所有的地区名，所有调用的返回结果的对应名字目前所看到的都是相同的，省去了转换为统一名字的麻烦。
+
+关于Android api的特别说明：
+由于它返回的数据是一个java的复杂对象，不能方便的转化为json字符串，这里规定取其中的某些数据构造为特定格式。
+其原始数据的表示形式：
+[Address
+    [addressLines=
+        [0:"3620 Norton Pl NW",1:"Washington, DC 20016",2:"USA"],
+     feature=3620,admin=District of Columbia,sub-admin=null,locality=Washington,thoroughfare=Norton Pl NW,postalCode=20016,
+     countryCode=US,countryName=United States,hasLatitude=true,latitude=38.935342,hasLongitude=true,longitude=-77.071962,
+     phone=null,url=null,extras=null]]
+后台需要的格式：
+{
+  addressLines:[],
+  admin,
+  sub-admin,
+  locality,
+  postalCode,
+  countryCode,
+  countryName,
+  latitude,
+  longitude
+}
+
+下面是一些样本数据供参考：
+
+北京知春路地铁站    39.976684,116.339936
+
+河北唐山 凤凰山植物园               39.631936,118.188
+
+中央公园 72 Central Park West, New York, NY 10023美国           40.795098,-73.956528
+
+555 Bailey Ave San Jose, CA 95141美国 西南 0.4 英里 37.199587,-121.739073
+
+Cleveland Park 华盛顿哥伦比亚特区哥伦比亚区美国 东 0.3 英里  38.935244,-77.071838
+
+
+-------------------------------------------------------------
+from iphone lib
+注意这不是json格式数据，而是apple那边的print结果
+
+北京知春路地铁站    39.976684,116.339936
+{
+    City = Beijing;
+    Country = China;
+    CountryCode = CN;
+    FormattedAddressLines =     (
+        "46\U53f7 Zhichun Rd",
+        "Haidian, Beijing",
+        China,
+        100098
+    );
+    State = Beijing;
+    Street = "Zhichun Rd 46\U53f7";
+    SubLocality = Haidian;
+    SubThoroughfare = "46\U53f7";
+    Thoroughfare = "Zhichun Rd";
+}
+
+
+"location":
+{
+  "Street":"Chaoyangmen Outer Street Side Rd",
+  "CountryCode":"CN",
+  "City":"Beijing",
+  "SubLocality":"Chaoyang",
+  "Country":"China",
+  "Thoroughfare":"Chaoyangmen Outer Street Side Rd",
+  "State":"Beijing",
+  "FormattedAddressLines":["Chaoyangmen Outer Street Side Rd","Chaoyang, Beijing","China","100020"]
+}
+
+
+河北唐山 凤凰山植物园               39.631936,118.188
+{
+    City = Tangshan;
+    Country = China;
+    CountryCode = CN;
+    FormattedAddressLines =     (
+        "59\U53f7 Beixin East Rd",
+        "Lubei, Tangshan, Hebei",
+        China
+    );
+    State = Hebei;
+    Street = "Beixin East Rd 59\U53f7";
+    SubLocality = Lubei;
+    SubThoroughfare = "59\U53f7";
+    Thoroughfare = "Beixin East Rd";
+}
+
+中央公园 72 Central Park West, New York, NY 10023美国           40.795098,-73.956528
+{
+    Country = "United States";
+    CountryCode = US;
+    FormattedAddressLines =     (
+        "Central Park Loop",
+        "Manhattan, NY 10026",
+        USA
+    );
+    State = "New York";
+    Street = "Central Park Loop";
+    SubLocality = Manhattan;
+    Thoroughfare = "Central Park Loop";
+    ZIP = 10026;
+}
+
+555 Bailey Ave San Jose, CA 95141美国 西南 0.4 英里 37.199587,-121.739073
+ {
+    City = "San Jose";
+    Country = "United States";
+    CountryCode = US;
+    FormattedAddressLines =     (
+        "555 Bailey Ave",
+        "San Jose, CA 95141",
+        USA
+    );
+    State = California;
+    Street = "555 Bailey Ave";
+    SubThoroughfare = 555;
+    Thoroughfare = "Bailey Ave";
+    ZIP = 95141;
+}
+
+Cleveland Park 华盛顿哥伦比亚特区哥伦比亚区美国 东 0.3 英里  38.935244,-77.071838
+{
+    City = Washington;
+    Country = "United States";
+    CountryCode = US;
+    FormattedAddressLines =     (
+        "3620 Norton Pl NW",
+        "Washington, DC 20016",
+        USA
+    );
+    State = "District of Columbia";
+    Street = "3620 Norton Pl NW";
+    SubThoroughfare = 3620;
+    Thoroughfare = "Norton Pl NW";
+    ZIP = 20016;
+}
+iphone call Geocoding API (V3)
+注意这不是json格式数据，而是apple那边的print结果。经确认与下面的Geocoding API (V3)的数据格式完全一样
+
+北京知春路地铁站    39.976684,116.339936
+{
+    "address_components" =     (
+                {
+            "long_name" = "46\U53f7";
+            "short_name" = "46\U53f7";
+            types =             (
+                "street_number"
+            );
+        },
+                {
+            "long_name" = "Zhichun Rd";
+            "short_name" = "Zhichun Rd";
+            types =             (
+                route
+            );
+        },
+                {
+            "long_name" = Haidian;
+            "short_name" = Haidian;
+            types =             (
+                sublocality,
+                political
+            );
+        },
+                {
+            "long_name" = Beijing;
+            "short_name" = Beijing;
+            types =             (
+                locality,
+                political
+            );
+        },
+                {
+            "long_name" = Beijing;
+            "short_name" = Beijing;
+            types =             (
+                "administrative_area_level_1",
+                political
+            );
+        },
+                {
+            "long_name" = China;
+            "short_name" = CN;
+            types =             (
+                country,
+                political
+            );
+        },
+                {
+            "long_name" = 100098;
+            "short_name" = 100098;
+            types =             (
+                "postal_code"
+            );
+        }
+    );
+    "formatted_address" = "46\U53f7 Zhichun Rd, Haidian, Beijing, China, 100098";
+    geometry =     {
+        location =         {
+            lat = "39.97577";
+            lng = "116.33915";
+        };
+        "location_type" = ROOFTOP;
+        viewport =         {
+            northeast =             {
+                lat = "39.9771189802915";
+                lng = "116.3404989802915";
+            };
+            southwest =             {
+                lat = "39.9744210197085";
+                lng = "116.3378010197085";
+            };
+        };
+    };
+    types =     (
+        "street_address"
+    );
+}
+河北唐山 凤凰山植物园               39.631936,118.188
+{
+    "address_components" =     (
+                {
+            "long_name" = "59\U53f7";
+            "short_name" = "59\U53f7";
+            types =             (
+                "street_number"
+            );
+        },
+                {
+            "long_name" = "Beixin East Rd";
+            "short_name" = "Beixin East Rd";
+            types =             (
+                route
+            );
+        },
+                {
+            "long_name" = Lubei;
+            "short_name" = Lubei;
+            types =             (
+                sublocality,
+                political
+            );
+        },
+                {
+            "long_name" = Tangshan;
+            "short_name" = Tangshan;
+            types =             (
+                locality,
+                political
+            );
+        },
+                {
+            "long_name" = Hebei;
+            "short_name" = Hebei;
+            types =             (
+                "administrative_area_level_1",
+                political
+            );
+        },
+                {
+            "long_name" = China;
+            "short_name" = CN;
+            types =             (
+                country,
+                political
+            );
+        }
+    );
+    "formatted_address" = "59\U53f7 Beixin East Rd, Lubei, Tangshan, Hebei, China";
+    geometry =     {
+        location =         {
+            lat = "39.633946";
+            lng = "118.188807";
+        };
+        "location_type" = ROOFTOP;
+        viewport =         {
+            northeast =             {
+                lat = "39.6352949802915";
+                lng = "118.1901559802915";
+            };
+            southwest =             {
+                lat = "39.63259701970851";
+                lng = "118.1874580197085";
+            };
+        };
+    };
+    types =     (
+        "street_address"
+    );
+}
+中央公园 72 Central Park West, New York, NY 10023美国           40.795098,-73.956528
+{
+    "address_components" =     (
+                {
+            "long_name" = 10026;
+            "short_name" = 10026;
+            types =             (
+                "postal_code"
+            );
+        },
+                {
+            "long_name" = Manhattan;
+            "short_name" = Manhattan;
+            types =             (
+                sublocality,
+                political
+            );
+        },
+                {
+            "long_name" = "New York";
+            "short_name" = "New York";
+            types =             (
+                locality,
+                political
+            );
+        },
+                {
+            "long_name" = "New York";
+            "short_name" = "New York";
+            types =             (
+                "administrative_area_level_2",
+                political
+            );
+        },
+                {
+            "long_name" = "New York";
+            "short_name" = NY;
+            types =             (
+                "administrative_area_level_1",
+                political
+            );
+        },
+                {
+            "long_name" = "United States";
+            "short_name" = US;
+            types =             (
+                country,
+                political
+            );
+        }
+    );
+    "formatted_address" = "Manhattan, NY 10026, USA";
+    geometry =     {
+        bounds =         {
+            northeast =             {
+                lat = "40.8112639";
+                lng = "-73.9446669";
+            };
+            southwest =             {
+                lat = "40.7936419";
+                lng = "-73.961077";
+            };
+        };
+        location =         {
+            lat = "40.8017423";
+            lng = "-73.9550857";
+        };
+        "location_type" = APPROXIMATE;
+        viewport =         {
+            northeast =             {
+                lat = "40.8112639";
+                lng = "-73.9446669";
+            };
+            southwest =             {
+                lat = "40.7936419";
+                lng = "-73.961077";
+            };
+        };
+    };
+    types =     (
+        "postal_code"
+    );
+}
+555 Bailey Ave San Jose, CA 95141美国 西南 0.4 英里 37.199587,-121.739073
+{
+    "address_components" =     (
+                {
+            "long_name" = 555;
+            "short_name" = 555;
+            types =             (
+                "street_number"
+            );
+        },
+                {
+            "long_name" = "Bailey Ave";
+            "short_name" = "Bailey Ave";
+            types =             (
+                route
+            );
+        },
+                {
+            "long_name" = Coyote;
+            "short_name" = Coyote;
+            types =             (
+                neighborhood,
+                political
+            );
+        },
+                {
+            "long_name" = "San Jose";
+            "short_name" = "San Jose";
+            types =             (
+                locality,
+                political
+            );
+        },
+                {
+            "long_name" = "Santa Clara";
+            "short_name" = "Santa Clara";
+            types =             (
+                "administrative_area_level_2",
+                political
+            );
+        },
+                {
+            "long_name" = California;
+            "short_name" = CA;
+            types =             (
+                "administrative_area_level_1",
+                political
+            );
+        },
+                {
+            "long_name" = "United States";
+            "short_name" = US;
+            types =             (
+                country,
+                political
+            );
+        },
+                {
+            "long_name" = 95141;
+            "short_name" = 95141;
+            types =             (
+                "postal_code"
+            );
+        }
+    );
+    "formatted_address" = "555 Bailey Ave, San Jose, CA 95141, USA";
+    geometry =     {
+        location =         {
+            lat = "37.196014";
+            lng = "-121.744223";
+        };
+        "location_type" = ROOFTOP;
+        viewport =         {
+            northeast =             {
+                lat = "37.19736298029149";
+                lng = "-121.7428740197085";
+            };
+            southwest =             {
+                lat = "37.19466501970849";
+                lng = "-121.7455719802915";
+            };
+        };
+    };
+    types =     (
+        "street_address"
+    );
+}
+
+Cleveland Park 华盛顿哥伦比亚特区哥伦比亚区美国 东 0.3 英里  38.935244,-77.071838
+{
+    "address_components" =     (
+                {
+            "long_name" = 3620;
+            "short_name" = 3620;
+            types =             (
+                "street_number"
+            );
+        },
+                {
+            "long_name" = "Norton Pl NW";
+            "short_name" = "Norton Pl NW";
+            types =             (
+                route
+            );
+        },
+                {
+            "long_name" = "Cleveland Park";
+            "short_name" = "Cleveland Park";
+            types =             (
+                neighborhood,
+                political
+            );
+        },
+                {
+            "long_name" = Washington;
+            "short_name" = Washington;
+            types =             (
+                locality,
+                political
+            );
+        },
+                {
+            "long_name" = "District of Columbia";
+            "short_name" = DC;
+            types =             (
+                "administrative_area_level_1",
+                political
+            );
+        },
+                {
+            "long_name" = "United States";
+            "short_name" = US;
+            types =             (
+                country,
+                political
+            );
+        },
+                {
+            "long_name" = 20016;
+            "short_name" = 20016;
+            types =             (
+                "postal_code"
+            );
+        }
+    );
+    "formatted_address" = "3620 Norton Pl NW, Washington, DC 20016, USA";
+    geometry =     {
+        location =         {
+            lat = "38.935342";
+            lng = "-77.071962";
+        };
+        "location_type" = ROOFTOP;
+        viewport =         {
+            northeast =             {
+                lat = "38.93669098029149";
+                lng = "-77.07061301970849";
+            };
+            southwest =             {
+                lat = "38.9339930197085";
+                lng = "-77.07331098029151";
+            };
+        };
+    };
+    types =     (
+        "street_address"
+    );
+}
+
+
+-------------------------------------------------------------
+Google api：Old to be del
+
+知春路地铁站
+{
+      "location": {
+           "address": {
+                "region": "Beijing",
+                "street_number": "46号",
+                "country_code": "CN",
+                "street": "Zhichun Rd",
+                "city": "Beijing",
+                "country": "China"
+           },
+           "longitude": 116.339936,
+           "latitude": 39.976684
+      },
+      "access_token": "2:v4lkvuGmA5s515Bc:XMYWiChiYetgRGmp"
+}
+
+唐山
+{
+      "location": {
+           "address": {
+                "region": "Hebei",
+                "street_number": "59号",
+                "country_code": "CN",
+                "street": "Beixin East Rd",
+                "city": "Tangshan",
+                "country": "China"
+           },
+           "longitude": 118.188,
+           "latitude": 39.631936
+      },
+      "access_token": "2:krV64b-0ysAXnUy0:JaVq_k5iJzB-bb1e"
+}
+
+
+中央公园
+{
+      "location": {
+           "address": {
+                "region": "New York",
+                "country_code": "US",
+                "postal_code": "10026",
+                "street": "Central Park Loop",
+                "country": "United States"
+           },
+           "longitude": -73.956528,
+           "latitude": 40.795098
+      },
+      "access_token": "2:_7LTDxu7zynOApq3:hFOO3H3Oeac0eYft"
+}
+
+555 Bailey Ave San Jose
+{
+      "location": {
+           "address": {
+                "region": "California",
+                "street_number": "555",
+                "country_code": "US",
+                "postal_code": "95141",
+                "street": "Bailey Ave",
+                "city": "San Jose",
+                "country": "United States"
+           },
+           "longitude": -121.739073,
+           "latitude": 37.199587
+      },
+      "access_token": "2:WhDOwvudF_WLvAsL:iofakvNiuhlSzR6W"
+}
+
+华盛顿哥伦比亚特区
+{
+      "location": {
+           "address": {
+                "region": "District of Columbia",
+                "street_number": "3620",
+                "country_code": "US",
+                "postal_code": "20016",
+                "street": "Norton Pl NW",
+                "city": "Washington",
+                "country": "United States"
+           },
+           "longitude": -77.071838,
+           "latitude": 38.935244
+      },
+      "access_token": "2:OGzdSdvYRWpfgxYc:i_Ca8jqjfdiKtXAu"
+}
+
+Geocoding API (V3)
+根据 https://developers.google.com/maps/documentation/geocoding/ 所显示的，这里是V3版本。
+通过如下url去取 http://maps.googleapis.com/maps/api/geocode/json?latlng=39.976684,116.339936&sensor=true ，以结果数组中的第一个元素（应该是最精确的地点）为这里的结果，如下：
+知春路地铁站
+      {
+         "address_components" : [
+            {
+               "long_name" : "46号",
+               "short_name" : "46号",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Zhichun Rd",
+               "short_name" : "Zhichun Rd",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Haidian",
+               "short_name" : "Haidian",
+               "types" : [ "sublocality", "political" ]
+            },
+            {
+               "long_name" : "Beijing",
+               "short_name" : "Beijing",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Beijing",
+               "short_name" : "Beijing",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "China",
+               "short_name" : "CN",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "100098",
+               "short_name" : "100098",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "46号 Zhichun Rd, Haidian, Beijing, China, 100098",
+         "geometry" : {
+            "location" : {
+               "lat" : 39.975770,
+               "lng" : 116.339150
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 39.97711898029150,
+                  "lng" : 116.3404989802915
+               },
+               "southwest" : {
+                  "lat" : 39.97442101970850,
+                  "lng" : 116.3378010197085
+               }
+            }
+         },
+         "types" : [ "street_address" ]
+      }
+唐山
+      {
+         "address_components" : [
+            {
+               "long_name" : "59号",
+               "short_name" : "59号",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Beixin East Rd",
+               "short_name" : "Beixin East Rd",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Lubei",
+               "short_name" : "Lubei",
+               "types" : [ "sublocality", "political" ]
+            },
+            {
+               "long_name" : "Tangshan",
+               "short_name" : "Tangshan",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Hebei",
+               "short_name" : "Hebei",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "China",
+               "short_name" : "CN",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "59号 Beixin East Rd, Lubei, Tangshan, Hebei, China",
+         "geometry" : {
+            "location" : {
+               "lat" : 39.6339460,
+               "lng" : 118.1888070
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 39.63529498029150,
+                  "lng" : 118.1901559802915
+               },
+               "southwest" : {
+                  "lat" : 39.63259701970851,
+                  "lng" : 118.1874580197085
+               }
+            }
+         },
+         "types" : [ "street_address" ]
+      }
+中央公园 72 Central Park West, New York, NY 10023美国           40.795098,-73.956528
+      {
+         "address_components" : [
+            {
+               "long_name" : "10026",
+               "short_name" : "10026",
+               "types" : [ "postal_code" ]
+            },
+            {
+               "long_name" : "Manhattan",
+               "short_name" : "Manhattan",
+               "types" : [ "sublocality", "political" ]
+            },
+            {
+               "long_name" : "New York",
+               "short_name" : "New York",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "New York",
+               "short_name" : "New York",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "New York",
+               "short_name" : "NY",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Manhattan, NY 10026, USA",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 40.81126390,
+                  "lng" : -73.94466690
+               },
+               "southwest" : {
+                  "lat" : 40.79364190,
+                  "lng" : -73.9610770
+               }
+            },
+            "location" : {
+               "lat" : 40.80174230,
+               "lng" : -73.95508570
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 40.81126390,
+                  "lng" : -73.94466690
+               },
+               "southwest" : {
+                  "lat" : 40.79364190,
+                  "lng" : -73.9610770
+               }
+            }
+         },
+         "types" : [ "postal_code" ]
+      }
+
+555 Bailey Ave San Jose, CA 95141美国 西南 0.4 英里 37.199587,-121.739073
+      {
+         "address_components" : [
+            {
+               "long_name" : "555",
+               "short_name" : "555",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Bailey Ave",
+               "short_name" : "Bailey Ave",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Coyote",
+               "short_name" : "Coyote",
+               "types" : [ "neighborhood", "political" ]
+            },
+            {
+               "long_name" : "San Jose",
+               "short_name" : "San Jose",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Santa Clara",
+               "short_name" : "Santa Clara",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "California",
+               "short_name" : "CA",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "95141",
+               "short_name" : "95141",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "555 Bailey Ave, San Jose, CA 95141, USA",
+         "geometry" : {
+            "location" : {
+               "lat" : 37.1960140,
+               "lng" : -121.7442230
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 37.19736298029149,
+                  "lng" : -121.7428740197085
+               },
+               "southwest" : {
+                  "lat" : 37.19466501970849,
+                  "lng" : -121.7455719802915
+               }
+            }
+         },
+         "types" : [ "street_address" ]
+      }
+
+Cleveland Park 华盛顿哥伦比亚特区哥伦比亚区美国 东 0.3 英里  38.935244,-77.071838
+
+      {
+         "address_components" : [
+            {
+               "long_name" : "3620",
+               "short_name" : "3620",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Norton Pl NW",
+               "short_name" : "Norton Pl NW",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Cleveland Park",
+               "short_name" : "Cleveland Park",
+               "types" : [ "neighborhood", "political" ]
+            },
+            {
+               "long_name" : "Washington",
+               "short_name" : "Washington",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "District of Columbia",
+               "short_name" : "DC",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "20016",
+               "short_name" : "20016",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "3620 Norton Pl NW, Washington, DC 20016, USA",
+         "geometry" : {
+            "location" : {
+               "lat" : 38.9353420,
+               "lng" : -77.0719620
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 38.93669098029149,
+                  "lng" : -77.07061301970849
+               },
+               "southwest" : {
+                  "lat" : 38.93399301970850,
+                  "lng" : -77.07331098029151
+               }
+            }
+         },
+         "types" : [ "street_address" ]
+      }
+
+
+-------------------------------------------------------------
+
+
+Android api：
+唐山
+[Address[addressLines=[0:"59号 Beixin East Rd",1:"Lubei, Tangshan, Hebei",2:"China"],feature=59号,admin=Hebei,sub-admin=null,locality=Tangshan,thoroughfare=Beixin East Rd,postalCode=null,countryCode=CN,countryName=China,hasLatitude=true,latitude=39.633946,hasLongitude=true,longitude=118.188807,phone=null,url=null,extras=null]]
+
+北京知春路地铁站
+[Address[addressLines=[0:"46号 Zhichun Rd",1:"Haidian, Beijing",2:"China",3:"100098"],feature=46号,admin=Beijing,sub-admin=null,locality=Beijing,thoroughfare=Zhichun Rd,postalCode=null,countryCode=CN,countryName=China,hasLatitude=true,latitude=39.97577,hasLongitude=true,longitude=116.33915,phone=null,url=null,extras=null]]
+
+中央公园
+[Address[addressLines=[0:"Central Park Loop",1:"Manhattan, NY 10026",2:"USA"],feature=Central Park Loop,admin=New York,sub-admin=null,locality=null,thoroughfare=Central Park Loop,postalCode=10026,countryCode=US,countryName=United States,hasLatitude=true,latitude=40.7954348,hasLongitude=true,longitude=-73.9580291,phone=null,url=null,extras=null]]
+
+555 Bailey Ave San Jose
+[Address[addressLines=[0:"555 Bailey Ave",1:"San Jose, CA 95141",2:"USA"],feature=555,admin=California,sub-admin=null,locality=San Jose,thoroughfare=Bailey Ave,postalCode=95141,countryCode=US,countryName=United States,hasLatitude=true,latitude=37.196014,hasLongitude=true,longitude=-121.744223,phone=null,url=null,extras=null]]
+
+华盛顿哥伦比亚特区
+[Address[addressLines=[0:"3620 Norton Pl NW",1:"Washington, DC 20016",2:"USA"],feature=3620,admin=District of Columbia,sub-admin=null,locality=Washington,thoroughfare=Norton Pl NW,postalCode=20016,countryCode=US,countryName=United States,hasLatitude=true,latitude=38.935342,hasLongitude=true,longitude=-77.071962,phone=null,url=null,extras=null]]
+
+
+
+
+由于积分在v1.2版取消，UserCredit和CreditTransaction,UserCreditTransaction没有用了。
+UserCredit(D)
+	目前暂定第一版用redis来存积分。这里主要存标志位。credit存在user中。
+userCredit:userId    hash        
+	    userId, creditGivenForFirstSignUp, creditGivenForDailySignInYYYYMMDD, creditGivenForPhoto:photoId:BeLiked2powN
+	
+CreditTransaction(D)
+creditTransaction:tranId    hash
+	tranId, userId, delta, reason( userRegister(replace firstSignUp in v1.1), dailySignIn, uploadPhoto, deletePhoto, photoBeLiked, batchSendDate, singleSendDate, firstRespondDate, confirmDate, systemReward, bought, ),  createTime, 
+	photoId, dateId,  -->  1 field, 
+	payMethod(通过哪种方式购买，如 工商银行， 支付宝， 等等), payRecord(购买时的中介方生成的交易记录...)
+UserCreditTransaction(D)
+userCreditTransaction:userId        list    store tranIds of the user
+
+CachedValue
+cachedValue        hash
+	c2dmAuth(store google c2dm auth string)
+Statistics
+User statistics
+All user number	Just max userId
+Male user number	userNumber:male
+Female user number	userNumber:female
+Active user number per day	userNumber:dayYYYYMMDD
+New user per day	新用户以注册完成为准
+
+userStat        hash
+    male, female, activeDailyYYYYMMDD, newDailyYYYYMMDD
+	这里很多项需要以注册完成为准
+	这里的天暂定为服务器上的自然天
+	目前activeDaily的统计依赖于signIn api的每天至少一次的调用，这样就不用下面的set了。
+
+userActiveDailyYYYYMMDD    set    store userIds
+    用以支持统计每天活跃用户数。后台准备每天跑一次，把以前的天的活跃用户数算出来，然后清掉该项，以免空间的消耗。
+Photo statistics
+All photo number	
+Male-upload photo number	不考虑审核的问题。如果delete，需要减掉
+Female-upload photo number	不考虑审核的问题。如果delete，需要减掉
+New photo number per day	这里由于delete不一定发生在当天，所以不考虑delete的。只算upload的。
+
+photoStat        hash
+    male, female, uploadDailyYYYYMMDD
+
+All like number	unlike需要减一
+Most like number	被like最多的一张照片的like数，从所有地区中找。  
+New like per day	unlike需要减一
+Like statistics
+likeStat        hash
+    like, unlike, likeDailyYYYYMMDD, unlikeDailyYYYYMMDD
+Date statistics...
+All Date number	Just max dateId
+Male-send date number	
+Female-send date number	
+Successful date number	double-confirmed date
+Date confirm number	由于可以confirm多个人和cancel confirm，统计date数量有些麻烦，这里统计confirm次数方便一些。
+New date per day	
+Successful date per day	
+confirm number per day	这里先不统计cancel confirm了，由于不一定是在confirm当天做的cancel。
+	
+	
+	
+Date number with at least one response	在判断responder第一次回复的地方计数。
+Date number ask for a treat	
+Date number ask for a wish	
+
+dateStat        hash
+maleCreate, femaleCreate, doubleConfirmed, finalConfirmed, confirmed, newDailyYYYYMMDD, doubleConfirmedDailyYYYYMMDD, finalConfirmedDailyYYYYMMDD, confirmedDailyYYYYMMDD, treat, wish, respondedDateCount
+Follow statistics
+All follow number	unfollow需要减一
+followStat        hash
+    allSum
+Credit statistics
+Total give	
+Total expense	
+Male expense	
+Female expense	
+Expense per day	
+creditStat        hash
+    giveSum, maleExpend, femaleExpend, expendDailyYYYYMMDD
+
+
+
+
+
+
+
+
+
+
+
+
+

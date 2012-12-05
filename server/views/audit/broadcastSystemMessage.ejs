@@ -1,0 +1,127 @@
+<%
+
+%>
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/common.css" />
+    <style>
+    </style>
+    <script type="text/javascript" >
+      function isAsciiByCharCode(c){
+          if (!c || c.length==0) return false;
+          if (c.length>1) return false;
+          var charcode = c.charCodeAt(0);
+          if (charcode <= 0xff)
+            return true;
+          else
+            return false;
+      }
+      function calculateTextLen(s){
+        var byteLen = 0;
+        if (!s) return byteLen;
+        for(var i=0; i<s.length; i++){
+          var c = s.charAt(i);
+          var btlen = 1;
+          if (!isAsciiByCharCode(c))
+            btlen = 3;//if a char is not ascii, we take it as chinese character
+          byteLen += btlen;
+        }//for
+        return byteLen;
+      }
+
+      function showTextLen(){
+        var messageTextE = document.getElementById('messageText');
+        var lengthInfoE = document.getElementById('lengthInfo');
+        var limitByteLen = 171;
+        var limitChineseCharLen = Math.floor(limitByteLen/3);
+        var curByteLen = calculateTextLen(messageTextE.value);
+        var remainByteLen = limitByteLen - curByteLen;
+        var remainChineseCharLen = Math.floor(remainByteLen/3);
+
+        var text = "current byte len=" +curByteLen
+          + ". ascii char limit="+limitByteLen+". chinese char limit="+limitChineseCharLen
+          + ". you can input "+remainByteLen+" ascii char, or "+remainChineseCharLen+" chinese char.";
+
+        lengthInfoE.innerText = text;
+      }
+    </script>
+  </head>
+
+  <body>
+    <%- partial('../errorPage.ejs') %>
+
+    <div>
+        <%if (actionedInfo != null){
+
+        %>
+            <p>fail to notify user count:</p>
+            <p>ret data:</p>
+            <pre><%= libs.util.inspect(actionedInfo,false,100) %></pre>
+        <%}
+        %>
+    </div>
+
+
+    <form method="post">
+      <div>
+        <h2>query filters:</h2>
+        <div>
+          <span>gender:</span>
+          <select name="gender">
+            <option value="all">all</option>
+            <option value="\bmale">male</option>
+            <option value="female">female</option>
+          </select>
+        </div>
+        <div>
+          <span>deviceType:</span>
+          <select name="deviceType">
+            <option value="all">all</option>
+            <option value="android">android</option>
+            <option value="iphone">iphone</option>
+          </select>
+        </div>
+        <div>
+          <span>School:</span><input type="text" name="school" />
+        </div>
+        <div>
+          <span>SchoolId:</span><input type="text" name="schoolId" />
+        </div>
+        <div>
+          <span>Emails:</span><textarea name="emails" rows="10", cols="400"></textarea>
+        </div>
+        <div>
+          <div>Message:</div>
+          <div class="textBold">
+            Notice that only support 57 Chinese characters or 171 English characters because of apns limit.
+            <br/>
+            The byte length occupied by 1 Chinese character equals that by 3 English character because of UTF-8.
+          </div>
+          <textarea name="messageText" id="messageText" rows="10", cols="400" onkeyup="showTextLen();"></textarea>
+          <div><span class="textBold" id="lengthInfo"></span></div>
+        </div>
+        <div>
+          <span></span>
+        </div>
+      </div>
+      <div>
+        <hr/>
+        <h2>for debug purpose:</h2>
+        <div>
+          <span >notSendReally:</span><input type="text" name="notSendReally" value="" />
+        </div>
+        <div>
+          <span></span>
+        </div>
+      </div>
+      <div>
+        <hr/>
+        <input type="submit" name="btnBroadCast" value="broadCast"/>
+      </div>
+    </form>
+  </body>
+</html>
+
+

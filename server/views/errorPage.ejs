@@ -1,0 +1,28 @@
+<%
+//var util = require('util');//require is not defined
+  //need libs.util
+%>
+    <div>
+        <%if (err != null){%>
+            <p>错误信息:</p>
+            <pre><%= libs.util.inspect(err.message,false,100) %></pre>
+        <%}%>
+    </div>
+    <div>
+        <%if (errors != null){%>
+            <p>错误集合信息:</p>
+            <%for(var i=0; i<errors.length; i++){
+                var err = errors[i];
+            %>
+                <pre><%= libs.util.inspect(err.message,false,100) %></pre>
+            <%}%>
+        <%}%>
+    </div>
+    <div>
+        <%if (redirectUrl != null){%>
+            <a href='<%= redirectUrl %>'>Back</a>
+        <%}%>
+    </div>
+
+
+
