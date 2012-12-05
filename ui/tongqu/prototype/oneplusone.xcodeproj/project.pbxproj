@@ -1,0 +1,545 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B952C60C162F983200B20794 /* LZLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B952C60B162F983200B20794 /* LZLoginViewController.m */; };
+		B95FEEAC1627EA2300939AFD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95FEEAB1627EA2300939AFD /* UIKit.framework */; };
+		B95FEEAE1627EA2300939AFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95FEEAD1627EA2300939AFD /* Foundation.framework */; };
+		B95FEEB01627EA2300939AFD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95FEEAF1627EA2300939AFD /* CoreGraphics.framework */; };
+		B95FEEB61627EA2300939AFD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B95FEEB41627EA2300939AFD /* InfoPlist.strings */; };
+		B95FEEB81627EA2300939AFD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B95FEEB71627EA2300939AFD /* main.m */; };
+		B95FEEBC1627EA2300939AFD /* LZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B95FEEBB1627EA2300939AFD /* LZAppDelegate.m */; };
+		B95FEEBE1627EA2300939AFD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B95FEEBD1627EA2300939AFD /* Default.png */; };
+		B95FEEC01627EA2300939AFD /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B95FEEBF1627EA2300939AFD /* Default@2x.png */; };
+		B95FEEC21627EA2300939AFD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B95FEEC11627EA2300939AFD /* Default-568h@2x.png */; };
+		B95FEEC51627EA2300939AFD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B95FEEC31627EA2300939AFD /* MainStoryboard.storyboard */; };
+		B95FEEE41627F56D00939AFD /* LZNewActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B95FEEE31627F56D00939AFD /* LZNewActivityViewController.m */; };
+		B95FEEE71627F5C100939AFD /* LZNewActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B95FEEE61627F5C100939AFD /* LZNewActivityCell.m */; };
+		B95FEEFA16287D4600939AFD /* LZActivityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B95FEEF916287D4600939AFD /* LZActivityListViewController.m */; };
+		B95FEEFD1628829D00939AFD /* LZActivityListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B95FEEFC1628829D00939AFD /* LZActivityListCell.m */; };
+		B95FEF0016289ADE00939AFD /* LZMyActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B95FEEFF16289ADE00939AFD /* LZMyActivityViewController.m */; };
+		B95FEF0316289BBE00939AFD /* LZPostActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B95FEF0216289BBE00939AFD /* LZPostActivityCell.m */; };
+		B95FEF0616289DFD00939AFD /* LZReceivedActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B95FEF0516289DFD00939AFD /* LZReceivedActivityCell.m */; };
+		B95FEF141629322E00939AFD /* LZSinglePostActivityMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B95FEF131629322D00939AFD /* LZSinglePostActivityMessageViewController.m */; };
+		B95FEF21162A0F8F00939AFD /* LZMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B95FEF20162A0F8F00939AFD /* LZMessageViewController.m */; };
+		B95FEF24162A1DE800939AFD /* LZActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B95FEF23162A1DE700939AFD /* LZActivityDetailViewController.m */; };
+		B96C6736163672E400474715 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B96C6735163672E400474715 /* icon.png */; };
+		B97530DF162B03C8003E7E20 /* LZProfileOneLineFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B97530DE162B03C8003E7E20 /* LZProfileOneLineFieldCell.m */; };
+		B97530E3162B06B3003E7E20 /* LZProfileSelfDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B97530E2162B06B3003E7E20 /* LZProfileSelfDescriptionCell.m */; };
+		B9B0E748162BA328007983A5 /* 0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E73D162BA328007983A5 /* 0.jpg */; };
+		B9B0E749162BA328007983A5 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E73E162BA328007983A5 /* 1.jpg */; };
+		B9B0E74A162BA328007983A5 /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E73F162BA328007983A5 /* 2.jpg */; };
+		B9B0E74B162BA328007983A5 /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E740162BA328007983A5 /* 3.jpg */; };
+		B9B0E74C162BA328007983A5 /* 4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E741162BA328007983A5 /* 4.jpg */; };
+		B9B0E74D162BA328007983A5 /* 5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E742162BA328007983A5 /* 5.jpg */; };
+		B9B0E74E162BA328007983A5 /* 6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E743162BA328007983A5 /* 6.jpg */; };
+		B9B0E74F162BA328007983A5 /* 7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E744162BA328007983A5 /* 7.jpg */; };
+		B9B0E750162BA328007983A5 /* 8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E745162BA328007983A5 /* 8.jpg */; };
+		B9B0E751162BA328007983A5 /* message bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E746162BA328007983A5 /* message bubble.png */; };
+		B9B0E752162BA328007983A5 /* message bubble2.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E747162BA328007983A5 /* message bubble2.png */; };
+		B9B0E755162CA014007983A5 /* leaf.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E753162CA014007983A5 /* leaf.png */; };
+		B9B0E756162CA014007983A5 /* leaf@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E754162CA014007983A5 /* leaf@2x.png */; };
+		B9B0E759162CFCA2007983A5 /* bulb.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E757162CFCA2007983A5 /* bulb.png */; };
+		B9B0E75A162CFCA2007983A5 /* bulb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E758162CFCA2007983A5 /* bulb@2x.png */; };
+		B9B0E75D162CFDBB007983A5 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E75B162CFDBB007983A5 /* home.png */; };
+		B9B0E75E162CFDBB007983A5 /* home@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E75C162CFDBB007983A5 /* home@2x.png */; };
+		B9B0E761162D02B3007983A5 /* tag.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E75F162D02B3007983A5 /* tag.png */; };
+		B9B0E762162D02B3007983A5 /* tag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B0E760162D02B3007983A5 /* tag@2x.png */; };
+		B9D3EF54162B8BE8008F5E87 /* LZUserRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D3EF53162B8BE8008F5E87 /* LZUserRegisterViewController.m */; };
+		B9D3EF65162B93B9008F5E87 /* LZMainNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D3EF64162B93B9008F5E87 /* LZMainNavigationController.m */; };
+		B9E26B14162A6FCA0063E1BA /* LZProfileEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E26B13162A6FCA0063E1BA /* LZProfileEditViewController.m */; };
+		B9E26B17162A70070063E1BA /* LZProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E26B16162A70070063E1BA /* LZProfileViewController.m */; };
+		B9E63235162DC11E00FE309D /* LZActivityJoinMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E63234162DC11E00FE309D /* LZActivityJoinMessageViewController.m */; };
+		B9E63238162DE37F00FE309D /* LZCreateActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E63237162DE37F00FE309D /* LZCreateActivityViewController.m */; };
+		B9E63240162DE8F700FE309D /* LZCreateActivityBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E6323F162DE8F600FE309D /* LZCreateActivityBaseViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B952C60A162F983200B20794 /* LZLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZLoginViewController.h; sourceTree = "<group>"; };
+		B952C60B162F983200B20794 /* LZLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZLoginViewController.m; sourceTree = "<group>"; };
+		B95FEEA71627EA2300939AFD /* oneplusone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oneplusone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B95FEEAB1627EA2300939AFD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B95FEEAD1627EA2300939AFD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B95FEEAF1627EA2300939AFD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B95FEEB31627EA2300939AFD /* oneplusone-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "oneplusone-Info.plist"; sourceTree = "<group>"; };
+		B95FEEB51627EA2300939AFD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B95FEEB71627EA2300939AFD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B95FEEB91627EA2300939AFD /* oneplusone-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "oneplusone-Prefix.pch"; sourceTree = "<group>"; };
+		B95FEEBA1627EA2300939AFD /* LZAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LZAppDelegate.h; sourceTree = "<group>"; };
+		B95FEEBB1627EA2300939AFD /* LZAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LZAppDelegate.m; sourceTree = "<group>"; };
+		B95FEEBD1627EA2300939AFD /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		B95FEEBF1627EA2300939AFD /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		B95FEEC11627EA2300939AFD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		B95FEEC41627EA2300939AFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		B95FEEE21627F56D00939AFD /* LZNewActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZNewActivityViewController.h; sourceTree = "<group>"; };
+		B95FEEE31627F56D00939AFD /* LZNewActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZNewActivityViewController.m; sourceTree = "<group>"; };
+		B95FEEE51627F5C100939AFD /* LZNewActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZNewActivityCell.h; sourceTree = "<group>"; };
+		B95FEEE61627F5C100939AFD /* LZNewActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZNewActivityCell.m; sourceTree = "<group>"; };
+		B95FEEF816287D4600939AFD /* LZActivityListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZActivityListViewController.h; sourceTree = "<group>"; };
+		B95FEEF916287D4600939AFD /* LZActivityListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZActivityListViewController.m; sourceTree = "<group>"; };
+		B95FEEFB1628829D00939AFD /* LZActivityListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZActivityListCell.h; sourceTree = "<group>"; };
+		B95FEEFC1628829D00939AFD /* LZActivityListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZActivityListCell.m; sourceTree = "<group>"; };
+		B95FEEFE16289ADE00939AFD /* LZMyActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZMyActivityViewController.h; sourceTree = "<group>"; };
+		B95FEEFF16289ADE00939AFD /* LZMyActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZMyActivityViewController.m; sourceTree = "<group>"; };
+		B95FEF0116289BBE00939AFD /* LZPostActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZPostActivityCell.h; sourceTree = "<group>"; };
+		B95FEF0216289BBE00939AFD /* LZPostActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZPostActivityCell.m; sourceTree = "<group>"; };
+		B95FEF0416289DFD00939AFD /* LZReceivedActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZReceivedActivityCell.h; sourceTree = "<group>"; };
+		B95FEF0516289DFD00939AFD /* LZReceivedActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZReceivedActivityCell.m; sourceTree = "<group>"; };
+		B95FEF121629322D00939AFD /* LZSinglePostActivityMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZSinglePostActivityMessageViewController.h; sourceTree = "<group>"; };
+		B95FEF131629322D00939AFD /* LZSinglePostActivityMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZSinglePostActivityMessageViewController.m; sourceTree = "<group>"; };
+		B95FEF1F162A0F8F00939AFD /* LZMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZMessageViewController.h; sourceTree = "<group>"; };
+		B95FEF20162A0F8F00939AFD /* LZMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZMessageViewController.m; sourceTree = "<group>"; };
+		B95FEF22162A1DE700939AFD /* LZActivityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZActivityDetailViewController.h; sourceTree = "<group>"; };
+		B95FEF23162A1DE700939AFD /* LZActivityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZActivityDetailViewController.m; sourceTree = "<group>"; };
+		B96C6735163672E400474715 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = oneplusone/icon.png; sourceTree = "<group>"; };
+		B97530DD162B03C8003E7E20 /* LZProfileOneLineFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZProfileOneLineFieldCell.h; sourceTree = "<group>"; };
+		B97530DE162B03C8003E7E20 /* LZProfileOneLineFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZProfileOneLineFieldCell.m; sourceTree = "<group>"; };
+		B97530E1162B06B3003E7E20 /* LZProfileSelfDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZProfileSelfDescriptionCell.h; sourceTree = "<group>"; };
+		B97530E2162B06B3003E7E20 /* LZProfileSelfDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZProfileSelfDescriptionCell.m; sourceTree = "<group>"; };
+		B9B0E73D162BA328007983A5 /* 0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 0.jpg; path = oneplusone/Resources/0.jpg; sourceTree = "<group>"; };
+		B9B0E73E162BA328007983A5 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 1.jpg; path = oneplusone/Resources/1.jpg; sourceTree = "<group>"; };
+		B9B0E73F162BA328007983A5 /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 2.jpg; path = oneplusone/Resources/2.jpg; sourceTree = "<group>"; };
+		B9B0E740162BA328007983A5 /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 3.jpg; path = oneplusone/Resources/3.jpg; sourceTree = "<group>"; };
+		B9B0E741162BA328007983A5 /* 4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 4.jpg; path = oneplusone/Resources/4.jpg; sourceTree = "<group>"; };
+		B9B0E742162BA328007983A5 /* 5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 5.jpg; path = oneplusone/Resources/5.jpg; sourceTree = "<group>"; };
+		B9B0E743162BA328007983A5 /* 6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 6.jpg; path = oneplusone/Resources/6.jpg; sourceTree = "<group>"; };
+		B9B0E744162BA328007983A5 /* 7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 7.jpg; path = oneplusone/Resources/7.jpg; sourceTree = "<group>"; };
+		B9B0E745162BA328007983A5 /* 8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 8.jpg; path = oneplusone/Resources/8.jpg; sourceTree = "<group>"; };
+		B9B0E746162BA328007983A5 /* message bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "message bubble.png"; path = "oneplusone/Resources/message bubble.png"; sourceTree = "<group>"; };
+		B9B0E747162BA328007983A5 /* message bubble2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "message bubble2.png"; path = "oneplusone/Resources/message bubble2.png"; sourceTree = "<group>"; };
+		B9B0E753162CA014007983A5 /* leaf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leaf.png; path = oneplusone/Resources/leaf.png; sourceTree = "<group>"; };
+		B9B0E754162CA014007983A5 /* leaf@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "leaf@2x.png"; path = "oneplusone/Resources/leaf@2x.png"; sourceTree = "<group>"; };
+		B9B0E757162CFCA2007983A5 /* bulb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bulb.png; path = oneplusone/Resources/bulb.png; sourceTree = "<group>"; };
+		B9B0E758162CFCA2007983A5 /* bulb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bulb@2x.png"; path = "oneplusone/Resources/bulb@2x.png"; sourceTree = "<group>"; };
+		B9B0E75B162CFDBB007983A5 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home.png; path = oneplusone/Resources/home.png; sourceTree = "<group>"; };
+		B9B0E75C162CFDBB007983A5 /* home@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "home@2x.png"; path = "oneplusone/Resources/home@2x.png"; sourceTree = "<group>"; };
+		B9B0E75F162D02B3007983A5 /* tag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tag.png; path = oneplusone/Resources/tag.png; sourceTree = "<group>"; };
+		B9B0E760162D02B3007983A5 /* tag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tag@2x.png"; path = "oneplusone/Resources/tag@2x.png"; sourceTree = "<group>"; };
+		B9D3EF52162B8BE8008F5E87 /* LZUserRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZUserRegisterViewController.h; sourceTree = "<group>"; };
+		B9D3EF53162B8BE8008F5E87 /* LZUserRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZUserRegisterViewController.m; sourceTree = "<group>"; };
+		B9D3EF63162B93B9008F5E87 /* LZMainNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZMainNavigationController.h; sourceTree = "<group>"; };
+		B9D3EF64162B93B9008F5E87 /* LZMainNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZMainNavigationController.m; sourceTree = "<group>"; };
+		B9E26B12162A6FCA0063E1BA /* LZProfileEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZProfileEditViewController.h; sourceTree = "<group>"; };
+		B9E26B13162A6FCA0063E1BA /* LZProfileEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZProfileEditViewController.m; sourceTree = "<group>"; };
+		B9E26B15162A70070063E1BA /* LZProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZProfileViewController.h; sourceTree = "<group>"; };
+		B9E26B16162A70070063E1BA /* LZProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZProfileViewController.m; sourceTree = "<group>"; };
+		B9E63233162DC11E00FE309D /* LZActivityJoinMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZActivityJoinMessageViewController.h; sourceTree = "<group>"; };
+		B9E63234162DC11E00FE309D /* LZActivityJoinMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZActivityJoinMessageViewController.m; sourceTree = "<group>"; };
+		B9E63236162DE37F00FE309D /* LZCreateActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZCreateActivityViewController.h; sourceTree = "<group>"; };
+		B9E63237162DE37F00FE309D /* LZCreateActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZCreateActivityViewController.m; sourceTree = "<group>"; };
+		B9E6323E162DE8F600FE309D /* LZCreateActivityBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZCreateActivityBaseViewController.h; sourceTree = "<group>"; };
+		B9E6323F162DE8F600FE309D /* LZCreateActivityBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZCreateActivityBaseViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B95FEEA41627EA2300939AFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B95FEEAC1627EA2300939AFD /* UIKit.framework in Frameworks */,
+				B95FEEAE1627EA2300939AFD /* Foundation.framework in Frameworks */,
+				B95FEEB01627EA2300939AFD /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B95FEE9C1627EA2300939AFD = {
+			isa = PBXGroup;
+			children = (
+				B95FEEB21627EA2300939AFD /* Supporting Files */,
+				B95FEEE11627F51900939AFD /* Resources */,
+				B95FEEB11627EA2300939AFD /* oneplusone */,
+				B95FEEAA1627EA2300939AFD /* Frameworks */,
+				B95FEEA81627EA2300939AFD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B95FEEA81627EA2300939AFD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B95FEEA71627EA2300939AFD /* oneplusone.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B95FEEAA1627EA2300939AFD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B95FEEAB1627EA2300939AFD /* UIKit.framework */,
+				B95FEEAD1627EA2300939AFD /* Foundation.framework */,
+				B95FEEAF1627EA2300939AFD /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B95FEEB11627EA2300939AFD /* oneplusone */ = {
+			isa = PBXGroup;
+			children = (
+				B95FEEBA1627EA2300939AFD /* LZAppDelegate.h */,
+				B95FEEBB1627EA2300939AFD /* LZAppDelegate.m */,
+				B95FEEC31627EA2300939AFD /* MainStoryboard.storyboard */,
+				B9E6323D162DE6D900FE309D /* RegisterOrLogin */,
+				B9E6323C162DE6BF00FE309D /* Profile */,
+				B9E6323B162DE67800FE309D /* MyActivities */,
+				B9E6323A162DE64C00FE309D /* RecentActivites */,
+				B9E63239162DE63B00FE309D /* CreateActivity */,
+			);
+			path = oneplusone;
+			sourceTree = "<group>";
+		};
+		B95FEEB21627EA2300939AFD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B95FEEB31627EA2300939AFD /* oneplusone-Info.plist */,
+				B95FEEB41627EA2300939AFD /* InfoPlist.strings */,
+				B95FEEB71627EA2300939AFD /* main.m */,
+				B95FEEB91627EA2300939AFD /* oneplusone-Prefix.pch */,
+				B95FEEBD1627EA2300939AFD /* Default.png */,
+				B95FEEBF1627EA2300939AFD /* Default@2x.png */,
+				B95FEEC11627EA2300939AFD /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			path = oneplusone;
+			sourceTree = "<group>";
+		};
+		B95FEEE11627F51900939AFD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B96C6735163672E400474715 /* icon.png */,
+				B9B0E75F162D02B3007983A5 /* tag.png */,
+				B9B0E760162D02B3007983A5 /* tag@2x.png */,
+				B9B0E75B162CFDBB007983A5 /* home.png */,
+				B9B0E75C162CFDBB007983A5 /* home@2x.png */,
+				B9B0E757162CFCA2007983A5 /* bulb.png */,
+				B9B0E758162CFCA2007983A5 /* bulb@2x.png */,
+				B9B0E753162CA014007983A5 /* leaf.png */,
+				B9B0E754162CA014007983A5 /* leaf@2x.png */,
+				B9B0E73D162BA328007983A5 /* 0.jpg */,
+				B9B0E73E162BA328007983A5 /* 1.jpg */,
+				B9B0E73F162BA328007983A5 /* 2.jpg */,
+				B9B0E740162BA328007983A5 /* 3.jpg */,
+				B9B0E741162BA328007983A5 /* 4.jpg */,
+				B9B0E742162BA328007983A5 /* 5.jpg */,
+				B9B0E743162BA328007983A5 /* 6.jpg */,
+				B9B0E744162BA328007983A5 /* 7.jpg */,
+				B9B0E745162BA328007983A5 /* 8.jpg */,
+				B9B0E746162BA328007983A5 /* message bubble.png */,
+				B9B0E747162BA328007983A5 /* message bubble2.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		B9E63239162DE63B00FE309D /* CreateActivity */ = {
+			isa = PBXGroup;
+			children = (
+				B95FEEF816287D4600939AFD /* LZActivityListViewController.h */,
+				B95FEEF916287D4600939AFD /* LZActivityListViewController.m */,
+				B9E6323E162DE8F600FE309D /* LZCreateActivityBaseViewController.h */,
+				B9E6323F162DE8F600FE309D /* LZCreateActivityBaseViewController.m */,
+				B9E63236162DE37F00FE309D /* LZCreateActivityViewController.h */,
+				B9E63237162DE37F00FE309D /* LZCreateActivityViewController.m */,
+				B95FEEFB1628829D00939AFD /* LZActivityListCell.h */,
+				B95FEEFC1628829D00939AFD /* LZActivityListCell.m */,
+			);
+			name = CreateActivity;
+			sourceTree = "<group>";
+		};
+		B9E6323A162DE64C00FE309D /* RecentActivites */ = {
+			isa = PBXGroup;
+			children = (
+				B95FEEE21627F56D00939AFD /* LZNewActivityViewController.h */,
+				B95FEEE31627F56D00939AFD /* LZNewActivityViewController.m */,
+				B95FEEE51627F5C100939AFD /* LZNewActivityCell.h */,
+				B95FEEE61627F5C100939AFD /* LZNewActivityCell.m */,
+				B9E63233162DC11E00FE309D /* LZActivityJoinMessageViewController.h */,
+				B9E63234162DC11E00FE309D /* LZActivityJoinMessageViewController.m */,
+			);
+			name = RecentActivites;
+			sourceTree = "<group>";
+		};
+		B9E6323B162DE67800FE309D /* MyActivities */ = {
+			isa = PBXGroup;
+			children = (
+				B95FEEFE16289ADE00939AFD /* LZMyActivityViewController.h */,
+				B95FEEFF16289ADE00939AFD /* LZMyActivityViewController.m */,
+				B95FEF0116289BBE00939AFD /* LZPostActivityCell.h */,
+				B95FEF0216289BBE00939AFD /* LZPostActivityCell.m */,
+				B95FEF0416289DFD00939AFD /* LZReceivedActivityCell.h */,
+				B95FEF0516289DFD00939AFD /* LZReceivedActivityCell.m */,
+				B95FEF121629322D00939AFD /* LZSinglePostActivityMessageViewController.h */,
+				B95FEF131629322D00939AFD /* LZSinglePostActivityMessageViewController.m */,
+				B95FEF1F162A0F8F00939AFD /* LZMessageViewController.h */,
+				B95FEF20162A0F8F00939AFD /* LZMessageViewController.m */,
+				B95FEF22162A1DE700939AFD /* LZActivityDetailViewController.h */,
+				B95FEF23162A1DE700939AFD /* LZActivityDetailViewController.m */,
+			);
+			name = MyActivities;
+			sourceTree = "<group>";
+		};
+		B9E6323C162DE6BF00FE309D /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				B9E26B15162A70070063E1BA /* LZProfileViewController.h */,
+				B9E26B16162A70070063E1BA /* LZProfileViewController.m */,
+				B9E26B12162A6FCA0063E1BA /* LZProfileEditViewController.h */,
+				B9E26B13162A6FCA0063E1BA /* LZProfileEditViewController.m */,
+				B97530DD162B03C8003E7E20 /* LZProfileOneLineFieldCell.h */,
+				B97530DE162B03C8003E7E20 /* LZProfileOneLineFieldCell.m */,
+				B97530E1162B06B3003E7E20 /* LZProfileSelfDescriptionCell.h */,
+				B97530E2162B06B3003E7E20 /* LZProfileSelfDescriptionCell.m */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		B9E6323D162DE6D900FE309D /* RegisterOrLogin */ = {
+			isa = PBXGroup;
+			children = (
+				B9D3EF63162B93B9008F5E87 /* LZMainNavigationController.h */,
+				B9D3EF64162B93B9008F5E87 /* LZMainNavigationController.m */,
+				B9D3EF52162B8BE8008F5E87 /* LZUserRegisterViewController.h */,
+				B9D3EF53162B8BE8008F5E87 /* LZUserRegisterViewController.m */,
+				B952C60A162F983200B20794 /* LZLoginViewController.h */,
+				B952C60B162F983200B20794 /* LZLoginViewController.m */,
+			);
+			name = RegisterOrLogin;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B95FEEA61627EA2300939AFD /* oneplusone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B95FEED61627EA2300939AFD /* Build configuration list for PBXNativeTarget "oneplusone" */;
+			buildPhases = (
+				B95FEEA31627EA2300939AFD /* Sources */,
+				B95FEEA41627EA2300939AFD /* Frameworks */,
+				B95FEEA51627EA2300939AFD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = oneplusone;
+			productName = oneplusone;
+			productReference = B95FEEA71627EA2300939AFD /* oneplusone.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B95FEE9E1627EA2300939AFD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = LZ;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Dalei Li";
+			};
+			buildConfigurationList = B95FEEA11627EA2300939AFD /* Build configuration list for PBXProject "oneplusone" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B95FEE9C1627EA2300939AFD;
+			productRefGroup = B95FEEA81627EA2300939AFD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B95FEEA61627EA2300939AFD /* oneplusone */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B95FEEA51627EA2300939AFD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B95FEEB61627EA2300939AFD /* InfoPlist.strings in Resources */,
+				B95FEEBE1627EA2300939AFD /* Default.png in Resources */,
+				B95FEEC01627EA2300939AFD /* Default@2x.png in Resources */,
+				B95FEEC21627EA2300939AFD /* Default-568h@2x.png in Resources */,
+				B95FEEC51627EA2300939AFD /* MainStoryboard.storyboard in Resources */,
+				B9B0E748162BA328007983A5 /* 0.jpg in Resources */,
+				B9B0E749162BA328007983A5 /* 1.jpg in Resources */,
+				B9B0E74A162BA328007983A5 /* 2.jpg in Resources */,
+				B9B0E74B162BA328007983A5 /* 3.jpg in Resources */,
+				B9B0E74C162BA328007983A5 /* 4.jpg in Resources */,
+				B9B0E74D162BA328007983A5 /* 5.jpg in Resources */,
+				B9B0E74E162BA328007983A5 /* 6.jpg in Resources */,
+				B9B0E74F162BA328007983A5 /* 7.jpg in Resources */,
+				B9B0E750162BA328007983A5 /* 8.jpg in Resources */,
+				B9B0E751162BA328007983A5 /* message bubble.png in Resources */,
+				B9B0E752162BA328007983A5 /* message bubble2.png in Resources */,
+				B9B0E755162CA014007983A5 /* leaf.png in Resources */,
+				B9B0E756162CA014007983A5 /* leaf@2x.png in Resources */,
+				B9B0E759162CFCA2007983A5 /* bulb.png in Resources */,
+				B9B0E75A162CFCA2007983A5 /* bulb@2x.png in Resources */,
+				B9B0E75D162CFDBB007983A5 /* home.png in Resources */,
+				B9B0E75E162CFDBB007983A5 /* home@2x.png in Resources */,
+				B9B0E761162D02B3007983A5 /* tag.png in Resources */,
+				B9B0E762162D02B3007983A5 /* tag@2x.png in Resources */,
+				B96C6736163672E400474715 /* icon.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B95FEEA31627EA2300939AFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B95FEEB81627EA2300939AFD /* main.m in Sources */,
+				B95FEEBC1627EA2300939AFD /* LZAppDelegate.m in Sources */,
+				B95FEEE41627F56D00939AFD /* LZNewActivityViewController.m in Sources */,
+				B95FEEE71627F5C100939AFD /* LZNewActivityCell.m in Sources */,
+				B95FEEFA16287D4600939AFD /* LZActivityListViewController.m in Sources */,
+				B95FEEFD1628829D00939AFD /* LZActivityListCell.m in Sources */,
+				B95FEF0016289ADE00939AFD /* LZMyActivityViewController.m in Sources */,
+				B95FEF0316289BBE00939AFD /* LZPostActivityCell.m in Sources */,
+				B95FEF0616289DFD00939AFD /* LZReceivedActivityCell.m in Sources */,
+				B95FEF141629322E00939AFD /* LZSinglePostActivityMessageViewController.m in Sources */,
+				B95FEF21162A0F8F00939AFD /* LZMessageViewController.m in Sources */,
+				B95FEF24162A1DE800939AFD /* LZActivityDetailViewController.m in Sources */,
+				B9E26B14162A6FCA0063E1BA /* LZProfileEditViewController.m in Sources */,
+				B9E26B17162A70070063E1BA /* LZProfileViewController.m in Sources */,
+				B97530DF162B03C8003E7E20 /* LZProfileOneLineFieldCell.m in Sources */,
+				B97530E3162B06B3003E7E20 /* LZProfileSelfDescriptionCell.m in Sources */,
+				B9D3EF54162B8BE8008F5E87 /* LZUserRegisterViewController.m in Sources */,
+				B9D3EF65162B93B9008F5E87 /* LZMainNavigationController.m in Sources */,
+				B9E63235162DC11E00FE309D /* LZActivityJoinMessageViewController.m in Sources */,
+				B9E63238162DE37F00FE309D /* LZCreateActivityViewController.m in Sources */,
+				B9E63240162DE8F700FE309D /* LZCreateActivityBaseViewController.m in Sources */,
+				B952C60C162F983200B20794 /* LZLoginViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B95FEEB41627EA2300939AFD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B95FEEB51627EA2300939AFD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B95FEEC31627EA2300939AFD /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B95FEEC41627EA2300939AFD /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B95FEED41627EA2300939AFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		B95FEED51627EA2300939AFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B95FEED71627EA2300939AFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dalei Li (F5QR8M3JSB)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "oneplusone/oneplusone-Prefix.pch";
+				INFOPLIST_FILE = "oneplusone/oneplusone-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3C6A1A26-7868-44BF-AC07-E89A56B3C806";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B95FEED81627EA2300939AFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "oneplusone/oneplusone-Prefix.pch";
+				INFOPLIST_FILE = "oneplusone/oneplusone-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B95FEEA11627EA2300939AFD /* Build configuration list for PBXProject "oneplusone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B95FEED41627EA2300939AFD /* Debug */,
+				B95FEED51627EA2300939AFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B95FEED61627EA2300939AFD /* Build configuration list for PBXNativeTarget "oneplusone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B95FEED71627EA2300939AFD /* Debug */,
+				B95FEED81627EA2300939AFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B95FEE9E1627EA2300939AFD /* Project object */;
+}
