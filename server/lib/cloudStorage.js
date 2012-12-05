@@ -169,8 +169,9 @@ var resizeAndUploadPhotoToS3ByPhpSide = exports.resizeAndUploadPhotoToS3ByPhpSid
       logger.logDebug("resizeAndUploadPhotoToS3ByPhpSide, doHttpPostForm, retDataObj.data=\n"+retDataObj.data);
       var retStrData = retDataObj.data+'';
       retStrData = retStrData.trim();
-      if (! (retStrData && retStrData.indexOf('success')>=0) ){
       //if (retStrData && retStrData.indexOf('error:')>=0){
+      var isRetSuccess = (  retStrData.indexOf('success')==0  );//must start with success because error message also can contain 'success' text
+      if (! isRetSuccess ){
         var err = handy.newError({errorKey:'errorFromPhpWhenResizeToS3',messageParams:[retStrData],messagePrefix:messagePrefix,req:req});
         return cbFun(err);
       }
@@ -197,11 +198,15 @@ var resizeAndUploadPhotoToAliyunOssByPhpSide = exports.resizeAndUploadPhotoToAli
       logger.logDebug("resizeAndUploadPhotoToAliyunOssByPhpSide, doHttpPostForm, retDataObj.data=\n"+retDataObj.data);
       var retStrData = retDataObj.data+'';
       retStrData = retStrData.trim();
-      if (! (retStrData && retStrData.indexOf('success')>=0) ){
       //if (retStrData && retStrData.indexOf('error:')>=0){
+      var isRetSuccess = (  retStrData.indexOf('success')==0  );//must start with success because error message also can contain 'success' text
+      //logger.logDebug("resizeAndUploadPhotoToAliyunOssByPhpSide, doHttpPostForm, isRetSuccess="+isRetSuccess+", retStrData=\n"+retStrData);
+      if (! isRetSuccess ){
+        //logger.logDebug("resizeAndUploadPhotoToAliyunOssByPhpSide error return");
         var err = handy.newError({errorKey:'errorFromPhpWhenResizeToAliyunOss',messageParams:[retStrData],messagePrefix:messagePrefix,req:req});
         return cbFun(err);
       }
+      //logger.logDebug("resizeAndUploadPhotoToAliyunOssByPhpSide ok return");
       return cbFun(null);
   });//doHttpPostForm
 };//resizeAndUploadPhotoToAliyunOssByPhpSide
