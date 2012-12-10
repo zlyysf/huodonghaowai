@@ -33,6 +33,7 @@
         self.navigationItem.rightBarButtonItem = reply;
         [reply release];
         self.navigationItem.title = @"我要加入";
+        self.placeholderLabel.text = @"";
     }
     else
     {
@@ -40,6 +41,7 @@
         self.navigationItem.rightBarButtonItem = reply;
         [reply release];
         self.navigationItem.title = @"我要举报";
+        self.placeholderLabel.text =@"请在此输入你的举报原因，我们会根据举报情况做出相应的处理！谢谢！";
     }
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonClicked)];
     self.navigationItem.leftBarButtonItem = cancel;
@@ -54,6 +56,14 @@
 - (void)textChanged:(NSNotification *)notification
 {
     int length = [self.messageTextView.text length];
+    if(length == 0)
+    {
+        self.placeholderLabel.alpha = 1;
+    }
+    else
+    {
+        self.placeholderLabel.alpha = 0;
+    }
     self.countLabel.text = [NSString stringWithFormat:@"%i/140",length];
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -167,12 +177,14 @@
     [targetUserId release];
     [_activityIndicator release];
     [_countLabel release];
+    [_placeholderLabel release];
     [super dealloc];
 }
 - (void)viewDidUnload {
     [self setMessageTextView:nil];
     [self setActivityIndicator:nil];
     [self setCountLabel:nil];
+    [self setPlaceholderLabel:nil];
     [super viewDidUnload];
 }
 @end

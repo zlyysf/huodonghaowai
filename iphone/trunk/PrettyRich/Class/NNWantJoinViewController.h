@@ -14,6 +14,7 @@ typedef enum PostType
     PostTypeReport = 1,//用户举报
 }PostType;
 @interface NNWantJoinViewController : UIViewController<UITextViewDelegate>
+@property (retain, nonatomic) IBOutlet UILabel *placeholderLabel;
 @property(nonatomic,retain) NodeAsyncConnection *curConnection;
 @property (retain, nonatomic) IBOutlet UILabel *countLabel;
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
