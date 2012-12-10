@@ -26,6 +26,77 @@
 		5F196DC1165A4094003072E5 /* help3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F196DBD165A4094003072E5 /* help3.jpg */; };
 		5F196DC2165A4094003072E5 /* help4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F196DBE165A4094003072E5 /* help4.jpg */; };
 		5F2072CE15988E5F009AB5C6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F2072CD15988E5F009AB5C6 /* AudioToolbox.framework */; };
+		5F2B31E016759205008C5EF8 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B315816759205008C5EF8 /* FMDatabase.m */; };
+		5F2B31E116759205008C5EF8 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B315A16759205008C5EF8 /* FMDatabaseAdditions.m */; };
+		5F2B31E216759205008C5EF8 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B315C16759205008C5EF8 /* FMResultSet.m */; };
+		5F2B31E316759205008C5EF8 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B316016759205008C5EF8 /* NSObject+SBJSON.m */; };
+		5F2B31E416759205008C5EF8 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B316216759205008C5EF8 /* NSString+SBJSON.m */; };
+		5F2B31E516759205008C5EF8 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B316416759205008C5EF8 /* SBJSON.m */; };
+		5F2B31E616759205008C5EF8 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B316616759205008C5EF8 /* SBJsonBase.m */; };
+		5F2B31E716759205008C5EF8 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B316816759205008C5EF8 /* SBJsonParser.m */; };
+		5F2B31E816759205008C5EF8 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B316A16759205008C5EF8 /* SBJsonWriter.m */; };
+		5F2B31E916759205008C5EF8 /* Renren.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B316D16759205008C5EF8 /* Renren.m */; };
+		5F2B31EA16759205008C5EF8 /* RenrenPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B316F16759205008C5EF8 /* RenrenPay.m */; };
+		5F2B31EB16759205008C5EF8 /* ROBaseDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B317316759205008C5EF8 /* ROBaseDialogViewController.m */; };
+		5F2B31EC16759205008C5EF8 /* ROCheckDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B317516759205008C5EF8 /* ROCheckDialogViewController.m */; };
+		5F2B31ED16759205008C5EF8 /* ROPayDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B317716759205008C5EF8 /* ROPayDialogViewController.m */; };
+		5F2B31EE16759205008C5EF8 /* ROWebDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B317916759205008C5EF8 /* ROWebDialogViewController.m */; };
+		5F2B31EF16759205008C5EF8 /* ROError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B317C16759205008C5EF8 /* ROError.m */; };
+		5F2B31F016759205008C5EF8 /* ROPayError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B317E16759205008C5EF8 /* ROPayError.m */; };
+		5F2B31F116759205008C5EF8 /* bottom-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318016759205008C5EF8 /* bottom-bar.png */; };
+		5F2B31F216759205008C5EF8 /* bottom-bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318116759205008C5EF8 /* bottom-bar@2x.png */; };
+		5F2B31F316759205008C5EF8 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318216759205008C5EF8 /* close.png */; };
+		5F2B31F416759205008C5EF8 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318316759205008C5EF8 /* close@2x.png */; };
+		5F2B31F516759205008C5EF8 /* close_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318416759205008C5EF8 /* close_selected.png */; };
+		5F2B31F616759205008C5EF8 /* close_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318516759205008C5EF8 /* close_selected@2x.png */; };
+		5F2B31F716759205008C5EF8 /* head-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318616759205008C5EF8 /* head-frame.png */; };
+		5F2B31F816759205008C5EF8 /* head-frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318716759205008C5EF8 /* head-frame@2x.png */; };
+		5F2B31F916759205008C5EF8 /* input-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318816759205008C5EF8 /* input-frame.png */; };
+		5F2B31FA16759205008C5EF8 /* input-frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318916759205008C5EF8 /* input-frame@2x.png */; };
+		5F2B31FB16759205008C5EF8 /* PayLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318A16759205008C5EF8 /* PayLogo.png */; };
+		5F2B31FC16759205008C5EF8 /* PayLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318B16759205008C5EF8 /* PayLogo@2x.png */; };
+		5F2B31FD16759205008C5EF8 /* photo-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318C16759205008C5EF8 /* photo-frame.png */; };
+		5F2B31FE16759205008C5EF8 /* photo-frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318D16759205008C5EF8 /* photo-frame@2x.png */; };
+		5F2B31FF16759205008C5EF8 /* renren-logo-top-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318E16759205008C5EF8 /* renren-logo-top-bar.png */; };
+		5F2B320016759205008C5EF8 /* renren-logo-top-bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B318F16759205008C5EF8 /* renren-logo-top-bar@2x.png */; };
+		5F2B320116759205008C5EF8 /* RepairButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B319016759205008C5EF8 /* RepairButton.png */; };
+		5F2B320216759205008C5EF8 /* RepairButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B319116759205008C5EF8 /* RepairButton@2x.png */; };
+		5F2B320316759205008C5EF8 /* small-button-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B319216759205008C5EF8 /* small-button-normal.png */; };
+		5F2B320416759205008C5EF8 /* small-button-normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B319316759205008C5EF8 /* small-button-normal@2x.png */; };
+		5F2B320516759205008C5EF8 /* ROBaseNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B319616759205008C5EF8 /* ROBaseNavigationViewController.m */; };
+		5F2B320616759205008C5EF8 /* ROCheckNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B319816759205008C5EF8 /* ROCheckNavigationViewController.m */; };
+		5F2B320716759205008C5EF8 /* ROPayNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B319A16759205008C5EF8 /* ROPayNavigationViewController.m */; };
+		5F2B320816759205008C5EF8 /* ROWebNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B319C16759205008C5EF8 /* ROWebNavigationViewController.m */; };
+		5F2B320916759205008C5EF8 /* ROPayDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B319F16759205008C5EF8 /* ROPayDB.m */; };
+		5F2B320A16759205008C5EF8 /* ROPayOrderDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31A116759205008C5EF8 /* ROPayOrderDao.m */; };
+		5F2B320B16759205008C5EF8 /* ROPayOrderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31A316759205008C5EF8 /* ROPayOrderInfo.m */; };
+		5F2B320C16759205008C5EF8 /* ROAlbumsInfoRequestParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31A716759205008C5EF8 /* ROAlbumsInfoRequestParam.m */; };
+		5F2B320D16759205008C5EF8 /* ROCreateAlbumRequestParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31A916759205008C5EF8 /* ROCreateAlbumRequestParam.m */; };
+		5F2B320E16759205008C5EF8 /* ROGetFriendsInfoRequestParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31AB16759205008C5EF8 /* ROGetFriendsInfoRequestParam.m */; };
+		5F2B320F16759205008C5EF8 /* ROGetFriendsRequestParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31AD16759205008C5EF8 /* ROGetFriendsRequestParam.m */; };
+		5F2B321016759205008C5EF8 /* ROPasswordFlowRequestParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31AF16759205008C5EF8 /* ROPasswordFlowRequestParam.m */; };
+		5F2B321116759205008C5EF8 /* ROPublishPhotoRequestParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31B116759205008C5EF8 /* ROPublishPhotoRequestParam.m */; };
+		5F2B321216759205008C5EF8 /* RORequestParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31B316759205008C5EF8 /* RORequestParam.m */; };
+		5F2B321316759205008C5EF8 /* ROUserInfoRequestParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31B516759205008C5EF8 /* ROUserInfoRequestParam.m */; };
+		5F2B321416759205008C5EF8 /* ROAlbumResponseltem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31B816759205008C5EF8 /* ROAlbumResponseltem.m */; };
+		5F2B321516759205008C5EF8 /* ROCreateAlbumResponseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31BA16759205008C5EF8 /* ROCreateAlbumResponseItem.m */; };
+		5F2B321616759205008C5EF8 /* ROFriendResponseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31BC16759205008C5EF8 /* ROFriendResponseItem.m */; };
+		5F2B321716759205008C5EF8 /* ROPublishPhotoResponseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31BE16759205008C5EF8 /* ROPublishPhotoResponseItem.m */; };
+		5F2B321816759205008C5EF8 /* ROResponseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31C016759205008C5EF8 /* ROResponseItem.m */; };
+		5F2B321916759205008C5EF8 /* ROUserResponseItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31C216759205008C5EF8 /* ROUserResponseItem.m */; };
+		5F2B321A16759205008C5EF8 /* RORequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31C416759205008C5EF8 /* RORequest.m */; };
+		5F2B321B16759205008C5EF8 /* ROResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31C616759205008C5EF8 /* ROResponse.m */; };
+		5F2B321C16759205008C5EF8 /* ROUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31CA16759205008C5EF8 /* ROUtility.m */; };
+		5F2B321D16759205008C5EF8 /* ROCheckOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31CD16759205008C5EF8 /* ROCheckOrderCell.m */; };
+		5F2B321E16759205008C5EF8 /* ROCheckOrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B31CE16759205008C5EF8 /* ROCheckOrderCell.xib */; };
+		5F2B321F16759205008C5EF8 /* RODialogModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31D116759205008C5EF8 /* RODialogModel.m */; };
+		5F2B322016759205008C5EF8 /* RODialogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31D316759205008C5EF8 /* RODialogView.m */; };
+		5F2B322116759205008C5EF8 /* ROCloseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31D616759205008C5EF8 /* ROCloseButton.m */; };
+		5F2B322216759205008C5EF8 /* ROGlobalStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31D816759205008C5EF8 /* ROGlobalStyle.m */; };
+		5F2B322316759205008C5EF8 /* ROImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31DA16759205008C5EF8 /* ROImageView.m */; };
+		5F2B322416759205008C5EF8 /* ROPublishPhotoDialogModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31DD16759205008C5EF8 /* ROPublishPhotoDialogModel.m */; };
+		5F2B322516759205008C5EF8 /* ROPublishPhotoInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B31DF16759205008C5EF8 /* ROPublishPhotoInternal.m */; };
+		5F2B322716759268008C5EF8 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F2B322616759268008C5EF8 /* libsqlite3.0.dylib */; };
 		5F2D1556164121F600B59BE8 /* DateActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2D1555164121F500B59BE8 /* DateActivityCell.m */; };
 		5F2D15581641220B00B59BE8 /* DateActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F2D15571641220A00B59BE8 /* DateActivityCell.xib */; };
 		5F340A33164CF2F600EEC488 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F340A30164CF2D300EEC488 /* MessageUI.framework */; };
@@ -159,6 +230,129 @@
 		5F196DBD165A4094003072E5 /* help3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = help3.jpg; sourceTree = "<group>"; };
 		5F196DBE165A4094003072E5 /* help4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = help4.jpg; sourceTree = "<group>"; };
 		5F2072CD15988E5F009AB5C6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		5F2B315716759205008C5EF8 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		5F2B315816759205008C5EF8 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		5F2B315916759205008C5EF8 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		5F2B315A16759205008C5EF8 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		5F2B315B16759205008C5EF8 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		5F2B315C16759205008C5EF8 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		5F2B315E16759205008C5EF8 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		5F2B315F16759205008C5EF8 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		5F2B316016759205008C5EF8 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		5F2B316116759205008C5EF8 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		5F2B316216759205008C5EF8 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		5F2B316316759205008C5EF8 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		5F2B316416759205008C5EF8 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		5F2B316516759205008C5EF8 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		5F2B316616759205008C5EF8 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		5F2B316716759205008C5EF8 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		5F2B316816759205008C5EF8 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		5F2B316916759205008C5EF8 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		5F2B316A16759205008C5EF8 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		5F2B316C16759205008C5EF8 /* Renren.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renren.h; sourceTree = "<group>"; };
+		5F2B316D16759205008C5EF8 /* Renren.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Renren.m; sourceTree = "<group>"; };
+		5F2B316E16759205008C5EF8 /* RenrenPay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenrenPay.h; sourceTree = "<group>"; };
+		5F2B316F16759205008C5EF8 /* RenrenPay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenrenPay.m; sourceTree = "<group>"; };
+		5F2B317016759205008C5EF8 /* ROConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROConnect.h; sourceTree = "<group>"; };
+		5F2B317216759205008C5EF8 /* ROBaseDialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROBaseDialogViewController.h; sourceTree = "<group>"; };
+		5F2B317316759205008C5EF8 /* ROBaseDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROBaseDialogViewController.m; sourceTree = "<group>"; };
+		5F2B317416759205008C5EF8 /* ROCheckDialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROCheckDialogViewController.h; sourceTree = "<group>"; };
+		5F2B317516759205008C5EF8 /* ROCheckDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROCheckDialogViewController.m; sourceTree = "<group>"; };
+		5F2B317616759205008C5EF8 /* ROPayDialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROPayDialogViewController.h; sourceTree = "<group>"; };
+		5F2B317716759205008C5EF8 /* ROPayDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROPayDialogViewController.m; sourceTree = "<group>"; };
+		5F2B317816759205008C5EF8 /* ROWebDialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROWebDialogViewController.h; sourceTree = "<group>"; };
+		5F2B317916759205008C5EF8 /* ROWebDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROWebDialogViewController.m; sourceTree = "<group>"; };
+		5F2B317B16759205008C5EF8 /* ROError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROError.h; sourceTree = "<group>"; };
+		5F2B317C16759205008C5EF8 /* ROError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROError.m; sourceTree = "<group>"; };
+		5F2B317D16759205008C5EF8 /* ROPayError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROPayError.h; sourceTree = "<group>"; };
+		5F2B317E16759205008C5EF8 /* ROPayError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROPayError.m; sourceTree = "<group>"; };
+		5F2B318016759205008C5EF8 /* bottom-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom-bar.png"; sourceTree = "<group>"; };
+		5F2B318116759205008C5EF8 /* bottom-bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom-bar@2x.png"; sourceTree = "<group>"; };
+		5F2B318216759205008C5EF8 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		5F2B318316759205008C5EF8 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
+		5F2B318416759205008C5EF8 /* close_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close_selected.png; sourceTree = "<group>"; };
+		5F2B318516759205008C5EF8 /* close_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close_selected@2x.png"; sourceTree = "<group>"; };
+		5F2B318616759205008C5EF8 /* head-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "head-frame.png"; sourceTree = "<group>"; };
+		5F2B318716759205008C5EF8 /* head-frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "head-frame@2x.png"; sourceTree = "<group>"; };
+		5F2B318816759205008C5EF8 /* input-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "input-frame.png"; sourceTree = "<group>"; };
+		5F2B318916759205008C5EF8 /* input-frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "input-frame@2x.png"; sourceTree = "<group>"; };
+		5F2B318A16759205008C5EF8 /* PayLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PayLogo.png; sourceTree = "<group>"; };
+		5F2B318B16759205008C5EF8 /* PayLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PayLogo@2x.png"; sourceTree = "<group>"; };
+		5F2B318C16759205008C5EF8 /* photo-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-frame.png"; sourceTree = "<group>"; };
+		5F2B318D16759205008C5EF8 /* photo-frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-frame@2x.png"; sourceTree = "<group>"; };
+		5F2B318E16759205008C5EF8 /* renren-logo-top-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren-logo-top-bar.png"; sourceTree = "<group>"; };
+		5F2B318F16759205008C5EF8 /* renren-logo-top-bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren-logo-top-bar@2x.png"; sourceTree = "<group>"; };
+		5F2B319016759205008C5EF8 /* RepairButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RepairButton.png; sourceTree = "<group>"; };
+		5F2B319116759205008C5EF8 /* RepairButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RepairButton@2x.png"; sourceTree = "<group>"; };
+		5F2B319216759205008C5EF8 /* small-button-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small-button-normal.png"; sourceTree = "<group>"; };
+		5F2B319316759205008C5EF8 /* small-button-normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small-button-normal@2x.png"; sourceTree = "<group>"; };
+		5F2B319516759205008C5EF8 /* ROBaseNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROBaseNavigationViewController.h; sourceTree = "<group>"; };
+		5F2B319616759205008C5EF8 /* ROBaseNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROBaseNavigationViewController.m; sourceTree = "<group>"; };
+		5F2B319716759205008C5EF8 /* ROCheckNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROCheckNavigationViewController.h; sourceTree = "<group>"; };
+		5F2B319816759205008C5EF8 /* ROCheckNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROCheckNavigationViewController.m; sourceTree = "<group>"; };
+		5F2B319916759205008C5EF8 /* ROPayNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROPayNavigationViewController.h; sourceTree = "<group>"; };
+		5F2B319A16759205008C5EF8 /* ROPayNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROPayNavigationViewController.m; sourceTree = "<group>"; };
+		5F2B319B16759205008C5EF8 /* ROWebNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROWebNavigationViewController.h; sourceTree = "<group>"; };
+		5F2B319C16759205008C5EF8 /* ROWebNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROWebNavigationViewController.m; sourceTree = "<group>"; };
+		5F2B319E16759205008C5EF8 /* ROPayDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROPayDB.h; sourceTree = "<group>"; };
+		5F2B319F16759205008C5EF8 /* ROPayDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROPayDB.m; sourceTree = "<group>"; };
+		5F2B31A016759205008C5EF8 /* ROPayOrderDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROPayOrderDao.h; sourceTree = "<group>"; };
+		5F2B31A116759205008C5EF8 /* ROPayOrderDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROPayOrderDao.m; sourceTree = "<group>"; };
+		5F2B31A216759205008C5EF8 /* ROPayOrderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROPayOrderInfo.h; sourceTree = "<group>"; };
+		5F2B31A316759205008C5EF8 /* ROPayOrderInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROPayOrderInfo.m; sourceTree = "<group>"; };
+		5F2B31A616759205008C5EF8 /* ROAlbumsInfoRequestParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROAlbumsInfoRequestParam.h; sourceTree = "<group>"; };
+		5F2B31A716759205008C5EF8 /* ROAlbumsInfoRequestParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROAlbumsInfoRequestParam.m; sourceTree = "<group>"; };
+		5F2B31A816759205008C5EF8 /* ROCreateAlbumRequestParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROCreateAlbumRequestParam.h; sourceTree = "<group>"; };
+		5F2B31A916759205008C5EF8 /* ROCreateAlbumRequestParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROCreateAlbumRequestParam.m; sourceTree = "<group>"; };
+		5F2B31AA16759205008C5EF8 /* ROGetFriendsInfoRequestParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROGetFriendsInfoRequestParam.h; sourceTree = "<group>"; };
+		5F2B31AB16759205008C5EF8 /* ROGetFriendsInfoRequestParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROGetFriendsInfoRequestParam.m; sourceTree = "<group>"; };
+		5F2B31AC16759205008C5EF8 /* ROGetFriendsRequestParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROGetFriendsRequestParam.h; sourceTree = "<group>"; };
+		5F2B31AD16759205008C5EF8 /* ROGetFriendsRequestParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROGetFriendsRequestParam.m; sourceTree = "<group>"; };
+		5F2B31AE16759205008C5EF8 /* ROPasswordFlowRequestParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROPasswordFlowRequestParam.h; sourceTree = "<group>"; };
+		5F2B31AF16759205008C5EF8 /* ROPasswordFlowRequestParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROPasswordFlowRequestParam.m; sourceTree = "<group>"; };
+		5F2B31B016759205008C5EF8 /* ROPublishPhotoRequestParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROPublishPhotoRequestParam.h; sourceTree = "<group>"; };
+		5F2B31B116759205008C5EF8 /* ROPublishPhotoRequestParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROPublishPhotoRequestParam.m; sourceTree = "<group>"; };
+		5F2B31B216759205008C5EF8 /* RORequestParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RORequestParam.h; sourceTree = "<group>"; };
+		5F2B31B316759205008C5EF8 /* RORequestParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RORequestParam.m; sourceTree = "<group>"; };
+		5F2B31B416759205008C5EF8 /* ROUserInfoRequestParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROUserInfoRequestParam.h; sourceTree = "<group>"; };
+		5F2B31B516759205008C5EF8 /* ROUserInfoRequestParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROUserInfoRequestParam.m; sourceTree = "<group>"; };
+		5F2B31B716759205008C5EF8 /* ROAlbumResponseltem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROAlbumResponseltem.h; sourceTree = "<group>"; };
+		5F2B31B816759205008C5EF8 /* ROAlbumResponseltem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROAlbumResponseltem.m; sourceTree = "<group>"; };
+		5F2B31B916759205008C5EF8 /* ROCreateAlbumResponseItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROCreateAlbumResponseItem.h; sourceTree = "<group>"; };
+		5F2B31BA16759205008C5EF8 /* ROCreateAlbumResponseItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROCreateAlbumResponseItem.m; sourceTree = "<group>"; };
+		5F2B31BB16759205008C5EF8 /* ROFriendResponseItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROFriendResponseItem.h; sourceTree = "<group>"; };
+		5F2B31BC16759205008C5EF8 /* ROFriendResponseItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROFriendResponseItem.m; sourceTree = "<group>"; };
+		5F2B31BD16759205008C5EF8 /* ROPublishPhotoResponseItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROPublishPhotoResponseItem.h; sourceTree = "<group>"; };
+		5F2B31BE16759205008C5EF8 /* ROPublishPhotoResponseItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROPublishPhotoResponseItem.m; sourceTree = "<group>"; };
+		5F2B31BF16759205008C5EF8 /* ROResponseItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROResponseItem.h; sourceTree = "<group>"; };
+		5F2B31C016759205008C5EF8 /* ROResponseItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROResponseItem.m; sourceTree = "<group>"; };
+		5F2B31C116759205008C5EF8 /* ROUserResponseItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROUserResponseItem.h; sourceTree = "<group>"; };
+		5F2B31C216759205008C5EF8 /* ROUserResponseItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROUserResponseItem.m; sourceTree = "<group>"; };
+		5F2B31C316759205008C5EF8 /* RORequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RORequest.h; sourceTree = "<group>"; };
+		5F2B31C416759205008C5EF8 /* RORequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RORequest.m; sourceTree = "<group>"; };
+		5F2B31C516759205008C5EF8 /* ROResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROResponse.h; sourceTree = "<group>"; };
+		5F2B31C616759205008C5EF8 /* ROResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROResponse.m; sourceTree = "<group>"; };
+		5F2B31C816759205008C5EF8 /* ROMacroDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROMacroDef.h; sourceTree = "<group>"; };
+		5F2B31C916759205008C5EF8 /* ROUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROUtility.h; sourceTree = "<group>"; };
+		5F2B31CA16759205008C5EF8 /* ROUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROUtility.m; sourceTree = "<group>"; };
+		5F2B31CC16759205008C5EF8 /* ROCheckOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROCheckOrderCell.h; sourceTree = "<group>"; };
+		5F2B31CD16759205008C5EF8 /* ROCheckOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROCheckOrderCell.m; sourceTree = "<group>"; };
+		5F2B31CE16759205008C5EF8 /* ROCheckOrderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ROCheckOrderCell.xib; sourceTree = "<group>"; };
+		5F2B31D016759205008C5EF8 /* RODialogModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RODialogModel.h; sourceTree = "<group>"; };
+		5F2B31D116759205008C5EF8 /* RODialogModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RODialogModel.m; sourceTree = "<group>"; };
+		5F2B31D216759205008C5EF8 /* RODialogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RODialogView.h; sourceTree = "<group>"; };
+		5F2B31D316759205008C5EF8 /* RODialogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RODialogView.m; sourceTree = "<group>"; };
+		5F2B31D516759205008C5EF8 /* ROCloseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROCloseButton.h; sourceTree = "<group>"; };
+		5F2B31D616759205008C5EF8 /* ROCloseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROCloseButton.m; sourceTree = "<group>"; };
+		5F2B31D716759205008C5EF8 /* ROGlobalStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROGlobalStyle.h; sourceTree = "<group>"; };
+		5F2B31D816759205008C5EF8 /* ROGlobalStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROGlobalStyle.m; sourceTree = "<group>"; };
+		5F2B31D916759205008C5EF8 /* ROImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROImageView.h; sourceTree = "<group>"; };
+		5F2B31DA16759205008C5EF8 /* ROImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROImageView.m; sourceTree = "<group>"; };
+		5F2B31DC16759205008C5EF8 /* ROPublishPhotoDialogModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROPublishPhotoDialogModel.h; sourceTree = "<group>"; };
+		5F2B31DD16759205008C5EF8 /* ROPublishPhotoDialogModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROPublishPhotoDialogModel.m; sourceTree = "<group>"; };
+		5F2B31DE16759205008C5EF8 /* ROPublishPhotoInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROPublishPhotoInternal.h; sourceTree = "<group>"; };
+		5F2B31DF16759205008C5EF8 /* ROPublishPhotoInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ROPublishPhotoInternal.m; sourceTree = "<group>"; };
+		5F2B322616759268008C5EF8 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		5F2D1554164121F400B59BE8 /* DateActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DateActivityCell.h; path = Class/DateActivityCell.h; sourceTree = "<group>"; };
 		5F2D1555164121F500B59BE8 /* DateActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DateActivityCell.m; path = Class/DateActivityCell.m; sourceTree = "<group>"; };
 		5F2D15571641220A00B59BE8 /* DateActivityCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateActivityCell.xib; sourceTree = "<group>"; };
@@ -326,6 +520,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F2B322716759268008C5EF8 /* libsqlite3.0.dylib in Frameworks */,
 				5F340A33164CF2F600EEC488 /* MessageUI.framework in Frameworks */,
 				5F843FE3164A70A900AB2F22 /* libz.dylib in Frameworks */,
 				8432969C155A148C00102B12 /* UIKit.framework in Frameworks */,
@@ -399,6 +594,264 @@
 				5F2D15571641220A00B59BE8 /* DateActivityCell.xib */,
 			);
 			name = NN;
+			sourceTree = "<group>";
+		};
+		5F2B3154167591CF008C5EF8 /* RenRen */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B322616759268008C5EF8 /* libsqlite3.0.dylib */,
+				5F2B315616759205008C5EF8 /* FMDB */,
+				5F2B315D16759205008C5EF8 /* JSON */,
+				5F2B316B16759205008C5EF8 /* Renren */,
+			);
+			name = RenRen;
+			sourceTree = "<group>";
+		};
+		5F2B315616759205008C5EF8 /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B315716759205008C5EF8 /* FMDatabase.h */,
+				5F2B315816759205008C5EF8 /* FMDatabase.m */,
+				5F2B315916759205008C5EF8 /* FMDatabaseAdditions.h */,
+				5F2B315A16759205008C5EF8 /* FMDatabaseAdditions.m */,
+				5F2B315B16759205008C5EF8 /* FMResultSet.h */,
+				5F2B315C16759205008C5EF8 /* FMResultSet.m */,
+			);
+			path = FMDB;
+			sourceTree = "<group>";
+		};
+		5F2B315D16759205008C5EF8 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B315E16759205008C5EF8 /* JSON.h */,
+				5F2B315F16759205008C5EF8 /* NSObject+SBJSON.h */,
+				5F2B316016759205008C5EF8 /* NSObject+SBJSON.m */,
+				5F2B316116759205008C5EF8 /* NSString+SBJSON.h */,
+				5F2B316216759205008C5EF8 /* NSString+SBJSON.m */,
+				5F2B316316759205008C5EF8 /* SBJSON.h */,
+				5F2B316416759205008C5EF8 /* SBJSON.m */,
+				5F2B316516759205008C5EF8 /* SBJsonBase.h */,
+				5F2B316616759205008C5EF8 /* SBJsonBase.m */,
+				5F2B316716759205008C5EF8 /* SBJsonParser.h */,
+				5F2B316816759205008C5EF8 /* SBJsonParser.m */,
+				5F2B316916759205008C5EF8 /* SBJsonWriter.h */,
+				5F2B316A16759205008C5EF8 /* SBJsonWriter.m */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+		5F2B316B16759205008C5EF8 /* Renren */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B316C16759205008C5EF8 /* Renren.h */,
+				5F2B316D16759205008C5EF8 /* Renren.m */,
+				5F2B316E16759205008C5EF8 /* RenrenPay.h */,
+				5F2B316F16759205008C5EF8 /* RenrenPay.m */,
+				5F2B317016759205008C5EF8 /* ROConnect.h */,
+				5F2B317116759205008C5EF8 /* RODialogViewController */,
+				5F2B317A16759205008C5EF8 /* ROError */,
+				5F2B317F16759205008C5EF8 /* ROImages */,
+				5F2B319416759205008C5EF8 /* RONavigationViewController */,
+				5F2B319D16759205008C5EF8 /* ROPayDAO */,
+				5F2B31A416759205008C5EF8 /* RORequest */,
+				5F2B31C716759205008C5EF8 /* ROTools */,
+				5F2B31CB16759205008C5EF8 /* ROView */,
+				5F2B31CF16759205008C5EF8 /* Sample UI */,
+			);
+			path = Renren;
+			sourceTree = "<group>";
+		};
+		5F2B317116759205008C5EF8 /* RODialogViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B317216759205008C5EF8 /* ROBaseDialogViewController.h */,
+				5F2B317316759205008C5EF8 /* ROBaseDialogViewController.m */,
+				5F2B317416759205008C5EF8 /* ROCheckDialogViewController.h */,
+				5F2B317516759205008C5EF8 /* ROCheckDialogViewController.m */,
+				5F2B317616759205008C5EF8 /* ROPayDialogViewController.h */,
+				5F2B317716759205008C5EF8 /* ROPayDialogViewController.m */,
+				5F2B317816759205008C5EF8 /* ROWebDialogViewController.h */,
+				5F2B317916759205008C5EF8 /* ROWebDialogViewController.m */,
+			);
+			path = RODialogViewController;
+			sourceTree = "<group>";
+		};
+		5F2B317A16759205008C5EF8 /* ROError */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B317B16759205008C5EF8 /* ROError.h */,
+				5F2B317C16759205008C5EF8 /* ROError.m */,
+				5F2B317D16759205008C5EF8 /* ROPayError.h */,
+				5F2B317E16759205008C5EF8 /* ROPayError.m */,
+			);
+			path = ROError;
+			sourceTree = "<group>";
+		};
+		5F2B317F16759205008C5EF8 /* ROImages */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B318016759205008C5EF8 /* bottom-bar.png */,
+				5F2B318116759205008C5EF8 /* bottom-bar@2x.png */,
+				5F2B318216759205008C5EF8 /* close.png */,
+				5F2B318316759205008C5EF8 /* close@2x.png */,
+				5F2B318416759205008C5EF8 /* close_selected.png */,
+				5F2B318516759205008C5EF8 /* close_selected@2x.png */,
+				5F2B318616759205008C5EF8 /* head-frame.png */,
+				5F2B318716759205008C5EF8 /* head-frame@2x.png */,
+				5F2B318816759205008C5EF8 /* input-frame.png */,
+				5F2B318916759205008C5EF8 /* input-frame@2x.png */,
+				5F2B318A16759205008C5EF8 /* PayLogo.png */,
+				5F2B318B16759205008C5EF8 /* PayLogo@2x.png */,
+				5F2B318C16759205008C5EF8 /* photo-frame.png */,
+				5F2B318D16759205008C5EF8 /* photo-frame@2x.png */,
+				5F2B318E16759205008C5EF8 /* renren-logo-top-bar.png */,
+				5F2B318F16759205008C5EF8 /* renren-logo-top-bar@2x.png */,
+				5F2B319016759205008C5EF8 /* RepairButton.png */,
+				5F2B319116759205008C5EF8 /* RepairButton@2x.png */,
+				5F2B319216759205008C5EF8 /* small-button-normal.png */,
+				5F2B319316759205008C5EF8 /* small-button-normal@2x.png */,
+			);
+			path = ROImages;
+			sourceTree = "<group>";
+		};
+		5F2B319416759205008C5EF8 /* RONavigationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B319516759205008C5EF8 /* ROBaseNavigationViewController.h */,
+				5F2B319616759205008C5EF8 /* ROBaseNavigationViewController.m */,
+				5F2B319716759205008C5EF8 /* ROCheckNavigationViewController.h */,
+				5F2B319816759205008C5EF8 /* ROCheckNavigationViewController.m */,
+				5F2B319916759205008C5EF8 /* ROPayNavigationViewController.h */,
+				5F2B319A16759205008C5EF8 /* ROPayNavigationViewController.m */,
+				5F2B319B16759205008C5EF8 /* ROWebNavigationViewController.h */,
+				5F2B319C16759205008C5EF8 /* ROWebNavigationViewController.m */,
+			);
+			path = RONavigationViewController;
+			sourceTree = "<group>";
+		};
+		5F2B319D16759205008C5EF8 /* ROPayDAO */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B319E16759205008C5EF8 /* ROPayDB.h */,
+				5F2B319F16759205008C5EF8 /* ROPayDB.m */,
+				5F2B31A016759205008C5EF8 /* ROPayOrderDao.h */,
+				5F2B31A116759205008C5EF8 /* ROPayOrderDao.m */,
+				5F2B31A216759205008C5EF8 /* ROPayOrderInfo.h */,
+				5F2B31A316759205008C5EF8 /* ROPayOrderInfo.m */,
+			);
+			path = ROPayDAO;
+			sourceTree = "<group>";
+		};
+		5F2B31A416759205008C5EF8 /* RORequest */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B31A516759205008C5EF8 /* RequestParam */,
+				5F2B31B616759205008C5EF8 /* ResponseItem */,
+				5F2B31C316759205008C5EF8 /* RORequest.h */,
+				5F2B31C416759205008C5EF8 /* RORequest.m */,
+				5F2B31C516759205008C5EF8 /* ROResponse.h */,
+				5F2B31C616759205008C5EF8 /* ROResponse.m */,
+			);
+			path = RORequest;
+			sourceTree = "<group>";
+		};
+		5F2B31A516759205008C5EF8 /* RequestParam */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B31A616759205008C5EF8 /* ROAlbumsInfoRequestParam.h */,
+				5F2B31A716759205008C5EF8 /* ROAlbumsInfoRequestParam.m */,
+				5F2B31A816759205008C5EF8 /* ROCreateAlbumRequestParam.h */,
+				5F2B31A916759205008C5EF8 /* ROCreateAlbumRequestParam.m */,
+				5F2B31AA16759205008C5EF8 /* ROGetFriendsInfoRequestParam.h */,
+				5F2B31AB16759205008C5EF8 /* ROGetFriendsInfoRequestParam.m */,
+				5F2B31AC16759205008C5EF8 /* ROGetFriendsRequestParam.h */,
+				5F2B31AD16759205008C5EF8 /* ROGetFriendsRequestParam.m */,
+				5F2B31AE16759205008C5EF8 /* ROPasswordFlowRequestParam.h */,
+				5F2B31AF16759205008C5EF8 /* ROPasswordFlowRequestParam.m */,
+				5F2B31B016759205008C5EF8 /* ROPublishPhotoRequestParam.h */,
+				5F2B31B116759205008C5EF8 /* ROPublishPhotoRequestParam.m */,
+				5F2B31B216759205008C5EF8 /* RORequestParam.h */,
+				5F2B31B316759205008C5EF8 /* RORequestParam.m */,
+				5F2B31B416759205008C5EF8 /* ROUserInfoRequestParam.h */,
+				5F2B31B516759205008C5EF8 /* ROUserInfoRequestParam.m */,
+			);
+			path = RequestParam;
+			sourceTree = "<group>";
+		};
+		5F2B31B616759205008C5EF8 /* ResponseItem */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B31B716759205008C5EF8 /* ROAlbumResponseltem.h */,
+				5F2B31B816759205008C5EF8 /* ROAlbumResponseltem.m */,
+				5F2B31B916759205008C5EF8 /* ROCreateAlbumResponseItem.h */,
+				5F2B31BA16759205008C5EF8 /* ROCreateAlbumResponseItem.m */,
+				5F2B31BB16759205008C5EF8 /* ROFriendResponseItem.h */,
+				5F2B31BC16759205008C5EF8 /* ROFriendResponseItem.m */,
+				5F2B31BD16759205008C5EF8 /* ROPublishPhotoResponseItem.h */,
+				5F2B31BE16759205008C5EF8 /* ROPublishPhotoResponseItem.m */,
+				5F2B31BF16759205008C5EF8 /* ROResponseItem.h */,
+				5F2B31C016759205008C5EF8 /* ROResponseItem.m */,
+				5F2B31C116759205008C5EF8 /* ROUserResponseItem.h */,
+				5F2B31C216759205008C5EF8 /* ROUserResponseItem.m */,
+			);
+			path = ResponseItem;
+			sourceTree = "<group>";
+		};
+		5F2B31C716759205008C5EF8 /* ROTools */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B31C816759205008C5EF8 /* ROMacroDef.h */,
+				5F2B31C916759205008C5EF8 /* ROUtility.h */,
+				5F2B31CA16759205008C5EF8 /* ROUtility.m */,
+			);
+			path = ROTools;
+			sourceTree = "<group>";
+		};
+		5F2B31CB16759205008C5EF8 /* ROView */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B31CC16759205008C5EF8 /* ROCheckOrderCell.h */,
+				5F2B31CD16759205008C5EF8 /* ROCheckOrderCell.m */,
+				5F2B31CE16759205008C5EF8 /* ROCheckOrderCell.xib */,
+			);
+			path = ROView;
+			sourceTree = "<group>";
+		};
+		5F2B31CF16759205008C5EF8 /* Sample UI */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B31D016759205008C5EF8 /* RODialogModel.h */,
+				5F2B31D116759205008C5EF8 /* RODialogModel.m */,
+				5F2B31D216759205008C5EF8 /* RODialogView.h */,
+				5F2B31D316759205008C5EF8 /* RODialogView.m */,
+				5F2B31D416759205008C5EF8 /* UI */,
+				5F2B31DB16759205008C5EF8 /* UploadPhotoDialog */,
+			);
+			path = "Sample UI";
+			sourceTree = "<group>";
+		};
+		5F2B31D416759205008C5EF8 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B31D516759205008C5EF8 /* ROCloseButton.h */,
+				5F2B31D616759205008C5EF8 /* ROCloseButton.m */,
+				5F2B31D716759205008C5EF8 /* ROGlobalStyle.h */,
+				5F2B31D816759205008C5EF8 /* ROGlobalStyle.m */,
+				5F2B31D916759205008C5EF8 /* ROImageView.h */,
+				5F2B31DA16759205008C5EF8 /* ROImageView.m */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		5F2B31DB16759205008C5EF8 /* UploadPhotoDialog */ = {
+			isa = PBXGroup;
+			children = (
+				5F2B31DC16759205008C5EF8 /* ROPublishPhotoDialogModel.h */,
+				5F2B31DD16759205008C5EF8 /* ROPublishPhotoDialogModel.m */,
+				5F2B31DE16759205008C5EF8 /* ROPublishPhotoInternal.h */,
+				5F2B31DF16759205008C5EF8 /* ROPublishPhotoInternal.m */,
+			);
+			path = UploadPhotoDialog;
 			sourceTree = "<group>";
 		};
 		5F4AF0A315679E9E005ECD5D /* Image */ = {
@@ -610,6 +1063,7 @@
 		843296A1155A148C00102B12 /* PrettyRich */ = {
 			isa = PBXGroup;
 			children = (
+				5F2B3154167591CF008C5EF8 /* RenRen */,
 				5F843FDD164A705A00AB2F22 /* UMeng */,
 				5F056892162FF8A9007D74A0 /* NN */,
 				5F88C7CC158B5DF900EFC488 /* Chat */,
@@ -783,6 +1237,27 @@
 				5F196DC0165A4094003072E5 /* help2.jpg in Resources */,
 				5F196DC1165A4094003072E5 /* help3.jpg in Resources */,
 				5F196DC2165A4094003072E5 /* help4.jpg in Resources */,
+				5F2B31F116759205008C5EF8 /* bottom-bar.png in Resources */,
+				5F2B31F216759205008C5EF8 /* bottom-bar@2x.png in Resources */,
+				5F2B31F316759205008C5EF8 /* close.png in Resources */,
+				5F2B31F416759205008C5EF8 /* close@2x.png in Resources */,
+				5F2B31F516759205008C5EF8 /* close_selected.png in Resources */,
+				5F2B31F616759205008C5EF8 /* close_selected@2x.png in Resources */,
+				5F2B31F716759205008C5EF8 /* head-frame.png in Resources */,
+				5F2B31F816759205008C5EF8 /* head-frame@2x.png in Resources */,
+				5F2B31F916759205008C5EF8 /* input-frame.png in Resources */,
+				5F2B31FA16759205008C5EF8 /* input-frame@2x.png in Resources */,
+				5F2B31FB16759205008C5EF8 /* PayLogo.png in Resources */,
+				5F2B31FC16759205008C5EF8 /* PayLogo@2x.png in Resources */,
+				5F2B31FD16759205008C5EF8 /* photo-frame.png in Resources */,
+				5F2B31FE16759205008C5EF8 /* photo-frame@2x.png in Resources */,
+				5F2B31FF16759205008C5EF8 /* renren-logo-top-bar.png in Resources */,
+				5F2B320016759205008C5EF8 /* renren-logo-top-bar@2x.png in Resources */,
+				5F2B320116759205008C5EF8 /* RepairButton.png in Resources */,
+				5F2B320216759205008C5EF8 /* RepairButton@2x.png in Resources */,
+				5F2B320316759205008C5EF8 /* small-button-normal.png in Resources */,
+				5F2B320416759205008C5EF8 /* small-button-normal@2x.png in Resources */,
+				5F2B321E16759205008C5EF8 /* ROCheckOrderCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -843,6 +1318,55 @@
 				5FD8E4E01651098F00BA33CE /* HPGrowingTextView.m in Sources */,
 				5FD8E4E71651098F00BA33CE /* MessageUIView.m in Sources */,
 				5F3DF8C51651426F00E2E63D /* DateDetailView.m in Sources */,
+				5F2B31E016759205008C5EF8 /* FMDatabase.m in Sources */,
+				5F2B31E116759205008C5EF8 /* FMDatabaseAdditions.m in Sources */,
+				5F2B31E216759205008C5EF8 /* FMResultSet.m in Sources */,
+				5F2B31E316759205008C5EF8 /* NSObject+SBJSON.m in Sources */,
+				5F2B31E416759205008C5EF8 /* NSString+SBJSON.m in Sources */,
+				5F2B31E516759205008C5EF8 /* SBJSON.m in Sources */,
+				5F2B31E616759205008C5EF8 /* SBJsonBase.m in Sources */,
+				5F2B31E716759205008C5EF8 /* SBJsonParser.m in Sources */,
+				5F2B31E816759205008C5EF8 /* SBJsonWriter.m in Sources */,
+				5F2B31E916759205008C5EF8 /* Renren.m in Sources */,
+				5F2B31EA16759205008C5EF8 /* RenrenPay.m in Sources */,
+				5F2B31EB16759205008C5EF8 /* ROBaseDialogViewController.m in Sources */,
+				5F2B31EC16759205008C5EF8 /* ROCheckDialogViewController.m in Sources */,
+				5F2B31ED16759205008C5EF8 /* ROPayDialogViewController.m in Sources */,
+				5F2B31EE16759205008C5EF8 /* ROWebDialogViewController.m in Sources */,
+				5F2B31EF16759205008C5EF8 /* ROError.m in Sources */,
+				5F2B31F016759205008C5EF8 /* ROPayError.m in Sources */,
+				5F2B320516759205008C5EF8 /* ROBaseNavigationViewController.m in Sources */,
+				5F2B320616759205008C5EF8 /* ROCheckNavigationViewController.m in Sources */,
+				5F2B320716759205008C5EF8 /* ROPayNavigationViewController.m in Sources */,
+				5F2B320816759205008C5EF8 /* ROWebNavigationViewController.m in Sources */,
+				5F2B320916759205008C5EF8 /* ROPayDB.m in Sources */,
+				5F2B320A16759205008C5EF8 /* ROPayOrderDao.m in Sources */,
+				5F2B320B16759205008C5EF8 /* ROPayOrderInfo.m in Sources */,
+				5F2B320C16759205008C5EF8 /* ROAlbumsInfoRequestParam.m in Sources */,
+				5F2B320D16759205008C5EF8 /* ROCreateAlbumRequestParam.m in Sources */,
+				5F2B320E16759205008C5EF8 /* ROGetFriendsInfoRequestParam.m in Sources */,
+				5F2B320F16759205008C5EF8 /* ROGetFriendsRequestParam.m in Sources */,
+				5F2B321016759205008C5EF8 /* ROPasswordFlowRequestParam.m in Sources */,
+				5F2B321116759205008C5EF8 /* ROPublishPhotoRequestParam.m in Sources */,
+				5F2B321216759205008C5EF8 /* RORequestParam.m in Sources */,
+				5F2B321316759205008C5EF8 /* ROUserInfoRequestParam.m in Sources */,
+				5F2B321416759205008C5EF8 /* ROAlbumResponseltem.m in Sources */,
+				5F2B321516759205008C5EF8 /* ROCreateAlbumResponseItem.m in Sources */,
+				5F2B321616759205008C5EF8 /* ROFriendResponseItem.m in Sources */,
+				5F2B321716759205008C5EF8 /* ROPublishPhotoResponseItem.m in Sources */,
+				5F2B321816759205008C5EF8 /* ROResponseItem.m in Sources */,
+				5F2B321916759205008C5EF8 /* ROUserResponseItem.m in Sources */,
+				5F2B321A16759205008C5EF8 /* RORequest.m in Sources */,
+				5F2B321B16759205008C5EF8 /* ROResponse.m in Sources */,
+				5F2B321C16759205008C5EF8 /* ROUtility.m in Sources */,
+				5F2B321D16759205008C5EF8 /* ROCheckOrderCell.m in Sources */,
+				5F2B321F16759205008C5EF8 /* RODialogModel.m in Sources */,
+				5F2B322016759205008C5EF8 /* RODialogView.m in Sources */,
+				5F2B322116759205008C5EF8 /* ROCloseButton.m in Sources */,
+				5F2B322216759205008C5EF8 /* ROGlobalStyle.m in Sources */,
+				5F2B322316759205008C5EF8 /* ROImageView.m in Sources */,
+				5F2B322416759205008C5EF8 /* ROPublishPhotoDialogModel.m in Sources */,
+				5F2B322516759205008C5EF8 /* ROPublishPhotoInternal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

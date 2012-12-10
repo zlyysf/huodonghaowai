@@ -8,7 +8,7 @@
 
 #ifndef PrettyRich_TongQuConfig_h
 #define PrettyRich_TongQuConfig_h
-#warning newserver = true to use new server,false to use old one.
-#define NewServer NO
+
+#define NewServer NO //newserver = YES to use new server,NO to use old one.
 
 #endif
