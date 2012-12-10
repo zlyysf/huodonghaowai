@@ -218,5 +218,19 @@
 	}
 	return nil;
 }
++(NSString *)getLoggedInUserId:(NSString *)token{
+	NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+								   token, @"oauth_token",
+								   nil];
+	NSString *getKeyUrl = [RORequest serializeURL:kRRSessionKeyURL params:params];
+    id result = [RORequest getRequestSessionKeyWithParams:getKeyUrl];
+	if ([result isKindOfClass:[NSDictionary class]]) {
+        NSNumber *uid = [[result objectForKey:@"user"] objectForKey:@"id"];
+        if (uid) {
+            return [uid stringValue];
+        }
+	}
+	return nil;
+}
 
 @end

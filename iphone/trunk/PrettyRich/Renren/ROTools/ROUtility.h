@@ -71,7 +71,7 @@
  * 用accesstoken 获取调用api 时用到的参数session_key
  */
 +(NSString *)getSessionKeyByToken:(NSString *)token;
-
++(NSString *)getLoggedInUserId:(NSString *)token;
 @end
 
 

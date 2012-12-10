@@ -111,7 +111,7 @@
         _starUser = [self valueForItemKey:@"star"];
         _vipUser = [self valueForItemKey:@"zidou"];
         _vipLevel = [self valueForItemKey:@"vip"];
-        _brithday = [self valueForItemKey:@"brithday"];
+        _brithday = [self valueForItemKey:@"birthday"];
         _emailHash = [self valueForItemKey:@"email_hash"];
         _tinyUrl = [self valueForItemKey:@"tinyurl"];
         _headUrl = [self valueForItemKey:@"headurl"];

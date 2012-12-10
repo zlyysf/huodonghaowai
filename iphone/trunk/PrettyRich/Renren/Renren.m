@@ -224,7 +224,14 @@ static Renren *sharedRenren = nil;
             self.accessToken = token;
             self.expirationDate = expirationDate;
             self.secret=[ROUtility getSecretKeyByToken:token];
-            self.sessionKey=[ROUtility getSessionKeyByToken:token];	
+            self.sessionKey=[ROUtility getSessionKeyByToken:token];
+            NSString *userId = [ROUtility getLoggedInUserId:token];
+            if (userId != nil && ![userId isEqualToString:@""])
+            {
+                [[NSUserDefaults standardUserDefaults] setObject:userId forKey:@"session_UserId"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"kNotificationDidGetLoggedInUserId" object:nil];
+            }
             //用户信息保存到本地
             [self saveUserSessionInfo];	
             [self getLoggedInUserId];
