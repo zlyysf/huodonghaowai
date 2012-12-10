@@ -58,6 +58,7 @@
     NSString *dateId = [aDate objectForKey:@"dateId"];
     NSString *targetUserId = [aDate objectForKey:@"senderId"];
     NNWantJoinViewController *joinController = [[NNWantJoinViewController alloc]initWithNibName:@"NNWantJoinViewController" bundle:nil];
+    joinController.postType = PostTypeJoin;
     joinController.dateId = dateId;
     joinController.targetUserId = targetUserId;
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:joinController];

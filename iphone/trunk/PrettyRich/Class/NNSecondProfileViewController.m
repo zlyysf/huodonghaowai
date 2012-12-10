@@ -10,6 +10,7 @@
 #import "PrettyUtility.h"
 #import "AppDelegate.h"
 #import "MobClick.h"
+#import "NNWantJoinViewController.h"
 @interface NNSecondProfileViewController ()
 
 @end
@@ -29,6 +30,14 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    NSString *userId = [[NSUserDefaults standardUserDefaults]objectForKey:@"PrettyUserId"];
+    
+    if (![userId isEqualToString:profileId])
+    {
+        UIBarButtonItem *report = [[UIBarButtonItem alloc]initWithTitle:@"举报" style:UIBarButtonItemStyleBordered target:self action:@selector(reportUser)];
+        self.navigationItem.rightBarButtonItem = report;
+        [report release];
+    }
     isFirstLoad = YES;
     userInfoDict = [[NSMutableDictionary alloc]init ];
     imageDownloadManager = [[ImagesDownloadManager alloc] init];
@@ -53,6 +62,17 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [MobClick endLogPageView:@"SecondryProfileView"];
+}
+- (void)reportUser
+{
+    NNWantJoinViewController *joinController = [[NNWantJoinViewController alloc]initWithNibName:@"NNWantJoinViewController" bundle:nil];
+    joinController.targetUserId = profileId;
+    joinController.postType = PostTypeReport;
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:joinController];
+    [joinController release];
+    [self presentModalViewController:nav animated:YES];
+    [nav release];
+
 }
 - (void)startGetUser
 {

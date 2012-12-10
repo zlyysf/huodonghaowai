@@ -13,7 +13,7 @@
 @end
 
 @implementation NNWantJoinViewController
-@synthesize dateId,targetUserId,curConnection;
+@synthesize dateId,targetUserId,curConnection,postType;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -27,13 +27,24 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    UIBarButtonItem *reply = [[UIBarButtonItem alloc]initWithTitle:@"回复" style:UIBarButtonItemStyleBordered target:self action:@selector(replyButtonClicked)];
-    self.navigationItem.rightBarButtonItem = reply;
-    [reply release];
+    if (postType == PostTypeJoin)
+    {
+        UIBarButtonItem *reply = [[UIBarButtonItem alloc]initWithTitle:@"回复" style:UIBarButtonItemStyleBordered target:self action:@selector(replyButtonClicked)];
+        self.navigationItem.rightBarButtonItem = reply;
+        [reply release];
+        self.navigationItem.title = @"我要加入";
+    }
+    else
+    {
+        UIBarButtonItem *reply = [[UIBarButtonItem alloc]initWithTitle:@"发送" style:UIBarButtonItemStyleBordered target:self action:@selector(reportButtonClicked)];
+        self.navigationItem.rightBarButtonItem = reply;
+        [reply release];
+        self.navigationItem.title = @"我要举报";
+    }
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonClicked)];
     self.navigationItem.leftBarButtonItem = cancel;
     [cancel release];
-    self.navigationItem.title = @"我要加入";
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
     NodeAsyncConnection *cur = [[NodeAsyncConnection alloc]init];
     self.curConnection = cur;
@@ -64,6 +75,37 @@
 //        return NO;
 //    }
     
+}
+-(void)reportButtonClicked
+{
+    NSString *message = [self.messageTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([message length]!=0)
+    {
+        NSLog(@"%@",message);
+        //[self startReplyDate:message];
+    }
+}
+- (void)startReportUser:(NSString *)message
+{
+    NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"PrettyUserId"];
+    NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:userId,@"userId",self.targetUserId,@"targetUserId",message,@"description", nil];
+    [curConnection cancelDownload];
+    [self.activityIndicator startAnimating];
+    self.activityIndicator.hidden = NO;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    [curConnection startDownload:[NodeAsyncConnection createNodeHttpRequest:@"/user/reportUser" parameters:dict] :self :@selector(didEndReportUser:)];
+    [dict release];
+}
+- (void)didEndReportUser:(NodeAsyncConnection *)connection
+{
+    self.activityIndicator.hidden = YES;
+    [self.activityIndicator stopAnimating];
+    self.navigationItem.rightBarButtonItem.enabled = YES;
+    if (connection==nil || connection.result == nil) return;
+    if ([[connection.result objectForKey:@"status"]isEqualToString:@"success"])
+    {
+        [self.navigationController dismissModalViewControllerAnimated:YES];
+    }
 }
 
 -(void)replyButtonClicked
