@@ -2726,15 +2726,19 @@ Redis.prototype.getUsers = function(params, callback) {
 *
 * @param {Object} params - contains emailAccount
 * @param {Function} callback - is function(err,userId)
+*   if the emailAccount has no correspond user, userId will be null.
 */
 Redis.prototype.getUserIdByEmailAccount = function(params, callback) {
   var self = this;
   var messagePrefix = 'in Redis.getUserIdByEmailAccount, ';
   var req = params.req;
+  if(!callback){
+    var err = self.newError({errorKey:'needCallbackFunction',messagePrefix:messagePrefix});
+    return self.handleError({err:err});
+  }
   if (!params.emailAccount){
     var err = self.newError({errorKey:'needParameter',messageParams:['emailAccount'],messagePrefix:messagePrefix,req:req});
-    if (callback) return callback(err);
-    else return self.handleError({err:err});
+    return callback(err);
   }
   var emailAccount = params.emailAccount;
   var emailToUserKey = 'emailToUser';
@@ -2742,13 +2746,41 @@ Redis.prototype.getUserIdByEmailAccount = function(params, callback) {
   self.client.hget(emailToUserKey,field,function(err,userId){
     if (err){
       var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
-      if (callback) return callback(err2);
-      else return self.handleError({err:err2});
+      return callback(err2);
     }
-    if (callback) return callback(null,userId);
-    return;
+    return callback(null,userId);
   });//client.hget
 };//getUserIdByEmailAccount
+
+/**
+*
+* @param {Object} params - contains accountRenRen
+* @param {Function} callback - is function(err,userId)
+*   if the accountRenRen has no correspond user, userId will be null.
+*
+*/
+Redis.prototype.getUserIdByRenRenAccount = function(params, callback) {
+  var self = this;
+  var messagePrefix = 'in Redis.getUserIdByRenRenAccount, ';
+  if(!callback){
+    var err = self.newError({errorKey:'needCallbackFunction',messagePrefix:messagePrefix});
+    return self.handleError({err:err});
+  }
+  var req = params.req;
+  if (!params.accountRenRen){
+    var err = self.newError({errorKey:'needParameter',messageParams:['accountRenRen'],messagePrefix:messagePrefix,req:req});
+    return callback(err);
+  }
+  var accountRenRen = params.accountRenRen;
+  var uerRenRenKey = 'userRenRen:'+accountRenRen;
+  self.client.hget(uerRenRenKey,"userId",function(err,userId){
+    if (err){
+      var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
+      return callback(err2);
+    }
+    return callback(null,userId);
+  });//client.hget
+};//getUserIdByRenRenAccount
 
 /**
 *
@@ -2756,7 +2788,7 @@ Redis.prototype.getUserIdByEmailAccount = function(params, callback) {
 * @param {Function} callback - is function(err,inviteCodes)
 *
 */
-Redis.prototype.generateInviteCode = function(params, callback){
+Redis.prototype.generateInviteCodeD = function(params, callback){
   var self = this;
   var messagePrefix = 'in Redis.generateInviteCode, ';
   var req = params.req;
@@ -2828,7 +2860,7 @@ Redis.prototype.generateInviteCode = function(params, callback){
 *   codeInfo contains userId, isValid
 *
 */
-Redis.prototype.getInviteCodeInfo = function(params, callback){
+Redis.prototype.getInviteCodeInfoD = function(params, callback){
   var self = this;
   var messagePrefix = 'in Redis.getInviteCodeInfo, ';
   var req = params.req;
@@ -2867,9 +2899,9 @@ Redis.prototype.getInviteCodeInfo = function(params, callback){
 
 
 /**
- *
+ * if provided accountRenRen, will store renren.com account info.
  * @param {Object} params - contains emailAccount, password, inviteCode, name, gender, school, schoolId(optional),
- *   deviceType.
+ *   deviceType, deviceId, accountRenRen(optional), accessTokenRenRen(optional), accountInfoJson(optional), hometown(optional).
  * @param {Function} callback - is function(err,userObj)
  *   userObj contains userId,createTime,...
  */
@@ -2931,114 +2963,94 @@ Redis.prototype.registerEmailAccount = function(params, callback) {
   //var studentNO = params.studentNO;
   var deviceType = params.deviceType;
   var deviceId = params.deviceId;
+  var accountRenRen = params.accountRenRen;
+  var accessTokenRenRen = params.accessTokenRenRen;
+  var accountInfoJson = params.accountInfoJson;
 //  var latlng = params.latlng;
 //  var region = params.region;
 //  var geolibType = params.geolibType;
+  var hometown = params.hometown;
   var password = params.password;
   var encryptedPwd = '';
   if (password) encryptedPwd = handy.encrypt(password);
 
-  var schoolId = params.schoolId;
-  function checkAndGetSchoolId(cbFun){
-    if (schoolId) return cbFun(null,schoolId);
-    self.getSchoolId({req:req,schoolName:school}, function(err,schoolId){
-      return cbFun(err,schoolId);
-    });//getSchoolId
-  };//checkAndGetSchoolId
+  function checkAccountRenRen(cbFun){
+    if (!accountRenRen) return cbFun(null);
+    //TODO access renren.com to verify accessTokenRenRen and accountRenRen
+    self.getUserIdByRenRenAccount({accountRenRen:accountRenRen},function(err,userId){
+      if (err) return cbFun(err);
+      if (userId){
+        var err = self.newError({errorKey:'renrenAccountAlreadyRegistered',messageParams:[emailAccount],messagePrefix:messagePrefix,req:req});
+        return callback(err);
+      }
+      return cbFun(null);
+    });//getUserIdByRenRenAccount
+  };//checkAccountRenRen
 
-  checkAndGetSchoolId(function(err,schoolId){
-    if (err) return callback(err);
-    self.getInviteCodeInfo({req:req,inviteCode:inviteCode}, function(err,codeInfo){
+  function checkAccountEmail(cbFun){
+    self.getUserIdByEmailAccount({req:req,emailAccount:emailAccount}, function(err,userId){
       if (err) return callback(err);
-      var referrerId = codeInfo.userId;
-      var isCodeValid = codeInfo.isValid;
-      var expireTime = codeInfo.expireTime;
-      if (referrerId != config.config.users.system.userId){
-        if (!isCodeValid){
-          var err = self.newError({errorKey:'invalidInviteCode',messageParams:[],messagePrefix:messagePrefix,req:req});
-          return callback(err);
-        }
+      if (userId){
+        var err = self.newError({errorKey:'emailAlreadyRegistered',messageParams:[emailAccount],messagePrefix:messagePrefix,req:req});
+        return callback(err);
       }
-      if (expireTime){
-        expireTime = handy.convertToNumber(expireTime);
-        var nowTime = handy.getNowOfUTCdate().getTime();
-        if (expireTime < nowTime){
-          var err = self.newError({errorKey:'expiredInviteCode',messageParams:[],messagePrefix:messagePrefix,req:req});
-          return callback(err);
+      return cbFun(null);
+    });//getUserIdByEmailAccount
+  };//checkAccountEmail
+
+  checkAccountRenRen(function(err){
+    if (err) return callback(err);
+    checkAccountEmail(function(err){
+      if (err) return callback(err);
+
+      self.client.incr('user', function(err, newId) {
+        if (err){
+          var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
+          return callback(err2);
         }
-      }
+        userId = newId+'';
+        var multi = self.client.multi();
+        var createTime = handy.getNowOfUTCdate().getTime();
+        var userKey = 'user:'+userId;
+        var userObj = {userId:userId, emailAccount:emailAccount, password:encryptedPwd, name:name, gender:gender,
+            school:school, deviceType:deviceType, regDeviceId:deviceId, currentDeviceId:deviceId,
+            createTime:createTime+'', lastLoginTime:createTime+''};//region:regionJSONstr,
+        //if (latlng) userObj.latlng = latlng;
+        //if (geolibType) userObj.geolibType = geolibType;
+        //if (countyLocation) userObj.countyLocation = countyLocation;
+        if (accountRenRen) userObj.accountRenRen = accountRenRen;
+        if (hometown) userObj.accountRenRen = hometown;
 
-      self.getUserIdByEmailAccount({req:req,emailAccount:emailAccount}, function(err,userId){
-        if (err) return callback(err);
-        if (userId){
-          var err = self.newError({errorKey:'emailAlreadyRegistered',messageParams:[emailAccount],messagePrefix:messagePrefix,req:req});
-          return callback(err);
+        var paramsUser = handy.toArray(userKey,userObj);
+        multi.hmset(paramsUser);
+        var emailToUserKey = 'emailToUser';
+        multi.hset(emailToUserKey,emailAccount,userId);
+        if (accountRenRen){
+          var userRenRenKey = 'userRenRen:'+accountRenRen;
+          var userRenRenObj = {userId:userId, accountRenRen:accountRenRen, createTime:createTime+'', accessTokenRenRen:accessTokenRenRen};
+          if (accountInfoJson) userRenRenObj.accountInfoJson = accountInfoJson;
+          var paramsUserRenRen = handy.toArray(userRenRenKey,userRenRenObj);
+          multi.hmset(paramsUserRenRen);
+          multi.incr('userRenRenCount');
         }
 
-        var beMade = false;
-//        if (region == config.config.madeRegion){
-//          beMade = true;
-//        }
-//        var regionInfo = handy.getCentainLevelRegion({region:region,geolibType:geolibType,regionLevel:4});
-//        if (regionInfo.err) return callback(regionInfo.err);
-//        var regionJSONstr = JSON.stringify(regionInfo.regionObj);
-//        var countyLocation = regionInfo.centainLevelRegion;
-//        var regionInfo2 = handy.getCentainLevelRegion({regions:regionInfo.regions,regionLevel:3});
-//        var cityLocation = regionInfo2.centainLevelRegion;
-
-        self.client.incr('user', function(err, newId) {
+        multi.exec(function(err){
           if (err){
             var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
             return callback(err2);
           }
-          userId = newId+'';
-          var multi = self.client.multi();
-          var createTime = handy.getNowOfUTCdate().getTime();
-          var userKey = 'user:'+userId;
-          var userObj = {userId:userId, emailAccount:emailAccount, password:encryptedPwd, name:name, gender:gender,
-              school:school, schoolId:schoolId,
-              deviceType:deviceType, regDeviceId:deviceId, currentDeviceId:deviceId,
-              referrerId:referrerId, createTime:createTime+'', lastLoginTime:createTime+''};//region:regionJSONstr,
-          //if (latlng) userObj.latlng = latlng;
-          //if (geolibType) userObj.geolibType = geolibType;
-          //if (countyLocation) userObj.countyLocation = countyLocation;
-          if (beMade) userObj.beMade = beMade;
-          var paramsUser = handy.toArray(userKey,userObj);
-          multi.hmset(paramsUser);
-          var emailToUserKey = 'emailToUser';
-          multi.hset(emailToUserKey,emailAccount,userId);
-          //var regionToCountyKey = 'regionToCounty';
-          //var regionToCityKey = 'regionToCity';
-          //if (countyLocation) multi.sadd(regionToCountyKey,countyLocation);
-          //if (cityLocation) multi.sadd(regionToCityKey,cityLocation);
-          if (beMade){
-            var madeUsersKey = 'madeUsers:' + gender;
-            multi.zadd(madeUsersKey,userObj.createTime,userId);
-          }
-          if (inviteCode){
-            var inviteCodeKey = 'inviteCode';
-            multi.hset(inviteCodeKey, inviteCode.toUpperCase()+"Valid", 0);
-          }//if (inviteCode)
-          multi.exec(function(err){
-            if (err){
-              var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
-              return callback(err2);
-            }
-            if (callback) return callback(null, userObj);
-            return;
-          });//multi.exec
-          return;
-        });//client.incr
-      });//getUserIdByEmailAccount
-    });//getInviteCodeInfo
-  });//checkAndGetSchoolId
+          return callback(null, userObj);
+        });//multi.exec
+        return;
+      });//client.incr
+    });//checkAccountEmail
+  });//checkAccountRenRen
 };//registerEmailAccount
-
 
 
 /**
  *
- * @param {Object} params - contains emailAccount, password, deviceType, userFields, needPrimaryPhoto, primaryPhotoFields
+ * @param {Object} params - contains emailAccount, password, deviceType, deviceId, userFields, needPrimaryPhoto, primaryPhotoFields
  * @param {Function} callback - is function(err,userObj)
  *
  */
@@ -3086,6 +3098,7 @@ Redis.prototype.emailLogIn = function(params, callback) {
       var shouldExistFields = ['userId','password','disabled'];
       userFields = handy.unionArray({ary1:userFields, ary2:shouldExistFields});
     }
+
     self.getUser({req:req,userId:userId,userFields:userFields,needPrimaryPhoto:needPrimaryPhoto,primaryPhotoFields:primaryPhotoFields}, function(err,userObj){
       if (err){
         if (callback) return callback(err);
@@ -3109,7 +3122,6 @@ Redis.prototype.emailLogIn = function(params, callback) {
         if (callback) return callback(err);
         else return self.handleError({err:err});
       }
-      var userId = userObj.userId;
       self.updateUser({req:req,userId:userId,updateFields:{deviceType:deviceType,currentDeviceId:deviceId,lastLoginTime:nowTime+''}}, function(err){
         if (err){
           if (callback) return callback(err);
@@ -3121,6 +3133,81 @@ Redis.prototype.emailLogIn = function(params, callback) {
     });//getUser
   });//getUserIdByEmailAccount
 };//emailLogIn
+
+
+/**
+*
+* @param {Object} params - contains accountRenRen, accessTokenRenRen, deviceType, deviceId, userFields, needPrimaryPhoto, primaryPhotoFields
+* @param {Function} callback - is function(err,userInfo)
+*   userInfo contains userExist, user.
+*
+*/
+Redis.prototype.renrenAccountLogIn = function(params, callback) {
+  var self = this;
+  var messagePrefix = 'in Redis.renrenAccountLogIn, ';
+  var req = params.req;
+  //logger.logDebug("Redis.renrenAccountLogIn entered, params="+util.inspect(params,false,100));
+  if(!callback){
+    var err = self.newError({errorKey:'needCallbackFunction',messagePrefix:messagePrefix});
+    return self.handleError({err:err});
+  }
+  if (!params.accountRenRen){
+    var err = self.newError({errorKey:'needParameter',messageParams:['accountRenRen'],messagePrefix:messagePrefix,req:req});
+    return callback(err);
+  }
+  if (!params.accessTokenRenRen){
+    var err = self.newError({errorKey:'needParameter',messageParams:['accessTokenRenRen'],messagePrefix:messagePrefix,req:req});
+    return callback(err);
+  }
+  if (!params.deviceType){
+    var err = self.newError({errorKey:'needParameter',messageParams:['deviceType'],messagePrefix:messagePrefix,req:req});
+    return callback(err);
+  }
+  if (!params.deviceId){
+    var err = self.newError({errorKey:'needParameter',messageParams:['deviceId'],messagePrefix:messagePrefix,req:req});
+    return callback(err);
+  }
+  var accountRenRen = params.accountRenRen;
+  var accessTokenRenRen = params.accessTokenRenRen;
+  var deviceType = params.deviceType;
+  var deviceId = params.deviceId;
+  var userFields = params.userFields;
+  var needPrimaryPhoto = params.needPrimaryPhoto;
+  var primaryPhotoFields = params.primaryPhotoFields;
+  //TODO verify accessTokenRenRen with renren api
+
+  var nowTime = handy.getNowOfUTCdate().getTime();
+  self.getUserIdByRenRenAccount({req:req, accountRenRen:accountRenRen}, function(err,userId){
+    if (err) return callback(err);
+    if (!userId){
+      return callback(null,{userExist:false});
+    }
+    if (userFields){
+      var shouldExistFields = ['userId','disabled'];
+      userFields = handy.unionArray({ary1:userFields, ary2:shouldExistFields});
+    }
+
+    self.getUser({req:req,userId:userId,userFields:userFields,needPrimaryPhoto:needPrimaryPhoto,primaryPhotoFields:primaryPhotoFields}, function(err,userObj){
+      if (err) return callback(err);
+      //inconsistent data, should take care ! ......
+      if (!userObj || !userObj.userId){
+        var err = self.newError({errorKey:'userNotExist',messageParams:[userId],messagePrefix:messagePrefix,req:req});
+        return callback(err);
+      }
+      var userDisabled = handy.convertToBool(userObj.disabled);
+      if (userDisabled){
+        var err = self.newError({errorKey:'userDisabled',messageParams:[],messagePrefix:messagePrefix,req:req});
+        return callback(err);
+      }
+      self.updateUser({req:req,userId:userId,updateFields:{deviceType:deviceType,currentDeviceId:deviceId,lastLoginTime:nowTime+''}}, function(err){
+        if (err) return callback(err);
+        return callback(null, {userExist:true, user:userObj});
+      });//self.updateUser
+    });//getUser
+  });//getUserIdByRenRenAccount
+};//renrenAccountLogIn
+
+
 
 /**
 * a business function, check user in app.
@@ -4578,11 +4665,12 @@ Redis.prototype.createDate = function(params, callback) {
     if (callback) return callback(err);
     else return self.handleError({err:err});
   }
-  if (!params.schoolId){
-    var err = self.newError({errorKey:'needParameter',messageParams:['schoolId'],messagePrefix:messagePrefix,req:req});
+  if (!params.school){
+    var err = self.newError({errorKey:'needParameter',messageParams:['school'],messagePrefix:messagePrefix,req:req});
     if (callback) return callback(err);
     else return self.handleError({err:err});
   }
+
   var senderId = params.senderId;
 //  var latlng = params.latlng;
 //  var region = params.region;
@@ -4596,7 +4684,7 @@ Redis.prototype.createDate = function(params, callback) {
   var description = params.description;
   var photoId = params.photoId;
   var userGender = params.userGender;
-  var schoolId = params.schoolId;
+  var school = params.school;
   var userBeMade = params.userBeMade;
   var createTime = handy.getNowOfUTCdate().getTime()+'';
 
@@ -4640,7 +4728,7 @@ Redis.prototype.createDate = function(params, callback) {
     }
     //var schoolDatesGivenGenderKey = 'school:'+schoolId+':dates:'+userGender;
     //multi.zadd(schoolDatesGivenGenderKey,orderScore,dateId);
-    var schoolDatesKey = 'school:'+schoolId+':dates:all';
+    var schoolDatesKey = 'school:'+school+':dates:all';
     multi.zadd(schoolDatesKey,orderScore,dateId);
     var allDatesKey = 'alldates:all';
     multi.zadd(allDatesKey,orderScore,dateId);
@@ -8987,11 +9075,11 @@ Redis.prototype.getNearbyUserIds = function(params, callback){
 
 
 /**
- *
+ * not use schoolId because too many schoolName, just use schoolName in UTF8 encoding as id.
  * @param {Object} params - contains schoolName
  * @param {Function} callback - is function(err,id)
  */
-Redis.prototype.getSchoolId = function(params, callback){
+Redis.prototype.getSchoolIdD = function(params, callback){
   var self = this;
   //logger.logDebug("Redis.getSchoolId entered, params="+util.inspect(params,false,100));
   var messagePrefix = 'in Redis.getSchoolId, ';

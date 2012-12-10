@@ -116,6 +116,9 @@ function Server () {
   self.secureApp.post('/user/logIn',
       function (req, res, next) { self._commonPreConfig(req, res, next);},
       function (req, res) { self.logIn(req, res);});
+  self.secureApp.post('/user/logInFromRenRen',
+      function (req, res, next) { self._commonPreConfig(req, res, next);},
+      function (req, res) { self.logInFromRenRen(req, res);});
   self.secureApp.post('/user/resetPassword',
       function (req, res, next) { self._commonPreConfig(req, res, next);},
       function (req, res, next) { self._checkLogInSessionStrict(req, res, next);},
@@ -128,7 +131,7 @@ function Server () {
       function (req, res, next) { self._commonPreConfig(req, res, next);},
       function (req, res) { self.getConfig(req, res);});
 
-  self.app.post('/user/generateInviteCode',
+  self.app.post('/user/generateInviteCodeD',
       function (req, res, next) { self._commonPreConfig(req, res, next);},
       //function (req, res, next) { self._checkLogInSessionStrict(req, res, next);},
       function (req, res) { self.generateInviteCode(req, res);});
@@ -645,7 +648,7 @@ Server.prototype.newWarning = function(params) {
 * @returns
 *   {status:success|fail, result:{inviteCode, inviteCodes}}
 */
-Server.prototype.generateInviteCode = function(req, res) {
+Server.prototype.generateInviteCodeD = function(req, res) {
   var self = this;
   //logger.logDebug("Server.generateInviteCode entered, params in body="+util.inspect(req.body,false,100));
   var messagePrefix = 'in Server.generateInviteCode, ';
@@ -740,15 +743,25 @@ Server.prototype.register = function(req, res) {
 //      return self.handleError({err:err,req:req,res:res});
 //    }
 //  }
+  if (req.body.accountRenRen){
+    if (!req.body.accessTokenRenRen){
+      var err = self.newError({errorKey:'needParameter',messageParams:['accessTokenRenRen'],messagePrefix:messagePrefix,req:req});
+      return self.handleError({err:err,req:req,res:res});
+    }
+  }
   var emailAccount = req.body.emailAccount;
   var password = req.body.password;
-  var inviteCode = req.body.inviteCode;
+  //var inviteCode = req.body.inviteCode;
   var name = req.body.name;
   var gender = req.body.gender;
   var school = req.body.school;
   //var studentNO = req.body.studentNO;
   var deviceType = req.body.deviceType;
   var deviceId = req.body.deviceId;
+  var accountRenRen = req.body.accountRenRen;
+  var accessTokenRenRen = req.body.accessTokenRenRen;
+  var accountInfoJson = req.body.accountInfoJson;
+  var hometown = req.body.hometown;
 //  var latlng = req.body.latlng;
 //  var region = req.body.region;
 //  var geolibType = req.body.geolibType;
@@ -756,13 +769,11 @@ Server.prototype.register = function(req, res) {
 //  var centainLevelRegion = null;
 //  if (!region) region = config.config.defaultRegion;
 
-  self.store.getSchoolId({req:req,schoolName:school},function(err,schoolId){
-    if (err) return self.handleError({err:err,req:req,res:res});
 
     gender = gender.toLowerCase();
-    self.store.registerEmailAccount({req:req,emailAccount:emailAccount,password:password, inviteCode:inviteCode,
-    name:name,gender:gender,school:school, schoolId:schoolId,
-    deviceType:deviceType, deviceId:deviceId},function(err,userObj){
+    self.store.registerEmailAccount({req:req,emailAccount:emailAccount,password:password,
+    name:name,gender:gender,school:school, accountRenRen:accountRenRen, accessTokenRenRen:accessTokenRenRen, accountInfoJson:accountInfoJson,
+    deviceType:deviceType, deviceId:deviceId, hometown:hometown},function(err,userObj){
       if (err) return self.handleError({err:err,req:req,res:res});
       var userId = userObj.userId;
       self.store.updateUserStat({req:req,userId:userId,gender:gender},function(err){
@@ -791,7 +802,7 @@ Server.prototype.register = function(req, res) {
         });//sendWelcomeEmail
       });//updateUserStat
     });//store.registerEmailAccount
-  });//getSchoolId
+
 
   function sendWelcomeEmail(cbFun){
     var mailMessage = {
@@ -978,10 +989,6 @@ Server.prototype.logIn = function(req, res) {
     var err = self.newError({errorKey:'needParameter',messageParams:['deviceType'],messagePrefix:messagePrefix,req:req});
     return self.handleError({err:err,req:req,res:res});
   }
-  if (!req.body.deviceType){
-    var err = self.newError({errorKey:'needParameter',messageParams:['deviceType'],messagePrefix:messagePrefix,req:req});
-    return self.handleError({err:err,req:req,res:res});
-  }
   if (!req.body.deviceId){
     var err = self.newError({errorKey:'needParameter',messageParams:['deviceId'],messagePrefix:messagePrefix,req:req});
     return self.handleError({err:err,req:req,res:res});
@@ -1027,6 +1034,72 @@ Server.prototype.logIn = function(req, res) {
     });//updateUserStatDailyActive
   });//emailLogIn
 };//logIn
+
+
+
+/**
+*
+* @param req - contains emailAccount, password, deviceType
+* @param res
+* @returns
+*   {status:success|fail, result:{userId, name, height, gender, primaryPhotoId, primaryPhotoPath}}
+*/
+Server.prototype.logInFromRenRen = function(req, res) {
+  var self = this;
+  //logger.logDebug("Server.logInFromRenRen entered, params in body="+util.inspect(req.body,false,100));
+  var messagePrefix = 'in Server.logInFromRenRen, ';
+  if (!req.body.accountRenRen){
+    var err = self.newError({errorKey:'needParameter',messageParams:['accountRenRen'],messagePrefix:messagePrefix,req:req});
+    return self.handleError({err:err,req:req,res:res});
+  }
+  if (!req.body.accessTokenRenRen){
+    var err = self.newError({errorKey:'needParameter',messageParams:['accessTokenRenRen'],messagePrefix:messagePrefix,req:req});
+    return self.handleError({err:err,req:req,res:res});
+  }
+  if (!req.body.deviceType){
+    var err = self.newError({errorKey:'needParameter',messageParams:['deviceType'],messagePrefix:messagePrefix,req:req});
+    return self.handleError({err:err,req:req,res:res});
+  }
+  if (!req.body.deviceId){
+    var err = self.newError({errorKey:'needParameter',messageParams:['deviceId'],messagePrefix:messagePrefix,req:req});
+    return self.handleError({err:err,req:req,res:res});
+  }
+  var accountRenRen = req.body.accountRenRen;
+  var accessTokenRenRen = req.body.accessTokenRenRen;
+  var deviceType = req.body.deviceType;
+  var deviceId = req.body.deviceId;
+  self.store.renrenAccountLogIn({req:req,accountRenRen:accountRenRen,accessTokenRenRen:accessTokenRenRen,deviceType:deviceType,deviceId:deviceId,
+  userFields:['userId','name','gender','primaryPhotoId','height', 'school', 'studentNO', 'department', 'bloodGroup',
+              'constellation', 'hometown', 'educationalStatus', 'description', 'goodRateCount'],
+  needPrimaryPhoto:true,primaryPhotoFields:['userId','photoPath']},function(err,userInfo){
+    if (err) return self.handleError({err:err,req:req,res:res});
+    var httpRetData = {status:'success',result:userInfo};
+    if (!userInfo.userExist){
+      self.returnDataFromResponse({res:res,req:req,data:httpRetData});
+      return;
+    }
+    var userId = userInfo.user.userId;
+    var dtActionTime = handy.getNowOfUTCdate();
+    self.store.updateUserStatDailyActive({req:req,userId:userId,updateTime:dtActionTime.getTime()},function(err,alreadyUpdateThisDay){
+      var statErr = err;
+      var beDailyFirst = !alreadyUpdateThisDay;
+      if (statErr) httpRetData.result.statErr = statErr;
+      var oldSessionUserId = req.session.userId;
+      req.session.userId = userId;
+      if (oldSessionUserId && oldSessionUserId != userId){
+        self._logOut({req:req,userId:oldSessionUserId},function(err){
+          if (err) return self.handleError({err:err,req:req,res:res});
+          self.returnDataFromResponse({res:res,req:req,data:httpRetData});
+          return;
+        });//_logOut
+        return;
+      }
+      self.returnDataFromResponse({res:res,req:req,data:httpRetData});
+      return;
+    });//updateUserStatDailyActive
+  });//renrenAccountLogIn
+};//logInFromRenRen
+
 
 
 /**
@@ -1441,146 +1514,6 @@ Server.prototype._auditPhotos = function(params, callback) {
 };//_auditPhotos
 
 
-
-Server.prototype._getDefaultHotPhotosD = function(params, cbFun) {
-  var self = this;
-  logger.logDebug("Server._getDefaultHotPhotos entered, params="+util.inspect(params,false,100));
-  var messagePrefix = 'in Server._getDefaultHotPhotos, ';
-  if (!params.count){
-    var err = self.newError({errorKey:'needParameter',messageParams:['count'],messagePrefix:messagePrefix,req:req});
-    return cbFun(err);
-  }
-  if (!params.targetGender){
-    var err = self.newError({errorKey:'needParameter',messageParams:['targetGender'],messagePrefix:messagePrefix,req:req});
-    return cbFun(err);
-  }
-  var req = params.req;
-  var count = params.count;
-  var targetGender = params.targetGender;
-  self.store.getRegionalHotPhotoIds({req:req,cityLocation:config.config.defaultRegion,count:count,start:0,targetGender:targetGender},function(err,photoIds){
-    if (err) return cbFun(err);
-    if (!photoIds || photoIds.length == 0){
-      return cbFun(null,null);
-    }
-    return cbFun(null,photoIds);
-  });//store.getRegionalHotPhotoIds
-};//_getDefaultHotPhotos
-
-Server.prototype._getDefaultNewPhotosD = function(params, cbFun) {
-  var self = this;
-  logger.logDebug("Server._getDefaultNewPhotos entered, params="+util.inspect(params,false,100));
-  var messagePrefix = 'in Server._getDefaultNewPhotos, ';
-  if (!params.count){
-    var err = self.newError({errorKey:'needParameter',messageParams:['count'],messagePrefix:messagePrefix,req:req});
-    return cbFun(err);
-  }
-  if (!params.targetGender){
-    var err = self.newError({errorKey:'needParameter',messageParams:['targetGender'],messagePrefix:messagePrefix,req:req});
-    return cbFun(err);
-  }
-  var count = params.count;
-  var targetGender = params.targetGender;
-  self.store.getRegionalRecentPhotoIds({req:req,cityLocation:config.config.defaultRegion,count:count,start:0,targetGender:targetGender},function(err,photoIds){
-    if (err) return cbFun(err);
-    if (!photoIds || photoIds.length == 0){
-      return cbFun(null,null);
-    }
-    return cbFun(null,photoIds);
-  });//store.getRegionalRecentPhotoIds
-};//_getDefaultNewPhotos
-
-
-
-/**
-*
-*
-* @param req - contains userId, photoId, type=like|unlike
-* @param res
-* @returns
-*   {status:success|fail}
-*/
-Server.prototype.likePhotoD = function(req, res) {
-  var self = this;
-  //logger.logDebug("Server.likePhoto entered, params in body="+util.inspect(req.body,false,100));
-  var messagePrefix = 'in Server.likePhoto, ';
-  if (!req.body.photoId){
-    var err = self.newError({errorKey:'needParameter',messageParams:['photoId'],messagePrefix:messagePrefix,req:req});
-    return self.handleError({err:err,req:req,res:res});
-  }
-  if (!req.body.type){
-    var err = self.newError({errorKey:'needParameter',messageParams:['type'],messagePrefix:messagePrefix,req:req});
-    return self.handleError({err:err,req:req,res:res});
-  }
-  var userId = req.session.userId;
-  var photoId = req.body.photoId;
-  var type = req.body.type;
-  self.store.getUser({req:req,userId:userId,userFields:['userId','primaryPhotoId']},function(err,userObj){
-    if (err) return self.handleError({err:err,req:req,res:res});
-    if (!userObj || !userObj.userId){
-      var err = self.newError({errorKey:'userNotExist',messageParams:[userId],messagePrefix:messagePrefix,req:req});
-      if (err) return self.handleError({err:err,req:req,res:res});
-    }
-    if (!userObj.primaryPhotoId){
-      var err = self.newError({errorKey:'noPriviledgeForNoAuditPassedPhoto',messageParams:[],messagePrefix:messagePrefix,req:req});
-      return self.handleError({err:err,req:req,res:res});
-    }
-    self.store.getPhoto({req:req,photoId:photoId,photoFields:['photoId','userId','likeCount','state'],userIdToCheckAlreadyLikedPhoto:userId},function(err,photoObj){
-      if (err) return self.handleError({err:err,req:req,res:res});
-      if (!photoObj || !photoObj.photoId){
-        var err = self.newError({errorKey:'photoNotExist',messageParams:[photoId],messagePrefix:messagePrefix,req:req});
-        if (err) return self.handleError({err:err,req:req,res:res});
-      }
-      if(photoObj.state == 'deleted'){
-        var err = self.newError({errorKey:'photoAlreadyDeleted',messageParams:[photoId],messagePrefix:messagePrefix,req:req});
-        if (err) return self.handleError({err:err,req:req,res:res});
-      }
-      if(photoObj.state == 'auditDenied'){
-        var err = self.newError({errorKey:'photoAuditDenied',messageParams:[photoId],messagePrefix:messagePrefix,req:req});
-        if (err) return self.handleError({err:err,req:req,res:res});
-      }
-      //not check photoObj.state == 'created' for it should be impossible.
-      var alreadyLiked = photoObj.alreadyLiked;
-      var photoOwnerId = photoObj.userId;
-      if (photoOwnerId == userId){
-        var err = self.newError({errorKey:'canNotLikeSelfPhoto',messageParams:[],messagePrefix:messagePrefix,req:req});
-        return self.handleError({err:err,req:req,res:res});
-      }
-      if (alreadyLiked && type == 'like'){
-        var err = self.newError({errorKey:'photoAlreadyLiked',messageParams:[],messagePrefix:messagePrefix,req:req});
-        return self.handleError({err:err,req:req,res:res});
-      }else if (!alreadyLiked && type == 'unlike'){
-        var err = self.newError({errorKey:'photoNotLiked',messageParams:[],messagePrefix:messagePrefix,req:req});
-        return self.handleError({err:err,req:req,res:res});
-      }
-      self.store.getUser({req:req,userId:photoOwnerId,needPhotoCount:false,
-      userFields:['userId','gender']},function(err,photoOwnerObj){
-        if (err) return self.handleError({err:err,req:req,res:res});
-        var photoOwnerGender = photoOwnerObj.gender;
-        if(!photoOwnerGender){
-          var err = self.newError({errorKey:'userNoGender',messageParams:[],messagePrefix:messagePrefix,req:req});
-          if (err) return self.handleError({err:err,req:req,res:res});
-        }
-
-        self.store.likePhoto({req:req,userId:userId,photoId:photoId,type:type,likeCount:photoObj.likeCount,
-        photoOwnerId:photoOwnerId},function(err,likeInfo){
-          if (err) return self.handleError({err:err,req:req,res:res});
-          var photoLikeCount = likeInfo.photoLikeCount;
-
-          var likeTime = handy.getNowOfUTCdate().getTime();
-          self.store.updateLikeStat({req:req,likeType:type,likeTime:likeTime},function(err){
-            var statErr = err;
-            var httpRetData = {status:'success',result:{photoId:photoId,likeCount:photoLikeCount}};
-
-            if(statErr)  httpRetData.result.statErr = statErr;
-            logger.logDebug("Server.likePhoto exited, httpRetData="+util.inspect(httpRetData,false,100));
-            self.returnDataFromResponse({res:res,req:req,data:httpRetData});
-            return;
-          });//updateLikeStat
-        });//store.likePhoto
-      });//store.getUser
-    });//store.getPhoto
-  });//getUser
-};//likePhoto
 
 
 
@@ -2025,7 +1958,7 @@ Server.prototype._createDate = function(params, callback) {
   var title = params.title;
   var description = params.description;
   var photoId = params.photoId;
-  self.store.getUser({req:req,userId:userId,userFields:['userId','primaryPhotoId','name','gender','beMade','schoolId']},function(err,userObj){
+  self.store.getUser({req:req,userId:userId,userFields:['userId','primaryPhotoId','name','gender','school','beMade']},function(err,userObj){
     if (err) return self.handleError({err:err,req:req,res:res});
     if (!userObj || !userObj.userId){
       var err = self.newError({errorKey:'userNotExist',messageParams:[userId],messagePrefix:messagePrefix,req:req});
@@ -2044,7 +1977,7 @@ Server.prototype._createDate = function(params, callback) {
       self.store.createDate({req:req,senderId:userId, //latlng:latlng, region:region, geolibType:geolibType,
       dateDate:dateDate, address:address, whoPay:whoPay, wantPersonCount:wantPersonCount, existPersonCount:existPersonCount,
       title:title, description:description, userGender:userObj.gender, userBeMade:userBeMade, photoId:photoId,
-      schoolId:userObj.schoolId},function(err, dateObj){
+      school:userObj.school},function(err, dateObj){
         if (err) return callback(err);
         var dateId = dateObj.dateId;
         var outData = {dateId:dateId};

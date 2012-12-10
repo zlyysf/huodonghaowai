@@ -398,6 +398,9 @@ var config = exports.config = {
       'canNotExceedUserCreateInviteCodeLimit' : {code:'21260', message:'You can not exceed invite code creating count limit.',
           msg_zh:"你超过了邀请码创建数量限额"},
 
+      'renrenAccountAlreadyRegistered' : {code:'21300', message:'the renren account({0}) has already been registered.',
+          msg_zh:"这个人人帐号({0})已经被注册"},
+
       'invalidResetPasswordCode' : {code:'30000', message:'invalid reset password code',
           msg_zh:"不正确的重置密码编码"},
       'invalidResetPasswordInfo' : {code:'30001', message:'invalid reset password info',

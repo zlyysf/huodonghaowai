@@ -50,12 +50,14 @@ Out:
 目前session使用express提供的cookie方式。这样，login之后，userId用不着传了，
 logInFromRenRen(https)
 In: 
-{ accountRenRen, accessTokenRenRen, deviceId }
+{ accountRenRen, accessTokenRenRen, deviceType(android|iphone), deviceId }
 accountRenRen 是人人那边返回数据中的uid.
 Out:
 { status:success|fail, 
-  result:{userId, name, gender, primaryPhotoId, primaryPhotoPath,
-    height, school, studentNO, department, bloodGroup, constellation, hometown, educationalStatus, description, goodRateCount
+  result:{
+    userExist: true | false,
+	user:{userId, name, gender, primaryPhotoId, primaryPhotoPath, height, school, studentNO, department, bloodGroup, constellation, hometown, educationalStatus, description, goodRateCount
+	}
   }
 }
 logOut(http)
@@ -69,7 +71,7 @@ Out:
 register(https)
 没有学号，以后认证功能再看。
 In: 
-{ emailAccount, password, inviteCode(optional), name, height, gender, school, studentNO, deviceType(android|iphone), deviceId, hometown(optional), accountRenRen, accessTokenRenRen
+{ emailAccount, password, inviteCode(optional), name, height, gender, school, studentNO, deviceType(android|iphone), deviceId, hometown(optional), accountRenRen, accessTokenRenRen, accountInfoJson(optional)(star, vip, )
 	latlng(optional), region(is a json object)(optional), geolibType(=ios| android| google| googleV3)(optional)
 }
 当 region=madeRegion 时，表明这个用户是造出来的一个假用户。
@@ -753,8 +755,8 @@ inviteCode    hash
 每一个inviteCode是一个5位的随机字符串，由字母和数字构成，不分大小写.
 User
 user:userId    hash
-userId, emailAccount, password(encrypted), name(nickname), accountRenRen, accessTokenRenRen,
-height(cm), gender, school(需要是UTF8的编码),  schoolId, studentNO, department, bloodGroup, constellation, hometown(目前暂定到省级), description, educationalStatus(undergraduate, postgraduate, doctorStudent), 
+userId, emailAccount, password(encrypted), name(nickname), accountRenRen, 
+height(cm), gender, school(实际应是Unicode的编码),  schoolId, studentNO, department, bloodGroup, constellation, hometown(目前暂定到省级), description, educationalStatus(undergraduate, postgraduate, doctorStudent), 
 createTime, lastLoginTime, lastLogoutTime(这里对应不了session过期的情况), primaryPhotoId, deviceType(android|iphone), regDeviceId, currentDeviceId
     latlng, region(json格式的字符串表示的含有多个属性及多层属性的对象),geolibType(用于解析region), cityLocation, countyLocation（是根据region内容取到county层级的地区的计算结果，大致为country+state+city+county，但是如果country或city取不到的话，也可能是更大的区域，详细的可参考region中的说明）, lastRegionUpdateTime
 	likeCount(其所有照片被like的总数), reportCount, goodRateCount, badRateCount
@@ -771,8 +773,9 @@ emailToUser    hash
 UserRenRen
 通过人人帐户(renren.com)注册的user。系统也会生成一个user与之对应。人人的api会返回一个uid的字段，这里称作accountId。
 注意虽然通过人人帐户注册，也需要填邮箱及密码以生成本系统的User。
-UserRenRen:accountId    hash
-	userId(关联本系统的user), accountRenRen, createTime, accountInfoJson(是存取到的人人帐户的所有信息，format成一个json的字符串存下来，虽然有些东西会提取出来，但这里保存一份原版的)
+userRenRenCount    string
+userRenRen:accountId    hash
+	userId(关联本系统的user), accountRenRen, createTime, accessTokenRenRen, accountInfoJson(是存取到的人人帐户的所有信息，format成一个json的字符串存下来，虽然有些东西会提取出来，但这里保存一份原版的)
 	
 User3rdAccount
 后台先不管这个功能，前端那边处理即可。Facebook的帐号每次都让用户输入。
@@ -903,7 +906,7 @@ alldates:female        sorted set    store dateIds
 SchoolDates
 准备支持搜索同校的dates，搜未过期的。搜附近的date的功能先去掉。
 school:schoolId:dates:all        sorted set    store dateIds
-school:schoolNameByUTF8:dates:all        sorted set    store dateIds
+school:schoolNameByUnicode:dates:all        sorted set    store dateIds
 
 以dateDate为序。
 

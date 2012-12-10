@@ -224,26 +224,16 @@ function busRegister1(params,cbFun){
     var photoIdU1_2;
     var notExistUserId = 'notExistUserId';
     handy.pipeline(
-        function(next){
-          console.log("\nnormal get invite code");
-          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/generateInviteCode',notLogResponseHere:null,
-          postDataObj:{expireDays:1}},function(err,outData){
-            assert.ok(outData.status=="success");
-            inviteCode = outData.result.inviteCode;
-            next();
-          });
-        },
 
         function(next){
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/register',notLogResponseHere:null,
-          postDataObj:{emailAccount:emailAccount, inviteCode:inviteCode, password:password, name:name,gender:gender,
+          postDataObj:{emailAccount:emailAccount, password:password, name:name,gender:gender,
           school:school, deviceType:deviceType, deviceId:deviceId}},function(err,outData){
             assert.ok(outData.status=="success");
             userId = outData.result.userId;
             next();
           });
         },
-
 
         function(next){
           console.log("\nnormal logout 1, should ok.");
@@ -317,24 +307,7 @@ function busRegister1(params,cbFun){
         },
 
 
-//        function(next){
-//          console.log("\nto check logIn return user fields.");
-//          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/updateLocation',notLogResponseHere:null,
-//          postDataObj:{latlng:gLatlng1,geolibType:gGeolibTypeGoogle,region:gRegionByGoogle1}},function(err,outData){
-//            assert.ok(outData.status=="success");
-//            next();
-//          });
-//        },
         function(next){
-//          testlib.runCurlCmdForUploadPhoto({host:host,port:port,notLogResponseHere:null,
-//            //postDataObj:{image:"/mnt/hgfs/zly/t/a1.log",notUploadReally:!uploadReally,userId:userId,width:900,height:800}},function(err,outData){
-//            postDataObj:{image:gUploadPhotoPath,notUploadReally:!uploadReally,width:900,height:800}},function(err,outData){
-//              assert.ifError(err);
-//              assert.ok(outData.status=="success");
-//              //util.log('testRunCurlCmdForUploadPhoto postDataObj outData='+util.inspect(outData,false,100));
-//              if (next) next();
-//            });//runCurlCmdForUploadPhoto
-
           testlib.runPRApiUploadPhoto({host:host,port:port,waitMsTimeForApiBackground:null,notLogResponseHere:null,
             postDataObj:{userId:userId,notUploadReally:!uploadReally, image:gUploadPhotoPath,width:900,height:800}},function(err,outData){
               assert.ifError(err);
@@ -411,16 +384,6 @@ function busRegister1(params,cbFun){
         },
 
         function(next){
-          console.log("\nuser1 get g2nd invite code");
-          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/generateInviteCode',notLogResponseHere:null,
-          postDataObj:{userId:userId}},function(err,outData){
-            assert.ok(outData.status=="success");
-            inviteCode2 = outData.result.inviteCode;
-            next();
-          });
-        },
-
-        function(next){
           console.log("\nnormal logout 2, should ok.");
           testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/logOut',notLogResponseHere:null,
           postDataObj:{}},function(err,outData){
@@ -430,109 +393,18 @@ function busRegister1(params,cbFun){
         },
 
         function(next){
-          console.log("\nregister 2nd user with location, but location not needed, should ok.");
-          testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/register',notLogResponseHere:null,
-          postDataObj:{emailAccount:emailAccount2, inviteCode:inviteCode2, password:password2, name:name2,gender:gender2, school:school2,
-          deviceType:deviceType2,deviceId:deviceId}},function(err,outData){
-            assert.ok(outData.status=="success");
-            userId2 = outData.result.userId;
-            next();
-          });
-        },
-        function(next){
-          console.log("\nget just register user, return name .. fields, no photo fields.");
-          testlib.runPRApi({host:host,port:port,path:'/user/getUser',notLogResponseHere:null,
-          postDataObj:{userId:userId2,targetUserId:userId2}},function(err,outData){
-            assert.ok(outData.status=="success");
-            assert.ok(outData.result.name);
-            assert.ok(outData.result.gender);
-            assert.ok(!outData.result.primaryPhotoId);
-            next();
-          });
-        },
-
-        function(next){
-          console.log("\njust register user add photo");
-//          testlib.runCurlCmdForUploadPhoto({host:host,port:port,notLogResponseHere:null,
-//            //postDataObj:{image:"/mnt/hgfs/zly/t/a1.log",notUploadReally:!uploadReally,userId:userId,width:900,height:800}},function(err,outData){
-//            postDataObj:{image:gUploadPhotoPath,notUploadReally:!uploadReally,width:900,height:800}},function(err,outData){
-//              assert.ifError(err);
-//              assert.ok(outData.status=="success");
-//              //util.log('testRunCurlCmdForUploadPhoto postDataObj outData='+util.inspect(outData,false,100));
-//              if (next) next();
-//            });//runCurlCmdForUploadPhoto
-
-          testlib.runPRApiUploadPhoto({host:host,port:port,waitMsTimeForApiBackground:null,notLogResponseHere:null,
-            postDataObj:{userId:userId2,notUploadReally:!uploadReally, image:gUploadPhotoPath,width:900,height:800}},function(err,outData){
-              assert.ifError(err);
-              assert.ok(outData.status=="success");
-              if (next) next();
-            });//runCurlCmdForUploadPhoto
-
-        },
-
-        function(next){
-          console.log("\nget just register user, return name .. fields, with photo fields.");
-          testlib.runPRApi({host:host,port:port,path:'/user/getUser',notLogResponseHere:null,
-          postDataObj:{userId:userId2,targetUserId:userId2}},function(err,outData){
-            assert.ok(outData.status=="success");
-            assert.ok(outData.result.name);
-            assert.ok(outData.result.gender);
-            assert.ok(outData.result.primaryPhotoId);
-            assert.ok(outData.result.primaryPhotoPath);
-            next();
-          });
-        },
-
-        function(next){
-          console.log("\njust register user add 2nd photo to make data for disable user page");
-//          testlib.runCurlCmdForUploadPhoto({host:host,port:port,notLogResponseHere:null,
-//            //postDataObj:{image:"/mnt/hgfs/zly/t/a1.log",notUploadReally:!uploadReally,userId:userId,width:900,height:800}},function(err,outData){
-//            postDataObj:{image:gUploadPhotoPath,notUploadReally:!uploadReally,width:900,height:800}},function(err,outData){
-//              assert.ifError(err);
-//              assert.ok(outData.status=="success");
-//              //util.log('testRunCurlCmdForUploadPhoto postDataObj outData='+util.inspect(outData,false,100));
-//              if (next) next();
-//            });//runCurlCmdForUploadPhoto
-
-          testlib.runPRApiUploadPhoto({host:host,port:port,waitMsTimeForApiBackground:null,notLogResponseHere:null,
-            postDataObj:{userId:userId2,notUploadReally:!uploadReally, image:gUploadPhotoPath,width:900,height:800}},function(err,outData){
-              assert.ifError(err);
-              assert.ok(outData.status=="success");
-              if (next) next();
-            });//runCurlCmdForUploadPhoto
-        },
-
-
-        function(next){
-          console.log("\n2nd user normal logout 20, should ok.");
-          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/logOut',notLogResponseHere:null,
-          postDataObj:{}},function(err,outData){
-            assert.ok(outData.status=="success");
-            next();
-          });
-        },
-        function(next){
-          console.log("\n2nd user normal logIn 20, should ok.");
+          console.log("\n user normal logIn , should ok.");
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
-          postDataObj:{emailAccount:emailAccount2, password:password2,deviceType:deviceType2,deviceId:deviceId}},function(err,outData){
+          postDataObj:{emailAccount:emailAccount, password:passwordNew,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
             assert.ok(outData.status=="success");
             next();
           });
         },
 
-//        function(next){
-//          console.log("\ndiable 2nd user , should ok.");
-//          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/web/disableUser',notLogResponseHere:null,
-//          postDataObj:{userId:userId2, disableUser:"1",returnFormat:"json"}},function(err,outData){
-//            assert.ok(outData.status=="success");
-//            next();
-//          });
-//        },
         function(next){
           console.log("\ndiable 2nd user , should ok.");
           testlib.runPRApi({needHttps:false, host:host,port:port,path:'/admin/runMethod',notLogResponseHere:null,
-          postDataObj:{methodName:'disableUser', userId:userId2, disableUser:true}},function(err,outData){
+          postDataObj:{methodName:'disableUser', userId:userId, disableUser:true}},function(err,outData){
             assert.ok(outData.status=="success");
             next();
           });
@@ -540,25 +412,17 @@ function busRegister1(params,cbFun){
         function(next){
           console.log("\ndisabled user logIn 21, should fail.");
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
-          postDataObj:{emailAccount:emailAccount2, password:password2,deviceType:deviceType2,deviceId:deviceId}},function(err,outData){
+          postDataObj:{emailAccount:emailAccount, password:passwordNew,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
             assert.ok(outData.status=="fail");
             next();
           });
         },
 
 
-//        function(next){
-//          console.log("\nenable 2nd user , should ok.");
-//          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/web/disableUser',notLogResponseHere:null,
-//          postDataObj:{emailAccount:emailAccount2, enableUser:1,returnFormat:"json"}},function(err,outData){
-//            assert.ok(outData.status=="success");
-//            next();
-//          });
-//        },
         function(next){
-          console.log("\nenable 2nd user , should ok.");
+          console.log("\nenable user , should ok.");
           testlib.runPRApi({needHttps:false, host:host,port:port,path:'/admin/runMethod',notLogResponseHere:null,
-          postDataObj:{methodName:'disableUser', userId:userId2, disableUser:false}},function(err,outData){
+          postDataObj:{methodName:'disableUser', userId:userId, disableUser:false}},function(err,outData){
             assert.ok(outData.status=="success");
             next();
           });
@@ -566,7 +430,7 @@ function busRegister1(params,cbFun){
         function(next){
           console.log("\nenabled user logIn 22, should ok.");
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
-          postDataObj:{emailAccount:emailAccount2, password:password2,deviceType:deviceType2,deviceId:deviceId}},function(err,outData){
+          postDataObj:{emailAccount:emailAccount, password:passwordNew,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
             assert.ok(outData.status=="success");
             next();
           });
@@ -575,7 +439,7 @@ function busRegister1(params,cbFun){
         function(next){
           console.log("\ntest logout clear apptoken, first set it.");
           testlib.runPRApi({host:host,port:port,path:'/user/updateAppToken',notLogResponseHere:null,
-          postDataObj:{userId:userId2, appToken:gDeviceToken}},
+          postDataObj:{userId:userId, appToken:gDeviceToken}},
           function(err,outData){
             assert.ok(outData.status=="success");
             next();
@@ -584,7 +448,7 @@ function busRegister1(params,cbFun){
         function(next){
           console.log("\nuser has the apptoken");
           testlib.runPRApi({host:host,port:port,path:'/admin/runMethod',notLogResponseHere:null,
-          postDataObj:{libName:'store',methodName:'getUserAppToken', userId:userId2}},
+          postDataObj:{libName:'store',methodName:'getUserAppToken', userId:userId}},
           function(err,outData){
             assert.ok(outData.status=="success");
             assert.ok(outData.result==gDeviceToken);
@@ -593,7 +457,7 @@ function busRegister1(params,cbFun){
         },
 
         function(next){
-          console.log("\n2nd user normal logout 21, should ok.");
+          console.log("\n user normal logout 21, should ok.");
           testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/logOut',notLogResponseHere:null,
           postDataObj:{}},function(err,outData){
             assert.ok(outData.status=="success");
@@ -601,9 +465,9 @@ function busRegister1(params,cbFun){
           });
         },
         function(next){
-          console.log("\n2nd user should have not the apptoken");
+          console.log("\nuser should have not the apptoken");
           testlib.runPRApi({host:host,port:port,path:'/admin/runMethod',notLogResponseHere:null,
-          postDataObj:{libName:'store',methodName:'getUserAppToken', userId:userId2}},
+          postDataObj:{libName:'store',methodName:'getUserAppToken', userId:userId}},
           function(err,outData){
             assert.ok(outData.status=="success");
             assert.ok(!outData.result || !outData.result.data);
@@ -611,18 +475,7 @@ function busRegister1(params,cbFun){
           });
         },
 
-        function(next){
-          console.log("\nregister 3rd user without inviteCode with config supported, should ok.");
-          config.config.needNotCheckInviteCode = true;
-          testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/register',notLogResponseHere:null,
-          postDataObj:{emailAccount:emailAccount3, inviteCode:null, password:password3, name:name3,gender:gender3, school:school3,
-          deviceType:deviceType3,deviceId:deviceId}},function(err,outData){
-            assert.ok(outData.status=="success");
-            userId3 = outData.result.userId;
-            testlib.setConfigDefaultValue();
-            next();
-          });
-        },
+
 
         function(next){
           //DoAssert
@@ -634,6 +487,163 @@ function busRegister1(params,cbFun){
         }
     );//handy.pipeline
 }//busRegister1
+
+
+
+
+/**
+*
+* @param params - contains (optional)port, ..
+*     @see busRenRenRegisterAndLogin1
+* @param next - is function(next)
+*/
+function testRenRenRegisterAndLogin1LocalBothSides(params,next){
+  handy.log('blue', "running testRenRenRegisterAndLogin1LocalBothSides");
+  if (!params) params = {};
+  params.host = 'localhost';
+  if (!params.port) params.port = port;
+  if (!params.securePort) params.securePort = securePort;
+  testlib.setConfigDefaultValue();
+  if (params.disableNotification){
+    notification.config.finelyEnableFlag = false;
+    waitMsTimeOfSendNotification = 10;
+  }
+  testlib.provideServerLifeCycle(
+    {port:params.port,securePort:params.securePort, needInitStore:true, NeedSetConfigDefault:false, notKeepC2dmAuth:true, c2dmAuth:gC2dmAuth},
+    function(cbNext){
+      testRenRenRegisterAndLogin1ClientSide(params,function(outData){
+        if (cbNext) cbNext();
+      });
+    },
+    next
+  );//provideServerLifeCycle
+}//testRenRenRegisterAndLogin1LocalBothSides
+
+/**
+ * as there is no socket.io, no complicate logic
+ * @param params - contains host,port; ..
+ *     @see busRenRenRegisterAndLogin1
+ * @param cbFun - is function(outData)
+ *   outData contains ..
+ */
+function testRenRenRegisterAndLogin1ClientSide(params,cbFun){
+  handy.log('blue', "testRenRenRegisterAndLogin1ClientSide enter");
+  assert.ok(params.host);
+  assert.ok(params.port);
+  assert.ok(params.securePort);
+  busRenRenRegisterAndLogin1(params,function(outDataBus){
+    if (cbFun) cbFun(outDataBus);
+  });//busRenRenRegisterAndLogin1
+}//testRenRenRegisterAndLogin1ClientSide
+
+/**
+ *
+ * @param params - contains host,port; (optional) emailAccount,password,name,height,gender
+ * @param cbFun - is function(outData)
+ *   outData contains deviceId,addDeviceOutData,addUserOutData
+ */
+function busRenRenRegisterAndLogin1(params,cbFun){
+    handy.log('blue', "busRenRenRegisterAndLogin1 enter");
+    assert.ok(params.host);
+    assert.ok(params.port);
+    assert.ok(params.securePort);
+    var host = params.host;
+    var port = params.port;
+    var securePort = params.securePort;
+    var uploadReally = params.uploadReally;
+
+    var nowTime = handy.getNowOfUTCdate().getTime();
+    var name = "name"+nowTime;
+    var emailAccount = name+gMailHostPart;
+    var password = gPassword;
+    var accountRenRen = "accountRenRen";
+    var accessTokenRenRen = "accessTokenRenRen";
+    var accountInfoJson = "accountInfoJson";
+    var gender = 'male';
+    var school = gSchool;
+    var deviceType = gDeviceType;
+    var deviceId = "deviceId";
+    var hometown = "hometown";
+    //var studentNO = 'studentNO';
+    var height = 1.61;
+    var height1_2 = 1.62;
+    var bloodGroup = "bloodGroup";
+
+
+    var userId = null;
+    var photoIdU1_2;
+
+    handy.pipeline(
+        function(next){
+          testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/register',notLogResponseHere:null,
+          postDataObj:{emailAccount:emailAccount, password:password, name:name, gender:gender,
+          school:school, deviceType:deviceType, deviceId:deviceId, hometown:hometown,
+          accountRenRen:accountRenRen, accessTokenRenRen:accessTokenRenRen, accountInfoJson:accountInfoJson}},function(err,outData){
+            assert.ok(outData.status=="success");
+            userId = outData.result.userId;
+            next();
+          });
+        },
+        function(next){
+          console.log("\nnormal logout 1, should ok.");
+          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/logOut',notLogResponseHere:null,
+          postDataObj:{}},function(err,outData){
+            assert.ok(outData.status=="success");
+            next();
+          });
+        },
+
+        function(next){
+          console.log("\nnormal logIn, should ok.");
+          testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
+          postDataObj:{emailAccount:emailAccount, password:password,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
+            assert.ok(outData.status=="success");
+            assert.ok(userId == outData.result.userId);
+            next();
+          });
+        },
+        function(next){
+          console.log("\nnormal logout 2, should ok.");
+          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/logOut',notLogResponseHere:null,
+          postDataObj:{}},function(err,outData){
+            assert.ok(outData.status=="success");
+            next();
+          });
+        },
+
+        function(next){
+          console.log("\nnormal logInFromRenRen, should ok.");
+          testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logInFromRenRen',notLogResponseHere:null,
+          postDataObj:{accountRenRen:accountRenRen, accessTokenRenRen:accessTokenRenRen,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
+            assert.ok(outData.status=="success");
+            assert.ok(outData.result.userExist);
+            assert.ok(userId == outData.result.user.userId);
+            next();
+          });
+        },
+
+        function(next){
+          console.log("\nlogInFromRenRen with not registered renren user, should ok but return user not exist.");
+          testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logInFromRenRen',notLogResponseHere:null,
+          postDataObj:{accountRenRen:accountRenRen+"XX", accessTokenRenRen:accessTokenRenRen,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
+            assert.ok(outData.status=="success");
+            assert.ok(!outData.result.userExist);
+            next();
+          });
+        },
+
+
+        function(next){
+          //DoAssert
+          next();
+        },
+        function(){
+          var outData = {};
+          if (cbFun) cbFun(outData);
+        }
+    );//handy.pipeline
+}//busRenRenRegisterAndLogin1
+
 
 
 
@@ -4672,18 +4682,18 @@ function busInitUserPhoto(params,cbFun){
     var inviteCode;
     testlib.setConfigDefaultValue();
     handy.pipeline(
-        function(next){
-          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/generateInviteCode',notLogResponseHere:null,
-          postDataObj:{expireDays:1}},function(err,outData){
-            assert.ok(outData.status=="success");
-            inviteCode = outData.result.inviteCode;
-            next();
-          });
-        },
+//        function(next){
+//          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/generateInviteCode',notLogResponseHere:null,
+//          postDataObj:{expireDays:1}},function(err,outData){
+//            assert.ok(outData.status=="success");
+//            inviteCode = outData.result.inviteCode;
+//            next();
+//          });
+//        },
 
         function(next){
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/register',notLogResponseHere:null,
-          postDataObj:{emailAccount:emailAccount, password:password, inviteCode:inviteCode, name:name,school:school,gender:gender,
+          postDataObj:{emailAccount:emailAccount, password:password, name:name,school:school,gender:gender,
           deviceType:deviceType,deviceId:gDeviceId,latlng:latlng,region:region,geolibType:geolibType}},function(err,outData){
             registerOutData = outData;
             userId = outData.result.userId;
@@ -8433,6 +8443,7 @@ testlib.backConfigDefaultValue();
 
 //testJustStartStopServer();
 //testRegister1LocalBothSides({disableNotification:true,uploadReally:false},null);
+//testRenRenRegisterAndLogin1LocalBothSides({disableNotification:true,uploadReally:false},null);
 //testUploadPhoto1LocalBothSides({disableNotification:true,uploadReally:false},null);
 
 //testSession1LocalBothSides({disableNotification:true,uploadReally:false},null);
