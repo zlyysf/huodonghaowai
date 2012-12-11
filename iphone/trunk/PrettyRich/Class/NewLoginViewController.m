@@ -56,7 +56,7 @@
     [self.loginButton addTarget:self action:@selector(startLogin) forControlEvents:UIControlEventTouchUpInside];
     self.emailTextField.tag = 201;
     self.passwordTextField.tag = 202;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChanged:) name:UITextFieldTextDidChangeNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChanged:) name:UITextFieldTextDidChangeNotification object:nil];
     UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 34)];
     self.emailTextField.leftView = paddingView1;    
     self.emailTextField.leftViewMode = UITextFieldViewModeAlways;
@@ -75,7 +75,7 @@
     }
     hasRenRenId = NO;
     backViewSizeAdjusted = NO;
-    [self.loginButton setEnabled:NO];
+    //[self.loginButton setEnabled:NO];
     self.navigationItem.title = @"已注册用户";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -199,16 +199,16 @@
         return self.resetPassCell;
     }
 }
-- (void)textDidChanged:(NSNotification *)notification
-{
-    if ([self.emailTextField.text length]!=0 && [self.passwordTextField.text length]!=0)
-    {
-        [self.loginButton setEnabled:YES];
-    }
-    else {
-        [self.loginButton setEnabled:NO];
-    }
-}
+//- (void)textDidChanged:(NSNotification *)notification
+//{
+//    if ([self.emailTextField.text length]!=0 && [self.passwordTextField.text length]!=0)
+//    {
+//        //[self.loginButton setEnabled:YES];
+//    }
+//    else {
+//        //[self.loginButton setEnabled:NO];
+//    }
+//}
 - (void)backButtonClicked
 {
     [curConnection cancelDownload];
@@ -494,7 +494,7 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"UpdateDateListNotification" object:nil];
     [curConnection cancelDownload];
     [curConnection release];

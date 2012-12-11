@@ -200,6 +200,8 @@
 		5FFB62BB15C7BBB300EE77C3 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFB62B915C7BBB300EE77C3 /* SignUpViewController.m */; };
 		5FFB62BC15C7BBB300EE77C3 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FFB62BA15C7BBB300EE77C3 /* SignUpViewController.xib */; };
 		5FFD7FBF1677224E00F9221C /* separate-line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD7FBE1677224E00F9221C /* separate-line@2x.png */; };
+		5FFD7FC7167726C500F9221C /* login-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD7FC5167726C500F9221C /* login-button@2x.png */; };
+		5FFD7FC8167726C500F9221C /* renren-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD7FC6167726C500F9221C /* renren-button@2x.png */; };
 		8432969C155A148C00102B12 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969B155A148C00102B12 /* UIKit.framework */; };
 		8432969E155A148C00102B12 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969D155A148C00102B12 /* Foundation.framework */; };
 		843296A0155A148C00102B12 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969F155A148C00102B12 /* CoreGraphics.framework */; };
@@ -505,6 +507,8 @@
 		5FFB62B915C7BBB300EE77C3 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = Class/SignUpViewController.m; sourceTree = "<group>"; };
 		5FFB62BA15C7BBB300EE77C3 /* SignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignUpViewController.xib; path = Class/SignUpViewController.xib; sourceTree = "<group>"; };
 		5FFD7FBE1677224E00F9221C /* separate-line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "separate-line@2x.png"; sourceTree = "<group>"; };
+		5FFD7FC5167726C500F9221C /* login-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-button@2x.png"; sourceTree = "<group>"; };
+		5FFD7FC6167726C500F9221C /* renren-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren-button@2x.png"; sourceTree = "<group>"; };
 		84329697155A148C00102B12 /* 同去.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "同去.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8432969B155A148C00102B12 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8432969D155A148C00102B12 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -860,6 +864,8 @@
 			isa = PBXGroup;
 			children = (
 				5FFD7FBE1677224E00F9221C /* separate-line@2x.png */,
+				5FFD7FC5167726C500F9221C /* login-button@2x.png */,
+				5FFD7FC6167726C500F9221C /* renren-button@2x.png */,
 				5F196DBB165A4094003072E5 /* help1.jpg */,
 				5F196DBC165A4094003072E5 /* help2.jpg */,
 				5F196DBD165A4094003072E5 /* help3.jpg */,
@@ -959,7 +965,6 @@
 				5F639A6A15772C8A00DB840A /* PrettyUtility.m */,
 				5F607B15159CA35C007A7B90 /* PrettyGlobalService.h */,
 				5F607B16159CA35C007A7B90 /* PrettyGlobalService.m */,
-				5F48B7A6166C63EE00A1C6D0 /* TongQuConfig.h */,
 			);
 			name = PrettyLib;
 			sourceTree = "<group>";
@@ -1098,6 +1103,7 @@
 			children = (
 				843296AA155A148C00102B12 /* AppDelegate.h */,
 				843296AB155A148C00102B12 /* AppDelegate.m */,
+				5F48B7A6166C63EE00A1C6D0 /* TongQuConfig.h */,
 				5F843FF4164B5D0000AB2F22 /* AppFirstLaunchViewController.h */,
 				5F843FF5164B5D0000AB2F22 /* AppFirstLaunchViewController.m */,
 				5F843FF6164B5D0100AB2F22 /* AppFirstLaunchViewController.xib */,
@@ -1262,6 +1268,8 @@
 				5F2B320416759205008C5EF8 /* small-button-normal@2x.png in Resources */,
 				5F2B321E16759205008C5EF8 /* ROCheckOrderCell.xib in Resources */,
 				5FFD7FBF1677224E00F9221C /* separate-line@2x.png in Resources */,
+				5FFD7FC7167726C500F9221C /* login-button@2x.png in Resources */,
+				5FFD7FC8167726C500F9221C /* renren-button@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
