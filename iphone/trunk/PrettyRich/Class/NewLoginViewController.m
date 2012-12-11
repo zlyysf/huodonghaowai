@@ -21,7 +21,7 @@
 @synthesize passwordTextField;
 @synthesize resetPasswordButton;
 @synthesize activityIndicator;
-@synthesize curConnection,emailAccount,lastActiveField;
+@synthesize curConnection,emailAccount,lastActiveField,hasRenRenId,backViewSizeAdjusted;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,9 +41,19 @@
 //    button.frame = CGRectMake(0, 0, 28, 16);
 //    [button addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
 //    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc]initWithTitle:@"登录" style:UIBarButtonItemStyleBordered target:self action:@selector(startLogin)];
-    self.navigationItem.rightBarButtonItem = customBarItem;
-    [customBarItem release];
+    //UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc]initWithTitle:@"登录" style:UIBarButtonItemStyleBordered target:self action:@selector(startLogin)];
+    //self.navigationItem.rightBarButtonItem = customBarItem;
+    //[customBarItem release];
+    UIView *tempView = [[UIView alloc] init];
+    [self.resetPassCell setBackgroundView:tempView];
+    [tempView release];
+    [self.resetPassCell setBackgroundColor:[UIColor clearColor]];
+    UIView *tempView1= [[UIView alloc] init];
+    [self.renrenCell setBackgroundView:tempView1];
+    [tempView1 release];
+    [self.renrenCell setBackgroundColor:[UIColor clearColor]];
+
+    [self.loginButton addTarget:self action:@selector(startLogin) forControlEvents:UIControlEventTouchUpInside];
     self.emailTextField.tag = 201;
     self.passwordTextField.tag = 202;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChanged:) name:UITextFieldTextDidChangeNotification object:nil];
@@ -59,30 +69,119 @@
 	self.curConnection = aConn;
 	[aConn release];
     self.activityIndicator.hidden = YES;
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    if([[Renren sharedRenren]isSessionValid])
+    {
+        [[Renren sharedRenren]logout:self];
+    }
+    hasRenRenId = NO;
+    backViewSizeAdjusted = NO;
+    [self.loginButton setEnabled:NO];
     self.navigationItem.title = @"已注册用户";
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveGetLoggedInUserIdNotification:) name:@"kNotificationDidGetLoggedInUserId" object:nil];
 }
+- (void)keyboardWillShow:(NSNotification *)notification {
+    NSDictionary* userInfo = [notification userInfo];
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    //CGFloat keyboardHeight = keyboardBounds.size.height;
+    if (backViewSizeAdjusted == NO)
+    {
+        backViewSizeAdjusted = YES;
+        //CGRect frame = self.listView.frame;
+        //frame.size.height -= keyboardHeight;
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:animationDuration];
+        self.listView.frame = CGRectMake(self.listView.frame.origin.x, self.listView.frame.origin.y,320 , 200);
+        if (self.lastActiveField.tag == 104 || self.lastActiveField.tag == 105)
+        {
+            //self.listView.contentOffset = CGPointMake(0, 100);
+            [self.listView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        }
+        [UIView commitAnimations];
+    }
+    
+}
+- (void)keyboardWillHide:(NSNotification *)notification {
+    NSDictionary* userInfo = [notification userInfo];
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    //CGFloat keyboardHeight = keyboardBounds.size.height;
+    if (backViewSizeAdjusted == YES)
+    {
+        backViewSizeAdjusted = NO;
+        //CGRect frame = self.listView.frame;
+        //frame.size.height += keyboardHeight;
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:animationDuration];
+        self.listView.frame = CGRectMake(self.listView.frame.origin.x, self.listView.frame.origin.y,320 , 416);
+        [UIView commitAnimations]; 
+    } 
+    
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return 3;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0)
+        return 36;
+    else if (section == 1)
+        return 10;
+    else
+        return 0;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if (section == 0)
+        return 26;
+    else if (section == 1)
+        return 26;
+    else
+        return 0;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    
     if (section == 0)
+    {
+        return 1;
+    }
+    else if (section == 1)
         return 2;
     else
         return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 44.0;
+    if (indexPath.section == 0)
+    {
+        return 91;
+    }
+    else if (indexPath.section == 1)
+    {
+        return 44.0;
+    }
+    else
+    {
+        return 70;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0)
+    {
+        return self.renrenCell;
+    }
+    else if (indexPath.section == 1)
     {
         if (indexPath.row == 0)
         {
@@ -96,15 +195,14 @@
         return self.resetPassCell;
     }
 }
-
 - (void)textDidChanged:(NSNotification *)notification
 {
     if ([self.emailTextField.text length]!=0 && [self.passwordTextField.text length]!=0)
     {
-        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+        [self.loginButton setEnabled:YES];
     }
     else {
-        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        [self.loginButton setEnabled:NO];
     }
 }
 - (void)backButtonClicked
@@ -141,7 +239,7 @@
     {
         self.emailTextField.text = preEmail;
     }
-    [self.emailTextField becomeFirstResponder];
+    //[self.emailTextField becomeFirstResponder];
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
@@ -161,6 +259,140 @@
     }
 	
     return YES;
+}
+- (IBAction)renrenLogin
+{
+    if(![[Renren sharedRenren]isSessionValid])
+    {
+        NSArray *permissions = [NSArray arrayWithObjects:@"read_user_album",@"status_update",@"photo_upload",@"publish_feed",@"create_album",@"operate_like",nil];
+        [[Renren sharedRenren] authorizationInNavigationWithPermisson:permissions andDelegate:self];
+    }
+    else
+    {
+        [[Renren sharedRenren] logout:self];
+    }
+}
+#pragma mark - RenrenDelegate methods
+
+-(void)renrenDidLogin:(Renren *)renren
+{
+    if (!hasRenRenId)
+    {
+        [[Renren sharedRenren]getLoggedInUserId];
+    }
+}
+
+- (void)renrenDidLogout:(Renren *)renren
+{
+    hasRenRenId = NO;
+}
+- (void)renren:(Renren *)renren loginFailWithError:(ROError*)error{
+	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
+	UIAlertView *alertView =[[[UIAlertView alloc] initWithTitle:title message:description delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] autorelease];
+	[alertView show];
+}
+
+- (void)renren:(Renren *)renren requestDidReturnResponse:(ROResponse*)response
+{
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
+    self.view.userInteractionEnabled = YES;
+	NSArray *usersInfo = (NSArray *)(response.rootObject);
+	NSString *outText = [NSString stringWithFormat:@""];
+	
+	for (ROUserResponseItem *item in usersInfo) {
+		outText = [outText stringByAppendingFormat:@"UserID:%@\n Name:%@\n Sex:%@\n Birthday:%@\n HeadURL:%@\n",item.userId,item.name,item.sex,item.brithday,item.headUrl];
+	}
+    NSLog(@"%@",outText);
+}
+
+/**
+ * 接口请求失败，第三方开发者实现这个方法
+ */
+- (void)renren:(Renren *)renren requestFailWithError:(ROError*)error
+{
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
+    self.view.userInteractionEnabled = YES;
+	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
+	UIAlertView *alertView =[[[UIAlertView alloc] initWithTitle:title message:description delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] autorelease];
+	[alertView show];
+}
+- (void) didReceiveGetLoggedInUserIdNotification:(NSNotification *)notification
+{
+    hasRenRenId = YES;
+    NSString *renrenId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
+    [self startRenRenLogin:renrenId];
+}
+- (void)startRenRenLogin:(NSString *)renrenId
+{
+    NSString * deviceUID = [[UIDevice currentDevice] uniqueIdentifier];
+    NSString * accessToken = [Renren sharedRenren].accessToken;
+    NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:
+                          deviceUID,@"deviceId",
+                          renrenId,@"accountRenRen",
+                          accessToken,@"accessTokenRenRen",
+                          @"iphone",@"deviceType",
+                          nil];
+    [curConnection cancelDownload];
+    [curConnection startDownload:[NodeAsyncConnection createHttpsRequest:@"/user/logInFromRenRen" parameters:dict] :self :@selector(didEndRenRenLogin:)];
+    [dict release];
+    //self.emailTextField.userInteractionEnabled = NO;
+    //self.passwordTextField.userInteractionEnabled = NO;
+    self.view.userInteractionEnabled = NO;
+    [self.activityIndicator startAnimating];
+    self.activityIndicator.hidden = NO;
+
+}
+- (void)didEndRenRenLogin:(NodeAsyncConnection *)connection
+{
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
+    self.view.userInteractionEnabled = YES;
+    if (connection == nil || connection.result == nil)
+    {
+        return;
+    }
+    if ([[connection.result objectForKey:@"status"]isEqualToString:@"success"])
+    {
+        NSDictionary *results = [connection.result objectForKey:@"result"];
+        if ([[results objectForKey:@"userExist"]boolValue])
+        {
+            NSDictionary *result = [results objectForKey:@"user"];
+            NSString *userId = [result objectForKey:@"userId"];
+            NSString *userName = [result objectForKey:@"name"];
+            NSString *userGender = [result objectForKey:@"gender"];
+            NSString *userPhoto = [result objectForKey:@"primaryPhotoPath"];
+            NSDictionary *userInfo = [[NSDictionary alloc]initWithDictionary:result];
+            [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:@"PrettyUserInfo"];
+            [userInfo release];
+            [[NSUserDefaults standardUserDefaults] setObject:userId forKey:@"PrettyUserId"];
+            [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"PrettyUserName"];
+            [[NSUserDefaults standardUserDefaults] setObject:userGender forKey:@"PrettyUserGender"];
+            [[NSUserDefaults standardUserDefaults] setObject:userPhoto forKey:@"PrettyUserPhoto"];
+            [[NSUserDefaults standardUserDefaults] setObject:self.emailAccount forKey:@"PrettyUserEmail"];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            [self.navigationController dismissModalViewControllerAnimated:YES];
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
+            NNMainTabViewController *mainTabViewController = [[NNMainTabViewController alloc]init];
+            AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            appDelegate.mainNavController.navigationBar.hidden = YES;
+            [appDelegate.mainNavController setViewControllers:[NSArray arrayWithObject:mainTabViewController]];
+            [mainTabViewController release];
+        }
+        else
+        {
+            ROUserInfoRequestParam *requestParam = [[[ROUserInfoRequestParam alloc] init] autorelease];
+            requestParam.fields = [NSString stringWithFormat:@"uid,name,sex,birthday,headurl"];
+            [[Renren sharedRenren] getUsersInfo:requestParam andDelegate:self];
+            self.view.userInteractionEnabled = NO;
+            [self.activityIndicator startAnimating];
+            self.activityIndicator.hidden = NO;
+        }
+    }
+
 }
 - (void)startLogin
 {
@@ -190,13 +422,13 @@
     self.view.userInteractionEnabled = NO;
     [self.activityIndicator startAnimating];
     self.activityIndicator.hidden = NO;
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    //[self.navigationItem.rightBarButtonItem setEnabled:NO];
 }
 - (void)didEndLogin:(NodeAsyncConnection *)connection
 {
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
-    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    //[self.navigationItem.rightBarButtonItem setEnabled:YES];
     //self.emailTextField.userInteractionEnabled = YES;
     //self.passwordTextField.userInteractionEnabled = YES;
     self.view.userInteractionEnabled = YES;
@@ -246,6 +478,8 @@
     [self setEmailCell:nil];
     [self setPasswordCell:nil];
     [self setResetPassCell:nil];
+    [self setRenrenCell:nil];
+    [self setLoginButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -261,7 +495,10 @@
     [curConnection cancelDownload];
 }
 - (void)dealloc {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"UpdateDateListNotification" object:nil];
     [curConnection cancelDownload];
     [curConnection release];
     [emailTextField release];
@@ -274,6 +511,8 @@
     [_emailCell release];
     [_passwordCell release];
     [_resetPassCell release];
+    [_renrenCell release];
+    [_loginButton release];
     [super dealloc];
 }
 @end
