@@ -2203,93 +2203,8 @@ Server.prototype.getNearbyDates = function(req, res) {
     return self.handleError({err:err,req:req,res:res});
   }
 
-//  /*
-//   * set targetGender if necessary.
-//   * updateLocation when get first page.
-//   */
-//  function dealAboutUser(cbFun){
-//    if (!userId){
-//      if (!targetGender){
-//        targetGender = 'female';
-//      }
-//      return cbFun(null);
-//    }else{
-//      self.store.getUser({req:req,userId:userId,userFields:['userId','name','gender','schoolId'],needPrimaryPhoto:true},function(err,userObj){
-//        if (err) return cbFun(err);
-//        if (!userObj || !userObj.userId){
-//          var err = self.newError({errorKey:'userNotExist',messageParams:[userId],messagePrefix:messagePrefix,req:req});
-//          if (err) return cbFun(err);
-//        }
-//        targetGender = handy.getTargetGender(userObj.gender);
-//        schoolId = userObj.schoolId;
-//        if (start == 0){
-//          self._updateLocation({req:req,userId:userId,latlng:latlng,region:region,geolibType:geolibType}, function(err,updateLocationRelateInfo){
-//            if (err) return cbFun(err);
-//            return cbFun(null);
-//          });//_updateLocation
-//          return;
-//        }else{//if not first page, no need to update location
-//          return cbFun(null);
-//        }
-//      });//getUser
-//      return;
-//    }
-//  };//dealAboutUser
-//
-//  function getDateIds(cbFun){
-//    if (!userId){
-//      self.store.getMadeDateIds({req:req,gender:targetGender,count:count},function(err,dateIdAndScoreData){
-//        if (err) return cbFun(err);
-//        if (!dateIdAndScoreData) return cbFun(null,null);
-//        var dateIds = dateIdAndScoreData.dateIds;
-//        var totalCount = dateIds.length;
-//        return cbFun(null,{dateIds:dateIds, totalCount:totalCount});
-//      });//getMadeDateIds
-//      return;
-//    }
-//    self.solrClient.queryNearbyDateIds({pointLatLon:latlng, start:start, count:count, gender:targetGender },function(err,datesInfo){
-//      if (err) return cbFun(err);
-//      return cbFun(null,datesInfo);
-//    });//queryNearbyDateIds
-//  };//getDateIds
-//
-//  dealAboutUser(function(err){
-//    if (err) return self.handleError({err:err,req:req,res:res});
-//    getDateIds(function(err,datesInfo){
-//      if (err) return self.handleError({err:err,req:req,res:res});
-//      var totalCount = 0;
-//      if (!datesInfo){
-//        var httpRetData = {status:'success', result:{totalCount:totalCount}};
-//        self.returnDataFromResponse({res:res,req:req,data:httpRetData});
-//        return;
-//      }
-//      var dateIds = datesInfo.dateIds;
-//      var totalCount  = datesInfo.totalCount;
-//      var httpRetData = {status:'success', result:{totalCount:totalCount}};
-//      if (!dateIds || dateIds.length == 0){
-//        self.returnDataFromResponse({res:res,req:req,data:httpRetData});
-//        return;
-//      }
-//
-//      self.store.getDatesWithDetail({req:req,dateIds:dateIds,
-//          dateFields:['dateId', 'senderId', 'createTime', 'latlng', 'region', 'geolibType', 'countyLocation',
-//                      'dateDate', 'whoPay', 'address', 'wantPersonCount', 'existPersonCount', 'title', 'description', 'alreadyStopped'],
-//          needPhoto:true,
-//          needSender:true,sendUserFields:['userId', 'name', 'primaryPhotoId'],
-//          needResponders:false,needRespondTime:false,needLatestMessage:false,
-//          needPrimaryPhoto:true,primaryPhotoFields:['photoId','photoPath']
-//        },
-//        function(err,dates){
-//          if (err) return self.handleError({err:err,req:req,res:res});
-//          httpRetData.result.dates = dates;
-//          logger.logDebug("Server.getNearbyDates exited, httpRetData="+util.inspect(httpRetData,false,100));
-//          self.returnDataFromResponse({res:res,req:req,data:httpRetData});
-//          return;
-//      });//store.getDates
-//    });//getDateIds
-//  });//dealAboutUser
   if (!userId){
-      self.store.getSchoolDates({req:req,schoolId:null,gender:null,
+      self.store.getSchoolDates({req:req,school:null,gender:null,
       cutOffTime:cutOffTime,start:start,count:count,getDataDirection:'fromEarlyToLate',excludeExpired:true,scoreBeInflectionTime:true,
       dateFields:['dateId', 'senderId', 'createTime', //'latlng', 'region', 'geolibType', 'countyLocation',
                   'dateDate', 'whoPay', 'address', 'wantPersonCount', 'existPersonCount', 'title', 'description'],
@@ -2304,21 +2219,21 @@ Server.prototype.getNearbyDates = function(req, res) {
           dateCount = dates.length;
           httpRetData.result = {dates:dates,dateCount:dateCount};
         }
-        logger.logDebug("Server.getNearbyDates exited, httpRetData="+util.inspect(httpRetData,false,100));
+        //logger.logDebug("Server.getNearbyDates exited, httpRetData="+util.inspect(httpRetData,false,100));
         self.returnDataFromResponse({res:res,req:req,data:httpRetData});
         return;
       });//getSchoolDates
       return;
   }else{
-    self.store.getUser({req:req,userId:userId,userFields:['userId','name','gender','schoolId'],needPrimaryPhoto:true},function(err,userObj){
+    self.store.getUser({req:req,userId:userId,userFields:['userId','name','gender','school'],needPrimaryPhoto:true},function(err,userObj){
       if (err) return self.handleError({err:err,req:req,res:res});
       if (!userObj || !userObj.userId){
         var err = self.newError({errorKey:'userNotExist',messageParams:[userId],messagePrefix:messagePrefix,req:req});
         return self.handleError({err:err,req:req,res:res});
       }
       //targetGender = handy.getTargetGender(userObj.gender);
-      schoolId = userObj.schoolId;
-      self.store.getSchoolDates({req:req,schoolId:schoolId,gender:null,
+      var school = userObj.school;
+      self.store.getSchoolDates({req:req,school:school,gender:null,
       cutOffTime:cutOffTime,start:start,count:count,getDataDirection:'fromEarlyToLate',excludeExpired:true,scoreBeInflectionTime:true,
       dateFields:['dateId', 'senderId', 'createTime', 'latlng', 'region', 'geolibType', 'countyLocation',
                   'dateDate', 'whoPay', 'address', 'wantPersonCount', 'existPersonCount', 'title', 'description'],
@@ -2333,7 +2248,7 @@ Server.prototype.getNearbyDates = function(req, res) {
           dateCount = dates.length;
           httpRetData.result = {dates:dates,dateCount:dateCount};
         }
-        logger.logDebug("Server.getNearbyDates exited, httpRetData="+util.inspect(httpRetData,false,100));
+        //logger.logDebug("Server.getNearbyDates exited, httpRetData="+util.inspect(httpRetData,false,100));
         self.returnDataFromResponse({res:res,req:req,data:httpRetData});
         return;
       });//getSchoolDates

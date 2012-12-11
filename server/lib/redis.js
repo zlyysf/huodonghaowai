@@ -5038,7 +5038,7 @@ Redis.prototype.getUserDateIds = function(params, callback) {
 /**
 *
 *
-* @param {Object} params - contains schoolId, gender,
+* @param {Object} params - contains school, gender,
 *   count, cutOffTime(optional), start(optional),
 *   getDataDirection(optional, fromEarlyToLate | fromLateToEarly, default be fromLateToEarly),
 *   excludeExpired, scoreBeInflectionTime
@@ -5060,14 +5060,14 @@ Redis.prototype.getSchoolDateIds = function(params, callback) {
 //    if (callback) return callback(err);
 //    else return self.handleError({err:err});
 //  }
-  var schoolId = params.schoolId;
+  var school = params.school;
   var gender = params.gender;
   var paramsSub = tool.cloneObject(params);
   delete paramsSub.schoolId;
   delete paramsSub.gender;
-  if (schoolId){
-    var schoolDatesKey = 'school:'+schoolId+':dates:all';
-    if (gender) schoolDatesKey = 'school:'+schoolId+':dates:'+gender;
+  if (school){
+    var schoolDatesKey = 'school:'+school+':dates:all';
+    if (gender) schoolDatesKey = 'school:'+school+':dates:'+gender;
     paramsSub.zsetKey = schoolDatesKey;
   }else{
     var allDatesKey = 'alldates:all';
@@ -5087,7 +5087,7 @@ Redis.prototype.getSchoolDateIds = function(params, callback) {
 
 /**
 *
-* @param {Object} params - contains schoolId, gender,
+* @param {Object} params - contains school, gender,
 *   count, cutOffTime(optional), start(optional),
 *   getDataDirection(optional, fromEarlyToLate | fromLateToEarly, default be fromLateToEarly),
 *   excludeExpired,scoreBeInflectionTime.
@@ -5106,7 +5106,7 @@ Redis.prototype.getSchoolDates = function(params, callback) {
   var messagePrefix = 'in Redis.getSchoolDates, ';
   var self = this;
   var req = params.req;
-  var paramsGetDateIds = {req:req,schoolId:params.schoolId, gender:params.gender,
+  var paramsGetDateIds = {req:req,school:params.school, gender:params.gender,
       count:params.count, cutOffTime:params.cutOffTime, start:params.start,
       getDataDirection:params.getDataDirection, excludeExpired:params.excludeExpired,
       scoreBeInflectionTime:params.scoreBeInflectionTime};
@@ -5131,7 +5131,7 @@ Redis.prototype.getSchoolDates = function(params, callback) {
 
     var getDatesWithDetailParams = tool.cloneObject(params);
     getDatesWithDetailParams.dateIds = dateIds;
-    delete getDatesWithDetailParams.schoolId;
+    delete getDatesWithDetailParams.school;
     delete getDatesWithDetailParams.gender;
     delete getDatesWithDetailParams.count;
     delete getDatesWithDetailParams.cutOffTime;

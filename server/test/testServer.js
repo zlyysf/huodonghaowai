@@ -3308,6 +3308,7 @@ function busGetNearbyDatesA1(params,cbFun){
   var port = params.port;
   var securePort = params.securePort;
   var uploadReally = params.uploadReally;
+  var deviceId = "deviceId";
   var user4Info1 = null, user4Info2 = null;
   var userIdM1, userIdM2, userIdF3, userIdF4, userIdF7, userIdF8;
   var emailAccountM1, emailAccountM2, emailAccountF3, emailAccountF4, emailAccountF7, emailAccountF8;
@@ -3340,7 +3341,8 @@ function busGetNearbyDatesA1(params,cbFun){
 
       function(next){
         testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
-        postDataObj:{emailAccount:emailAccountM1, password:gPassword,deviceType:user4Info1.userInfoMale1.userParams.deviceType}},function(err,outData){
+        postDataObj:{emailAccount:emailAccountM1, password:gPassword,deviceType:user4Info1.userInfoMale1.userParams.deviceType,
+        deviceId:deviceId}},function(err,outData){
           assert.ok(outData.status=="success");
           next();
         });
@@ -3348,7 +3350,7 @@ function busGetNearbyDatesA1(params,cbFun){
       function(next){
         console.log("\nuser 1 get 0 created dates");
         testlib.runPRApi({host:host,port:port,path:'/user/getDates',notLogResponseHere:null,
-        postDataObj:{type:'onlyActiveSend',count:10}},function(err,outData){
+        postDataObj:{type:'onlyActiveSend',count:10,userId:userIdM1}},function(err,outData){
           assert.ok(outData.status=="success");
           next();
         });
@@ -3357,7 +3359,7 @@ function busGetNearbyDatesA1(params,cbFun){
       function(next){
         console.log("\nuser1 create date d-1.");
         testlib.runPRApiWithUploadPhoto({host:host,port:port,path:'/user/createDateWithPhoto',notLogResponseHere:null,
-        postDataObj:{
+        postDataObj:{userId:userIdM1,
         dateDate:dateDate_1,whoPay:0,wantPersonCount:1,existPersonCount:1,address:'address',title:"dateU1_3",description:"i want to do something"
         }},function(err,outData){
           assert.ok(outData.status=="success");
@@ -3368,7 +3370,7 @@ function busGetNearbyDatesA1(params,cbFun){
       function(next){
         console.log("\nuser 1 get 0 nearby self dates");
         testlib.runPRApi({host:host,port:port,path:'/user/getNearbyDates',notLogResponseHere:null,
-        postDataObj:{start:0,count:10}},function(err,outData){
+        postDataObj:{userId:userIdM1,start:0,count:10}},function(err,outData){
           assert.ok(outData.status=="success");
           assert.ok(outData.result==null || outData.result.dates==null || outData.result.dates.length==0);
           //assert.ok(outData.result.dates.length==3);
@@ -3380,7 +3382,7 @@ function busGetNearbyDatesA1(params,cbFun){
       function(next){
         console.log("\nuser1 create date d+2.");
         testlib.runPRApiWithUploadPhoto({host:host,port:port,path:'/user/createDateWithPhoto',notLogResponseHere:null,
-        postDataObj:{
+        postDataObj:{userId:userIdM1,
         dateDate:dateDateA2,whoPay:0,wantPersonCount:1,existPersonCount:1,address:'address',title:"dateU1_1",description:"i want to do something"
         }},function(err,outData){
           assert.ok(outData.status=="success");
@@ -3392,45 +3394,12 @@ function busGetNearbyDatesA1(params,cbFun){
       function(next){
         console.log("\nuser 1 get 1 nearby self dates");
         testlib.runPRApi({host:host,port:port,path:'/user/getNearbyDates',notLogResponseHere:null,
-        postDataObj:{start:0,count:10}},function(err,outData){
+        postDataObj:{userId:userIdM1,start:0,count:10}},function(err,outData){
           assert.ok(outData.status=="success");
           assert.ok(outData.result.dates.length==1);
           next();
         });
       },
-//      function(next){
-//        console.log("\nuser1 create date d+4.");
-//        testlib.runPRApiWithUploadPhoto({host:host,port:port,path:'/user/createDateWithPhoto',notLogResponseHere:null,
-//        postDataObj:{
-//        dateDate:dateDateA4,whoPay:0,wantPersonCount:1,existPersonCount:1,address:'address',title:"dateU1_2",description:"i want to do something"
-//        }},function(err,outData){
-//          assert.ok(outData.status=="success");
-//          dateIdUM1_2 = outData.result.dateId;
-//          next();
-//        });
-//      },
-//      function(next){
-//        console.log("\nuser1 create date d+1.");
-//        testlib.runPRApiWithUploadPhoto({host:host,port:port,path:'/user/createDateWithPhoto',notLogResponseHere:null,
-//        postDataObj:{
-//        dateDate:dateDateA1,whoPay:0,wantPersonCount:1,existPersonCount:1,address:'address',title:"dateU1_3",description:"i want to do something"
-//        }},function(err,outData){
-//          assert.ok(outData.status=="success");
-//          dateIdUM1_3 = outData.result.dateId;
-//          next();
-//        });
-//      },
-//      function(next){
-//        console.log("\nuser1 create date now.");
-//        testlib.runPRApiWithUploadPhoto({host:host,port:port,path:'/user/createDateWithPhoto',notLogResponseHere:null,
-//        postDataObj:{
-//        dateDate:dateDate0,whoPay:0,wantPersonCount:1,existPersonCount:1,address:'address',title:"dateU1_4",description:"i want to do something"
-//        }},function(err,outData){
-//          assert.ok(outData.status=="success");
-//          dateIdUM1_4 = outData.result.dateId;
-//          next();
-//        });
-//      },
 
 
       function(next){
@@ -3441,34 +3410,6 @@ function busGetNearbyDatesA1(params,cbFun){
         });
       },
 
-//
-//      function(next){
-//        testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
-//        postDataObj:{emailAccount:emailAccountF3, password:gPassword,deviceType:user4Info1.userInfoFemale3.userParams.deviceType}},function(err,outData){
-//          assert.ok(outData.status=="success");
-//          next();
-//        });
-//      },
-//
-//      function(next){
-//        testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
-//        postDataObj:{emailAccount:emailAccountF4, password:gPassword,deviceType:user4Info1.userInfoFemale3.userParams.deviceType}},function(err,outData){
-//          assert.ok(outData.status=="success");
-//          next();
-//        });
-//      },
-//
-//      function(next){
-//        testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
-//        postDataObj:{emailAccount:emailAccountM1, password:gPassword,deviceType:user4Info1.userInfoMale1.userParams.deviceType}},function(err,outData){
-//          assert.ok(outData.status=="success");
-//          next();
-//        });
-//      },
-
-
-
-
       function(next){
         //DoAssert
         if (next) next();
@@ -3478,6 +3419,237 @@ function busGetNearbyDatesA1(params,cbFun){
       }
   );//handy.pipeline
 };//busGetNearbyDatesA1
+
+
+
+/**
+*
+* @param params - contains (optional)port, ..
+*     @see
+* @param next - is function(next)
+*/
+function testGetNearbyDatesMultiSchool1LocalBothSides(params,next){
+  handy.log('blue', "running testGetNearbyDatesMultiSchool1LocalBothSides");
+  if (!params) params = {};
+  params.host = 'localhost';
+  if (!params.port) params.port = port;
+  if (!params.securePort) params.securePort = securePort;
+  testlib.setConfigDefaultValue();
+  if (params.disableNotification){
+    notification.config.finelyEnableFlag = false;
+    waitMsTimeOfSendNotification = 10;
+  }
+  testlib.provideServerLifeCycle(
+    {port:params.port,securePort:params.securePort, needInitStore:true, NeedSetConfigDefault:false, notKeepC2dmAuth:true, c2dmAuth:gC2dmAuth},
+    function(cbNext){
+      testGetNearbyDatesMultiSchool1ClientSide(params,function(outData){
+        if (cbNext) cbNext();
+      });
+    },
+    next
+  );//provideServerLifeCycle
+}//testGetNearbyDatesMultiSchool1LocalBothSides
+/**
+ * as there is no socket.io, no complicate logic
+ * @param params - contains host,port; ..
+ *     @see busAddDeviceAndUser
+ * @param cbFun - is function(outData)
+ *   outData contains ..
+ */
+function testGetNearbyDatesMultiSchool1ClientSide(params,cbFun){
+  handy.log('blue', "testGetNearbyDatesMultiSchool1ClientSide enter");
+  assert.ok(params.host);
+  assert.ok(params.port);
+  assert.ok(params.securePort);
+  busGetNearbyDatesMultiSchool1(params,function(outDataBus){
+    if (cbFun) cbFun(outDataBus);
+  });//busGetNearbyDatesMultiSchool1
+}//testGetNearbyDatesMultiSchool1ClientSide
+
+function busGetNearbyDatesMultiSchool1(params,cbFun){
+  handy.log('blue', "busGetNearbyDatesMultiSchool1 enter");
+  assert.ok(params.host);
+  assert.ok(params.port);
+  assert.ok(params.securePort);
+  var host = params.host;
+  var port = params.port;
+  var securePort = params.securePort;
+  var uploadReally = params.uploadReally;
+  var deviceId = "deviceId";
+  var user4Info1 = null, user4Info2 = null;
+  var schoolBd = "北京大学", shcoolQh = "清华大学";
+  var userIdM1, userIdM2, userIdF3, userIdF4, userIdM5, userIdM6, userIdF7, userIdF8;
+  var emailAccountM1, emailAccountM2, emailAccountF3, emailAccountF4, emailAccountM5, emailAccountM6, emailAccountF7, emailAccountF8;
+  var dateIdUM1_1, dateIdUM1_2, dateIdUM1_3, dateIdUM1_4, dateIdUM5_1, dateIdUM5_2;
+  var messageIdM1D1_F3_1, messageIdM1D2_F3_1, messageIdM1D2_M1_1, messageIdM1D3_F3_1;
+  var dateDate0 = handy.getNowOfUTCdate().getTime();
+  var dateDateA1 = dateDate0+1*24*60*60*1000;
+  var dateDateA2 = dateDate0+2*24*60*60*1000;
+  var dateDateA4 = dateDate0+4*24*60*60*1000;
+  var dateDate_1 = dateDate0-1*24*60*60*1000;
+  var dateDate_2 = dateDate0-2*24*60*60*1000;
+  var dateDate_4 = dateDate0-4*24*60*60*1000;
+  handy.pipeline(
+      function(next){
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Adam',name2:'Bob',name3:'Clara',name4:'Daisy',
+          school1:schoolBd,school2:schoolBd,school3:schoolBd,school4:schoolBd},destObj:lparams});
+        busPrepare4User(lparams,function(outData){
+          user4Info1 = outData;
+          userIdM1 = outData.userInfoMale1.registerOutData.result.userId;
+          userIdM2 = outData.userInfoMale2.registerOutData.result.userId;
+          userIdF3 = outData.userInfoFemale3.registerOutData.result.userId;
+          userIdF4 = outData.userInfoFemale4.registerOutData.result.userId;
+          emailAccountM1 = outData.userInfoMale1.userParams.emailAccount;
+          emailAccountM2 = outData.userInfoMale2.userParams.emailAccount;
+          emailAccountF3 = outData.userInfoFemale3.userParams.emailAccount;
+          emailAccountF4 = outData.userInfoFemale4.userParams.emailAccount;
+          if (next) next();
+        });//busPrepare4User
+      },
+
+      function(next){
+        var lparams = tool.cloneObject(params);
+        tool.copyFields({srcObj:{name1:'Edward',name2:'Ford',name3:'Georgia',name4:'Helen',
+          school1:shcoolQh,school2:shcoolQh,school3:shcoolQh,school4:shcoolQh},destObj:lparams});
+        busPrepare4User(lparams,function(outData){
+          user4Info2 = outData;
+          userIdM5 = outData.userInfoMale1.registerOutData.result.userId;
+          userIdM6 = outData.userInfoMale2.registerOutData.result.userId;
+          userIdF7 = outData.userInfoFemale3.registerOutData.result.userId;
+          userIdF8 = outData.userInfoFemale4.registerOutData.result.userId;
+          emailAccountM5 = outData.userInfoMale1.userParams.emailAccount;
+          emailAccountM6 = outData.userInfoMale2.userParams.emailAccount;
+          emailAccountF7 = outData.userInfoFemale3.userParams.emailAccount;
+          emailAccountF8 = outData.userInfoFemale4.userParams.emailAccount;
+          if (next) next();
+        });//busPrepare4User
+      },
+
+      function(next){
+        testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
+        postDataObj:{emailAccount:emailAccountM1, password:gPassword,deviceType:user4Info1.userInfoMale1.userParams.deviceType,
+        deviceId:deviceId}},function(err,outData){
+          assert.ok(outData.status=="success");
+          next();
+        });
+      },
+      function(next){
+        console.log("\nuserM1 create date d+1.");
+        testlib.runPRApiWithUploadPhoto({host:host,port:port,path:'/user/createDateWithPhoto',notLogResponseHere:null,
+        postDataObj:{userId:userIdM1,
+        dateDate:dateDateA1,whoPay:0,wantPersonCount:1,existPersonCount:1,address:'address',title:"dateU1_1",description:"i want to do something"
+        }},function(err,outData){
+          assert.ok(outData.status=="success");
+          dateIdUM1_1 = outData.result.dateId;
+          next();
+        });
+      },
+      function(next){
+        console.log("\nuser1 logout");
+        testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/logOut',notLogResponseHere:null,
+        postDataObj:{}},function(err,outData){
+          next();
+        });
+      },
+
+      function(next){
+        testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
+        postDataObj:{emailAccount:emailAccountM5, password:gPassword,deviceType:user4Info2.userInfoMale1.userParams.deviceType,
+        deviceId:deviceId}},function(err,outData){
+          assert.ok(outData.status=="success");
+          next();
+        });
+      },
+      function(next){
+        console.log("\nuserM5 create date d+2.");
+        testlib.runPRApiWithUploadPhoto({host:host,port:port,path:'/user/createDateWithPhoto',notLogResponseHere:null,
+        postDataObj:{userId:userIdM5,
+        dateDate:dateDateA2,whoPay:0,wantPersonCount:1,existPersonCount:1,address:'address',title:"dateU5_1",description:"i want to do something"
+        }},function(err,outData){
+          assert.ok(outData.status=="success");
+          dateIdUM5_1 = outData.result.dateId;
+          next();
+        });
+      },
+      function(next){
+        console.log("\nuserM5 create date d+4.");
+        testlib.runPRApiWithUploadPhoto({host:host,port:port,path:'/user/createDateWithPhoto',notLogResponseHere:null,
+        postDataObj:{userId:userIdM5,
+        dateDate:dateDateA4,whoPay:0,wantPersonCount:1,existPersonCount:1,address:'address',title:"dateU5_2",description:"i want to do something"
+        }},function(err,outData){
+          assert.ok(outData.status=="success");
+          dateIdUM5_2 = outData.result.dateId;
+          next();
+        });
+      },
+      function(next){
+        console.log("\nuserM5 logout");
+        testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/logOut',notLogResponseHere:null,
+        postDataObj:{}},function(err,outData){
+          next();
+        });
+      },
+
+      function(next){
+        testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
+        postDataObj:{emailAccount:emailAccountM2, password:gPassword,deviceType:user4Info1.userInfoMale2.userParams.deviceType,
+        deviceId:deviceId}},function(err,outData){
+          assert.ok(outData.status=="success");
+          next();
+        });
+      },
+      function(next){
+        console.log("\nuserM2 get 1 nearby dates");
+        testlib.runPRApi({host:host,port:port,path:'/user/getNearbyDates',notLogResponseHere:null,
+        postDataObj:{userId:userIdM2,start:0,count:10}},function(err,outData){
+          assert.ok(outData.status=="success");
+          assert.ok(outData.result.dates.length==1);
+          next();
+        });
+      },
+      function(next){
+        console.log("\nuserM2 logout");
+        testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/logOut',notLogResponseHere:null,
+        postDataObj:{}},function(err,outData){
+          next();
+        });
+      },
+
+      function(next){
+        testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
+        postDataObj:{emailAccount:emailAccountM6, password:gPassword,deviceType:user4Info2.userInfoMale2.userParams.deviceType,
+        deviceId:deviceId}},function(err,outData){
+          assert.ok(outData.status=="success");
+          next();
+        });
+      },
+      function(next){
+        console.log("\nuserM6 get 2 nearby dates");
+        testlib.runPRApi({host:host,port:port,path:'/user/getNearbyDates',notLogResponseHere:null,
+        postDataObj:{userId:userIdM6,start:0,count:10}},function(err,outData){
+          assert.ok(outData.status=="success");
+          assert.ok(outData.result.dates.length==2);
+          next();
+        });
+      },
+      function(next){
+        console.log("\nuserM6 logout");
+        testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/logOut',notLogResponseHere:null,
+        postDataObj:{}},function(err,outData){
+          next();
+        });
+      },
+
+      function(next){
+        //DoAssert
+        if (next) next();
+      },
+      function(){
+        if (cbFun) cbFun(null);
+      }
+  );//handy.pipeline
+};//busGetNearbyDatesMultiSchool1
 
 
 
@@ -4800,6 +4972,11 @@ function busPrepare4User(params,cbFun){
   var deviceId2 = params.deviceId2;
   var deviceId3 = params.deviceId3;
   var deviceId4 = params.deviceId4;
+
+  var school1 = params.school1;
+  var school2 = params.school2;
+  var school3 = params.school3;
+  var school4 = params.school4;
   var latlng1 = params.latlng1;
   var latlng2 = params.latlng2;
   var latlng3 = params.latlng3;
@@ -4834,6 +5011,11 @@ function busPrepare4User(params,cbFun){
   if (!deviceId2) deviceId2 = gDeviceId;
   if (!deviceId3) deviceId3 = gDeviceId;
   if (!deviceId4) deviceId4 = gDeviceId;
+
+  if (!school1) school1 = gSchool;
+  if (!school2) school2 = gSchool;
+  if (!school3) school3 = gSchool;
+  if (!school4) school4 = gSchool;
   if (!latlng1) latlng1 = gLatlng1;
   if (!latlng2) latlng2 = gLatlng1;
   if (!latlng3) latlng3 = gLatlng1;
@@ -4851,7 +5033,8 @@ function busPrepare4User(params,cbFun){
   handy.pipeline(
       function(next){
         var lParams = {host:host,port:port,securePort:securePort, emailAccount:emailAccount1,password:password1,name:name1,gender:gender1,height:height1,
-              deviceType:deviceType1,deviceId:deviceId1,latlng:latlng1,region:region1,geolibType:geolibType1,
+              deviceType:deviceType1,deviceId:deviceId1, school:school1,
+              latlng:latlng1,region:region1,geolibType:geolibType1,
               uploadReally:uploadReally,notAutoAudit:notAutoAudit,notUploadPhoto:notUploadPhoto};
         busInitUserPhoto(lParams,function(outData){
           userInfoMale1 = outData;
@@ -4861,7 +5044,8 @@ function busPrepare4User(params,cbFun){
       },
       function(next){
         var lParams = {host:host,port:port,securePort:securePort, emailAccount:emailAccount2,password:password2,name:name2,gender:gender2,height:height2,
-              deviceType:deviceType2,deviceId:deviceId2,latlng:latlng2,region:region2,geolibType:geolibType2,
+              deviceType:deviceType2,deviceId:deviceId2, school:school2,
+              latlng:latlng2,region:region2,geolibType:geolibType2,
               uploadReally:uploadReally,notAutoAudit:notAutoAudit,notUploadPhoto:notUploadPhoto};
         busInitUserPhoto(lParams,function(outData){
           userInfoMale2 = outData;
@@ -4871,7 +5055,8 @@ function busPrepare4User(params,cbFun){
       },
       function(next){
         var lParams = {host:host,port:port,securePort:securePort, emailAccount:emailAccount3,password:password3,name:name3,gender:gender3,height:height3,
-              deviceType:deviceType3,deviceId:deviceId3,latlng:latlng3,region:region3,geolibType:geolibType3,
+              deviceType:deviceType3,deviceId:deviceId3, school:school3,
+              latlng:latlng3,region:region3,geolibType:geolibType3,
               uploadReally:uploadReally,notAutoAudit:notAutoAudit,notUploadPhoto:notUploadPhoto};
         busInitUserPhoto(lParams,function(outData){
           userInfoFemale3 = outData;
@@ -4881,7 +5066,8 @@ function busPrepare4User(params,cbFun){
       },
       function(next){
         var lParams = {host:host,port:port,securePort:securePort, emailAccount:emailAccount4,password:password4,name:name4,gender:gender4,height:height4,
-              deviceType:deviceType4,deviceId:deviceId4,latlng:latlng4,region:region4,geolibType:geolibType4,
+              deviceType:deviceType4,deviceId:deviceId4, school:school4,
+              latlng:latlng4,region:region4,geolibType:geolibType4,
               uploadReally:uploadReally,notAutoAudit:notAutoAudit,notUploadPhoto:notUploadPhoto};
         busInitUserPhoto(lParams,function(outData){
           userInfoFemale4 = outData;
@@ -4900,26 +5086,6 @@ function busPrepare4User(params,cbFun){
       }
   );//handy.pipeline
 };//busPrepare4User
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -8450,11 +8616,12 @@ testlib.backConfigDefaultValue();
 //testCountInvitingUser1LocalBothSides({disableNotification:true},null);
 //testUpdateLocation1LocalBothSides({disableNotification:true},null);
 //testMiscellaneousApis1LocalBothSides({disableNotification:true},null);
-testDateBasic1LocalBothSides({disableNotification:true,uploadReally:false},null);
+//testDateBasic1LocalBothSides({disableNotification:true,uploadReally:false},null);
 //testActiveApplyingDates1LocalBothSides({disableNotification:true},null);
 //testDateActiveResponders1LocalBothSides({disableNotification:true},null);
 //testDateActiveResponders2LocalBothSides({disableNotification:true},null);
 //testGetNearbyDatesA1LocalBothSides({disableNotification:true},null);
+testGetNearbyDatesMultiSchool1LocalBothSides({disableNotification:true},null);
 //testGetDates1LocalBothSides({disableNotification:true},null);
 
 //testGetNearbyDates1LocalBothSidesOld({disableNotification:true},null);
