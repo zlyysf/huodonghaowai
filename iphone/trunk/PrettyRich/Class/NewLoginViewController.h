@@ -33,6 +33,6 @@
 - (void)backButtonClicked;
 - (void)startLogin;
 - (void)didEndLogin:(NodeAsyncConnection *)connection;
-- (void)startRenRenLogin:(NSString *)renrenId;
+- (void)startRenRenLogin;
 - (void)didEndRenRenLogin:(NodeAsyncConnection *)connection;
 @end

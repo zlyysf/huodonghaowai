@@ -96,10 +96,14 @@
         [UIView setAnimationBeginsFromCurrentState:YES];
         [UIView setAnimationDuration:animationDuration];
         self.listView.frame = CGRectMake(self.listView.frame.origin.x, self.listView.frame.origin.y,320 , 200);
-        if (self.lastActiveField.tag == 104 || self.lastActiveField.tag == 105)
+        if (self.lastActiveField.tag == 201)
         {
             //self.listView.contentOffset = CGPointMake(0, 100);
-            [self.listView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            [self.listView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        }
+        else if (self.lastActiveField.tag == 202)
+        {
+            [self.listView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
         }
         [UIView commitAnimations];
     }
@@ -262,6 +266,10 @@
 }
 - (IBAction)renrenLogin
 {
+    if (lastActiveField != nil)
+    {
+        [lastActiveField resignFirstResponder];
+    }
     if(![[Renren sharedRenren]isSessionValid])
     {
         NSArray *permissions = [NSArray arrayWithObjects:@"read_user_album",@"status_update",@"photo_upload",@"publish_feed",@"create_album",@"operate_like",nil];
@@ -269,7 +277,10 @@
     }
     else
     {
-        [[Renren sharedRenren] logout:self];
+        if (hasRenRenId)
+            [self startRenRenLogin];
+        else
+            [[Renren sharedRenren]getLoggedInUserId];
     }
 }
 #pragma mark - RenrenDelegate methods
@@ -281,7 +292,6 @@
         [[Renren sharedRenren]getLoggedInUserId];
     }
 }
-
 - (void)renrenDidLogout:(Renren *)renren
 {
     hasRenRenId = NO;
@@ -292,7 +302,6 @@
 	UIAlertView *alertView =[[[UIAlertView alloc] initWithTitle:title message:description delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] autorelease];
 	[alertView show];
 }
-
 - (void)renren:(Renren *)renren requestDidReturnResponse:(ROResponse*)response
 {
     [self.activityIndicator stopAnimating];
@@ -306,10 +315,6 @@
 	}
     NSLog(@"%@",outText);
 }
-
-/**
- * 接口请求失败，第三方开发者实现这个方法
- */
 - (void)renren:(Renren *)renren requestFailWithError:(ROError*)error
 {
     [self.activityIndicator stopAnimating];
@@ -323,11 +328,12 @@
 - (void) didReceiveGetLoggedInUserIdNotification:(NSNotification *)notification
 {
     hasRenRenId = YES;
-    NSString *renrenId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
-    [self startRenRenLogin:renrenId];
+    //NSString *renrenId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
+    [self startRenRenLogin];
 }
-- (void)startRenRenLogin:(NSString *)renrenId
+- (void)startRenRenLogin
 {
+    NSString *renrenId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
     NSString * deviceUID = [[UIDevice currentDevice] uniqueIdentifier];
     NSString * accessToken = [Renren sharedRenren].accessToken;
     NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:
@@ -339,8 +345,6 @@
     [curConnection cancelDownload];
     [curConnection startDownload:[NodeAsyncConnection createHttpsRequest:@"/user/logInFromRenRen" parameters:dict] :self :@selector(didEndRenRenLogin:)];
     [dict release];
-    //self.emailTextField.userInteractionEnabled = NO;
-    //self.passwordTextField.userInteractionEnabled = NO;
     self.view.userInteractionEnabled = NO;
     [self.activityIndicator startAnimating];
     self.activityIndicator.hidden = NO;
@@ -417,20 +421,14 @@
     [curConnection cancelDownload];
     [curConnection startDownload:[NodeAsyncConnection createHttpsRequest:@"/user/logIn" parameters:dict] :self :@selector(didEndLogin:)];
     [dict release];
-    //self.emailTextField.userInteractionEnabled = NO;
-    //self.passwordTextField.userInteractionEnabled = NO;
     self.view.userInteractionEnabled = NO;
     [self.activityIndicator startAnimating];
     self.activityIndicator.hidden = NO;
-    //[self.navigationItem.rightBarButtonItem setEnabled:NO];
 }
 - (void)didEndLogin:(NodeAsyncConnection *)connection
 {
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
-    //[self.navigationItem.rightBarButtonItem setEnabled:YES];
-    //self.emailTextField.userInteractionEnabled = YES;
-    //self.passwordTextField.userInteractionEnabled = YES;
     self.view.userInteractionEnabled = YES;
     if (connection == nil || connection.result == nil)
     {
@@ -446,22 +444,17 @@
         NSDictionary *userInfo = [[NSDictionary alloc]initWithDictionary:result];
         [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:@"PrettyUserInfo"];
         [userInfo release];
-        //NSString *userCredit = [result objectForKey:@"credit"];
         [[NSUserDefaults standardUserDefaults] setObject:userId forKey:@"PrettyUserId"];
         [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"PrettyUserName"];
         [[NSUserDefaults standardUserDefaults] setObject:userGender forKey:@"PrettyUserGender"];
         [[NSUserDefaults standardUserDefaults] setObject:userPhoto forKey:@"PrettyUserPhoto"];
         
-        //[[NSUserDefaults standardUserDefaults] setObject:userCredit forKey:@"PrettyUserCredit"];
         [[NSUserDefaults standardUserDefaults] setObject:self.emailAccount forKey:@"PrettyUserEmail"];
         [[NSUserDefaults standardUserDefaults] setObject:self.emailAccount forKey:@"PreUserEmail"];
-        //NSDate *today = [NSDate date];
-        //[[NSUserDefaults standardUserDefaults]setObject:today forKey:@"PrettyLastSign"];
         [[NSUserDefaults standardUserDefaults]synchronize];
         [self.navigationController dismissModalViewControllerAnimated:YES];
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
         NNMainTabViewController *mainTabViewController = [[NNMainTabViewController alloc]init];
-        //navigationController.naviAutoType = NaviAutoTypeNearbyDate;
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         appDelegate.mainNavController.navigationBar.hidden = YES;
         [appDelegate.mainNavController setViewControllers:[NSArray arrayWithObject:mainTabViewController]];
@@ -492,6 +485,10 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [MobClick endLogPageView:@"LoginView"];
+    if (lastActiveField != nil)
+    {
+        [lastActiveField resignFirstResponder];
+    }
     [curConnection cancelDownload];
 }
 - (void)dealloc {

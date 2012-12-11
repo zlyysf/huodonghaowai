@@ -48,7 +48,7 @@
                                    nil];
     self.dateOption = option;
     [option release];
-    self.navigationItem.title = @"同去";
+    self.navigationItem.title = @"活动号外";
     self.activityIndicator.hidden = YES;
 }
 -(void)viewWillAppear:(BOOL)animated
