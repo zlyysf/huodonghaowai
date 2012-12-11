@@ -199,6 +199,7 @@
 		5FFB62B515C7B84600EE77C3 /* NewLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFB62B315C7B84600EE77C3 /* NewLoginViewController.m */; };
 		5FFB62BB15C7BBB300EE77C3 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFB62B915C7BBB300EE77C3 /* SignUpViewController.m */; };
 		5FFB62BC15C7BBB300EE77C3 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FFB62BA15C7BBB300EE77C3 /* SignUpViewController.xib */; };
+		5FFD7FBF1677224E00F9221C /* separate-line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD7FBE1677224E00F9221C /* separate-line@2x.png */; };
 		8432969C155A148C00102B12 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969B155A148C00102B12 /* UIKit.framework */; };
 		8432969E155A148C00102B12 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969D155A148C00102B12 /* Foundation.framework */; };
 		843296A0155A148C00102B12 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969F155A148C00102B12 /* CoreGraphics.framework */; };
@@ -503,6 +504,7 @@
 		5FFB62B815C7BBB300EE77C3 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpViewController.h; path = Class/SignUpViewController.h; sourceTree = "<group>"; };
 		5FFB62B915C7BBB300EE77C3 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = Class/SignUpViewController.m; sourceTree = "<group>"; };
 		5FFB62BA15C7BBB300EE77C3 /* SignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignUpViewController.xib; path = Class/SignUpViewController.xib; sourceTree = "<group>"; };
+		5FFD7FBE1677224E00F9221C /* separate-line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "separate-line@2x.png"; sourceTree = "<group>"; };
 		84329697155A148C00102B12 /* 同去.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "同去.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8432969B155A148C00102B12 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8432969D155A148C00102B12 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -857,6 +859,7 @@
 		5F4AF0A315679E9E005ECD5D /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				5FFD7FBE1677224E00F9221C /* separate-line@2x.png */,
 				5F196DBB165A4094003072E5 /* help1.jpg */,
 				5F196DBC165A4094003072E5 /* help2.jpg */,
 				5F196DBD165A4094003072E5 /* help3.jpg */,
@@ -1258,6 +1261,7 @@
 				5F2B320316759205008C5EF8 /* small-button-normal.png in Resources */,
 				5F2B320416759205008C5EF8 /* small-button-normal@2x.png in Resources */,
 				5F2B321E16759205008C5EF8 /* ROCheckOrderCell.xib in Resources */,
+				5FFD7FBF1677224E00F9221C /* separate-line@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

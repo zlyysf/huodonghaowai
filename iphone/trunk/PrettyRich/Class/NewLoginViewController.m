@@ -217,13 +217,13 @@
 - (IBAction)resetPassword
 {
     NSString *host;
-    if (NewServer)
+    if (ServerProd)
     {
-        host = @"http://42.121.122.47:4000";//prod
+        host = @"http://42.121.122.47:3000";//prod
     }
     else
     {
-        host = @"http://ec2-23-23-144-110.compute-1.amazonaws.com:4000";//prod
+        host = @"http://42.121.122.47:4000";//stage
     }
     NSLog(@"%@",host);
     //static NSString *host = @"http://ec2-23-21-136-120.compute-1.amazonaws.com:4000";//stage

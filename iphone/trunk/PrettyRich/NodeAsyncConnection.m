@@ -208,13 +208,13 @@
 + (NSMutableURLRequest *) createNodeHttpRequest :(NSString *)apiName parameters:(NSDictionary *)parameters
 {
     NSString *host;
-    if (NewServer)
+    if (ServerProd)
     {
-        host = @"http://42.121.122.47:4000";
+        host = @"http://42.121.122.47:3000";//prod
     }
     else
     {
-        host = @"http://ec2-23-23-144-110.compute-1.amazonaws.com:4000";
+        host = @"http://42.121.122.47:4000";//stage
     }
     NSLog(@"%@",host);
     //static NSString *host = @"http://ec2-23-21-136-120.compute-1.amazonaws.com:4000";//stage
@@ -239,13 +239,13 @@
 + (NSMutableURLRequest *) createHttpsRequest :(NSString *)apiName parameters:(NSDictionary *)parameters
 {
     NSString *host;
-    if (NewServer)
+    if (ServerProd)
     {
-        host = @"https://42.121.122.47:4010";
+        host = @"https://42.121.122.47:3010";//prod
     }
     else
     {
-        host = @"https://ec2-23-23-144-110.compute-1.amazonaws.com:4010";
+        host = @"https://42.121.122.47:4010";//stage
     }
     NSLog(@"%@",host);
     //static NSString *host = @"https://ec2-23-21-136-120.compute-1.amazonaws.com:4010";//stage
@@ -269,13 +269,13 @@
 + (NSMutableURLRequest *) createUploadPhotoRequest :(NSString *)apiName parameters:(NSDictionary *)parameters
 {
     NSString *host;
-    if (NewServer)
+    if (ServerProd)
     {
-        host = @"http://42.121.122.47:4000";
+        host = @"http://42.121.122.47:3000";//prod
     }
     else
     {
-        host = @"http://ec2-23-23-144-110.compute-1.amazonaws.com:4000";
+        host = @"http://42.121.122.47:4000";//stage
     }
     NSLog(@"%@",host);
     //static NSString *host = @"http://ec2-23-21-136-120.compute-1.amazonaws.com:4000";//stage
