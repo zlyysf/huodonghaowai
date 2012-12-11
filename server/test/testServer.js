@@ -8505,7 +8505,8 @@ function busMiscellaneousApis1(params,cbFun){
 
       function(next){
         testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
-        postDataObj:{emailAccount:emailAccountM1, password:gPassword,deviceType:user4Info1.userInfoMale1.userParams.deviceType}},function(err,outData){
+        postDataObj:{emailAccount:emailAccountM1, password:gPassword,deviceType:user4Info1.userInfoMale1.userParams.deviceType,
+        deviceId:user4Info1.userInfoMale1.userParams.deviceId}},function(err,outData){
           assert.ok(outData.status=="success");
           next();
         });
@@ -8513,7 +8514,7 @@ function busMiscellaneousApis1(params,cbFun){
       function(next){
         console.log("\nnormal updateAppToken");
         testlib.runPRApi({host:host,port:port,path:'/user/updateAppToken',notLogResponseHere:null,
-        postDataObj:{appToken:"aaa"}},function(err,outData){
+        postDataObj:{userId:userIdM1,appToken:"aaa"}},function(err,outData){
           assert.ok(outData.status=="success");
           next();
         });
@@ -8531,15 +8532,20 @@ function busMiscellaneousApis1(params,cbFun){
       function(next){
         console.log("\nnormal getSentingSMS");
         testlib.runPRApi({host:host,port:port,path:'/user/getSentingSMS',notLogResponseHere:null,
-        postDataObj:{type:"invite"}},function(err,outData){
+        postDataObj:{userId:userIdM1,type:"invite"}},function(err,outData){
           assert.ok(outData.status=="success");
           next();
         });
       },
 
-
-
-
+      function(next){
+        console.log("\nnormal report");
+        testlib.runPRApi({host:host,port:port,path:'/user/reportUser',notLogResponseHere:null,
+        postDataObj:{userId:userIdM1, targetUserId:userIdM2, description:"description"}},function(err,outData){
+          assert.ok(outData.status=="success");
+          next();
+        });
+      },
 
       function(next){
         //DoAssert
@@ -8615,13 +8621,13 @@ testlib.backConfigDefaultValue();
 //testSession1LocalBothSides({disableNotification:true,uploadReally:false},null);
 //testCountInvitingUser1LocalBothSides({disableNotification:true},null);
 //testUpdateLocation1LocalBothSides({disableNotification:true},null);
-//testMiscellaneousApis1LocalBothSides({disableNotification:true},null);
+testMiscellaneousApis1LocalBothSides({disableNotification:true},null);
 //testDateBasic1LocalBothSides({disableNotification:true,uploadReally:false},null);
 //testActiveApplyingDates1LocalBothSides({disableNotification:true},null);
 //testDateActiveResponders1LocalBothSides({disableNotification:true},null);
 //testDateActiveResponders2LocalBothSides({disableNotification:true},null);
 //testGetNearbyDatesA1LocalBothSides({disableNotification:true},null);
-testGetNearbyDatesMultiSchool1LocalBothSides({disableNotification:true},null);
+//testGetNearbyDatesMultiSchool1LocalBothSides({disableNotification:true},null);
 //testGetDates1LocalBothSides({disableNotification:true},null);
 
 //testGetNearbyDates1LocalBothSidesOld({disableNotification:true},null);

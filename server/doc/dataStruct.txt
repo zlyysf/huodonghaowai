@@ -981,6 +981,11 @@ audit:auditId    hash
 Report
 report:reportId    hash
 	reportId, reporterId, reporteeId(对人report而不是对图片等), createTime, description
+UserReportedByUser
+user:userId:reportedByUser    set    Store userIds
+UserReportedByRecord
+user:userId:reportedByRecord    set    Store reportIds
+	
 Broadcast
 broadcast:broadcastId    hash
 	broadcastId,messageText,userFilters(Json str represent a object) , createTime

@@ -3333,17 +3333,12 @@ Server.prototype.getSentingSMS = function (req, res) {
     return self.handleError({err:err,req:req,res:res});
   }
   if (type=='invite'){
-    self.store.generateInviteCode({req:req,count:1,userId:userId},function(err,inviteCodes){
-      if (err) return self.handleError({err:err,req:req,res:res});
-      var inviteCode = inviteCodes[0];
-      var downUrlForAndroid = config.config.downUrlForAndroid;
-      var downUrlForApple = config.config.downUrlForApple;
-      //var text = "我正在使用同去应用，很有趣。你也来用吧。邀请码:"+inviteCode+"\n\n安卓应用的下载地址:"+downUrlForAndroid+"\n\n苹果应用的下载地址:"+downUrlForApple;
-      var text = "我正在使用同去应用，很有趣。你也来用吧。邀请码:"+inviteCode+"\n\n安卓应用的下载地址:"+downUrlForAndroid;
-      var httpRetData = {status:'success',result:{text:text}};
-      self.returnDataFromResponse({res:res,req:req,data:httpRetData});
-      return;
-    });//generateInviteCode
+    var downUrlForAndroid = config.config.downUrlForAndroid;
+    var downUrlForApple = config.config.downUrlForApple;
+    //var text = "我正在使用同去应用，很有趣。你也来用吧。\n\n安卓应用的下载地址:"+downUrlForAndroid+"\n\n苹果应用的下载地址:"+downUrlForApple;
+    var text = "我正在使用同去应用，很有趣。你也来用吧。\n\n安卓应用的下载地址:"+downUrlForAndroid;
+    var httpRetData = {status:'success',result:{text:text}};
+    self.returnDataFromResponse({res:res,req:req,data:httpRetData});
     return;
   }else{
     var err = self.newError({errorKey:'unsupportedValueForParam',messageParams:[type,'type'],messagePrefix:messagePrefix,req:req});

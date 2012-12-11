@@ -4577,10 +4577,14 @@ Redis.prototype.createReport = function(params, callback) {
     }
     var reportId = newId+'';
     var reportKey = 'report:'+reportId;
+    var multi = self.client.multi();
     var reportObj = {reportId:reportId, reporterId:reporterId, reporteeId:reporteeId, description:description, createTime:createTime+''};
     var paramsReport = handy.toArray(reportKey,reportObj);
-    var multi = self.client.multi();
     multi.hmset(paramsReport);
+    var userReportedByUserKey = "user:"+reporteeId+":reportedByUser";
+    multi.sadd(userReportedByUserKey,reporterId);
+    var userReportedByRecordKey = "user:"+reporteeId+":reportedByRecord";
+    multi.sadd(userReportedByRecordKey,reportId);
     multi.exec(function(err){
       if (err){
         var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
