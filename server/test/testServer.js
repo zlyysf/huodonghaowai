@@ -603,6 +603,15 @@ function busRenRenRegisterAndLogin1(params,cbFun){
           });
         },
         function(next){
+          console.log("\nnormal getuser, should ok.");
+          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/getUser',notLogResponseHere:null,
+          postDataObj:{userId:userId,targetUserId:userId}},function(err,outData){
+            assert.ok(outData.status=="success");
+            assert.ok(outData.result.hometown);
+            next();
+          });
+        },
+        function(next){
           console.log("\nnormal logout 2, should ok.");
           testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/logOut',notLogResponseHere:null,
           postDataObj:{}},function(err,outData){
@@ -8615,13 +8624,13 @@ testlib.backConfigDefaultValue();
 
 //testJustStartStopServer();
 //testRegister1LocalBothSides({disableNotification:true,uploadReally:false},null);
-//testRenRenRegisterAndLogin1LocalBothSides({disableNotification:true,uploadReally:false},null);
+testRenRenRegisterAndLogin1LocalBothSides({disableNotification:true,uploadReally:false},null);
 //testUploadPhoto1LocalBothSides({disableNotification:true,uploadReally:false},null);
 
 //testSession1LocalBothSides({disableNotification:true,uploadReally:false},null);
 //testCountInvitingUser1LocalBothSides({disableNotification:true},null);
 //testUpdateLocation1LocalBothSides({disableNotification:true},null);
-testMiscellaneousApis1LocalBothSides({disableNotification:true},null);
+//testMiscellaneousApis1LocalBothSides({disableNotification:true},null);
 //testDateBasic1LocalBothSides({disableNotification:true,uploadReally:false},null);
 //testActiveApplyingDates1LocalBothSides({disableNotification:true},null);
 //testDateActiveResponders1LocalBothSides({disableNotification:true},null);

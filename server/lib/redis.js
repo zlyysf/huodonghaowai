@@ -3019,7 +3019,7 @@ Redis.prototype.registerEmailAccount = function(params, callback) {
         //if (geolibType) userObj.geolibType = geolibType;
         //if (countyLocation) userObj.countyLocation = countyLocation;
         if (accountRenRen) userObj.accountRenRen = accountRenRen;
-        if (hometown) userObj.accountRenRen = hometown;
+        if (hometown) userObj.hometown = hometown;
 
         var paramsUser = handy.toArray(userKey,userObj);
         multi.hmset(paramsUser);
