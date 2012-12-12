@@ -22,6 +22,8 @@
 }
 @property (retain, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (retain,nonatomic)NSArray *schoolArray;
+@property (retain, nonatomic)NSArray *cityArray;
+@property (retain , nonatomic)NSDictionary *schoolDict;
 @property (retain, nonatomic) IBOutlet UIPickerView *schoolPicker;
 @property (retain, nonatomic) IBOutlet UITableViewCell *photoCell;
 @property (retain, nonatomic) IBOutlet UITableViewCell *genderCell;

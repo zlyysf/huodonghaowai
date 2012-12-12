@@ -14,6 +14,8 @@
 #import "CustomAlertView.h"
 #import "NNMainTabViewController.h"
 #import "MobClick.h"
+#define kProvinceComponent 0
+#define kCityComponent 1
 @interface RenRenSignUpViewController ()
 
 @end
@@ -28,8 +30,8 @@
 @synthesize femaleButton;
 @synthesize maleButton;
 @synthesize activityIndicator;
-@synthesize photoButton,schoolArray;
-@synthesize curConnection,name,height,gender,photoSelected,uploadImage,backViewSizeAdjusted,emailAccount,lastActiveField,password,inviteCode,codeTextField;
+@synthesize photoButton,schoolArray,cityArray;
+@synthesize curConnection,name,height,gender,photoSelected,uploadImage,backViewSizeAdjusted,emailAccount,lastActiveField,password,inviteCode,codeTextField,schoolDict;
 @synthesize imageDownloadManager,renrenPhotoUrl,accountInfoJson;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,9 +46,19 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    NSArray *schoolA = [[NSArray alloc]initWithObjects:@"北京大学",nil];
-    self.schoolArray = schoolA;
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"school" ofType:@"plist"];
+    NSDictionary* aDict = [[NSDictionary alloc]initWithContentsOfFile:plistPath];
+    self.schoolDict = aDict;
+    [aDict release];
+    NSArray *schoolA = [[NSArray alloc]initWithArray:[self.schoolDict allKeys]];
+    NSArray *sorted = [schoolA sortedArrayUsingSelector:@selector(compare:)];
+    cityArray = [[NSArray alloc]initWithArray:sorted];
     [schoolA release];
+    
+    NSString *city = [self.cityArray objectAtIndex:0];
+    NSArray *tempA = [self.schoolDict objectForKey:city];
+    
+    schoolArray = [[NSArray alloc]initWithArray:tempA];
     
     UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc]initWithTitle:@"激活" style:UIBarButtonItemStyleBordered target:self action:@selector(startSignup)];
     self.navigationItem.rightBarButtonItem = customBarItem;
@@ -442,13 +454,10 @@
     //{
     //self.heightTextField.text = [self.schoolArray objectAtIndex:0];
     //}
-    int current = [self.schoolPicker selectedRowInComponent:0];
-    if (current>=0 && current < [self.schoolArray count])
-    {
-        self.heightTextField.text = [self.schoolArray objectAtIndex:current];
-    }
+    NSInteger cityRow = [self.schoolPicker selectedRowInComponent:kCityComponent];
+    NSString *city = [self.schoolArray objectAtIndex:cityRow];
+    self.heightTextField.text = city;
     [self.heightTextField resignFirstResponder];
-    [self.codeTextField becomeFirstResponder];
     
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -544,25 +553,25 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    if (textField.tag == 101)
-    {
-        [passwordTextField becomeFirstResponder];
-        return YES;
-    }
-    else if(textField.tag == 102)
-    {
-        [firstnameTextField becomeFirstResponder];
-        return YES;
-    }
-    else if(textField.tag == 103)
-    {
-        [heightTextField becomeFirstResponder];
-        return YES;
-    }
-    else
-    {
-        [codeTextField resignFirstResponder];
-    }
+//    if (textField.tag == 101)
+//    {
+//        [passwordTextField becomeFirstResponder];
+//        return YES;
+//    }
+//    else if(textField.tag == 102)
+//    {
+//        [firstnameTextField becomeFirstResponder];
+//        return YES;
+//    }
+//    else if(textField.tag == 103)
+//    {
+//        [heightTextField becomeFirstResponder];
+//        return YES;
+//    }
+//    else
+//    {
+//        [codeTextField resignFirstResponder];
+//    }
 	
     return YES;
 }
@@ -626,21 +635,53 @@
     //        self.inchLabel.textColor = [UIColor blackColor];
     //    }
 }
+#pragma mark- Picker Date Source Methods
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    return 1;
+    return 2;
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
+    if (component == kProvinceComponent)
+    {
+        return [self.cityArray count];
+    }
     return [self.schoolArray count];
 }
+#pragma mark- Picker Delegate Methods
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
+    if (component == kProvinceComponent)
+    {
+        return [self.cityArray objectAtIndex:row];
+    }
     return [self.schoolArray objectAtIndex:row];
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    self.heightTextField.text =  [self.schoolArray objectAtIndex:row];
+    if (component == kProvinceComponent)
+    {
+        NSString *selectedState = [self.cityArray objectAtIndex:row];
+        NSArray *tempA = [self.schoolDict objectForKey:selectedState];
+        self.schoolArray = [NSArray arrayWithArray:tempA];
+        
+        [pickerView selectRow:0 inComponent:kCityComponent animated:YES];
+        [pickerView reloadComponent:kCityComponent];
+    }
+    else
+    {
+        NSInteger cityRow = [pickerView selectedRowInComponent:kCityComponent];
+        NSString *city = [self.schoolArray objectAtIndex:cityRow];
+        self.heightTextField.text = city;
+    }
+}
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
+{
+    if (component == kCityComponent)
+    {
+        return 210;
+    }
+    return 80;
 }
 
 - (void)backButtonClicked
@@ -767,6 +808,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+    [schoolDict release];
+    [cityArray release];
     [accountInfoJson release];
     [emailTextField release];
     [passwordTextField release];
