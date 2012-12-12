@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "NNDatePreViewViewController.h"
 #import "NodeAsyncConnection.h"
-@interface NNCreateDateViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UITextViewDelegate>
+@interface NNCreateDateViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UITextViewDelegate,RenrenDelegate>
+@property (readwrite, nonatomic)BOOL shareChecked;
+@property (retain, nonatomic) IBOutlet UITableViewCell *renrenCell;
 @property (retain, nonatomic) IBOutlet UIToolbar *toolbar1;
 @property (retain, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (retain, nonatomic) IBOutlet UILabel *desPlaceholderLabel;
@@ -36,6 +38,7 @@
 @property (nonatomic, retain) UIImage *uploadImage;
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic,retain)NNDatePreViewViewController *datePreViewViewController;
+@property (retain, nonatomic) IBOutlet UIImageView *renrenImage;
 @property (nonatomic,retain)UIBarButtonItem *flipItem;
 @property (nonatomic,readwrite)BOOL editVisible;
 @property(nonatomic,retain)UIDatePicker *datePicker;
@@ -54,6 +57,6 @@
 -(IBAction)segmentSelected:(id)sender;
 - (IBAction)doneButtonClicked;
 - (IBAction)cancelButtonClicked;
-- (void)startDatePost;
+- (IBAction)startDatePost;
 - (void)didEndDatePost:(NodeAsyncConnection *)connection;
 @end

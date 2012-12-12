@@ -64,4 +64,5 @@
 - (IBAction) clickAddPhoto;
 - (IBAction)doneButtonClicked;
 - (IBAction)cancelButtonClicked;
+-(IBAction)startUpdateProfileWithPhoto;
 @end

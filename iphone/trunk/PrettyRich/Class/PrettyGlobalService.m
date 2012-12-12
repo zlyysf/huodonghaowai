@@ -367,6 +367,7 @@ static PrettyGlobalService *instance;
         }
     }
     [appDelegate.imageCache removeAllObjects];
+    [[Renren sharedRenren]logout:self];
     //UIImage *gradientImage44 = [[UIImage imageNamed:@"top-bar-pretty-rich.png"]
                                 //resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
     //[[UINavigationBar appearance] setBackgroundImage:gradientImage44

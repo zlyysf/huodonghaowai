@@ -13,7 +13,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 + (NSString *)getPhotoUrl:(NSString *)photoPath :(NSString*)type
 {
     // 75*75,112*112，分别用s(small),m(medium),l(large)
-    NSString *prefix = @"http://s3.amazonaws.com/ysf1/";
+    NSString *prefix = @"http://oss.aliyuncs.com/ysf1/";
     NSString *photoUrl;
     if ([type isEqualToString:@"s"]) 
     {

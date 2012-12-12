@@ -92,7 +92,7 @@
     if ([message length]!=0)
     {
         NSLog(@"%@",message);
-        //[self startReplyDate:message];
+        [self startReportUser:message];
     }
 }
 - (void)startReportUser:(NSString *)message

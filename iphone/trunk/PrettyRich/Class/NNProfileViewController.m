@@ -82,6 +82,10 @@
     self.starPicker.tag = 202;
     self.schoolPicker.tag = 203;
     self.responderField = 0;
+    UIView *backview = [[UIView alloc]init];
+    [self.saveChangeCell setBackgroundView:backview];
+    [backview release];
+    [self.saveChangeCell setBackgroundColor:[UIColor clearColor]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
@@ -406,7 +410,7 @@ replacementString:(NSString *)string
     }
 }
 
--(void)startUpdateProfileWithPhoto
+-(IBAction)startUpdateProfileWithPhoto
 {
     [self.view bringSubviewToFront:self.activityIndicator];
     [self.activityIndicator startAnimating];

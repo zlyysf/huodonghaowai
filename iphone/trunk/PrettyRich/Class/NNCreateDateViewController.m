@@ -20,6 +20,7 @@
 @synthesize uploadImage,photoSelected;
 @synthesize datePreViewViewController,flipItem,editVisible,datePicker;
 @synthesize titleString,timeString,addressString,hasCountString,wantCountString,descripString,whoPayString,responderField,curConnection,selectedTopic,backViewSizeAdjusted;
+@synthesize shareChecked;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -55,6 +56,16 @@
 		[self.photoImageView setImage:self.uploadImage];
 		self.photoSelected = YES;
 	}
+    if ([[Renren sharedRenren] isSessionValid])
+    {
+        self.shareChecked = YES;
+        [self.renrenImage setImage:[UIImage imageNamed:@"share-checked.png"]];
+    }
+    else
+    {
+        self.shareChecked = NO;
+        [self.renrenImage setImage:[UIImage imageNamed:@"share-unchecked.png"]];
+    }
     backViewSizeAdjusted = NO;
     datePicker =  [[UIDatePicker alloc]init];
     self.desPlaceholderLabel.text = @"请填写活动细节, 吸引更多的同学来报名参加!";
@@ -89,6 +100,10 @@
         [formatter release];
 
     }
+    UIView *view = [[UIView alloc]init];
+    [self.publishCell setBackgroundView:view];
+    [view release];
+    [self.publishCell setBackgroundColor:[UIColor clearColor]];
     if ([self.addressString length]!=0)
     {
         self.addressTextFiled.text = self.addressString;
@@ -208,7 +223,7 @@
     }
 }
 
-- (void)startDatePost
+- (IBAction)startDatePost
 {
     self.hasCountString = self.hasCountTextField.text;
     self.wantCountString = self.wantCountTextField.text;
@@ -695,7 +710,7 @@ replacementString:(NSString *)string
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 4;
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -772,19 +787,79 @@ replacementString:(NSString *)string
         //[self.photoUploadCell setBackgroundColor:[UIColor clearColor]];
         return self.photoUploadCell;
     }
-    else
+    else if(indexPath.section == 3)
     {
         return self.publishCell;
+    }
+    else
+    {
+        return self.renrenCell;
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 3)
+    if (indexPath.section == 4)
     {
-        [self startDatePost];
+        [self changeShareStatus];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+-(void)changeShareStatus
+{
+    if ([[Renren sharedRenren]isSessionValid])
+    {
+        if(self.shareChecked)
+        {
+            self.shareChecked = NO;
+            [self.renrenImage setImage:[UIImage imageNamed:@"share-unchecked.png"]];
+        }
+        else
+        {
+            self.shareChecked = YES;
+            [self.renrenImage setImage:[UIImage imageNamed:@"share-checked.png"]];
+        }
+    }
+    else
+    {
+        NSArray *permissions = [NSArray arrayWithObjects:@"read_user_album",@"status_update",@"photo_upload",@"publish_feed",@"create_album",@"operate_like",nil];
+        [[Renren sharedRenren] authorizationInNavigationWithPermisson:permissions andDelegate:self];
+    }
+}
+#pragma mark - RenrenDelegate methods
+
+-(void)renrenDidLogin:(Renren *)renren
+{
+    self.shareChecked = YES;
+    [self.renrenImage setImage:[UIImage imageNamed:@"share-checked.png"]];
+}
+- (void)renren:(Renren *)renren loginFailWithError:(ROError*)error{
+	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
+	NSLog(@"loginfail:%@ %@",title,description);
+}
+- (void)renren:(Renren *)renren requestDidReturnResponse:(ROResponse*)response
+{
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
+    self.view.userInteractionEnabled = YES;
+	NSArray *usersInfo = (NSArray *)(response.rootObject);
+	NSString *outText = [NSString stringWithFormat:@""];
+	
+	for (ROUserResponseItem *item in usersInfo) {
+		outText = [outText stringByAppendingFormat:@"UserID:%@\n Name:%@\n Sex:%@\n Birthday:%@\n HeadURL:%@\n",item.userId,item.name,item.sex,item.brithday,item.headUrl];
+	}
+    NSLog(@"%@",outText);
+}
+- (void)renren:(Renren *)renren requestFailWithError:(ROError*)error
+{
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
+    self.view.userInteractionEnabled = YES;
+	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
+	NSLog(@"loginfail:%@ %@",title,description);
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
@@ -826,6 +901,8 @@ replacementString:(NSString *)string
     [_desPlaceholderLabel release];
     [_activityIndicator release];
     [_toolbar1 release];
+    [_renrenCell release];
+    [_renrenImage release];
     [super dealloc];
 }
 - (void)viewDidUnload {
@@ -852,6 +929,8 @@ replacementString:(NSString *)string
     [self setDesPlaceholderLabel:nil];
     [self setActivityIndicator:nil];
     [self setToolbar1:nil];
+    [self setRenrenCell:nil];
+    [self setRenrenImage:nil];
     [super viewDidUnload];
 }
 @end

@@ -299,8 +299,7 @@
 - (void)renren:(Renren *)renren loginFailWithError:(ROError*)error{
 	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
 	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
-	UIAlertView *alertView =[[[UIAlertView alloc] initWithTitle:title message:description delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] autorelease];
-	[alertView show];
+	NSLog(@"loginfail:%@ %@",title,description);
 }
 - (void)renren:(Renren *)renren requestDidReturnResponse:(ROResponse*)response
 {
@@ -322,8 +321,7 @@
     self.view.userInteractionEnabled = YES;
 	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
 	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
-	UIAlertView *alertView =[[[UIAlertView alloc] initWithTitle:title message:description delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] autorelease];
-	[alertView show];
+	NSLog(@"loginfail:%@ %@",title,description);
 }
 - (void) didReceiveGetLoggedInUserIdNotification:(NSNotification *)notification
 {

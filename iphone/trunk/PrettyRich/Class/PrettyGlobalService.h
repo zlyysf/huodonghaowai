@@ -7,7 +7,7 @@
 //
 #import <Foundation/Foundation.h>
 #import "NodeAsyncConnection.h"
-@interface PrettyGlobalService : NSObject
+@interface PrettyGlobalService : NSObject<RenrenDelegate>
 
 +(PrettyGlobalService *)shareInstance;
 - (void)startUploadPhoto:(UIImage*)uploadImage forUrl:(NSString *)photoUrl;

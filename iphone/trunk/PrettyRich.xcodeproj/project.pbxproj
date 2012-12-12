@@ -202,6 +202,8 @@
 		5FFD7FBF1677224E00F9221C /* separate-line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD7FBE1677224E00F9221C /* separate-line@2x.png */; };
 		5FFD7FC7167726C500F9221C /* login-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD7FC5167726C500F9221C /* login-button@2x.png */; };
 		5FFD7FC8167726C500F9221C /* renren-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD7FC6167726C500F9221C /* renren-button@2x.png */; };
+		5FFD7FD016782F3500F9221C /* share-checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD7FCE16782F3500F9221C /* share-checked@2x.png */; };
+		5FFD7FD116782F3500F9221C /* share-unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD7FCF16782F3500F9221C /* share-unchecked@2x.png */; };
 		8432969C155A148C00102B12 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969B155A148C00102B12 /* UIKit.framework */; };
 		8432969E155A148C00102B12 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969D155A148C00102B12 /* Foundation.framework */; };
 		843296A0155A148C00102B12 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969F155A148C00102B12 /* CoreGraphics.framework */; };
@@ -509,6 +511,8 @@
 		5FFD7FBE1677224E00F9221C /* separate-line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "separate-line@2x.png"; sourceTree = "<group>"; };
 		5FFD7FC5167726C500F9221C /* login-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-button@2x.png"; sourceTree = "<group>"; };
 		5FFD7FC6167726C500F9221C /* renren-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren-button@2x.png"; sourceTree = "<group>"; };
+		5FFD7FCE16782F3500F9221C /* share-checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share-checked@2x.png"; sourceTree = "<group>"; };
+		5FFD7FCF16782F3500F9221C /* share-unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share-unchecked@2x.png"; sourceTree = "<group>"; };
 		84329697155A148C00102B12 /* 同去.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "同去.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8432969B155A148C00102B12 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8432969D155A148C00102B12 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -863,6 +867,8 @@
 		5F4AF0A315679E9E005ECD5D /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				5FFD7FCE16782F3500F9221C /* share-checked@2x.png */,
+				5FFD7FCF16782F3500F9221C /* share-unchecked@2x.png */,
 				5FFD7FBE1677224E00F9221C /* separate-line@2x.png */,
 				5FFD7FC5167726C500F9221C /* login-button@2x.png */,
 				5FFD7FC6167726C500F9221C /* renren-button@2x.png */,
@@ -1270,6 +1276,8 @@
 				5FFD7FBF1677224E00F9221C /* separate-line@2x.png in Resources */,
 				5FFD7FC7167726C500F9221C /* login-button@2x.png in Resources */,
 				5FFD7FC8167726C500F9221C /* renren-button@2x.png in Resources */,
+				5FFD7FD016782F3500F9221C /* share-checked@2x.png in Resources */,
+				5FFD7FD116782F3500F9221C /* share-unchecked@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

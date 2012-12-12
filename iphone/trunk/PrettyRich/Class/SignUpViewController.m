@@ -322,7 +322,7 @@
     self.inviteCode = self.codeTextField.text;
     if (self.inviteCode == nil || [self.inviteCode length] == 0)
     {
-        CustomAlertView *errorAlert = [[CustomAlertView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) messgage:@"请输入邀请码." otherButton:nil cancelButton:nil delegate:nil duration:2.0];
+        CustomAlertView *errorAlert = [[CustomAlertView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) messgage:@"请输入家乡." otherButton:nil cancelButton:nil delegate:nil duration:2.0];
         [errorAlert show];
         [errorAlert release];
         return;
@@ -346,43 +346,9 @@
                        self.name,@"name",
                        self.gender,@"gender",
                        self.height,@"school",
-                       self.inviteCode,@"inviteCode",
+                       self.inviteCode,@"hometown",
                        @"iphone",@"deviceType",
                        nil];
-;
-    //NSDictionary *region = [[NSUserDefaults standardUserDefaults]objectForKey:@"PrettyRegionData"];
-    //NSLog(@"%@,%@,%@,%@,%@,%@",emailAccount,password,name,gender,height,inviteCode);
-//    if([PrettyUtility isNull:region])
-//    {
-//        dict = [[NSDictionary alloc]initWithObjectsAndKeys:
-//                              self.emailAccount,@"emailAccount",
-//                              self.password,@"password",
-//                              self.name,@"name",
-//                              self.gender,@"gender",
-//                              self.height,@"school",
-//                              self.inviteCode,@"inviteCode",
-//                              @"iphone",@"deviceType",
-//                              nil];
-//    }
-//    else {
-//        dict = [[NSDictionary alloc]initWithObjectsAndKeys:
-//                self.emailAccount,@"emailAccount",
-//                self.password,@"password",
-//                self.name,@"name",
-//                self.gender,@"gender",
-//                self.height,@"school",
-//                self.inviteCode,@"inviteCode",
-//                @"iphone",@"deviceType",
-//                region,@"region",
-//                @"googleV3",@"geolibType",
-//                [PrettyUtility getlatlng:region],@"latlng",
-//                nil];
-//    }
-//    self.emailTextField.userInteractionEnabled = NO;
-//    self.passwordTextField.userInteractionEnabled = NO;
-//    self.firstnameTextField.userInteractionEnabled = NO;
-//    self.heightTextField.userInteractionEnabled = NO;
-//    self.codeTextField.userInteractionEnabled = NO;
     self.view.userInteractionEnabled = NO;
     [curConnection cancelDownload];
     [curConnection startDownload:[NodeAsyncConnection createHttpsRequest:@"/user/register" parameters:dict] :self :@selector(didEndSignup:)];
@@ -393,11 +359,6 @@
 }
 - (void)didEndSignup:(NodeAsyncConnection *)connection
 {
-//    self.emailTextField.userInteractionEnabled = YES;
-//    self.passwordTextField.userInteractionEnabled = YES;
-//    self.firstnameTextField.userInteractionEnabled = YES;
-//    self.heightTextField.userInteractionEnabled = YES;
-//    self.codeTextField.userInteractionEnabled = YES;
     self.view.userInteractionEnabled = YES;
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
@@ -418,7 +379,7 @@
         //[[NSUserDefaults standardUserDefaults] setObject:userCredit forKey:@"PrettyUserCredit"];
         [[NSUserDefaults standardUserDefaults] setObject:self.emailAccount forKey:@"PrettyUserEmail"];
         [[NSUserDefaults standardUserDefaults] setObject:self.emailAccount forKey:@"PreUserEmail"];
-        NSDictionary *userInfo =[[NSDictionary alloc]initWithObjectsAndKeys:userId,@"userId",self.name,@"name",self.gender,@"gender",self.height,@"school", nil];
+        NSDictionary *userInfo =[[NSDictionary alloc]initWithObjectsAndKeys:userId,@"userId",self.name,@"name",self.gender,@"gender",self.height,@"school",self.inviteCode,@"hometown", nil];
         [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:@"PrettyUserInfo"];
         [userInfo release];
         //NSDate *today = [NSDate date];
