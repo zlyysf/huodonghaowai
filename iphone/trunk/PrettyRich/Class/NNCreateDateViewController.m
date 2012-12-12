@@ -305,6 +305,33 @@
         [curConnection cancelDownload];
         [curConnection startDownload:[NodeAsyncConnection createUploadPhotoRequest:@"/user/createDateWithPhoto" parameters:dict] :self :@selector(didEndDatePost:)];
         [dict release];
+        if (shareChecked)
+        {
+//            NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+//                                         @"feed.publishFeed",@"method",
+//                                         @"http://www.renren.com/229308864",@"url",
+//                                         @"同去",@"name",
+//                                         @"试试看",@"message",
+//                                         @"访问我们",@"action_name",
+//                                         @"http://www.renren.com/229308864",@"action_link",
+//                                         @"主体内容",@"description",
+//                                         @"副标题",@"caption",
+//                                         @"http://oss.aliyuncs.com/ysf1/folder1/1_1355253219472_iphone.jpg",@"image",
+//                                         nil];
+            NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                           @"feed.publishFeed",@"method",
+                                           @"http://www.renren.com/229308864",@"url",
+                                           @"同去",@"name",
+                                           @"试试看",@"message",
+                                           @"访问我们",@"action_name",
+                                           @"http://www.renren.com/229308864",@"action_link",
+                                           @"主体内容",@"description",
+                                           //@"副标题",@"caption",
+                                           //@"http://oss.aliyuncs.com/ysf1/folder1/1_1355253219472_iphone.jpg",@"image",
+                                           nil];
+
+            [[Renren sharedRenren] requestWithParams:params andDelegate:self];
+        }
 
     }
     else
@@ -842,13 +869,14 @@ replacementString:(NSString *)string
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
     self.view.userInteractionEnabled = YES;
-	NSArray *usersInfo = (NSArray *)(response.rootObject);
-	NSString *outText = [NSString stringWithFormat:@""];
-	
-	for (ROUserResponseItem *item in usersInfo) {
-		outText = [outText stringByAppendingFormat:@"UserID:%@\n Name:%@\n Sex:%@\n Birthday:%@\n HeadURL:%@\n",item.userId,item.name,item.sex,item.brithday,item.headUrl];
-	}
-    NSLog(@"%@",outText);
+    NSLog(@"%@",[response.rootObject description]);
+//	NSArray *usersInfo = (NSArray *)(response.rootObject);
+//	NSString *outText = [NSString stringWithFormat:@""];
+//	
+//	for (ROUserResponseItem *item in usersInfo) {
+//		outText = [outText stringByAppendingFormat:@"UserID:%@\n Name:%@\n Sex:%@\n Birthday:%@\n HeadURL:%@\n",item.userId,item.name,item.sex,item.brithday,item.headUrl];
+//	}
+//    NSLog(@"%@",outText);
 }
 - (void)renren:(Renren *)renren requestFailWithError:(ROError*)error
 {

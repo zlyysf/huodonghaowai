@@ -1,12 +1,12 @@
 //
-//  SignUpViewController.m
+//  RenRenSignUpViewController.m
 //  PrettyRich
 //
-//  Created by liu miao on 7/31/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Created by liu miao on 12/12/12.
+//
 //
 
-#import "SignUpViewController.h"
+#import "RenRenSignUpViewController.h"
 #import "PrettyUtility.h"
 #import "PrettyGlobalService.h"
 #define kNumbers     @"0123456789"
@@ -14,11 +14,12 @@
 #import "CustomAlertView.h"
 #import "NNMainTabViewController.h"
 #import "MobClick.h"
-@interface SignUpViewController ()
+@interface RenRenSignUpViewController ()
 
 @end
 
-@implementation SignUpViewController
+@implementation RenRenSignUpViewController
+
 @synthesize emailTextField;
 @synthesize passwordTextField;
 @synthesize firstnameTextField;
@@ -28,7 +29,7 @@
 @synthesize maleButton;
 @synthesize activityIndicator;
 @synthesize photoButton,schoolArray;
-@synthesize curConnection,name,height,gender,photoSelected,uploadImage,backViewSizeAdjusted,emailAccount,lastActiveField,password;
+@synthesize curConnection,name,height,gender,photoSelected,uploadImage,backViewSizeAdjusted,emailAccount,lastActiveField,password,inviteCode,codeTextField;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -45,8 +46,8 @@
     NSArray *schoolA = [[NSArray alloc]initWithObjects:@"北京大学",nil];
     self.schoolArray = schoolA;
     [schoolA release];
-
-    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc]initWithTitle:@"注册" style:UIBarButtonItemStyleBordered target:self action:@selector(startSignup)];
+    
+    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc]initWithTitle:@"激活" style:UIBarButtonItemStyleBordered target:self action:@selector(startSignup)];
     self.navigationItem.rightBarButtonItem = customBarItem;
     [customBarItem release];
     photoSelected = NO;
@@ -59,6 +60,7 @@
     self.passwordTextField.tag = 102;
     self.firstnameTextField.tag = 103;
     self.heightTextField.tag = 104;
+    self.codeTextField.tag = 105;
     UIView *tempView = [[UIView alloc] init];
     [self.genderCell setBackgroundView:tempView];
     [self.genderCell setBackgroundColor:[UIColor clearColor]];
@@ -78,26 +80,35 @@
     if ([self.height length]!=0)
     {
         self.heightTextField.text = self.height;
-//        self.inchLabel.text = [PrettyUtility convertIntToInch:[self.height intValue]];
-//        self.inchLabel.textColor = [UIColor blackColor];
+        //        self.inchLabel.text = [PrettyUtility convertIntToInch:[self.height intValue]];
+        //        self.inchLabel.textColor = [UIColor blackColor];
+    }
+    if ([self.inviteCode length]!= 0)
+    {
+        self.codeTextField.text = self.inviteCode;
     }
     UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 34)];
-    self.emailTextField.leftView = paddingView1;    
+    self.emailTextField.leftView = paddingView1;
     self.emailTextField.leftViewMode = UITextFieldViewModeAlways;
     [paddingView1 release];
-        UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 34)];
-    self.passwordTextField.leftView = paddingView2;    
+    UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 34)];
+    self.passwordTextField.leftView = paddingView2;
     self.passwordTextField.leftViewMode = UITextFieldViewModeAlways;
     [paddingView2 release];
-        UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 34)];
-    self.firstnameTextField.leftView = paddingView3;    
+    UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 34)];
+    self.firstnameTextField.leftView = paddingView3;
     self.firstnameTextField.leftViewMode = UITextFieldViewModeAlways;
     [paddingView3 release];
-        UIView *paddingView4 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 34)];
-    self.heightTextField.leftView = paddingView4;    
+    UIView *paddingView4 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 34)];
+    self.heightTextField.leftView = paddingView4;
     self.heightTextField.leftViewMode = UITextFieldViewModeAlways;
     [paddingView4 release];
-
+    UIView *paddingView5 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 34)];
+    self.codeTextField.leftView = paddingView5;
+    self.codeTextField.leftViewMode = UITextFieldViewModeAlways;
+    [paddingView5 release];
+    
+    
     NodeAsyncConnection * aConn = [[NodeAsyncConnection alloc] init];
 	self.curConnection = aConn;
 	[aConn release];
@@ -109,20 +120,20 @@
     
     [self.maleButton addTarget:self action:@selector(maleButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.femaleButton addTarget:self action:@selector(femaleButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    if (self.gender == nil ||[self.gender isEqualToString:@"female"]) 
+    if (self.gender == nil ||[self.gender isEqualToString:@"female"])
     {
         
         [self.femaleButton setBackgroundImage:[[UIImage imageNamed:@"login-female-on.png"] stretchableImageWithLeftCapWidth:20 topCapHeight:17] forState:UIControlStateNormal];
         [self.maleButton setBackgroundImage:[[UIImage imageNamed:@"login-male-off.png"] stretchableImageWithLeftCapWidth:20 topCapHeight:17] forState:UIControlStateNormal];
     }
-    else 
+    else
     {
         [self.maleButton setBackgroundImage:[[UIImage imageNamed:@"login-male-on.png"] stretchableImageWithLeftCapWidth:20 topCapHeight:17] forState:UIControlStateNormal];
         [self.femaleButton setBackgroundImage:[[UIImage imageNamed:@"login-female-off.png"] stretchableImageWithLeftCapWidth:20 topCapHeight:17] forState:UIControlStateNormal];
     }
-
+    
     backViewSizeAdjusted = NO;
-    self.navigationItem.title = @"新用户注册";
+    self.navigationItem.title = @"激活账号";
 }
 - (IBAction) clickAddPhoto
 {
@@ -130,6 +141,7 @@
     self.password = self.passwordTextField.text;
     self.name = self.firstnameTextField.text;
     self.height = self.heightTextField.text;
+    self.inviteCode = self.codeTextField.text;
 	if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
         UIActionSheet *actionSheet;
@@ -138,7 +150,7 @@
         [actionSheet release];
         
     }
-    else 
+    else
     {
         [self showModalImagePicker:UIImagePickerControllerSourceTypePhotoLibrary];
     }
@@ -158,8 +170,8 @@
 
 - (void) showModalImagePicker :(UIImagePickerControllerSourceType) sourceType
 {
-//    [[UINavigationBar appearance] setBackgroundImage:nil 
-//                                       forBarMetrics:UIBarMetricsDefault];
+    //    [[UINavigationBar appearance] setBackgroundImage:nil
+    //                                       forBarMetrics:UIBarMetricsDefault];
 	UIImagePickerController *imagePicker =  [[UIImagePickerController alloc] init];
     imagePicker.sourceType = sourceType;
     imagePicker.delegate = self;
@@ -175,7 +187,7 @@
     // Set the background image for *all* UINavigationBars
     //[[UINavigationBar appearance] setBackgroundImage:gradientImage44
     //                                   forBarMetrics:UIBarMetricsDefault];
-
+    
     [picker dismissModalViewControllerAnimated:YES];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleBlackOpaque];
 }
@@ -222,36 +234,36 @@
     NSString * regex = @"\\w+([-+.]\\w*)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
     NSPredicate * pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
     return [pred evaluateWithObject:email];
-//    if( (0 != [email rangeOfString:@"@"].length) &&  (0 != [email rangeOfString:@"."].length) )
-//    {
-//        NSMutableCharacterSet *invalidCharSet = [[[[NSCharacterSet alphanumericCharacterSet] invertedSet]mutableCopy]autorelease];
-//        [invalidCharSet removeCharactersInString:@"_-+"];
-//        
-//        NSRange range1 = [email rangeOfString:@"@" options:NSCaseInsensitiveSearch];
-//        
-//        // If username part contains any character other than "."  "_" "-"
-//        
-//        NSString *usernamePart = [email substringToIndex:range1.location];
-//        NSArray *stringsArray1 = [usernamePart componentsSeparatedByString:@"."];
-//        for (NSString *string in stringsArray1) {
-//            NSRange rangeOfInavlidChars=[string rangeOfCharacterFromSet: invalidCharSet];
-//            if(rangeOfInavlidChars.length !=0 || [string isEqualToString:@""])
-//                return NO;
-//        }
-//        
-//        NSString *domainPart = [email substringFromIndex:range1.location+1];
-//        NSArray *stringsArray2 = [domainPart componentsSeparatedByString:@"."];
-//        
-//        for (NSString *string in stringsArray2) {
-//            NSRange rangeOfInavlidChars=[string rangeOfCharacterFromSet:invalidCharSet];
-//            if(rangeOfInavlidChars.length !=0 || [string isEqualToString:@""])
-//                return NO;
-//        }
-//        
-//        return YES;
-//    }
-//    else // no ''@'' or ''.'' present
-//        return NO;
+    //    if( (0 != [email rangeOfString:@"@"].length) &&  (0 != [email rangeOfString:@"."].length) )
+    //    {
+    //        NSMutableCharacterSet *invalidCharSet = [[[[NSCharacterSet alphanumericCharacterSet] invertedSet]mutableCopy]autorelease];
+    //        [invalidCharSet removeCharactersInString:@"_-+"];
+    //
+    //        NSRange range1 = [email rangeOfString:@"@" options:NSCaseInsensitiveSearch];
+    //
+    //        // If username part contains any character other than "."  "_" "-"
+    //
+    //        NSString *usernamePart = [email substringToIndex:range1.location];
+    //        NSArray *stringsArray1 = [usernamePart componentsSeparatedByString:@"."];
+    //        for (NSString *string in stringsArray1) {
+    //            NSRange rangeOfInavlidChars=[string rangeOfCharacterFromSet: invalidCharSet];
+    //            if(rangeOfInavlidChars.length !=0 || [string isEqualToString:@""])
+    //                return NO;
+    //        }
+    //
+    //        NSString *domainPart = [email substringFromIndex:range1.location+1];
+    //        NSArray *stringsArray2 = [domainPart componentsSeparatedByString:@"."];
+    //
+    //        for (NSString *string in stringsArray2) {
+    //            NSRange rangeOfInavlidChars=[string rangeOfCharacterFromSet:invalidCharSet];
+    //            if(rangeOfInavlidChars.length !=0 || [string isEqualToString:@""])
+    //                return NO;
+    //        }
+    //
+    //        return YES;
+    //    }
+    //    else // no ''@'' or ''.'' present
+    //        return NO;
 }
 
 - (void)startSignup
@@ -273,7 +285,7 @@
             return;
 		}
 	}
-	else 
+	else
     {
         //pop Please input your Email as your account
         CustomAlertView *errorAlert = [[CustomAlertView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) messgage:@"请输入你的电子邮件." otherButton:nil cancelButton:nil delegate:nil duration:2.0];
@@ -300,13 +312,21 @@
         return;
     }
     self.height = self.heightTextField.text;
-    if (self.height == nil || [self.height length] == 0) 
+    if (self.height == nil || [self.height length] == 0)
     {
         CustomAlertView *errorAlert = [[CustomAlertView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) messgage:@"请选择你的学校." otherButton:nil cancelButton:nil delegate:nil duration:2.0];
         [errorAlert show];
         [errorAlert release];
         return;
-
+        
+    }
+    self.inviteCode = self.codeTextField.text;
+    if (self.inviteCode == nil || [self.inviteCode length] == 0)
+    {
+        CustomAlertView *errorAlert = [[CustomAlertView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) messgage:@"请输入家乡." otherButton:nil cancelButton:nil delegate:nil duration:2.0];
+        [errorAlert show];
+        [errorAlert release];
+        return;
     }
     if (self.gender == nil)
     {
@@ -321,14 +341,15 @@
     }
     NSString * deviceUID = [[UIDevice currentDevice] uniqueIdentifier];
     NSDictionary *dict =[[NSDictionary alloc]initWithObjectsAndKeys:
-                        deviceUID,@"deviceId",
-                       self.emailAccount,@"emailAccount",
-                       self.password,@"password",
-                       self.name,@"name",
-                       self.gender,@"gender",
-                       self.height,@"school",
-                       @"iphone",@"deviceType",
-                       nil];
+                         deviceUID,@"deviceId",
+                         self.emailAccount,@"emailAccount",
+                         self.password,@"password",
+                         self.name,@"name",
+                         self.gender,@"gender",
+                         self.height,@"school",
+                         self.inviteCode,@"hometown",
+                         @"iphone",@"deviceType",
+                         nil];
     self.view.userInteractionEnabled = NO;
     [curConnection cancelDownload];
     [curConnection startDownload:[NodeAsyncConnection createHttpsRequest:@"/user/register" parameters:dict] :self :@selector(didEndSignup:)];
@@ -359,7 +380,7 @@
         //[[NSUserDefaults standardUserDefaults] setObject:userCredit forKey:@"PrettyUserCredit"];
         [[NSUserDefaults standardUserDefaults] setObject:self.emailAccount forKey:@"PrettyUserEmail"];
         [[NSUserDefaults standardUserDefaults] setObject:self.emailAccount forKey:@"PreUserEmail"];
-        NSDictionary *userInfo =[[NSDictionary alloc]initWithObjectsAndKeys:userId,@"userId",self.name,@"name",self.gender,@"gender",self.height,@"school", nil];
+        NSDictionary *userInfo =[[NSDictionary alloc]initWithObjectsAndKeys:userId,@"userId",self.name,@"name",self.gender,@"gender",self.height,@"school",self.inviteCode,@"hometown", nil];
         [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:@"PrettyUserInfo"];
         [userInfo release];
         //NSDate *today = [NSDate date];
@@ -371,7 +392,7 @@
         //UIImage *newImage = [PrettyUtility correctImageOrientation:self.uploadImage :480];
         PrettyGlobalService *globalService = [PrettyGlobalService shareInstance];
         [globalService startUploadPhoto:self.uploadImage forPrimaryPhoto:YES];
-         NNMainTabViewController *mainTabViewController = [[NNMainTabViewController alloc]init];
+        NNMainTabViewController *mainTabViewController = [[NNMainTabViewController alloc]init];
         //navigationViewController.naviAutoType = NaviAutoTypeNearbyDate;
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         appDelegate.mainNavController.navigationBar.hidden = YES;
@@ -383,7 +404,7 @@
 {
     //if ([self.heightTextField.text length]==0)
     //{
-        //self.heightTextField.text = [self.schoolArray objectAtIndex:0];
+    //self.heightTextField.text = [self.schoolArray objectAtIndex:0];
     //}
     int current = [self.schoolPicker selectedRowInComponent:0];
     if (current>=0 && current < [self.schoolArray count])
@@ -391,15 +412,17 @@
         self.heightTextField.text = [self.schoolArray objectAtIndex:current];
     }
     [self.heightTextField resignFirstResponder];
+    [self.codeTextField becomeFirstResponder];
+    
 }
 - (void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:@"SignUpView"];
-//    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 113, 26)];
-//    UIImageView *imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 113, 26)];
-//    [imgView setImage:[UIImage imageNamed:@"prettyrich-title.png"]];
-//    [titleView addSubview:imgView];
-//    self.navigationItem.titleView = titleView;
+    //    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 113, 26)];
+    //    UIImageView *imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 113, 26)];
+    //    [imgView setImage:[UIImage imageNamed:@"prettyrich-title.png"]];
+    //    [titleView addSubview:imgView];
+    //    self.navigationItem.titleView = titleView;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -418,9 +441,9 @@
 {
     if (section == 1)
     {
-    return 1;
+        return 1;
     }
-
+    
     return 5;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -428,7 +451,7 @@
     // Return the number of rows in the section.
     
     if (section == 0)
-        return 4;
+        return 5;
     else
         return 1;
 }
@@ -443,7 +466,7 @@
         return 34.0;
     }
     else
-    return 80.0;
+        return 80.0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -461,15 +484,19 @@
         {
             return self.nameCell;
         }
-        else
+        else if (indexPath.row == 3)
         {
             return self.schoolCell;
         }
-
+        else
+        {
+            return self.inviteCell;
+        }
+        
     }
     else if (indexPath.section == 1)
     {
-
+        
         return self.genderCell;
     }
     else
@@ -482,19 +509,23 @@
 {
     [textField resignFirstResponder];
     if (textField.tag == 101)
-    {   
+    {
         [passwordTextField becomeFirstResponder];
-        return YES;            
+        return YES;
     }
     else if(textField.tag == 102)
     {
         [firstnameTextField becomeFirstResponder];
-        return YES; 
+        return YES;
     }
     else if(textField.tag == 103)
     {
         [heightTextField becomeFirstResponder];
-        return YES; 
+        return YES;
+    }
+    else
+    {
+        [codeTextField resignFirstResponder];
     }
 	
     return YES;
@@ -507,33 +538,33 @@
         textField.inputAccessoryView = self.toolBar;
         textField.inputView = self.schoolPicker;
     }
-        self.lastActiveField = textField;
+    self.lastActiveField = textField;
     return YES;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-//    if (textField.tag == 104)
-//    {
-//
-//        NSCharacterSet *cs;
-//        cs = [[NSCharacterSet characterSetWithCharactersInString:kNumbers] invertedSet];
-//        NSString *filtered =
-//        [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
-//        BOOL basic = [string isEqualToString:filtered];
-//        if (basic) 
-//        {
-//            if ([string length]+[self.heightTextField.text length]>3)
-//            {
-//                return NO;
-//            }
-//
-//            return YES;
-//        }
-//        else {
-//            return NO;
-//        }
-//    }
+    //    if (textField.tag == 104)
+    //    {
+    //
+    //        NSCharacterSet *cs;
+    //        cs = [[NSCharacterSet characterSetWithCharactersInString:kNumbers] invertedSet];
+    //        NSString *filtered =
+    //        [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+    //        BOOL basic = [string isEqualToString:filtered];
+    //        if (basic)
+    //        {
+    //            if ([string length]+[self.heightTextField.text length]>3)
+    //            {
+    //                return NO;
+    //            }
+    //
+    //            return YES;
+    //        }
+    //        else {
+    //            return NO;
+    //        }
+    //    }
     if(textField.tag == 103)
     {
         NSCharacterSet *cs;
@@ -549,15 +580,15 @@
 }
 - (void)textDidChanged:(NSNotification *)notification
 {
-//    if ([self.heightTextField.text length]==0)
-//    {
-//        self.inchLabel.text = @"cm(5'10'')";
-//        self.inchLabel.textColor = [UIColor lightGrayColor];
-//    }
-//    else {
-//        self.inchLabel.text = [PrettyUtility convertIntToInch:[self.heightTextField.text intValue]];
-//        self.inchLabel.textColor = [UIColor blackColor];
-//    }
+    //    if ([self.heightTextField.text length]==0)
+    //    {
+    //        self.inchLabel.text = @"cm(5'10'')";
+    //        self.inchLabel.textColor = [UIColor lightGrayColor];
+    //    }
+    //    else {
+    //        self.inchLabel.text = [PrettyUtility convertIntToInch:[self.heightTextField.text intValue]];
+    //        self.inchLabel.textColor = [UIColor blackColor];
+    //    }
 }
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -565,11 +596,11 @@
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-        return [self.schoolArray count];
+    return [self.schoolArray count];
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-        return [self.schoolArray objectAtIndex:row];
+    return [self.schoolArray objectAtIndex:row];
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
@@ -583,71 +614,71 @@
 }
 - (void)keyboardWillShow:(NSNotification *)notification {
 	
-//    NSDictionary *userInfo = [notification userInfo];
-//    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-//    NSTimeInterval animationDuration;
-//    [animationDurationValue getValue:&animationDuration];
-//    
-//    [UIView beginAnimations:nil context:NULL];
-//    [UIView setAnimationDuration:animationDuration];
-//   	self.backView.frame = CGRectMake(0, 0, 320, 290);
-//    //self.backView.contentOffset = CGPointMake(0.0f,170);
-//    [UIView commitAnimations];
-//    CGRect keyboardBounds; 
-//    [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
+    //    NSDictionary *userInfo = [notification userInfo];
+    //    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    //    NSTimeInterval animationDuration;
+    //    [animationDurationValue getValue:&animationDuration];
+    //
+    //    [UIView beginAnimations:nil context:NULL];
+    //    [UIView setAnimationDuration:animationDuration];
+    //   	self.backView.frame = CGRectMake(0, 0, 320, 290);
+    //    //self.backView.contentOffset = CGPointMake(0.0f,170);
+    //    [UIView commitAnimations];
+    //    CGRect keyboardBounds;
+    //    [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
     NSDictionary* userInfo = [notification userInfo];
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSTimeInterval animationDuration;
     [animationDurationValue getValue:&animationDuration];
     //CGFloat keyboardHeight = keyboardBounds.size.height;
-    if (backViewSizeAdjusted == NO) 
-    { 
-        backViewSizeAdjusted = YES; 
+    if (backViewSizeAdjusted == NO)
+    {
+        backViewSizeAdjusted = YES;
         //CGRect frame = self.listView.frame;
         //frame.size.height -= keyboardHeight;
-        [UIView beginAnimations:nil context:NULL]; 
-        [UIView setAnimationBeginsFromCurrentState:YES]; 
-        [UIView setAnimationDuration:animationDuration]; 
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:animationDuration];
         self.listView.frame = CGRectMake(self.listView.frame.origin.x, self.listView.frame.origin.y,320 , 200);
-        if (self.lastActiveField.tag == 104)
+        if (self.lastActiveField.tag == 104 || self.lastActiveField.tag == 105)
         {
             //self.listView.contentOffset = CGPointMake(0, 100);
             [self.listView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
         }
         [UIView commitAnimations];
-    } 
-
+    }
+    
 }
 - (void)keyboardWillHide:(NSNotification *)notification {
     
-//    NSDictionary* userInfo = [notification userInfo];
-//	NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-//    NSTimeInterval animationDuration;
-//    [animationDurationValue getValue:&animationDuration];
-//    
-//    [UIView beginAnimations:nil context:NULL];
-//    [UIView setAnimationDuration:animationDuration];
-//    self.backView.frame = CGRectMake(0, 0, 320, 460);
-//    [UIView commitAnimations];
-//    CGRect keyboardBounds;
-//    [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
+    //    NSDictionary* userInfo = [notification userInfo];
+    //	NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    //    NSTimeInterval animationDuration;
+    //    [animationDurationValue getValue:&animationDuration];
+    //
+    //    [UIView beginAnimations:nil context:NULL];
+    //    [UIView setAnimationDuration:animationDuration];
+    //    self.backView.frame = CGRectMake(0, 0, 320, 460);
+    //    [UIView commitAnimations];
+    //    CGRect keyboardBounds;
+    //    [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
     NSDictionary* userInfo = [notification userInfo];
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSTimeInterval animationDuration;
     [animationDurationValue getValue:&animationDuration];
     //CGFloat keyboardHeight = keyboardBounds.size.height;
-    if (backViewSizeAdjusted == YES) 
-    { 
-        backViewSizeAdjusted = NO; 
+    if (backViewSizeAdjusted == YES)
+    {
+        backViewSizeAdjusted = NO;
         //CGRect frame = self.listView.frame;
         //frame.size.height += keyboardHeight;
-        [UIView beginAnimations:nil context:NULL]; 
-        [UIView setAnimationBeginsFromCurrentState:YES]; 
-        [UIView setAnimationDuration:animationDuration]; 
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:animationDuration];
         self.listView.frame = CGRectMake(self.listView.frame.origin.x, self.listView.frame.origin.y,320 , 416);
-        [UIView commitAnimations]; 
-    } 
-
+        [UIView commitAnimations];
+    }
+    
 }
 - (void)viewDidUnload
 {
@@ -660,11 +691,13 @@
     [self setActivityIndicator:nil];
     [self setPhotoButton:nil];
     [self setPhotoImageView:nil];
+    [self setCodeTextField:nil];
     [self setListView:nil];
     [self setEmailCell:nil];
     [self setPasswordCell:nil];
     [self setNameCell:nil];
     [self setSchoolCell:nil];
+    [self setInviteCell:nil];
     [self setGenderCell:nil];
     [self setPhotoCell:nil];
     [self setSchoolPicker:nil];
@@ -701,14 +734,17 @@
     [password release];
     [height release];
     [gender release];
+    [inviteCode release];
     [emailAccount release];
     [lastActiveField release];
     [photoImageView release];
+    [codeTextField release];
     [_listView release];
     [_emailCell release];
     [_passwordCell release];
     [_nameCell release];
     [_schoolCell release];
+    [_inviteCell release];
     [_genderCell release];
     [_photoCell release];
     [_schoolPicker release];

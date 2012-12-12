@@ -204,6 +204,8 @@
 		5FFD7FC8167726C500F9221C /* renren-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD7FC6167726C500F9221C /* renren-button@2x.png */; };
 		5FFD7FD016782F3500F9221C /* share-checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD7FCE16782F3500F9221C /* share-checked@2x.png */; };
 		5FFD7FD116782F3500F9221C /* share-unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD7FCF16782F3500F9221C /* share-unchecked@2x.png */; };
+		5FFD7FDA1678469C00F9221C /* RenRenSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFD7FD81678469C00F9221C /* RenRenSignUpViewController.m */; };
+		5FFD7FDB1678469C00F9221C /* RenRenSignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD7FD91678469C00F9221C /* RenRenSignUpViewController.xib */; };
 		8432969C155A148C00102B12 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969B155A148C00102B12 /* UIKit.framework */; };
 		8432969E155A148C00102B12 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969D155A148C00102B12 /* Foundation.framework */; };
 		843296A0155A148C00102B12 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969F155A148C00102B12 /* CoreGraphics.framework */; };
@@ -513,6 +515,9 @@
 		5FFD7FC6167726C500F9221C /* renren-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren-button@2x.png"; sourceTree = "<group>"; };
 		5FFD7FCE16782F3500F9221C /* share-checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share-checked@2x.png"; sourceTree = "<group>"; };
 		5FFD7FCF16782F3500F9221C /* share-unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share-unchecked@2x.png"; sourceTree = "<group>"; };
+		5FFD7FD71678469C00F9221C /* RenRenSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenRenSignUpViewController.h; path = Class/RenRenSignUpViewController.h; sourceTree = "<group>"; };
+		5FFD7FD81678469C00F9221C /* RenRenSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RenRenSignUpViewController.m; path = Class/RenRenSignUpViewController.m; sourceTree = "<group>"; };
+		5FFD7FD91678469C00F9221C /* RenRenSignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RenRenSignUpViewController.xib; path = Class/RenRenSignUpViewController.xib; sourceTree = "<group>"; };
 		84329697155A148C00102B12 /* 同去.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "同去.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8432969B155A148C00102B12 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8432969D155A148C00102B12 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1129,6 +1134,9 @@
 				5FFB62B815C7BBB300EE77C3 /* SignUpViewController.h */,
 				5FFB62B915C7BBB300EE77C3 /* SignUpViewController.m */,
 				5FFB62BA15C7BBB300EE77C3 /* SignUpViewController.xib */,
+				5FFD7FD71678469C00F9221C /* RenRenSignUpViewController.h */,
+				5FFD7FD81678469C00F9221C /* RenRenSignUpViewController.m */,
+				5FFD7FD91678469C00F9221C /* RenRenSignUpViewController.xib */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -1278,6 +1286,7 @@
 				5FFD7FC8167726C500F9221C /* renren-button@2x.png in Resources */,
 				5FFD7FD016782F3500F9221C /* share-checked@2x.png in Resources */,
 				5FFD7FD116782F3500F9221C /* share-unchecked@2x.png in Resources */,
+				5FFD7FDB1678469C00F9221C /* RenRenSignUpViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1387,6 +1396,7 @@
 				5F2B322316759205008C5EF8 /* ROImageView.m in Sources */,
 				5F2B322416759205008C5EF8 /* ROPublishPhotoDialogModel.m in Sources */,
 				5F2B322516759205008C5EF8 /* ROPublishPhotoInternal.m in Sources */,
+				5FFD7FDA1678469C00F9221C /* RenRenSignUpViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

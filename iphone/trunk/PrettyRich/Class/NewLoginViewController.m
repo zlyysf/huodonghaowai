@@ -9,6 +9,7 @@
 #import "NewLoginViewController.h"
 #import "AppDelegate.h"
 #import "NNMainTabViewController.h"
+#import "RenRenSignUpViewController.h"
 #import "PrettyUtility.h"
 #import "MobClick.h"
 #import "TongQuConfig.h"
@@ -313,6 +314,9 @@
 		outText = [outText stringByAppendingFormat:@"UserID:%@\n Name:%@\n Sex:%@\n Birthday:%@\n HeadURL:%@\n",item.userId,item.name,item.sex,item.brithday,item.headUrl];
 	}
     NSLog(@"%@",outText);
+    RenRenSignUpViewController *signUpViewController =[[RenRenSignUpViewController alloc]initWithNibName:@"RenRenSignUpViewController" bundle:nil];
+    [self.navigationController pushViewController:signUpViewController animated:YES];
+    [signUpViewController release];
 }
 - (void)renren:(Renren *)renren requestFailWithError:(ROError*)error
 {
