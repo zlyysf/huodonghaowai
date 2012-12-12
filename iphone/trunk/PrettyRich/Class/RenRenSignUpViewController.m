@@ -30,6 +30,7 @@
 @synthesize activityIndicator;
 @synthesize photoButton,schoolArray;
 @synthesize curConnection,name,height,gender,photoSelected,uploadImage,backViewSizeAdjusted,emailAccount,lastActiveField,password,inviteCode,codeTextField;
+@synthesize imageDownloadManager,renrenPhotoUrl,accountInfoJson;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -51,11 +52,22 @@
     self.navigationItem.rightBarButtonItem = customBarItem;
     [customBarItem release];
     photoSelected = NO;
+    self.activityIndicator.hidden = YES;
+    imageDownloadManager = [[ImagesDownloadManager alloc] init];
+    imageDownloadManager.imageDownloadDelegate = self;
+
     if(self.uploadImage != nil)
     {
+        self.renrenPhotoUrl = nil;
 		[self.photoImageView setImage:self.uploadImage];
 		self.photoSelected = YES;
 	}
+    if (renrenPhotoUrl!= nil)
+    {
+        [imageDownloadManager downloadImageWithUrl:renrenPhotoUrl];
+        self.activityIndicator.hidden = NO;
+        [self.activityIndicator startAnimating];
+    }
     self.emailTextField.tag = 101;
     self.passwordTextField.tag = 102;
     self.firstnameTextField.tag = 103;
@@ -113,7 +125,7 @@
 	self.curConnection = aConn;
 	[aConn release];
     self.lastActiveField = nil;
-    self.activityIndicator.hidden = YES;
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChanged:) name:UITextFieldTextDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -135,6 +147,25 @@
     backViewSizeAdjusted = NO;
     self.navigationItem.title = @"激活账号";
 }
+#pragma mark- ImageDownloaderDelegate
+- (void) imageDidDownload:(ImageDownloader *)downloader
+{
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
+    if (downloader.downloadImage != nil)
+    {
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate.imageCache setObject:downloader.downloadImage forKey:downloader.imageUrl];
+        if (renrenPhotoUrl != nil && [renrenPhotoUrl isEqualToString:downloader.imageUrl])
+            {
+                self.uploadImage = downloader.downloadImage;
+                [self.photoImageView setImage:self.uploadImage];
+                self.photoSelected = YES;
+            }
+    }
+    [imageDownloadManager removeOneDownloadWithUrl:downloader.imageUrl];
+}
+
 - (IBAction) clickAddPhoto
 {
 	self.emailAccount = self.emailTextField.text;
@@ -340,6 +371,7 @@
         return;
     }
     NSString * deviceUID = [[UIDevice currentDevice] uniqueIdentifier];
+    NSString *sessionId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
     NSDictionary *dict =[[NSDictionary alloc]initWithObjectsAndKeys:
                          deviceUID,@"deviceId",
                          self.emailAccount,@"emailAccount",
@@ -349,7 +381,11 @@
                          self.height,@"school",
                          self.inviteCode,@"hometown",
                          @"iphone",@"deviceType",
+                         sessionId,@"accountRenRen",
+                         [Renren sharedRenren].accessToken,@"accessTokenRenRen",
+                         self.accountInfoJson,@"accountInfoJson",
                          nil];
+    NSLog(@"register param :%@",[dict description]);
     self.view.userInteractionEnabled = NO;
     [curConnection cancelDownload];
     [curConnection startDownload:[NodeAsyncConnection createHttpsRequest:@"/user/register" parameters:dict] :self :@selector(didEndSignup:)];
@@ -417,7 +453,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    [MobClick beginLogPageView:@"SignUpView"];
+    [MobClick beginLogPageView:@"RenRenSignUpView"];
     //    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 113, 26)];
     //    UIImageView *imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 113, 26)];
     //    [imgView setImage:[UIImage imageNamed:@"prettyrich-title.png"]];
@@ -682,6 +718,10 @@
 }
 - (void)viewDidUnload
 {
+    if (imageDownloadManager != nil)
+    {
+        [imageDownloadManager cancelAllDownloadInProgress];
+    }
     [self setEmailTextField:nil];
     [self setPasswordTextField:nil];
     [self setFirstnameTextField:nil];
@@ -713,13 +753,21 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [MobClick endLogPageView:@"SignUpView"];
+    [MobClick endLogPageView:@"RenRenSignUpView"];
     [curConnection cancelDownload];
 }
 - (void)dealloc {
+    [renrenPhotoUrl release];
+    if (imageDownloadManager != nil)
+    {
+        [imageDownloadManager cancelAllDownloadInProgress];
+        imageDownloadManager.imageDownloadDelegate = nil;
+    }
+    [imageDownloadManager release];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+    [accountInfoJson release];
     [emailTextField release];
     [passwordTextField release];
     [firstnameTextField release];

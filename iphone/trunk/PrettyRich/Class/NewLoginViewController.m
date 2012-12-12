@@ -302,19 +302,64 @@
 	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
 	NSLog(@"loginfail:%@ %@",title,description);
 }
+-(void)startQuearyRenRenUserInfo
+{
+    ROUserInfoRequestParam *requestParam = [[[ROUserInfoRequestParam alloc] init] autorelease];
+    requestParam.fields = @"uid,name,sex,star,zidou,vip,birthday,tinyurl,headurl,mainurl,hometown_location,work_history,university_history";
+    [[Renren sharedRenren] getUsersInfo:requestParam andDelegate:self];
+    self.view.userInteractionEnabled = NO;
+    [self.activityIndicator startAnimating];
+    self.activityIndicator.hidden = NO;
+}
 - (void)renren:(Renren *)renren requestDidReturnResponse:(ROResponse*)response
 {
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
     self.view.userInteractionEnabled = YES;
 	NSArray *usersInfo = (NSArray *)(response.rootObject);
+    NSLog(@"%@",[usersInfo description]);
 	NSString *outText = [NSString stringWithFormat:@""];
-	
-	for (ROUserResponseItem *item in usersInfo) {
-		outText = [outText stringByAppendingFormat:@"UserID:%@\n Name:%@\n Sex:%@\n Birthday:%@\n HeadURL:%@\n",item.userId,item.name,item.sex,item.brithday,item.headUrl];
-	}
-    NSLog(@"%@",outText);
+	NSString *photoUrl;
+    NSString *name;
+    NSString *gender;
+    NSString *school;
+    NSString *hometown;
+    int year = 0;
+    ROUserResponseItem *item = [usersInfo objectAtIndex:0];
+    outText = [outText stringByAppendingFormat:@"UserID:%@\n Name:%@\n Sex:%@\n Birthday:%@\n HeadURL:%@\n",item.userId,item.name,item.sex,item.brithday,item.headUrl];
+    if (item.universityHistory != nil && [item.universityHistory count]!= 0)
+    {
+        for (ROUserUniversityInfoItem *uItem in item.universityHistory)
+        {
+            if ([uItem.year intValue]>year)
+            {
+                year = [uItem.year intValue];
+                school = uItem.name;
+            }
+        }
+    }
+    if (item.hometownLocation != nil)
+    {
+        hometown = item.hometownLocation.province;
+    }
+    
+    photoUrl = item.mainUrl;
+    name = item.name;
+    gender = [item.sex isEqualToString:@"1"]?@"male":@"female";
+    NSDictionary *infoJson = [NSDictionary dictionaryWithObjectsAndKeys:item.starUser,@"star",item.vipUser,@"vip", nil];
     RenRenSignUpViewController *signUpViewController =[[RenRenSignUpViewController alloc]initWithNibName:@"RenRenSignUpViewController" bundle:nil];
+    signUpViewController.renrenPhotoUrl = photoUrl;
+    signUpViewController.name = name;
+    signUpViewController.gender = gender;
+    if (school != nil)
+    {
+        signUpViewController.height = school;
+    }
+    if (hometown != nil)
+    {
+        signUpViewController.inviteCode = hometown;
+    }
+    signUpViewController.accountInfoJson = infoJson;
     [self.navigationController pushViewController:signUpViewController animated:YES];
     [signUpViewController release];
 }
@@ -390,12 +435,7 @@
         }
         else
         {
-            ROUserInfoRequestParam *requestParam = [[[ROUserInfoRequestParam alloc] init] autorelease];
-            requestParam.fields = [NSString stringWithFormat:@"uid,name,sex,birthday,headurl"];
-            [[Renren sharedRenren] getUsersInfo:requestParam andDelegate:self];
-            self.view.userInteractionEnabled = NO;
-            [self.activityIndicator startAnimating];
-            self.activityIndicator.hidden = NO;
+            [self startQuearyRenRenUserInfo];
         }
     }
 

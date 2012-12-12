@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "NodeAsyncConnection.h"
+#import "ImagesDownloadManager.h"
+#import "ImageDownloaderDelegate.h"
 @interface RenRenSignUpViewController : UIViewController
-<UITextFieldDelegate,UIActionSheetDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
+<UITextFieldDelegate,UIActionSheetDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate,ImageDownloaderDelegate>
 {
     NodeAsyncConnection *curConnection;
     NSString *name;
@@ -22,6 +24,8 @@
     BOOL backViewSizeAdjusted;
     UITextField *lastActiveField;
 }
+@property (retain,nonatomic)NSDictionary *accountInfoJson;
+@property (retain, nonatomic)ImagesDownloadManager * imageDownloadManager;
 @property (retain, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (retain,nonatomic)NSArray *schoolArray;
 @property (retain, nonatomic) IBOutlet UIPickerView *schoolPicker;
@@ -50,6 +54,7 @@
 @property (retain, nonatomic) NSString *emailAccount;
 @property (retain, nonatomic) NSString *password;
 @property (retain, nonatomic) NSString *inviteCode;
+@property (retain, nonatomic) NSString *renrenPhotoUrl;
 @property (nonatomic, assign) BOOL photoSelected;
 @property (nonatomic, assign) BOOL backViewSizeAdjusted;
 @property (nonatomic, retain) UIImage *uploadImage;
