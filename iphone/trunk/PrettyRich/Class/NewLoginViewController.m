@@ -292,6 +292,7 @@
     {
         [[Renren sharedRenren]getLoggedInUserId];
     }
+    
 }
 - (void)renrenDidLogout:(Renren *)renren
 {
@@ -316,52 +317,58 @@
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
     self.view.userInteractionEnabled = YES;
-	NSArray *usersInfo = (NSArray *)(response.rootObject);
-    NSLog(@"%@",[usersInfo description]);
-	NSString *outText = [NSString stringWithFormat:@""];
-	NSString *photoUrl;
-    NSString *name;
-    NSString *gender;
-    NSString *school;
-    NSString *hometown;
-    int year = 0;
-    ROUserResponseItem *item = [usersInfo objectAtIndex:0];
-    outText = [outText stringByAppendingFormat:@"UserID:%@\n Name:%@\n Sex:%@\n Birthday:%@\n HeadURL:%@\n",item.userId,item.name,item.sex,item.brithday,item.headUrl];
-    if (item.universityHistory != nil && [item.universityHistory count]!= 0)
+    if ([response.rootObject isKindOfClass:[NSArray class]])
     {
-        for (ROUserUniversityInfoItem *uItem in item.universityHistory)
+        if ([(NSArray *)response.rootObject count] == 0) {
+            return;
+        }
+        NSArray *usersInfo = (NSArray *)(response.rootObject);
+        NSLog(@"%@",[usersInfo description]);
+        NSString *outText = [NSString stringWithFormat:@""];
+        NSString *photoUrl;
+        NSString *name;
+        NSString *gender;
+        NSString *school;
+        NSString *hometown;
+        int year = 0;
+        ROUserResponseItem *item = [usersInfo objectAtIndex:0];
+        outText = [outText stringByAppendingFormat:@"UserID:%@\n Name:%@\n Sex:%@\n Birthday:%@\n HeadURL:%@\n",item.userId,item.name,item.sex,item.brithday,item.headUrl];
+        if (item.universityHistory != nil && [item.universityHistory count]!= 0)
         {
-            if ([uItem.year intValue]>year)
+            for (ROUserUniversityInfoItem *uItem in item.universityHistory)
             {
-                year = [uItem.year intValue];
-                school = uItem.name;
+                if ([uItem.year intValue]>year)
+                {
+                    year = [uItem.year intValue];
+                    school = uItem.name;
+                }
             }
         }
+        if (item.hometownLocation != nil)
+        {
+            hometown = item.hometownLocation.province;
+        }
+        
+        photoUrl = item.mainUrl;
+        name = item.name;
+        gender = [item.sex isEqualToString:@"1"]?@"male":@"female";
+        NSDictionary *infoJson = [NSDictionary dictionaryWithObjectsAndKeys:item.starUser,@"star",item.vipUser,@"vip", nil];
+        RenRenSignUpViewController *signUpViewController =[[RenRenSignUpViewController alloc]initWithNibName:@"RenRenSignUpViewController" bundle:nil];
+        signUpViewController.renrenPhotoUrl = photoUrl;
+        signUpViewController.name = name;
+        signUpViewController.gender = gender;
+        if (school != nil)
+        {
+            signUpViewController.height = school;
+        }
+        if (hometown != nil)
+        {
+            signUpViewController.inviteCode = hometown;
+        }
+        signUpViewController.accountInfoJson = infoJson;
+        [self.navigationController pushViewController:signUpViewController animated:YES];
+        [signUpViewController release];
     }
-    if (item.hometownLocation != nil)
-    {
-        hometown = item.hometownLocation.province;
-    }
-    
-    photoUrl = item.mainUrl;
-    name = item.name;
-    gender = [item.sex isEqualToString:@"1"]?@"male":@"female";
-    NSDictionary *infoJson = [NSDictionary dictionaryWithObjectsAndKeys:item.starUser,@"star",item.vipUser,@"vip", nil];
-    RenRenSignUpViewController *signUpViewController =[[RenRenSignUpViewController alloc]initWithNibName:@"RenRenSignUpViewController" bundle:nil];
-    signUpViewController.renrenPhotoUrl = photoUrl;
-    signUpViewController.name = name;
-    signUpViewController.gender = gender;
-    if (school != nil)
-    {
-        signUpViewController.height = school;
-    }
-    if (hometown != nil)
-    {
-        signUpViewController.inviteCode = hometown;
-    }
-    signUpViewController.accountInfoJson = infoJson;
-    [self.navigationController pushViewController:signUpViewController animated:YES];
-    [signUpViewController release];
 }
 - (void)renren:(Renren *)renren requestFailWithError:(ROError*)error
 {
@@ -416,6 +423,7 @@
             NSString *userName = [result objectForKey:@"name"];
             NSString *userGender = [result objectForKey:@"gender"];
             NSString *userPhoto = [result objectForKey:@"primaryPhotoPath"];
+            NSString *userEmail = [result objectForKey:@"emailAccount"];
             NSDictionary *userInfo = [[NSDictionary alloc]initWithDictionary:result];
             [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:@"PrettyUserInfo"];
             [userInfo release];
@@ -423,7 +431,8 @@
             [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"PrettyUserName"];
             [[NSUserDefaults standardUserDefaults] setObject:userGender forKey:@"PrettyUserGender"];
             [[NSUserDefaults standardUserDefaults] setObject:userPhoto forKey:@"PrettyUserPhoto"];
-            [[NSUserDefaults standardUserDefaults] setObject:self.emailAccount forKey:@"PrettyUserEmail"];
+            [[NSUserDefaults standardUserDefaults] setObject:userEmail forKey:@"PrettyUserEmail"];
+            [[NSUserDefaults standardUserDefaults] setObject:userEmail forKey:@"PreUserEmail"];
             [[NSUserDefaults standardUserDefaults]synchronize];
             [self.navigationController dismissModalViewControllerAnimated:YES];
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
@@ -435,9 +444,27 @@
         }
         else
         {
+            [self publishFirstRenRenConnectFeed];
             [self startQuearyRenRenUserInfo];
         }
     }
+
+}
+-(void)publishFirstRenRenConnectFeed
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   @"feed.publishFeed",@"method",
+                                   @"http://www.huodonghaowai.com",@"url",
+                                   @"活动号外",@"name",
+                                   @"我加入了活动号外",@"message",
+                                   @"访问活动号外",@"action_name",
+                                   @"http://www.huodonghaowai.com",@"action_link",
+                                   @"活动号外是第一个中国大学生组织活动的平台",@"description",
+                                   //@"副标题",@"caption",
+                                   @"http://oss.aliyuncs.com/ysf1/resource/app-icon.png",@"image",
+                                   nil];
+    
+    [[Renren sharedRenren] requestWithParams:params andDelegate:self];
 
 }
 - (void)startLogin

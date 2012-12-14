@@ -320,14 +320,14 @@
 //                                         nil];
             NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                            @"feed.publishFeed",@"method",
-                                           @"http://www.renren.com/229308864",@"url",
+                                           @"http://www.huodonghaowai.com",@"url",
                                            @"同去",@"name",
-                                           @"试试看",@"message",
+                                           @"message",@"message",
                                            @"访问我们",@"action_name",
-                                           @"http://www.renren.com/229308864",@"action_link",
-                                           @"主体内容",@"description",
+                                           @"http://www.huodonghaowai.com",@"action_link",
+                                           @"description",@"description",
                                            //@"副标题",@"caption",
-                                           //@"http://oss.aliyuncs.com/ysf1/folder1/1_1355253219472_iphone.jpg",@"image",
+                                           @"http://oss.aliyuncs.com/ysf1/resource/app-icon.png",@"image",
                                            nil];
 
             [[Renren sharedRenren] requestWithParams:params andDelegate:self];
@@ -869,7 +869,6 @@ replacementString:(NSString *)string
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
     self.view.userInteractionEnabled = YES;
-    NSLog(@"%@",[response.rootObject description]);
 //	NSArray *usersInfo = (NSArray *)(response.rootObject);
 //	NSString *outText = [NSString stringWithFormat:@""];
 //	
