@@ -627,6 +627,7 @@ function busRenRenRegisterAndLogin1(params,cbFun){
             assert.ok(outData.status=="success");
             assert.ok(outData.result.userExist);
             assert.ok(userId == outData.result.user.userId);
+            assert.ok(emailAccount == outData.result.user.emailAccount);
             next();
           });
         },

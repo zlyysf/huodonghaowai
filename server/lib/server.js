@@ -1069,7 +1069,7 @@ Server.prototype.logInFromRenRen = function(req, res) {
   var deviceType = req.body.deviceType;
   var deviceId = req.body.deviceId;
   self.store.renrenAccountLogIn({req:req,accountRenRen:accountRenRen,accessTokenRenRen:accessTokenRenRen,deviceType:deviceType,deviceId:deviceId,
-  userFields:['userId','name','gender','primaryPhotoId','height', 'school', 'studentNO', 'department', 'bloodGroup',
+  userFields:['userId','emailAccount','name','gender','primaryPhotoId','height', 'school', 'studentNO', 'department', 'bloodGroup',
               'constellation', 'hometown', 'educationalStatus', 'description', 'goodRateCount'],
   needPrimaryPhoto:true,primaryPhotoFields:['userId','photoPath']},function(err,userInfo){
     if (err) return self.handleError({err:err,req:req,res:res});

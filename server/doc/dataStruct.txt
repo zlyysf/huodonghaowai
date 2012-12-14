@@ -56,7 +56,7 @@ Out:
 { status:success|fail, 
   result:{
     userExist: true | false,
-	user:{userId, name, gender, primaryPhotoId, primaryPhotoPath, height, school, studentNO, department, bloodGroup, constellation, hometown, educationalStatus, description, goodRateCount
+	user:{userId, emailAccount(liumiao need it to judge something), name, gender, primaryPhotoId, primaryPhotoPath, height, school, studentNO, department, bloodGroup, constellation, hometown, educationalStatus, description, goodRateCount
 	}
   }
 }
