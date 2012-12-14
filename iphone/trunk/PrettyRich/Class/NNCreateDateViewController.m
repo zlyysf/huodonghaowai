@@ -287,7 +287,6 @@
     NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"PrettyUserId"];
     if (self.photoSelected)
     {
-        //NSLog(@"time %@",self.timeString);
         NSData *imageData = UIImageJPEGRepresentation(self.uploadImage, 0.6);
         NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:
                               userId,@"userId",
@@ -305,38 +304,9 @@
         [curConnection cancelDownload];
         [curConnection startDownload:[NodeAsyncConnection createUploadPhotoRequest:@"/user/createDateWithPhoto" parameters:dict] :self :@selector(didEndDatePost:)];
         [dict release];
-        if (shareChecked)
-        {
-//            NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-//                                         @"feed.publishFeed",@"method",
-//                                         @"http://www.renren.com/229308864",@"url",
-//                                         @"同去",@"name",
-//                                         @"试试看",@"message",
-//                                         @"访问我们",@"action_name",
-//                                         @"http://www.renren.com/229308864",@"action_link",
-//                                         @"主体内容",@"description",
-//                                         @"副标题",@"caption",
-//                                         @"http://oss.aliyuncs.com/ysf1/folder1/1_1355253219472_iphone.jpg",@"image",
-//                                         nil];
-            NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                           @"feed.publishFeed",@"method",
-                                           @"http://www.huodonghaowai.com",@"url",
-                                           @"同去",@"name",
-                                           @"message",@"message",
-                                           @"访问我们",@"action_name",
-                                           @"http://www.huodonghaowai.com",@"action_link",
-                                           @"description",@"description",
-                                           //@"副标题",@"caption",
-                                           @"http://oss.aliyuncs.com/ysf1/resource/app-icon.png",@"image",
-                                           nil];
-
-            [[Renren sharedRenren] requestWithParams:params andDelegate:self];
-        }
-
     }
     else
     {
-        //NSLog(@"time %@",self.timeString);
         NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:
                               userId,@"userId",
                               self.timeString,@"dateDate",
@@ -350,7 +320,21 @@
         [curConnection cancelDownload];
         [curConnection startDownload:[NodeAsyncConnection createNodeHttpRequest:@"/user/createDateWithPhoto" parameters:dict] :self :@selector(didEndDatePost:)];
         [dict release];
-
+    }
+    if (shareChecked)
+    {
+        NSString *feedContent = [NSString stringWithFormat:@"时间:%@  地点:%@  详情:%@",self.timeTextField.text,self.addressString,self.descripString];
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       @"feed.publishFeed",@"method",
+                                       @"http://www.huodonghaowai.com",@"url",
+                                       @"来活动号外加入吧",@"name",
+                                       self.titleString,@"message",
+                                       @"发现更多活动",@"action_name",
+                                       @"http://www.huodonghaowai.com",@"action_link",
+                                       feedContent,@"description",
+                                       @"http://oss.aliyuncs.com/ysf1/resource/app-icon.png",@"image",
+                                       nil];
+        [[Renren sharedRenren] requestWithParams:params andDelegate:self];
     }
     [self.activityIndicator startAnimating];
     self.activityIndicator.hidden = NO;

@@ -457,10 +457,9 @@
                                    @"http://www.huodonghaowai.com",@"url",
                                    @"活动号外",@"name",
                                    @"我加入了活动号外",@"message",
-                                   @"访问活动号外",@"action_name",
+                                   @"加入活动号外",@"action_name",
                                    @"http://www.huodonghaowai.com",@"action_link",
-                                   @"活动号外是第一个中国大学生组织活动的平台",@"description",
-                                   //@"副标题",@"caption",
+                                   @"中国第一个为大学生组织个性化活动的手机平台!",@"description",
                                    @"http://oss.aliyuncs.com/ysf1/resource/app-icon.png",@"image",
                                    nil];
     

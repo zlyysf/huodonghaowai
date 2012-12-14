@@ -520,7 +520,7 @@
 		5FFD7FD81678469C00F9221C /* RenRenSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RenRenSignUpViewController.m; path = Class/RenRenSignUpViewController.m; sourceTree = "<group>"; };
 		5FFD7FD91678469C00F9221C /* RenRenSignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RenRenSignUpViewController.xib; path = Class/RenRenSignUpViewController.xib; sourceTree = "<group>"; };
 		5FFD800516789B2600F9221C /* school.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = school.plist; sourceTree = "<group>"; };
-		84329697155A148C00102B12 /* 同去.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "同去.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84329697155A148C00102B12 /* 活动号外.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "活动号外.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8432969B155A148C00102B12 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8432969D155A148C00102B12 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8432969F155A148C00102B12 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1063,7 +1063,7 @@
 		84329698155A148C00102B12 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				84329697155A148C00102B12 /* 同去.app */,
+				84329697155A148C00102B12 /* 活动号外.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1161,7 +1161,7 @@
 			);
 			name = PrettyRich;
 			productName = PrettyRich;
-			productReference = 84329697155A148C00102B12 /* 同去.app */;
+			productReference = 84329697155A148C00102B12 /* 活动号外.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1485,7 +1485,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/PrettyRich\"",
 				);
-				PRODUCT_NAME = "同去";
+				PRODUCT_NAME = "活动号外";
 				PROVISIONING_PROFILE = "D1DC0C49-1FA4-4A7F-A4EE-4DC64DCE0267";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D1DC0C49-1FA4-4A7F-A4EE-4DC64DCE0267";
 				WRAPPER_EXTENSION = app;
@@ -1510,7 +1510,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/PrettyRich\"",
 				);
-				PRODUCT_NAME = "同去";
+				PRODUCT_NAME = "活动号外";
 				PROVISIONING_PROFILE = "C505163E-90A7-4DAB-BD3C-BB4DA273316F";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C505163E-90A7-4DAB-BD3C-BB4DA273316F";
 				WRAPPER_EXTENSION = app;
