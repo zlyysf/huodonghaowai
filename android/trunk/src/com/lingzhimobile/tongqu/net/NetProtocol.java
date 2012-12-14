@@ -2,8 +2,8 @@ package com.lingzhimobile.tongqu.net;
 
 public class NetProtocol {
 
-    private static final String DOMAIN_URL_PROD = "ec2-23-23-144-110.compute-1.amazonaws.com";
-    private static final String DOMAIN_URL_STAGE = "ec2-23-21-136-120.compute-1.amazonaws.com";
+    private static final String DOMAIN_URL_PROD = "42.121.122.47";//"ec2-23-23-144-110.compute-1.amazonaws.com";
+    private static final String DOMAIN_URL_STAGE = "42.121.122.47";// "ec2-23-21-136-120.compute-1.amazonaws.com";
 
     private static final String DOMAIN_URL = DOMAIN_URL_PROD;
 
@@ -12,7 +12,7 @@ public class NetProtocol {
     public static final String HTTPS_REQUEST_URL = "https://" + DOMAIN_URL
             + ":4010/";
 
-    public static final String IMAGE_BASE_URL = "http://s3.amazonaws.com/ysf1/";
+    public static final String IMAGE_BASE_URL = "http://oss.aliyuncs.com/ysf1/";//"http://s3.amazonaws.com/ysf1/";
 
     public static final String C2DM_SENDER = "lingzhimobile@gmail.com";
 
