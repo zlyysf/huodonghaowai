@@ -154,7 +154,7 @@ public class AskInfo extends TongQuActivity {
         // nameEditText.setFilters(inputFilter);
         //
         btnBack.setOnClickListener(new View.OnClickListener() {
-            
+
             @Override
             public void onClick(View v) {
                 finish();
@@ -212,12 +212,13 @@ public class AskInfo extends TongQuActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                invitationCode = invitationEditText.getText().toString();
-                if (TextUtils.isEmpty(invitationCode)) {
-                    Toast.makeText(AskInfo.this, R.string.invite_code_empty,
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                invitationCode = "";
+//                invitationCode = invitationEditText.getText().toString();
+//                if (TextUtils.isEmpty(invitationCode)) {
+//                    Toast.makeText(AskInfo.this, R.string.invite_code_empty,
+//                            Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
                 if (bm == null) {
                     Toast.makeText(AskInfo.this, R.string.no_photo,
                             Toast.LENGTH_SHORT).show();
