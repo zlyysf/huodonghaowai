@@ -27,10 +27,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.guidePageControll.numberOfPages = 4;
+    self.guidePageControll.numberOfPages = 5;
     self.guidePageControll.currentPage = 0;
     
-    self.guideScrollView.contentSize = CGSizeMake(self.view.frame.size.width * 4, self.view.frame.size.height);
+    self.guideScrollView.contentSize = CGSizeMake(self.view.frame.size.width * 5, self.view.frame.size.height);
     UIImage *sendBtnBackground = [[UIImage imageNamed:@"NNsend-button.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
     [self.startButton setBackgroundImage:sendBtnBackground forState:UIControlStateNormal];
 }

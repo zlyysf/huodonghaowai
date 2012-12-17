@@ -808,7 +808,7 @@ Server.prototype.register = function(req, res) {
     var mailMessage = {
         from: '"'+config.config.productName+'" <'+config.config.noreplyMailAccount+'>',
         to: emailAccount,
-        subject: '欢迎使用同去应用', //
+        subject: '欢迎使用活动号外应用', //
         headers: {
             'X-Laziness-level': 1000
         },
@@ -817,9 +817,9 @@ Server.prototype.register = function(req, res) {
 //        html:'<p>Hello '+name+'</p>' +
 //        '<p>Welcome in PrettyRich</p>'
         html:'<h4>亲爱的同学，'+name+'，您好：</h4>' +
-        '<p>欢迎你加入和使用我们的手机应用，同去，中国第一个同校大学生活动交友的手机平台。 希望通过同去这个平台，你可以结识到更多本校同学。<br/></p>' +
-        '<p>我们倾听你的建议，欢迎发信到 tongqusupport@yasofon.com。<br/></p>' +
-        '<p>同去开发团队</p>'
+        '<p>欢迎你加入和使用我们的手机应用，活动号外，中国第一个同校大学生活动交友的手机平台。 希望通过活动号外这个平台，你可以结识到更多本校同学。<br/></p>' +
+        '<p>我们倾听你的建议，欢迎发信到 support@huodonghaowai.com。<br/></p>' +
+        '<p>活动号外开发团队</p>'
     };
 
     self.mailTransport.sendMail(mailMessage, function(err){
