@@ -115,18 +115,18 @@ com.google.android.c2dm.C2DMessaging:
     67:74:public static void unregister(android.content.Context)
     85:88:public static java.lang.String getRegistrationId(android.content.Context)
     92:94:public static long getLastRegistrationChange(android.content.Context)
-com.lingzhimobile.tongqu.BuildConfig
-com.lingzhimobile.tongqu.Manifest
-com.lingzhimobile.tongqu.Manifest$permission
-com.lingzhimobile.tongqu.R:
+com.lingzhimobile.huodonghaowai.BuildConfig
+com.lingzhimobile.huodonghaowai.Manifest
+com.lingzhimobile.huodonghaowai.Manifest$permission
+com.lingzhimobile.huodonghaowai.R:
     10:10:public R()
-com.lingzhimobile.tongqu.activity.AskInfo:
+com.lingzhimobile.huodonghaowai.activity.AskInfo:
     335:337:private java.lang.String getUserId()
-com.lingzhimobile.tongqu.activity.DateChat:
-    private com.lingzhimobile.tongqu.model.ConversationItem conversationItem
+com.lingzhimobile.huodonghaowai.activity.DateChat:
+    private com.lingzhimobile.huodonghaowai.model.ConversationItem conversationItem
     479:498:public void showAlertDialog()
-com.lingzhimobile.tongqu.activity.DateChat$15
-com.lingzhimobile.tongqu.activity.MainTabActivity:
+com.lingzhimobile.huodonghaowai.activity.DateChat$15
+com.lingzhimobile.huodonghaowai.activity.MainTabActivity:
     public static final java.lang.String APP_ID
     public static final java.lang.String LOCAL_PUSH_FLAG
     public static final java.lang.String STRING_NEARBY
@@ -135,27 +135,27 @@ com.lingzhimobile.tongqu.activity.MainTabActivity:
     public static final java.lang.String STRING_PROPOSEDATE
     public static java.lang.String userAgent
     212:217:private void unregister()
-com.lingzhimobile.tongqu.activity.Settings:
+com.lingzhimobile.huodonghaowai.activity.Settings:
     private java.lang.String tempStuNO
     private java.lang.String tempDepartment
     private java.lang.String tempDescription
     private java.lang.String tempHomeTown
-com.lingzhimobile.tongqu.activity.Settings$AuthDialogListener:
+com.lingzhimobile.huodonghaowai.activity.Settings$AuthDialogListener:
     333:340:public void onComplete(android.os.Bundle)
     349:352:public void onWeiboException(com.weibo.net.WeiboException)
     357:357:public void onError(com.weibo.net.DialogError)
-com.lingzhimobile.tongqu.activity.Share:
+com.lingzhimobile.huodonghaowai.activity.Share:
     static final int UPLOAD
-    private com.lingzhimobile.tongqu.asynctask.UploadPhotoTask uploadPhotoTask
-com.lingzhimobile.tongqu.activity.Share$2$1:
+    private com.lingzhimobile.huodonghaowai.asynctask.UploadPhotoTask uploadPhotoTask
+com.lingzhimobile.huodonghaowai.activity.Share$2$1:
     186:187:public void onFacebookError(com.facebook.android.FacebookError,java.lang.Object)
-com.lingzhimobile.tongqu.activity.Share$2$2:
+com.lingzhimobile.huodonghaowai.activity.Share$2$2:
     209:210:public void onIOException(java.io.IOException)
-com.lingzhimobile.tongqu.activity.Share$AuthDialogListener:
+com.lingzhimobile.huodonghaowai.activity.Share$AuthDialogListener:
     336:342:public void onComplete(android.os.Bundle)
     353:356:public void onWeiboException(com.weibo.net.WeiboException)
     361:361:public void onError(com.weibo.net.DialogError)
-com.lingzhimobile.tongqu.activity.UploadPhoto:
+com.lingzhimobile.huodonghaowai.activity.UploadPhoto:
     static final int MULTIPLY
     static final int OVERLAY
     static final int COLORDODGE
@@ -164,60 +164,60 @@ com.lingzhimobile.tongqu.activity.UploadPhoto:
     static final int UPLOAD
     int[] merge
     int[] result
-com.lingzhimobile.tongqu.adapter.DateRespondersAdapter
-com.lingzhimobile.tongqu.adapter.DateRespondersAdapter$1
-com.lingzhimobile.tongqu.adapter.DateRespondersAdapter$2
-com.lingzhimobile.tongqu.adapter.DateRespondersAdapter$ViewHolder
-com.lingzhimobile.tongqu.adapter.HelpViewPagerAdapter:
+com.lingzhimobile.huodonghaowai.adapter.DateRespondersAdapter
+com.lingzhimobile.huodonghaowai.adapter.DateRespondersAdapter$1
+com.lingzhimobile.huodonghaowai.adapter.DateRespondersAdapter$2
+com.lingzhimobile.huodonghaowai.adapter.DateRespondersAdapter$ViewHolder
+com.lingzhimobile.huodonghaowai.adapter.HelpViewPagerAdapter:
     14:14:public java.util.List getmListViews()
     18:19:public void setmListViews(java.util.List)
-com.lingzhimobile.tongqu.adapter.NearbyDateViewPagerAdapter:
+com.lingzhimobile.huodonghaowai.adapter.NearbyDateViewPagerAdapter:
     34:35:public void setData(java.util.List)
-com.lingzhimobile.tongqu.adapter.PreLoginDateAdapter
-com.lingzhimobile.tongqu.adapter.PreLoginDateAdapter$1
-com.lingzhimobile.tongqu.adapter.PreLoginDateAdapter$2
-com.lingzhimobile.tongqu.adapter.PreLoginDateAdapter$ViewHolder
-com.lingzhimobile.tongqu.adapter.SentDateListItemAdapter:
+com.lingzhimobile.huodonghaowai.adapter.PreLoginDateAdapter
+com.lingzhimobile.huodonghaowai.adapter.PreLoginDateAdapter$1
+com.lingzhimobile.huodonghaowai.adapter.PreLoginDateAdapter$2
+com.lingzhimobile.huodonghaowai.adapter.PreLoginDateAdapter$ViewHolder
+com.lingzhimobile.huodonghaowai.adapter.SentDateListItemAdapter:
     public boolean isBusy
     public boolean needRemoveBitmap
-com.lingzhimobile.tongqu.adapter.ViewPagerAdapter:
+com.lingzhimobile.huodonghaowai.adapter.ViewPagerAdapter:
     16:16:public java.util.List getmListViews()
     20:21:public void setmListViews(java.util.List)
-com.lingzhimobile.tongqu.asyncloader.GetDateLoader:
+com.lingzhimobile.huodonghaowai.asyncloader.GetDateLoader:
     32:33:public GetDateLoader(android.content.Context)
-com.lingzhimobile.tongqu.asyncloader.GetInviteCodeLoader:
+com.lingzhimobile.huodonghaowai.asyncloader.GetInviteCodeLoader:
     25:26:public GetInviteCodeLoader(android.content.Context)
-com.lingzhimobile.tongqu.asyncloader.GetNearbyDateLoader:
+com.lingzhimobile.huodonghaowai.asyncloader.GetNearbyDateLoader:
     31:32:public GetNearbyDateLoader(android.content.Context)
-com.lingzhimobile.tongqu.asynctask.GetConversationsTask
-com.lingzhimobile.tongqu.asynctask.GetPhotosTask
-com.lingzhimobile.tongqu.asynctask.SignInTask
-com.lingzhimobile.tongqu.asynctask.StopDateTask
-com.lingzhimobile.tongqu.asynctask.UpdateProfileTask:
+com.lingzhimobile.huodonghaowai.asynctask.GetConversationsTask
+com.lingzhimobile.huodonghaowai.asynctask.GetPhotosTask
+com.lingzhimobile.huodonghaowai.asynctask.SignInTask
+com.lingzhimobile.huodonghaowai.asynctask.StopDateTask
+com.lingzhimobile.huodonghaowai.asynctask.UpdateProfileTask:
     java.lang.String studentNo
     java.lang.String department
     java.lang.String description
     java.lang.String educationaStatus
     java.lang.String constellation
     java.lang.String hometown
-com.lingzhimobile.tongqu.cons.MessageID
-com.lingzhimobile.tongqu.cons.MessageType:
+com.lingzhimobile.huodonghaowai.cons.MessageID
+com.lingzhimobile.huodonghaowai.cons.MessageType:
     3:3:public MessageType()
-com.lingzhimobile.tongqu.cons.RequestCode
-com.lingzhimobile.tongqu.exception.AppException:
+com.lingzhimobile.huodonghaowai.cons.RequestCode
+com.lingzhimobile.huodonghaowai.exception.AppException:
     private static final long serialVersionUID
     17:18:public void setCode(int)
     22:25:public AppException(int,java.lang.String,java.lang.Throwable)
     29:31:public AppException(int)
     34:36:public AppException(int,java.lang.Throwable)
-com.lingzhimobile.tongqu.exception.ErrorCode:
+com.lingzhimobile.huodonghaowai.exception.ErrorCode:
     public static final int SERVER_RETURN_ERROR
     7:7:public ErrorCode()
-com.lingzhimobile.tongqu.exception.JSONParseException:
+com.lingzhimobile.huodonghaowai.exception.JSONParseException:
     private static final long serialVersionUID
     12:13:public JSONParseException(int,java.lang.String,java.lang.Throwable)
     16:17:public JSONParseException(int)
-com.lingzhimobile.tongqu.fragment.DateListFragment:
+com.lingzhimobile.huodonghaowai.fragment.DateListFragment:
     public static final java.lang.String TYPE_SEND
     public static final java.lang.String TYPE_INVITED
     public static final java.lang.String TYPE_APPLY
@@ -227,38 +227,38 @@ com.lingzhimobile.tongqu.fragment.DateListFragment:
     public static final int SEND_MORE_LOADER_ID
     public static final int INVITED_MORE_LOADER_ID
     public static final int APPLY_MORE_LOADER_ID
-com.lingzhimobile.tongqu.fragment.DateResponderList:
+com.lingzhimobile.huodonghaowai.fragment.DateResponderList:
     private android.widget.ListView lvDateResponders
-com.lingzhimobile.tongqu.fragment.PreLogin:
+com.lingzhimobile.huodonghaowai.fragment.PreLogin:
     public static final int LOGIN
     public static final int SIGNUP
-com.lingzhimobile.tongqu.fragment.ProfileFragment:
-    private com.lingzhimobile.tongqu.asynctask.UploadPhotoTask uploadPhotoTask
-com.lingzhimobile.tongqu.gps.AddressTask:
+com.lingzhimobile.huodonghaowai.fragment.ProfileFragment:
+    private com.lingzhimobile.huodonghaowai.asynctask.UploadPhotoTask uploadPhotoTask
+com.lingzhimobile.huodonghaowai.gps.AddressTask:
     public static final int DO_APN
     public static final int DO_WIFI
     public static final int DO_GPS
-com.lingzhimobile.tongqu.gps.IAddressTask:
+com.lingzhimobile.huodonghaowai.gps.IAddressTask:
     77:100:private org.json.JSONObject doApn()
     104:125:private org.json.JSONObject doWifi()
-com.lingzhimobile.tongqu.log.LogTag
-com.lingzhimobile.tongqu.log.LogUtils:
+com.lingzhimobile.huodonghaowai.log.LogTag
+com.lingzhimobile.huodonghaowai.log.LogUtils:
     private static final boolean enableLog
     17:17:public LogUtils()
     26:33:public static void Logd(java.lang.String,java.util.List)
     39:44:public static void Logd(java.lang.String,java.util.HashMap)
     84:85:public static void Logw(java.lang.String,java.lang.String)
     111:121:public static void LogdMultiple(java.lang.String,java.lang.String)
-com.lingzhimobile.tongqu.model.ChatItem:
+com.lingzhimobile.huodonghaowai.model.ChatItem:
     34:34:public boolean isHaveUnViewedMessage()
     53:53:public java.lang.String getPhotoId()
     62:63:public void setSmallPhotoPath(java.lang.String)
-    90:97:public void getPostBitmapAsync(com.lingzhimobile.tongqu.util.MethodHandler)
-    99:106:public void getPostSmallBitmapAsync(com.lingzhimobile.tongqu.util.MethodHandler)
-com.lingzhimobile.tongqu.model.ChatItem$1
-com.lingzhimobile.tongqu.model.ChatItem$2
-com.lingzhimobile.tongqu.model.ConversationItem
-com.lingzhimobile.tongqu.model.DateListItem:
+    90:97:public void getPostBitmapAsync(com.lingzhimobile.huodonghaowai.util.MethodHandler)
+    99:106:public void getPostSmallBitmapAsync(com.lingzhimobile.huodonghaowai.util.MethodHandler)
+com.lingzhimobile.huodonghaowai.model.ChatItem$1
+com.lingzhimobile.huodonghaowai.model.ChatItem$2
+com.lingzhimobile.huodonghaowai.model.ConversationItem
+com.lingzhimobile.huodonghaowai.model.DateListItem:
     private org.json.JSONObject region
     private java.lang.String countryLocation
     58:58:public java.lang.String getPhotoId()
@@ -270,14 +270,14 @@ com.lingzhimobile.tongqu.model.DateListItem:
     137:137:public java.lang.String getDateType()
     149:149:public org.json.JSONObject getRegion()
     152:153:public void setRegion(org.json.JSONObject)
-com.lingzhimobile.tongqu.model.MessageItem:
+com.lingzhimobile.huodonghaowai.model.MessageItem:
     private java.lang.String briefMessage
     14:14:public java.lang.String getBriefMessage()
     17:18:public void setBriefMessage(java.lang.String)
     23:23:public java.lang.String getSenderName()
     29:29:public java.lang.String getSenderPhotoPath()
     44:44:public java.lang.String getReceiverId()
-com.lingzhimobile.tongqu.model.PhotoItem:
+com.lingzhimobile.huodonghaowai.model.PhotoItem:
     private long createTime
     private java.lang.String state
     26:27:public void setSmallPhotoPath(java.lang.String)
@@ -288,13 +288,13 @@ com.lingzhimobile.tongqu.model.PhotoItem:
     61:61:public int getWidth()
     79:79:public java.lang.String getState()
     82:83:public void setState(java.lang.String)
-    88:89:public void setUser(com.lingzhimobile.tongqu.model.UserItem)
-    116:123:public void getSmallPostBitmapAsync(com.lingzhimobile.tongqu.util.MethodHandler)
-com.lingzhimobile.tongqu.model.PhotoItem$2
-com.lingzhimobile.tongqu.model.PushMessageInfo:
+    88:89:public void setUser(com.lingzhimobile.huodonghaowai.model.UserItem)
+    116:123:public void getSmallPostBitmapAsync(com.lingzhimobile.huodonghaowai.util.MethodHandler)
+com.lingzhimobile.huodonghaowai.model.PhotoItem$2
+com.lingzhimobile.huodonghaowai.model.PushMessageInfo:
     23:23:public java.lang.String getDateSenderId()
-com.lingzhimobile.tongqu.model.UrlBitmap
-com.lingzhimobile.tongqu.model.UserItem:
+com.lingzhimobile.huodonghaowai.model.UrlBitmap
+com.lingzhimobile.huodonghaowai.model.UserItem:
     private java.lang.String deviceId
     private java.lang.String createTime
     59:59:public java.lang.String getStudentNo()
@@ -306,16 +306,16 @@ com.lingzhimobile.tongqu.model.UserItem:
     135:136:public void setDeviceId(java.lang.String)
     138:138:public java.lang.String getCreateTime()
     141:142:public void setCreateTime(java.lang.String)
-com.lingzhimobile.tongqu.net.HttpManager:
+com.lingzhimobile.huodonghaowai.net.HttpManager:
     46:46:public HttpManager()
     67:68:public static void cancelRequest(org.apache.http.client.methods.HttpPost)
-com.lingzhimobile.tongqu.net.NetProtocol
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshAdapterViewBase:
+com.lingzhimobile.huodonghaowai.net.NetProtocol
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshAdapterViewBase:
     static final boolean DEFAULT_SHOW_INDICATOR
     public abstract android.view.ContextMenu$ContextMenuInfo getContextMenuInfo()
-    131:132:public final void setOnLastItemVisibleListener(com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase$OnLastItemVisibleListener)
+    131:132:public final void setOnLastItemVisibleListener(com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase$OnLastItemVisibleListener)
     135:136:public final void setOnScrollListener(android.widget.AbsListView$OnScrollListener)
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase:
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase:
     static final boolean DEBUG
     static final java.lang.String LOG_TAG
     static final float FRICTION
@@ -330,7 +330,7 @@ com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase:
     static final java.lang.String STATE_SHOW_REFRESHING_VIEW
     static final java.lang.String STATE_SUPER
     119:119:public final boolean getFilterTouchEvents()
-    130:130:public final com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase$Mode getMode()
+    130:130:public final com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase$Mode getMode()
     158:158:public final boolean hasPullFromTop()
     168:168:public final boolean isDisableScrollingWhileRefreshing()
     177:177:public final boolean isPullToRefreshEnabled()
@@ -340,25 +340,25 @@ com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase:
     457:458:public final void setRefreshing()
     468:472:public final void setRefreshing(boolean)
     482:483:public void setRefreshingLabel(java.lang.String)
-    496:502:public void setRefreshingLabel(java.lang.String,com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase$Mode)
+    496:502:public void setRefreshingLabel(java.lang.String,com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase$Mode)
     513:514:public void setReleaseLabel(java.lang.String)
     543:544:public final void setShowViewWhileRefreshing(boolean)
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase$SmoothScrollRunnable:
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase$SmoothScrollRunnable:
     static final int ANIMATION_DURATION_MS
     static final int ANIMATION_FPS
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshListView:
-    63:71:public void setRefreshingLabel(java.lang.String,com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase$Mode)
-com.lingzhimobile.tongqu.pulltorefresh.internal.EmptyViewMethodAccessor:
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshListView:
+    63:71:public void setRefreshingLabel(java.lang.String,com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase$Mode)
+com.lingzhimobile.huodonghaowai.pulltorefresh.internal.EmptyViewMethodAccessor:
     public abstract void setEmptyView(android.view.View)
-com.lingzhimobile.tongqu.pulltorefresh.internal.LoadingLayout:
+com.lingzhimobile.huodonghaowai.pulltorefresh.internal.LoadingLayout:
     static final int DEFAULT_ROTATION_ANIMATION_DURATION
     163:164:public void setRefreshingLabel(java.lang.String)
-com.lingzhimobile.tongqu.thread.LoadImgThread:
+com.lingzhimobile.huodonghaowai.thread.LoadImgThread:
     public static final int ConnectTimeOutTime
     private static final long serialVersionUID
-com.lingzhimobile.tongqu.util.AppInfo:
+com.lingzhimobile.huodonghaowai.util.AppInfo:
     11:11:public AppInfo()
-com.lingzhimobile.tongqu.util.AppUtil:
+com.lingzhimobile.huodonghaowai.util.AppUtil:
     64:64:public AppUtil()
     114:119:public static int[] convertMeterToFootAndInch(int)
     124:151:public static void setListViewHeightBasedOnChildren(android.widget.ExpandableListView,boolean)
@@ -367,54 +367,54 @@ com.lingzhimobile.tongqu.util.AppUtil:
     593:620:public static java.lang.String getLocationStr(org.json.JSONObject,java.lang.String)
     624:645:public static android.graphics.Bitmap getRoundedCornerBitmap(android.graphics.Bitmap)
     649:656:public static android.graphics.Bitmap getRotationBitmap(android.content.Context,int)
-com.lingzhimobile.tongqu.util.BitmapManager:
+com.lingzhimobile.huodonghaowai.util.BitmapManager:
     public static final int MAX_HEAD_SCALE
     public static final int MAX_STATUS_SCALE
     public static final int MAX_FILE_SIZE
     public static final int compressRatio
     14:14:public BitmapManager()
     26:33:public static android.graphics.Bitmap getAppropriateBitmapFromStream(android.content.Context,android.net.Uri)
-com.lingzhimobile.tongqu.util.BitmapManager$CompressedBitmap
-com.lingzhimobile.tongqu.util.DateTimeUtil:
+com.lingzhimobile.huodonghaowai.util.BitmapManager$CompressedBitmap
+com.lingzhimobile.huodonghaowai.util.DateTimeUtil:
     13:13:public DateTimeUtil()
     34:33:public static java.lang.String formatTime(android.content.Context,long)
-com.lingzhimobile.tongqu.util.FileManager:
+com.lingzhimobile.huodonghaowai.util.FileManager:
     8:8:public FileManager()
-com.lingzhimobile.tongqu.util.GlobalValue:
+com.lingzhimobile.huodonghaowai.util.GlobalValue:
     public static org.json.JSONObject region
     public static java.lang.String inviteSMS
     public static final java.lang.String CONSUMER_KEY
     public static final java.lang.String CONSUMER_SECRET
     public static final java.lang.String REDIRECT_RUL
     14:14:public GlobalValue()
-com.lingzhimobile.tongqu.util.ImageBuffer:
+com.lingzhimobile.huodonghaowai.util.ImageBuffer:
     public static final int MaxBufferSize
     private static final int MaxSingleFileSize
     private static final int MaxSingleGIFFileSize
     28:28:public ImageBuffer()
-com.lingzhimobile.tongqu.util.ImageLoadUtil:
+com.lingzhimobile.huodonghaowai.util.ImageLoadUtil:
     19:19:public ImageLoadUtil()
     25:53:public static android.graphics.Bitmap loadImageFromURL(java.lang.String)
-com.lingzhimobile.tongqu.util.JSONParser:
+com.lingzhimobile.huodonghaowai.util.JSONParser:
     24:24:public JSONParser()
     73:81:public static java.lang.String getReportUserResult(java.lang.String)
     136:177:public static java.util.List getNearbyPhotos(java.lang.String)
     219:247:public static java.util.ArrayList getPhotos(java.lang.String)
     381:395:public static java.util.HashMap getCreditDelta(java.lang.String)
     451:502:public static java.util.ArrayList getConversations(java.lang.String)
-com.lingzhimobile.tongqu.util.NotificationUtil:
+com.lingzhimobile.huodonghaowai.util.NotificationUtil:
     5:5:public NotificationUtil()
-com.lingzhimobile.tongqu.util.SessionStore:
+com.lingzhimobile.huodonghaowai.util.SessionStore:
     private static final java.lang.String TOKEN
     private static final java.lang.String EXPIRES
     27:27:public SessionStore()
     55:62:public static boolean restoreFacebook(com.facebook.android.Facebook,android.content.Context)
     66:73:public static void clearFacebook(android.content.Context)
     76:83:public static boolean saveSinaWeibo(com.weibo.net.Weibo,android.content.Context)
-com.lingzhimobile.tongqu.view.AutoResizeTextView:
+com.lingzhimobile.huodonghaowai.view.AutoResizeTextView:
     public static final float MIN_TEXT_SIZE
     private static final java.lang.String mEllipsis
-    89:90:public void setOnResizeListener(com.lingzhimobile.tongqu.view.AutoResizeTextView$OnTextResizeListener)
+    89:90:public void setOnResizeListener(com.lingzhimobile.huodonghaowai.view.AutoResizeTextView$OnTextResizeListener)
     125:128:public void setMaxTextSize(float)
     135:135:public float getMaxTextSize()
     143:146:public void setMinTextSize(float)
@@ -422,7 +422,7 @@ com.lingzhimobile.tongqu.view.AutoResizeTextView:
     161:162:public void setAddEllipsis(boolean)
     169:169:public boolean getAddEllipsis()
     198:201:public void resizeText()
-com.lingzhimobile.tongqu.view.BouncyRefreshLazyScrollView:
+com.lingzhimobile.huodonghaowai.view.BouncyRefreshLazyScrollView:
     private static final java.lang.String TAG
     private static final int RELEASE_To_REFRESH
     private static final int PULL_To_REFRESH
@@ -434,19 +434,19 @@ com.lingzhimobile.tongqu.view.BouncyRefreshLazyScrollView:
     74:76:public BouncyRefreshLazyScrollView(android.content.Context)
     169:199:private void init()
     332:336:public void getView()
-    357:358:public void setOnScrollListener(com.lingzhimobile.tongqu.view.BouncyRefreshLazyScrollView$OnScrollListener)
-    441:443:public void setonRefreshListener(com.lingzhimobile.tongqu.view.BouncyRefreshLazyScrollView$OnRefreshListener)
+    357:358:public void setOnScrollListener(com.lingzhimobile.huodonghaowai.view.BouncyRefreshLazyScrollView$OnScrollListener)
+    441:443:public void setonRefreshListener(com.lingzhimobile.huodonghaowai.view.BouncyRefreshLazyScrollView$OnRefreshListener)
     450:456:public void onRefreshComplete()
     465:466:public void addChild(android.view.View)
     469:470:public void addChild(android.view.View,int)
     473:474:public void setPullLabel(java.lang.String)
     476:477:public void setReleaseLabel(java.lang.String)
-com.lingzhimobile.tongqu.view.BouncyRefreshLazyScrollView$2
-com.lingzhimobile.tongqu.view.BouncyRefreshLazyScrollView$OnScrollListener:
+com.lingzhimobile.huodonghaowai.view.BouncyRefreshLazyScrollView$2
+com.lingzhimobile.huodonghaowai.view.BouncyRefreshLazyScrollView$OnScrollListener:
     public abstract void onBottom()
     public abstract void onTop()
     public abstract void onScroll()
-com.lingzhimobile.tongqu.view.BouncyRefreshListView:
+com.lingzhimobile.huodonghaowai.view.BouncyRefreshListView:
     private static final java.lang.String TAG
     private static final int RELEASE_To_REFRESH
     private static final int PULL_To_REFRESH
@@ -458,16 +458,16 @@ com.lingzhimobile.tongqu.view.BouncyRefreshListView:
     private int headContentWidth
     78:80:public BouncyRefreshListView(android.content.Context)
     88:138:public void init(android.content.Context)
-    202:204:public void setonRefreshListener(com.lingzhimobile.tongqu.view.BouncyRefreshListView$OnRefreshListener)
+    202:204:public void setonRefreshListener(com.lingzhimobile.huodonghaowai.view.BouncyRefreshListView$OnRefreshListener)
     211:215:public void onRefreshComplete()
     225:241:private void measureView(android.view.View)
     244:247:public void setAdapter(android.widget.BaseAdapter)
-com.lingzhimobile.tongqu.view.CustomizeDatePickerDialog:
+com.lingzhimobile.huodonghaowai.view.CustomizeDatePickerDialog:
     private static final java.lang.String MONTH
     private static final java.lang.String DAY
     private static final java.lang.String HOUR
-com.lingzhimobile.tongqu.view.FlowTag
-com.lingzhimobile.tongqu.view.FlowView:
+com.lingzhimobile.huodonghaowai.view.FlowTag
+com.lingzhimobile.huodonghaowai.view.FlowView:
     private int columnIndex
     private int rowIndex
     23:23:public java.lang.String getDataType()
@@ -478,26 +478,26 @@ com.lingzhimobile.tongqu.view.FlowView:
     159:159:public int getRowIndex()
     163:164:public void setRowIndex(int)
     167:167:public android.os.Handler getViewHandler()
-com.lingzhimobile.tongqu.view.FlowView$3
-com.lingzhimobile.tongqu.view.PreLoginViewPagerItemView:
+com.lingzhimobile.huodonghaowai.view.FlowView$3
+com.lingzhimobile.huodonghaowai.view.PreLoginViewPagerItemView:
     private int mPosition
     39:42:public PreLoginViewPagerItemView(android.content.Context)
-    72:115:public void setData(com.lingzhimobile.tongqu.model.DateListItem,int)
+    72:115:public void setData(com.lingzhimobile.huodonghaowai.model.DateListItem,int)
     121:127:public void recycle()
     133:161:public void reload()
-    36:36:static synthetic int access$3(com.lingzhimobile.tongqu.view.PreLoginViewPagerItemView)
-com.lingzhimobile.tongqu.view.PreLoginViewPagerItemView$2
-com.lingzhimobile.tongqu.view.PreLoginViewPagerItemView$3
-com.lingzhimobile.tongqu.view.ViewFlow:
+    36:36:static synthetic int access$3(com.lingzhimobile.huodonghaowai.view.PreLoginViewPagerItemView)
+com.lingzhimobile.huodonghaowai.view.PreLoginViewPagerItemView$2
+com.lingzhimobile.huodonghaowai.view.PreLoginViewPagerItemView$3
+com.lingzhimobile.huodonghaowai.view.ViewFlow:
     private static final int SNAP_VELOCITY
     private static final int INVALID_SCREEN
     private static final int TOUCH_STATE_REST
     private static final int TOUCH_STATE_SCROLLING
     138:138:public int getViewsCount()
-    447:448:public void setOnViewSwitchListener(com.lingzhimobile.tongqu.view.ViewFlow$ViewSwitchListener)
-com.lingzhimobile.tongqu.view.myProgressDialog:
-    31:31:public static com.lingzhimobile.tongqu.view.myProgressDialog show(android.content.Context,java.lang.CharSequence,java.lang.CharSequence)
-    41:41:public static com.lingzhimobile.tongqu.view.myProgressDialog show(android.content.Context,java.lang.CharSequence,java.lang.CharSequence,boolean,boolean)
+    447:448:public void setOnViewSwitchListener(com.lingzhimobile.huodonghaowai.view.ViewFlow$ViewSwitchListener)
+com.lingzhimobile.huodonghaowai.view.myProgressDialog:
+    31:31:public static com.lingzhimobile.huodonghaowai.view.myProgressDialog show(android.content.Context,java.lang.CharSequence,java.lang.CharSequence)
+    41:41:public static com.lingzhimobile.huodonghaowai.view.myProgressDialog show(android.content.Context,java.lang.CharSequence,java.lang.CharSequence,boolean,boolean)
 com.umeng.analytics.Gender
 com.umeng.analytics.MobclickAgent:
     public MobclickAgent()

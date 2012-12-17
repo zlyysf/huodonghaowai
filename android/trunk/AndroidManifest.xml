@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lingzhimobile.tongqu"
+    package="com.lingzhimobile.huodonghaowai"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -12,10 +12,10 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <permission
-        android:name="com.lingzhimobile.tongqu.permission.C2D_MESSAGE"
+        android:name="com.lingzhimobile.huodonghaowai.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.lingzhimobile.tongqu.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.lingzhimobile.huodonghaowai.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
@@ -158,13 +158,13 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-                <category android:name="com.lingzhimobile.tongqu" />
+                <category android:name="com.lingzhimobile.huodonghaowai" />
             </intent-filter>
             <!-- Receive registration ids -->
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <category android:name="com.lingzhimobile.tongqu" />
+                <category android:name="com.lingzhimobile.huodonghaowai" />
             </intent-filter>
         </receiver>
 
@@ -179,7 +179,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.Share"
+            android:name="com.lingzhimobile.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Sharele.huodonghaowai.activity.Share"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>

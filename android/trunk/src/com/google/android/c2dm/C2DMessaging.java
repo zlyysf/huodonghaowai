@@ -22,8 +22,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import com.lingzhimobile.tongqu.log.LogTag;
-import com.lingzhimobile.tongqu.log.LogUtils;
+import com.lingzhimobile.huodonghaowai.log.LogTag;
+import com.lingzhimobile.huodonghaowai.log.LogUtils;
 
 /**
  * Utilities for device registration.

@@ -42,7 +42,7 @@
    public <init>(org.json.JSONObject);
 }
 
--keep public class com.lingzhimobile.tongqu.R$*{
+-keep public class com.lingzhimobile.huodonghaowai.R$*{
     public static final int *;
 }
 

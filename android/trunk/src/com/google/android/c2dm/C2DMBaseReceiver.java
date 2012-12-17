@@ -25,8 +25,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
 
-import com.lingzhimobile.tongqu.log.LogTag;
-import com.lingzhimobile.tongqu.log.LogUtils;
+import com.lingzhimobile.huodonghaowai.log.LogTag;
+import com.lingzhimobile.huodonghaowai.log.LogUtils;
 
 /**
  * Base class for C2D message receiver. Includes constants for the
@@ -140,7 +140,7 @@ public abstract class C2DMBaseReceiver extends IntentService {
        
         // Use a naming convention, similar with how permissions and intents are 
         // used. Alternatives are introspection or an ugly use of statics. 
-        String receiver = "com.lingzhimobile.tongqu.push.C2DMReceiver";
+        String receiver = "com.lingzhimobile.huodonghaowai.push.C2DMReceiver";
         intent.setClassName(context, receiver);
         
         context.startService(intent);

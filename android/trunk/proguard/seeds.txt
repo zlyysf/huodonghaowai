@@ -2499,785 +2499,785 @@ com.google.android.c2dm.C2DMBaseReceiver
 com.google.android.c2dm.C2DMBaseReceiver: C2DMBaseReceiver(java.lang.String)
 com.google.android.c2dm.C2DMBroadcastReceiver
 com.google.android.c2dm.C2DMBroadcastReceiver: C2DMBroadcastReceiver()
-com.lingzhimobile.tongqu.R$anim
-com.lingzhimobile.tongqu.R$anim: int push_left_in
-com.lingzhimobile.tongqu.R$anim: int push_left_out
-com.lingzhimobile.tongqu.R$anim: int push_right_in
-com.lingzhimobile.tongqu.R$anim: int push_right_out
-com.lingzhimobile.tongqu.R$anim: int refreshing
-com.lingzhimobile.tongqu.R$anim: int slide_in_from_bottom
-com.lingzhimobile.tongqu.R$anim: int slide_in_from_top
-com.lingzhimobile.tongqu.R$anim: int slide_out_to_bottom
-com.lingzhimobile.tongqu.R$anim: int slide_out_to_top
-com.lingzhimobile.tongqu.R$array
-com.lingzhimobile.tongqu.R$array: int blood_type_values
-com.lingzhimobile.tongqu.R$array: int constellation_values
-com.lingzhimobile.tongqu.R$array: int day_values_28
-com.lingzhimobile.tongqu.R$array: int day_values_29
-com.lingzhimobile.tongqu.R$array: int day_values_30
-com.lingzhimobile.tongqu.R$array: int day_values_31
-com.lingzhimobile.tongqu.R$array: int edu_status_values
-com.lingzhimobile.tongqu.R$array: int hour_values
-com.lingzhimobile.tongqu.R$array: int minute_values
-com.lingzhimobile.tongqu.R$array: int month_values
-com.lingzhimobile.tongqu.R$array: int month_values_en
-com.lingzhimobile.tongqu.R$array: int school_values
-com.lingzhimobile.tongqu.R$attr
-com.lingzhimobile.tongqu.R$attr: int ptrAdapterViewBackground
-com.lingzhimobile.tongqu.R$attr: int ptrDrawable
-com.lingzhimobile.tongqu.R$attr: int ptrHeaderBackground
-com.lingzhimobile.tongqu.R$attr: int ptrHeaderSubTextColor
-com.lingzhimobile.tongqu.R$attr: int ptrHeaderTextColor
-com.lingzhimobile.tongqu.R$attr: int ptrMode
-com.lingzhimobile.tongqu.R$attr: int ptrShowIndicator
-com.lingzhimobile.tongqu.R$attr: int sidebuffer
-com.lingzhimobile.tongqu.R$color
-com.lingzhimobile.tongqu.R$color: int black
-com.lingzhimobile.tongqu.R$color: int color_radiobutton
-com.lingzhimobile.tongqu.R$color: int dialog_title_blue
-com.lingzhimobile.tongqu.R$color: int font_blue
-com.lingzhimobile.tongqu.R$color: int font_gray
-com.lingzhimobile.tongqu.R$color: int gray
-com.lingzhimobile.tongqu.R$color: int green
-com.lingzhimobile.tongqu.R$color: int half_translucent_black
-com.lingzhimobile.tongqu.R$color: int half_translucent_white
-com.lingzhimobile.tongqu.R$color: int half_transparent
-com.lingzhimobile.tongqu.R$color: int half_transparent_7
-com.lingzhimobile.tongqu.R$color: int light_gray
-com.lingzhimobile.tongqu.R$color: int light_pink_bg
-com.lingzhimobile.tongqu.R$color: int line_gray
-com.lingzhimobile.tongqu.R$color: int orange
-com.lingzhimobile.tongqu.R$color: int pink
-com.lingzhimobile.tongqu.R$color: int pink_bg
-com.lingzhimobile.tongqu.R$color: int text_num_gray
-com.lingzhimobile.tongqu.R$color: int time_gray
-com.lingzhimobile.tongqu.R$color: int title_click
-com.lingzhimobile.tongqu.R$color: int translucent_7_gray
-com.lingzhimobile.tongqu.R$color: int transparent
-com.lingzhimobile.tongqu.R$color: int white
-com.lingzhimobile.tongqu.R$dimen
-com.lingzhimobile.tongqu.R$dimen: int dialog_bottom_margin
-com.lingzhimobile.tongqu.R$dimen: int dialog_btn_close_right_margin
-com.lingzhimobile.tongqu.R$dimen: int dialog_btn_close_top_margin
-com.lingzhimobile.tongqu.R$dimen: int dialog_left_margin
-com.lingzhimobile.tongqu.R$dimen: int dialog_right_margin
-com.lingzhimobile.tongqu.R$dimen: int dialog_title_height
-com.lingzhimobile.tongqu.R$dimen: int dialog_title_logo_left_margin
-com.lingzhimobile.tongqu.R$dimen: int dialog_top_margin
-com.lingzhimobile.tongqu.R$dimen: int indicator_corner_radius
-com.lingzhimobile.tongqu.R$dimen: int indicator_internal_padding
-com.lingzhimobile.tongqu.R$dimen: int indicator_right_padding
-com.lingzhimobile.tongqu.R$drawable
-com.lingzhimobile.tongqu.R$drawable: int alert_dialog_bg
-com.lingzhimobile.tongqu.R$drawable: int alert_refresh
-com.lingzhimobile.tongqu.R$drawable: int alertdialog_corners_stroken
-com.lingzhimobile.tongqu.R$drawable: int app_icon
-com.lingzhimobile.tongqu.R$drawable: int arrow_down
-com.lingzhimobile.tongqu.R$drawable: int arrow_expanding
-com.lingzhimobile.tongqu.R$drawable: int arrow_hide
-com.lingzhimobile.tongqu.R$drawable: int arrow_left
-com.lingzhimobile.tongqu.R$drawable: int arrow_left_bg
-com.lingzhimobile.tongqu.R$drawable: int arrow_left_click
-com.lingzhimobile.tongqu.R$drawable: int arrow_right
-com.lingzhimobile.tongqu.R$drawable: int arrow_up
-com.lingzhimobile.tongqu.R$drawable: int askinfo_female_bg
-com.lingzhimobile.tongqu.R$drawable: int askinfo_female_bg_selected
-com.lingzhimobile.tongqu.R$drawable: int askinfo_male_bg
-com.lingzhimobile.tongqu.R$drawable: int askinfo_male_bg_selected
-com.lingzhimobile.tongqu.R$drawable: int back_button
-com.lingzhimobile.tongqu.R$drawable: int back_button_clicked
-com.lingzhimobile.tongqu.R$drawable: int bg_btn
-com.lingzhimobile.tongqu.R$drawable: int bg_content
-com.lingzhimobile.tongqu.R$drawable: int bg_delwords
-com.lingzhimobile.tongqu.R$drawable: int bg_delwords_nor
-com.lingzhimobile.tongqu.R$drawable: int bg_delwords_sel
-com.lingzhimobile.tongqu.R$drawable: int bg_title
-com.lingzhimobile.tongqu.R$drawable: int block_icon
-com.lingzhimobile.tongqu.R$drawable: int border
-com.lingzhimobile.tongqu.R$drawable: int bottom_bar
-com.lingzhimobile.tongqu.R$drawable: int bottombar_item
-com.lingzhimobile.tongqu.R$drawable: int bottombar_left
-com.lingzhimobile.tongqu.R$drawable: int bottombar_middle
-com.lingzhimobile.tongqu.R$drawable: int bottombar_right
-com.lingzhimobile.tongqu.R$drawable: int btn_back_bg
-com.lingzhimobile.tongqu.R$drawable: int btn_check_off
-com.lingzhimobile.tongqu.R$drawable: int btn_check_on
-com.lingzhimobile.tongqu.R$drawable: int btn_login_bg
-com.lingzhimobile.tongqu.R$drawable: int btn_signup_bg
-com.lingzhimobile.tongqu.R$drawable: int camera
-com.lingzhimobile.tongqu.R$drawable: int cancel
-com.lingzhimobile.tongqu.R$drawable: int chat_grey
-com.lingzhimobile.tongqu.R$drawable: int chat_yellow
-com.lingzhimobile.tongqu.R$drawable: int checkbox_selector
-com.lingzhimobile.tongqu.R$drawable: int close_normal
-com.lingzhimobile.tongqu.R$drawable: int close_press
-com.lingzhimobile.tongqu.R$drawable: int close_selector
-com.lingzhimobile.tongqu.R$drawable: int commit
-com.lingzhimobile.tongqu.R$drawable: int corners_bg
-com.lingzhimobile.tongqu.R$drawable: int corners_gray
-com.lingzhimobile.tongqu.R$drawable: int corners_pink
-com.lingzhimobile.tongqu.R$drawable: int corners_stroke_gray
-com.lingzhimobile.tongqu.R$drawable: int corners_stroke_pink
-com.lingzhimobile.tongqu.R$drawable: int date_chat_box
-com.lingzhimobile.tongqu.R$drawable: int date_edit_background
-com.lingzhimobile.tongqu.R$drawable: int date_filter_left
-com.lingzhimobile.tongqu.R$drawable: int date_filter_left_clicked
-com.lingzhimobile.tongqu.R$drawable: int date_filter_middle
-com.lingzhimobile.tongqu.R$drawable: int date_filter_middle_clicked
-com.lingzhimobile.tongqu.R$drawable: int date_filter_right
-com.lingzhimobile.tongqu.R$drawable: int date_filter_right_clicked
-com.lingzhimobile.tongqu.R$drawable: int date_list_icon
-com.lingzhimobile.tongqu.R$drawable: int date_list_icon_clciked
-com.lingzhimobile.tongqu.R$drawable: int date_pre_bg1
-com.lingzhimobile.tongqu.R$drawable: int date_pre_bg10
-com.lingzhimobile.tongqu.R$drawable: int date_pre_bg2
-com.lingzhimobile.tongqu.R$drawable: int date_pre_bg3
-com.lingzhimobile.tongqu.R$drawable: int date_pre_bg4
-com.lingzhimobile.tongqu.R$drawable: int date_pre_bg5
-com.lingzhimobile.tongqu.R$drawable: int date_pre_bg6
-com.lingzhimobile.tongqu.R$drawable: int date_pre_bg7
-com.lingzhimobile.tongqu.R$drawable: int date_pre_bg8
-com.lingzhimobile.tongqu.R$drawable: int date_pre_bg9
-com.lingzhimobile.tongqu.R$drawable: int date_time_bg
-com.lingzhimobile.tongqu.R$drawable: int date_time_bg_click
-com.lingzhimobile.tongqu.R$drawable: int datetitlelistitembg
-com.lingzhimobile.tongqu.R$drawable: int default_ptr_drawable
-com.lingzhimobile.tongqu.R$drawable: int del_pic
-com.lingzhimobile.tongqu.R$drawable: int dialog_bg
-com.lingzhimobile.tongqu.R$drawable: int dota
-com.lingzhimobile.tongqu.R$drawable: int edittextbg
-com.lingzhimobile.tongqu.R$drawable: int facebook
-com.lingzhimobile.tongqu.R$drawable: int female
-com.lingzhimobile.tongqu.R$drawable: int filter_bottom_bg
-com.lingzhimobile.tongqu.R$drawable: int filter_hide
-com.lingzhimobile.tongqu.R$drawable: int filter_left
-com.lingzhimobile.tongqu.R$drawable: int filter_left_clicked
-com.lingzhimobile.tongqu.R$drawable: int filter_middle
-com.lingzhimobile.tongqu.R$drawable: int filter_middle_clicked
-com.lingzhimobile.tongqu.R$drawable: int filter_right
-com.lingzhimobile.tongqu.R$drawable: int filter_right_clicked
-com.lingzhimobile.tongqu.R$drawable: int filter_show
-com.lingzhimobile.tongqu.R$drawable: int follow_button_click
-com.lingzhimobile.tongqu.R$drawable: int follow_button_normal
-com.lingzhimobile.tongqu.R$drawable: int following_button
-com.lingzhimobile.tongqu.R$drawable: int gender_female
-com.lingzhimobile.tongqu.R$drawable: int gender_male
-com.lingzhimobile.tongqu.R$drawable: int help1
-com.lingzhimobile.tongqu.R$drawable: int help2
-com.lingzhimobile.tongqu.R$drawable: int help3
-com.lingzhimobile.tongqu.R$drawable: int help4
-com.lingzhimobile.tongqu.R$drawable: int helpview
-com.lingzhimobile.tongqu.R$drawable: int ic_pulltorefresh_arrow
-com.lingzhimobile.tongqu.R$drawable: int icon
-com.lingzhimobile.tongqu.R$drawable: int icon_delwords
-com.lingzhimobile.tongqu.R$drawable: int icon_heart
-com.lingzhimobile.tongqu.R$drawable: int icon_heart_click
-com.lingzhimobile.tongqu.R$drawable: int icon_hide
-com.lingzhimobile.tongqu.R$drawable: int icon_show
-com.lingzhimobile.tongqu.R$drawable: int image_background
-com.lingzhimobile.tongqu.R$drawable: int indicator_bg_bottom
-com.lingzhimobile.tongqu.R$drawable: int indicator_bg_top
-com.lingzhimobile.tongqu.R$drawable: int item_first_normal
-com.lingzhimobile.tongqu.R$drawable: int item_last_normal
-com.lingzhimobile.tongqu.R$drawable: int item_middle_normal
-com.lingzhimobile.tongqu.R$drawable: int item_single_normal
-com.lingzhimobile.tongqu.R$drawable: int item_single_pressed
-com.lingzhimobile.tongqu.R$drawable: int like_icon
-com.lingzhimobile.tongqu.R$drawable: int loading
-com.lingzhimobile.tongqu.R$drawable: int male
-com.lingzhimobile.tongqu.R$drawable: int male_clicked
-com.lingzhimobile.tongqu.R$drawable: int male_icon
-com.lingzhimobile.tongqu.R$drawable: int nearby_date_icon
-com.lingzhimobile.tongqu.R$drawable: int nearby_date_icon_clicked
-com.lingzhimobile.tongqu.R$drawable: int none
-com.lingzhimobile.tongqu.R$drawable: int notification_logo
-com.lingzhimobile.tongqu.R$drawable: int photo_icon
-com.lingzhimobile.tongqu.R$drawable: int point_normal
-com.lingzhimobile.tongqu.R$drawable: int point_orange
-com.lingzhimobile.tongqu.R$drawable: int profile_icon
-com.lingzhimobile.tongqu.R$drawable: int profile_icon_clicked
-com.lingzhimobile.tongqu.R$drawable: int profile_photo
-com.lingzhimobile.tongqu.R$drawable: int publish_icon
-com.lingzhimobile.tongqu.R$drawable: int publish_icon_clicked
-com.lingzhimobile.tongqu.R$drawable: int rb_askinfo_female
-com.lingzhimobile.tongqu.R$drawable: int rb_askinfo_male
-com.lingzhimobile.tongqu.R$drawable: int rb_date_filter_left
-com.lingzhimobile.tongqu.R$drawable: int rb_date_filter_middle
-com.lingzhimobile.tongqu.R$drawable: int rb_date_filter_right
-com.lingzhimobile.tongqu.R$drawable: int rb_my_dates
-com.lingzhimobile.tongqu.R$drawable: int rb_nearby_date
-com.lingzhimobile.tongqu.R$drawable: int rb_profile
-com.lingzhimobile.tongqu.R$drawable: int rb_publish_date
-com.lingzhimobile.tongqu.R$drawable: int rb_treat_filter_left
-com.lingzhimobile.tongqu.R$drawable: int rb_treat_filter_middle
-com.lingzhimobile.tongqu.R$drawable: int rb_treat_filter_right
-com.lingzhimobile.tongqu.R$drawable: int refresh
-com.lingzhimobile.tongqu.R$drawable: int reply
-com.lingzhimobile.tongqu.R$drawable: int select_date_time
-com.lingzhimobile.tongqu.R$drawable: int selectdateitembg
-com.lingzhimobile.tongqu.R$drawable: int sign_in_button
-com.lingzhimobile.tongqu.R$drawable: int sign_in_button_clicked
-com.lingzhimobile.tongqu.R$drawable: int sign_in_disable
-com.lingzhimobile.tongqu.R$drawable: int sign_up
-com.lingzhimobile.tongqu.R$drawable: int sign_up_clicked
-com.lingzhimobile.tongqu.R$drawable: int single_bottom_bg
-com.lingzhimobile.tongqu.R$drawable: int singleitemselector
-com.lingzhimobile.tongqu.R$drawable: int tab_selected
-com.lingzhimobile.tongqu.R$drawable: int title_logo
-com.lingzhimobile.tongqu.R$drawable: int top_bar
-com.lingzhimobile.tongqu.R$drawable: int upload_photo
-com.lingzhimobile.tongqu.R$drawable: int weibo_icon
-com.lingzhimobile.tongqu.R$drawable: int x_icon
-com.lingzhimobile.tongqu.R$id
-com.lingzhimobile.tongqu.R$id: int RadioButton01
-com.lingzhimobile.tongqu.R$id: int RadioButton02
-com.lingzhimobile.tongqu.R$id: int RadioButton03
-com.lingzhimobile.tongqu.R$id: int RadioButton04
-com.lingzhimobile.tongqu.R$id: int RadioGroup01
-com.lingzhimobile.tongqu.R$id: int bloodTypeTextView
-com.lingzhimobile.tongqu.R$id: int both
-com.lingzhimobile.tongqu.R$id: int bouncyRefreshViewApply
-com.lingzhimobile.tongqu.R$id: int bouncyRefreshViewInvited
-com.lingzhimobile.tongqu.R$id: int bouncyRefreshViewSend
-com.lingzhimobile.tongqu.R$id: int btnCancel
-com.lingzhimobile.tongqu.R$id: int btnClose
-com.lingzhimobile.tongqu.R$id: int btnConfirm
-com.lingzhimobile.tongqu.R$id: int btnEdit
-com.lingzhimobile.tongqu.R$id: int btnInvite
-com.lingzhimobile.tongqu.R$id: int btnLoadMore
-com.lingzhimobile.tongqu.R$id: int btnLogin
-com.lingzhimobile.tongqu.R$id: int btnMenu
-com.lingzhimobile.tongqu.R$id: int btnOk
-com.lingzhimobile.tongqu.R$id: int btnPreview
-com.lingzhimobile.tongqu.R$id: int btnReply
-com.lingzhimobile.tongqu.R$id: int btnSave
-com.lingzhimobile.tongqu.R$id: int btnSend
-com.lingzhimobile.tongqu.R$id: int btnSignup
-com.lingzhimobile.tongqu.R$id: int btnStart
-com.lingzhimobile.tongqu.R$id: int btnUpload
-com.lingzhimobile.tongqu.R$id: int btnWant
-com.lingzhimobile.tongqu.R$id: int cbFacebook
-com.lingzhimobile.tongqu.R$id: int cbLikes
-com.lingzhimobile.tongqu.R$id: int cbSinaWeibo
-com.lingzhimobile.tongqu.R$id: int chathistoryListView
-com.lingzhimobile.tongqu.R$id: int constellationTextView
-com.lingzhimobile.tongqu.R$id: int container
-com.lingzhimobile.tongqu.R$id: int dateTitleEditText
-com.lingzhimobile.tongqu.R$id: int dayListView
-com.lingzhimobile.tongqu.R$id: int departmentEditText
-com.lingzhimobile.tongqu.R$id: int descriptionEditText
-com.lingzhimobile.tongqu.R$id: int destination
-com.lingzhimobile.tongqu.R$id: int detailPlanEditText
-com.lingzhimobile.tongqu.R$id: int editText1
-com.lingzhimobile.tongqu.R$id: int eduStatusTextView
-com.lingzhimobile.tongqu.R$id: int emailEditText
-com.lingzhimobile.tongqu.R$id: int enterButton
-com.lingzhimobile.tongqu.R$id: int etEdit
-com.lingzhimobile.tongqu.R$id: int etMessage
-com.lingzhimobile.tongqu.R$id: int existPersonCountEditText
-com.lingzhimobile.tongqu.R$id: int femaleButton
-com.lingzhimobile.tongqu.R$id: int filter12
-com.lingzhimobile.tongqu.R$id: int filter14
-com.lingzhimobile.tongqu.R$id: int filter16
-com.lingzhimobile.tongqu.R$id: int filter4
-com.lingzhimobile.tongqu.R$id: int filter6
-com.lingzhimobile.tongqu.R$id: int filter9
-com.lingzhimobile.tongqu.R$id: int filter_black_white
-com.lingzhimobile.tongqu.R$id: int flPic
-com.lingzhimobile.tongqu.R$id: int fragment01
-com.lingzhimobile.tongqu.R$id: int gridview
-com.lingzhimobile.tongqu.R$id: int head_arrowImageView
-com.lingzhimobile.tongqu.R$id: int head_contentLayout
-com.lingzhimobile.tongqu.R$id: int head_lastUpdatedTextView
-com.lingzhimobile.tongqu.R$id: int head_progressBar
-com.lingzhimobile.tongqu.R$id: int head_tipsTextView
-com.lingzhimobile.tongqu.R$id: int heightEditText
-com.lingzhimobile.tongqu.R$id: int homeTownEditText
-com.lingzhimobile.tongqu.R$id: int hometownEditText
-com.lingzhimobile.tongqu.R$id: int horizontalScrollView
-com.lingzhimobile.tongqu.R$id: int hourListView
-com.lingzhimobile.tongqu.R$id: int invitationEditText
-com.lingzhimobile.tongqu.R$id: int ivBack
-com.lingzhimobile.tongqu.R$id: int ivCancel
-com.lingzhimobile.tongqu.R$id: int ivCommit
-com.lingzhimobile.tongqu.R$id: int ivDatePhoto
-com.lingzhimobile.tongqu.R$id: int ivDelPic
-com.lingzhimobile.tongqu.R$id: int ivEditUserPhoto
-com.lingzhimobile.tongqu.R$id: int ivFilter
-com.lingzhimobile.tongqu.R$id: int ivHelpView
-com.lingzhimobile.tongqu.R$id: int ivImage
-com.lingzhimobile.tongqu.R$id: int ivLikeIcon
-com.lingzhimobile.tongqu.R$id: int ivNavigation
-com.lingzhimobile.tongqu.R$id: int ivPickPhoto
-com.lingzhimobile.tongqu.R$id: int ivPreDatePhoto
-com.lingzhimobile.tongqu.R$id: int ivReply
-com.lingzhimobile.tongqu.R$id: int ivUnreadMessage
-com.lingzhimobile.tongqu.R$id: int ivUploadPhoto
-com.lingzhimobile.tongqu.R$id: int ivUserGender
-com.lingzhimobile.tongqu.R$id: int ivUserProfilePhoto
-com.lingzhimobile.tongqu.R$id: int ivUserProfilePhotoLL
-com.lingzhimobile.tongqu.R$id: int linearLayout1
-com.lingzhimobile.tongqu.R$id: int llDateChat
-com.lingzhimobile.tongqu.R$id: int llDateMessageItem
-com.lingzhimobile.tongqu.R$id: int llFacebook
-com.lingzhimobile.tongqu.R$id: int llForgotPassword
-com.lingzhimobile.tongqu.R$id: int llImage
-com.lingzhimobile.tongqu.R$id: int llLeftChatItem
-com.lingzhimobile.tongqu.R$id: int llLogout
-com.lingzhimobile.tongqu.R$id: int llNotifyDialog
-com.lingzhimobile.tongqu.R$id: int llPagePoint
-com.lingzhimobile.tongqu.R$id: int llPickPhoto
-com.lingzhimobile.tongqu.R$id: int llPostto
-com.lingzhimobile.tongqu.R$id: int llProfileHeaderView
-com.lingzhimobile.tongqu.R$id: int llRightChatItem
-com.lingzhimobile.tongqu.R$id: int llSinaWeibo
-com.lingzhimobile.tongqu.R$id: int llViewsContainer
-com.lingzhimobile.tongqu.R$id: int llWeibo
-com.lingzhimobile.tongqu.R$id: int ll_text_limit_unit
-com.lingzhimobile.tongqu.R$id: int lllocation
-com.lingzhimobile.tongqu.R$id: int localEditText
-com.lingzhimobile.tongqu.R$id: int lvConversations
-com.lingzhimobile.tongqu.R$id: int lvDateRespondersList
-com.lingzhimobile.tongqu.R$id: int lvDateTitleList
-com.lingzhimobile.tongqu.R$id: int lvNearbyDate
-com.lingzhimobile.tongqu.R$id: int maleButton
-com.lingzhimobile.tongqu.R$id: int message
-com.lingzhimobile.tongqu.R$id: int monthListView
-com.lingzhimobile.tongqu.R$id: int nameEditText
-com.lingzhimobile.tongqu.R$id: int nameTextView
-com.lingzhimobile.tongqu.R$id: int nearbyheaderview
-com.lingzhimobile.tongqu.R$id: int numberTextView
-com.lingzhimobile.tongqu.R$id: int passwordEditText
-com.lingzhimobile.tongqu.R$id: int pbLoadImage
-com.lingzhimobile.tongqu.R$id: int progress
-com.lingzhimobile.tongqu.R$id: int progressBar1
-com.lingzhimobile.tongqu.R$id: int pullDownFromTop
-com.lingzhimobile.tongqu.R$id: int pullUpFromBottom
-com.lingzhimobile.tongqu.R$id: int rbAA
-com.lingzhimobile.tongqu.R$id: int rbDateFilterLeft
-com.lingzhimobile.tongqu.R$id: int rbDateFilterMiddle
-com.lingzhimobile.tongqu.R$id: int rbDateFilterRight
-com.lingzhimobile.tongqu.R$id: int rbMyTreat
-com.lingzhimobile.tongqu.R$id: int rbNone
-com.lingzhimobile.tongqu.R$id: int reset
-com.lingzhimobile.tongqu.R$id: int rlBottombar
-com.lingzhimobile.tongqu.R$id: int rlDatePreview
-com.lingzhimobile.tongqu.R$id: int rlEditDate
-com.lingzhimobile.tongqu.R$id: int rlEditProfile
-com.lingzhimobile.tongqu.R$id: int rlHeaderPhoto
-com.lingzhimobile.tongqu.R$id: int rlTitle
-com.lingzhimobile.tongqu.R$id: int rlTotal
-com.lingzhimobile.tongqu.R$id: int rlViewProfile
-com.lingzhimobile.tongqu.R$id: int schoolTextView
-com.lingzhimobile.tongqu.R$id: int scrollView1
-com.lingzhimobile.tongqu.R$id: int sendButton
-com.lingzhimobile.tongqu.R$id: int stuNOEditText
-com.lingzhimobile.tongqu.R$id: int timeTextView
-com.lingzhimobile.tongqu.R$id: int tvAddPersonNum
-com.lingzhimobile.tongqu.R$id: int tvAlertString
-com.lingzhimobile.tongqu.R$id: int tvApplyPersonNum
-com.lingzhimobile.tongqu.R$id: int tvCancel
-com.lingzhimobile.tongqu.R$id: int tvCurrentDate
-com.lingzhimobile.tongqu.R$id: int tvDateBodyInfo
-com.lingzhimobile.tongqu.R$id: int tvDateLocationInfo
-com.lingzhimobile.tongqu.R$id: int tvDatePersonNum
-com.lingzhimobile.tongqu.R$id: int tvDatePhoto
-com.lingzhimobile.tongqu.R$id: int tvDateTimeInfo
-com.lingzhimobile.tongqu.R$id: int tvDateTitle
-com.lingzhimobile.tongqu.R$id: int tvDateWhoPay
-com.lingzhimobile.tongqu.R$id: int tvFilter1
-com.lingzhimobile.tongqu.R$id: int tvFilter2
-com.lingzhimobile.tongqu.R$id: int tvFilter3
-com.lingzhimobile.tongqu.R$id: int tvHeaderPhoto
-com.lingzhimobile.tongqu.R$id: int tvLastestMessage
-com.lingzhimobile.tongqu.R$id: int tvLeftChatItem
-com.lingzhimobile.tongqu.R$id: int tvLikerCount
-com.lingzhimobile.tongqu.R$id: int tvNewDate
-com.lingzhimobile.tongqu.R$id: int tvNotifyText
-com.lingzhimobile.tongqu.R$id: int tvPhotoIndex
-com.lingzhimobile.tongqu.R$id: int tvProfileUserDescription
-com.lingzhimobile.tongqu.R$id: int tvProfileUserEdu
-com.lingzhimobile.tongqu.R$id: int tvProfileUserName
-com.lingzhimobile.tongqu.R$id: int tvProfileUserPhotoCount
-com.lingzhimobile.tongqu.R$id: int tvResponderType
-com.lingzhimobile.tongqu.R$id: int tvRightChatItem
-com.lingzhimobile.tongqu.R$id: int tvSubjectType
-com.lingzhimobile.tongqu.R$id: int tvTextNum
-com.lingzhimobile.tongqu.R$id: int tvTimeLine
-com.lingzhimobile.tongqu.R$id: int tvTitle
-com.lingzhimobile.tongqu.R$id: int tvToast
-com.lingzhimobile.tongqu.R$id: int tvTreat
-com.lingzhimobile.tongqu.R$id: int tvUserBasicInfo
-com.lingzhimobile.tongqu.R$id: int tvUserDescription
-com.lingzhimobile.tongqu.R$id: int tvUserEduInfo
-com.lingzhimobile.tongqu.R$id: int tvUserLikeCount
-com.lingzhimobile.tongqu.R$id: int tvUserMessage
-com.lingzhimobile.tongqu.R$id: int tvUserMessageTime
-com.lingzhimobile.tongqu.R$id: int tvUserName
-com.lingzhimobile.tongqu.R$id: int tv_text_limit
-com.lingzhimobile.tongqu.R$id: int umeng_common_app
-com.lingzhimobile.tongqu.R$id: int umeng_common_appIcon
-com.lingzhimobile.tongqu.R$id: int umeng_common_description
-com.lingzhimobile.tongqu.R$id: int umeng_common_notification
-com.lingzhimobile.tongqu.R$id: int umeng_common_progress_bar
-com.lingzhimobile.tongqu.R$id: int umeng_common_progress_text
-com.lingzhimobile.tongqu.R$id: int umeng_common_title
-com.lingzhimobile.tongqu.R$id: int viewflow
-com.lingzhimobile.tongqu.R$id: int vpHelpView
-com.lingzhimobile.tongqu.R$id: int vpNearbyDate
-com.lingzhimobile.tongqu.R$id: int vpSinglePhoto
-com.lingzhimobile.tongqu.R$id: int wantPersonCountEditText
-com.lingzhimobile.tongqu.R$id: int waterfall_container
-com.lingzhimobile.tongqu.R$id: int webview
-com.lingzhimobile.tongqu.R$layout
-com.lingzhimobile.tongqu.R$layout: int askinfo
-com.lingzhimobile.tongqu.R$layout: int chat_detail_item
-com.lingzhimobile.tongqu.R$layout: int conversationitem
-com.lingzhimobile.tongqu.R$layout: int conversations
-com.lingzhimobile.tongqu.R$layout: int datechat
-com.lingzhimobile.tongqu.R$layout: int datefilterdialog
-com.lingzhimobile.tongqu.R$layout: int datelistitem
-com.lingzhimobile.tongqu.R$layout: int datelistitemsend
-com.lingzhimobile.tongqu.R$layout: int datelistuseritem
-com.lingzhimobile.tongqu.R$layout: int datepicker
-com.lingzhimobile.tongqu.R$layout: int dateresponders
-com.lingzhimobile.tongqu.R$layout: int daterespondersitem
-com.lingzhimobile.tongqu.R$layout: int dateresponderstype
-com.lingzhimobile.tongqu.R$layout: int datetitlelist
-com.lingzhimobile.tongqu.R$layout: int datetitlelistitem
-com.lingzhimobile.tongqu.R$layout: int detaildate
-com.lingzhimobile.tongqu.R$layout: int errtoast
-com.lingzhimobile.tongqu.R$layout: int facebookoption
-com.lingzhimobile.tongqu.R$layout: int fragment
-com.lingzhimobile.tongqu.R$layout: int helpview
-com.lingzhimobile.tongqu.R$layout: int helpviewitem
-com.lingzhimobile.tongqu.R$layout: int loadmoreview
-com.lingzhimobile.tongqu.R$layout: int login
-com.lingzhimobile.tongqu.R$layout: int main
-com.lingzhimobile.tongqu.R$layout: int message
-com.lingzhimobile.tongqu.R$layout: int mylistview_head
-com.lingzhimobile.tongqu.R$layout: int nearby
-com.lingzhimobile.tongqu.R$layout: int nearby_date_item
-com.lingzhimobile.tongqu.R$layout: int nearbydatelist
-com.lingzhimobile.tongqu.R$layout: int nearbydatelistitem
-com.lingzhimobile.tongqu.R$layout: int notifydialog
-com.lingzhimobile.tongqu.R$layout: int numberitem
-com.lingzhimobile.tongqu.R$layout: int prelogin
-com.lingzhimobile.tongqu.R$layout: int prelogin_date_item
-com.lingzhimobile.tongqu.R$layout: int profile
-com.lingzhimobile.tongqu.R$layout: int profile_body
-com.lingzhimobile.tongqu.R$layout: int profileheaderview
-com.lingzhimobile.tongqu.R$layout: int progress_dialog
-com.lingzhimobile.tongqu.R$layout: int proposedate
-com.lingzhimobile.tongqu.R$layout: int respondersgalleryitem
-com.lingzhimobile.tongqu.R$layout: int selectdatedialog
-com.lingzhimobile.tongqu.R$layout: int setting
-com.lingzhimobile.tongqu.R$layout: int share
-com.lingzhimobile.tongqu.R$layout: int share_mblog_view
-com.lingzhimobile.tongqu.R$layout: int singlephoto
-com.lingzhimobile.tongqu.R$layout: int spendcreditsdialog
-com.lingzhimobile.tongqu.R$layout: int splash
-com.lingzhimobile.tongqu.R$layout: int umeng_common_download_notification
-com.lingzhimobile.tongqu.R$layout: int uploadphoto
-com.lingzhimobile.tongqu.R$layout: int wantin
-com.lingzhimobile.tongqu.R$string
-com.lingzhimobile.tongqu.R$string: int Account
-com.lingzhimobile.tongqu.R$string: int Adress
-com.lingzhimobile.tongqu.R$string: int Cancel
-com.lingzhimobile.tongqu.R$string: int Conversations
-com.lingzhimobile.tongqu.R$string: int Gallery
-com.lingzhimobile.tongqu.R$string: int Nearby
-com.lingzhimobile.tongqu.R$string: int OK
-com.lingzhimobile.tongqu.R$string: int Profile
-com.lingzhimobile.tongqu.R$string: int Subject
-com.lingzhimobile.tongqu.R$string: int Time
-com.lingzhimobile.tongqu.R$string: int Treat
-com.lingzhimobile.tongqu.R$string: int UMAppUpdate
-com.lingzhimobile.tongqu.R$string: int UMBreak_Network
-com.lingzhimobile.tongqu.R$string: int UMDialog_InstallAPK
-com.lingzhimobile.tongqu.R$string: int UMGprsCondition
-com.lingzhimobile.tongqu.R$string: int UMNewVersion
-com.lingzhimobile.tongqu.R$string: int UMNotNow
-com.lingzhimobile.tongqu.R$string: int UMToast_IsUpdating
-com.lingzhimobile.tongqu.R$string: int UMUpdateNow
-com.lingzhimobile.tongqu.R$string: int UMUpdateTitle
-com.lingzhimobile.tongqu.R$string: int aa
-com.lingzhimobile.tongqu.R$string: int announce_str
-com.lingzhimobile.tongqu.R$string: int app_name
-com.lingzhimobile.tongqu.R$string: int ask_details_plan
-com.lingzhimobile.tongqu.R$string: int askfor_date_describe
-com.lingzhimobile.tongqu.R$string: int askfor_date_photo
-com.lingzhimobile.tongqu.R$string: int askfor_first_photo
-com.lingzhimobile.tongqu.R$string: int attention
-com.lingzhimobile.tongqu.R$string: int back
-com.lingzhimobile.tongqu.R$string: int back_notify
-com.lingzhimobile.tongqu.R$string: int bloodtype
-com.lingzhimobile.tongqu.R$string: int camera
-com.lingzhimobile.tongqu.R$string: int cancel
-com.lingzhimobile.tongqu.R$string: int cancel_add
-com.lingzhimobile.tongqu.R$string: int cancel_date_alert
-com.lingzhimobile.tongqu.R$string: int change_setting
-com.lingzhimobile.tongqu.R$string: int close
-com.lingzhimobile.tongqu.R$string: int comment_alert
-com.lingzhimobile.tongqu.R$string: int comment_good
-com.lingzhimobile.tongqu.R$string: int comment_next_time
-com.lingzhimobile.tongqu.R$string: int confirm_add
-com.lingzhimobile.tongqu.R$string: int confirm_date_alert
-com.lingzhimobile.tongqu.R$string: int constellation
-com.lingzhimobile.tongqu.R$string: int d_day_ago
-com.lingzhimobile.tongqu.R$string: int d_hour_ago
-com.lingzhimobile.tongqu.R$string: int d_minute_ago
-com.lingzhimobile.tongqu.R$string: int d_mount_ago
-com.lingzhimobile.tongqu.R$string: int date_detail
-com.lingzhimobile.tongqu.R$string: int date_info
-com.lingzhimobile.tongqu.R$string: int date_responders
-com.lingzhimobile.tongqu.R$string: int date_title
-com.lingzhimobile.tongqu.R$string: int day_ago
-com.lingzhimobile.tongqu.R$string: int del_pic
-com.lingzhimobile.tongqu.R$string: int delete
-com.lingzhimobile.tongqu.R$string: int delete_all
-com.lingzhimobile.tongqu.R$string: int department
-com.lingzhimobile.tongqu.R$string: int description
-com.lingzhimobile.tongqu.R$string: int detail
-com.lingzhimobile.tongqu.R$string: int edit
-com.lingzhimobile.tongqu.R$string: int edit_profile_ok
-com.lingzhimobile.tongqu.R$string: int educationalStatus
-com.lingzhimobile.tongqu.R$string: int email
-com.lingzhimobile.tongqu.R$string: int email_wrong
-com.lingzhimobile.tongqu.R$string: int enter
-com.lingzhimobile.tongqu.R$string: int err21010
-com.lingzhimobile.tongqu.R$string: int err21020
-com.lingzhimobile.tongqu.R$string: int err21021
-com.lingzhimobile.tongqu.R$string: int err21022
-com.lingzhimobile.tongqu.R$string: int err21023
-com.lingzhimobile.tongqu.R$string: int err21024
-com.lingzhimobile.tongqu.R$string: int err21030
-com.lingzhimobile.tongqu.R$string: int err21040
-com.lingzhimobile.tongqu.R$string: int err21041
-com.lingzhimobile.tongqu.R$string: int err21042
-com.lingzhimobile.tongqu.R$string: int err21043
-com.lingzhimobile.tongqu.R$string: int err21044
-com.lingzhimobile.tongqu.R$string: int err21045
-com.lingzhimobile.tongqu.R$string: int err21050
-com.lingzhimobile.tongqu.R$string: int err21051
-com.lingzhimobile.tongqu.R$string: int err21060
-com.lingzhimobile.tongqu.R$string: int err21070
-com.lingzhimobile.tongqu.R$string: int err21071
-com.lingzhimobile.tongqu.R$string: int err21072
-com.lingzhimobile.tongqu.R$string: int err21082
-com.lingzhimobile.tongqu.R$string: int err21083
-com.lingzhimobile.tongqu.R$string: int err21087
-com.lingzhimobile.tongqu.R$string: int err21088
-com.lingzhimobile.tongqu.R$string: int err21210
-com.lingzhimobile.tongqu.R$string: int err21211
-com.lingzhimobile.tongqu.R$string: int err21212
-com.lingzhimobile.tongqu.R$string: int errMessage
-com.lingzhimobile.tongqu.R$string: int error_please_try_again_later
-com.lingzhimobile.tongqu.R$string: int failed_retreive_location_alert
-com.lingzhimobile.tongqu.R$string: int female
-com.lingzhimobile.tongqu.R$string: int firstNum
-com.lingzhimobile.tongqu.R$string: int firstNum_is_empty
-com.lingzhimobile.tongqu.R$string: int first_name
-com.lingzhimobile.tongqu.R$string: int forgotpassowrd
-com.lingzhimobile.tongqu.R$string: int free
-com.lingzhimobile.tongqu.R$string: int get_invite_code
-com.lingzhimobile.tongqu.R$string: int good_rate_count
-com.lingzhimobile.tongqu.R$string: int have_add
-com.lingzhimobile.tongqu.R$string: int have_apply
-com.lingzhimobile.tongqu.R$string: int headerphoto
-com.lingzhimobile.tongqu.R$string: int height
-com.lingzhimobile.tongqu.R$string: int hello
-com.lingzhimobile.tongqu.R$string: int helpstring2
-com.lingzhimobile.tongqu.R$string: int helpstring3
-com.lingzhimobile.tongqu.R$string: int hometown
-com.lingzhimobile.tongqu.R$string: int hour_ago
-com.lingzhimobile.tongqu.R$string: int i_want
-com.lingzhimobile.tongqu.R$string: int iam
-com.lingzhimobile.tongqu.R$string: int in_place
-com.lingzhimobile.tongqu.R$string: int invitation
-com.lingzhimobile.tongqu.R$string: int invite
-com.lingzhimobile.tongqu.R$string: int invite_code_empty
-com.lingzhimobile.tongqu.R$string: int last_update
-com.lingzhimobile.tongqu.R$string: int latest_activity
-com.lingzhimobile.tongqu.R$string: int likes
-com.lingzhimobile.tongqu.R$string: int loading
-com.lingzhimobile.tongqu.R$string: int loadmore
-com.lingzhimobile.tongqu.R$string: int location_is_empty
-com.lingzhimobile.tongqu.R$string: int login
-com.lingzhimobile.tongqu.R$string: int logout
-com.lingzhimobile.tongqu.R$string: int logout_alert
-com.lingzhimobile.tongqu.R$string: int logout_unlink
-com.lingzhimobile.tongqu.R$string: int male
-com.lingzhimobile.tongqu.R$string: int message
-com.lingzhimobile.tongqu.R$string: int minute_ago
-com.lingzhimobile.tongqu.R$string: int mount_ago
-com.lingzhimobile.tongqu.R$string: int my_dates
-com.lingzhimobile.tongqu.R$string: int my_profile
-com.lingzhimobile.tongqu.R$string: int my_treat
-com.lingzhimobile.tongqu.R$string: int name
-com.lingzhimobile.tongqu.R$string: int name_empty
-com.lingzhimobile.tongqu.R$string: int new_user
-com.lingzhimobile.tongqu.R$string: int no
-com.lingzhimobile.tongqu.R$string: int no_camera_prompt
-com.lingzhimobile.tongqu.R$string: int no_photo
-com.lingzhimobile.tongqu.R$string: int ok
-com.lingzhimobile.tongqu.R$string: int old_user
-com.lingzhimobile.tongqu.R$string: int password
-com.lingzhimobile.tongqu.R$string: int password_wrong
-com.lingzhimobile.tongqu.R$string: int personNum
-com.lingzhimobile.tongqu.R$string: int photo
-com.lingzhimobile.tongqu.R$string: int photo_destination
-com.lingzhimobile.tongqu.R$string: int photo_gallery
-com.lingzhimobile.tongqu.R$string: int please_choose
-com.lingzhimobile.tongqu.R$string: int please_login
-com.lingzhimobile.tongqu.R$string: int post_to
-com.lingzhimobile.tongqu.R$string: int preview
-com.lingzhimobile.tongqu.R$string: int profile_alert
-com.lingzhimobile.tongqu.R$string: int publish
-com.lingzhimobile.tongqu.R$string: int publish_date
-com.lingzhimobile.tongqu.R$string: int pull_to_load_earlier_pull_label
-com.lingzhimobile.tongqu.R$string: int pull_to_load_earlier_release_label
-com.lingzhimobile.tongqu.R$string: int pull_to_load_pull_label
-com.lingzhimobile.tongqu.R$string: int pull_to_load_release_label
-com.lingzhimobile.tongqu.R$string: int pull_to_refresh_pull_label
-com.lingzhimobile.tongqu.R$string: int pull_to_refresh_refreshing_label
-com.lingzhimobile.tongqu.R$string: int pull_to_refresh_release_label
-com.lingzhimobile.tongqu.R$string: int pull_up_to_load_pull_label
-com.lingzhimobile.tongqu.R$string: int rate
-com.lingzhimobile.tongqu.R$string: int rb_date_filter_left
-com.lingzhimobile.tongqu.R$string: int rb_date_filter_middle
-com.lingzhimobile.tongqu.R$string: int rb_date_filter_right
-com.lingzhimobile.tongqu.R$string: int receiver_confirmed
-com.lingzhimobile.tongqu.R$string: int recommend_date
-com.lingzhimobile.tongqu.R$string: int reply
-com.lingzhimobile.tongqu.R$string: int responses
-com.lingzhimobile.tongqu.R$string: int save
-com.lingzhimobile.tongqu.R$string: int sb_send_msg
-com.lingzhimobile.tongqu.R$string: int school
-com.lingzhimobile.tongqu.R$string: int school_empty
-com.lingzhimobile.tongqu.R$string: int send
-com.lingzhimobile.tongqu.R$string: int send_failed
-com.lingzhimobile.tongqu.R$string: int send_sucess
-com.lingzhimobile.tongqu.R$string: int set_profile_photo
-com.lingzhimobile.tongqu.R$string: int settings
-com.lingzhimobile.tongqu.R$string: int share
-com.lingzhimobile.tongqu.R$string: int share_dialog_title
-com.lingzhimobile.tongqu.R$string: int share_to_timeline
-com.lingzhimobile.tongqu.R$string: int share_weibo
-com.lingzhimobile.tongqu.R$string: int sharing_settings
-com.lingzhimobile.tongqu.R$string: int signup
-com.lingzhimobile.tongqu.R$string: int sina_weibo
-com.lingzhimobile.tongqu.R$string: int sms_content
-com.lingzhimobile.tongqu.R$string: int start_app
-com.lingzhimobile.tongqu.R$string: int studentNo
-com.lingzhimobile.tongqu.R$string: int tap_to_retry
-com.lingzhimobile.tongqu.R$string: int time_differentday_withminutes
-com.lingzhimobile.tongqu.R$string: int time_is_wrong
-com.lingzhimobile.tongqu.R$string: int time_proposedate
-com.lingzhimobile.tongqu.R$string: int time_sameday
-com.lingzhimobile.tongqu.R$string: int title_is_empty
-com.lingzhimobile.tongqu.R$string: int title_list
-com.lingzhimobile.tongqu.R$string: int upload
-com.lingzhimobile.tongqu.R$string: int upload_photo_alert
-com.lingzhimobile.tongqu.R$string: int upload_photo_earn_credit
-com.lingzhimobile.tongqu.R$string: int wantNum
-com.lingzhimobile.tongqu.R$string: int wantNum_is_empty
-com.lingzhimobile.tongqu.R$string: int welcome_str
-com.lingzhimobile.tongqu.R$string: int yes
-com.lingzhimobile.tongqu.R$style
-com.lingzhimobile.tongqu.R$style: int AlertDialog
-com.lingzhimobile.tongqu.R$style: int AnimationActivity
-com.lingzhimobile.tongqu.R$style: int AnimationActivity1
-com.lingzhimobile.tongqu.R$style: int AnimationFade
-com.lingzhimobile.tongqu.R$style: int ContentOverlay
-com.lingzhimobile.tongqu.R$style: int MyCheckBox
-com.lingzhimobile.tongqu.R$style: int ProgressDialog
-com.lingzhimobile.tongqu.R$style: int ThemeActivity
-com.lingzhimobile.tongqu.R$style: int ThemeActivity1
-com.lingzhimobile.tongqu.R$style: int radiobutton1
-com.lingzhimobile.tongqu.R$styleable
-com.lingzhimobile.tongqu.R$styleable: int PullToRefresh_ptrAdapterViewBackground
-com.lingzhimobile.tongqu.R$styleable: int PullToRefresh_ptrDrawable
-com.lingzhimobile.tongqu.R$styleable: int PullToRefresh_ptrHeaderBackground
-com.lingzhimobile.tongqu.R$styleable: int PullToRefresh_ptrHeaderSubTextColor
-com.lingzhimobile.tongqu.R$styleable: int PullToRefresh_ptrHeaderTextColor
-com.lingzhimobile.tongqu.R$styleable: int PullToRefresh_ptrMode
-com.lingzhimobile.tongqu.R$styleable: int PullToRefresh_ptrShowIndicator
-com.lingzhimobile.tongqu.R$styleable: int ViewFlow_sidebuffer
-com.lingzhimobile.tongqu.activity.AskInfo
-com.lingzhimobile.tongqu.activity.AskInfo: AskInfo()
-com.lingzhimobile.tongqu.activity.DateChat
-com.lingzhimobile.tongqu.activity.DateChat: DateChat()
-com.lingzhimobile.tongqu.activity.DateDetail
-com.lingzhimobile.tongqu.activity.DateDetail: DateDetail()
-com.lingzhimobile.tongqu.activity.DateList
-com.lingzhimobile.tongqu.activity.DateList: DateList()
-com.lingzhimobile.tongqu.activity.DateTitleList
-com.lingzhimobile.tongqu.activity.DateTitleList: DateTitleList()
-com.lingzhimobile.tongqu.activity.HelpView
-com.lingzhimobile.tongqu.activity.HelpView: HelpView()
-com.lingzhimobile.tongqu.activity.Login
-com.lingzhimobile.tongqu.activity.Login: Login()
-com.lingzhimobile.tongqu.activity.MainTabActivity
-com.lingzhimobile.tongqu.activity.MainTabActivity: MainTabActivity()
-com.lingzhimobile.tongqu.activity.Nearby
-com.lingzhimobile.tongqu.activity.Nearby: Nearby()
-com.lingzhimobile.tongqu.activity.Profile
-com.lingzhimobile.tongqu.activity.Profile: Profile()
-com.lingzhimobile.tongqu.activity.Settings
-com.lingzhimobile.tongqu.activity.Settings: Settings()
-com.lingzhimobile.tongqu.activity.Share
-com.lingzhimobile.tongqu.activity.Share: Share()
-com.lingzhimobile.tongqu.activity.SinglePhoto
-com.lingzhimobile.tongqu.activity.SinglePhoto: SinglePhoto()
-com.lingzhimobile.tongqu.activity.Splash
-com.lingzhimobile.tongqu.activity.Splash: Splash()
-com.lingzhimobile.tongqu.activity.TongQuActivity
-com.lingzhimobile.tongqu.activity.TongQuActivity: TongQuActivity()
-com.lingzhimobile.tongqu.activity.UploadPhoto
-com.lingzhimobile.tongqu.activity.UploadPhoto: UploadPhoto()
-com.lingzhimobile.tongqu.activity.WantIn
-com.lingzhimobile.tongqu.activity.WantIn: WantIn()
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshAdapterViewBase
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshAdapterViewBase: PullToRefreshAdapterViewBase(android.content.Context)
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshAdapterViewBase: PullToRefreshAdapterViewBase(android.content.Context,android.util.AttributeSet)
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshAdapterViewBase: PullToRefreshAdapterViewBase(android.content.Context,com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase$Mode)
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase: PullToRefreshBase(android.content.Context)
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase: PullToRefreshBase(android.content.Context,android.util.AttributeSet)
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase: PullToRefreshBase(android.content.Context,com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase$Mode)
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase$Mode: com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase$Mode[] values()
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase$Mode: com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase$Mode valueOf(java.lang.String)
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshListView
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshListView: PullToRefreshListView(android.content.Context)
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshListView: PullToRefreshListView(android.content.Context,android.util.AttributeSet)
-com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshListView: PullToRefreshListView(android.content.Context,com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshBase$Mode)
-com.lingzhimobile.tongqu.push.C2DMReceiver
-com.lingzhimobile.tongqu.push.C2DMReceiver: C2DMReceiver()
-com.lingzhimobile.tongqu.view.AutoResizeTextView
-com.lingzhimobile.tongqu.view.AutoResizeTextView: AutoResizeTextView(android.content.Context)
-com.lingzhimobile.tongqu.view.AutoResizeTextView: AutoResizeTextView(android.content.Context,android.util.AttributeSet)
-com.lingzhimobile.tongqu.view.AutoResizeTextView: AutoResizeTextView(android.content.Context,android.util.AttributeSet,int)
-com.lingzhimobile.tongqu.view.BouncyRefreshLazyScrollView
-com.lingzhimobile.tongqu.view.BouncyRefreshLazyScrollView: BouncyRefreshLazyScrollView(android.content.Context,android.util.AttributeSet)
-com.lingzhimobile.tongqu.view.BouncyRefreshLazyScrollView: BouncyRefreshLazyScrollView(android.content.Context,android.util.AttributeSet,int)
-com.lingzhimobile.tongqu.view.BouncyRefreshListView
-com.lingzhimobile.tongqu.view.BouncyRefreshListView: BouncyRefreshListView(android.content.Context,android.util.AttributeSet)
-com.lingzhimobile.tongqu.view.FlowView
-com.lingzhimobile.tongqu.view.FlowView: FlowView(android.content.Context,android.util.AttributeSet,int)
-com.lingzhimobile.tongqu.view.FlowView: FlowView(android.content.Context,android.util.AttributeSet)
-com.lingzhimobile.tongqu.view.NoCenterLockGallery
-com.lingzhimobile.tongqu.view.NoCenterLockGallery: NoCenterLockGallery(android.content.Context,android.util.AttributeSet)
-com.lingzhimobile.tongqu.view.PreLoginViewPagerItemView
-com.lingzhimobile.tongqu.view.PreLoginViewPagerItemView: PreLoginViewPagerItemView(android.content.Context,android.util.AttributeSet)
-com.lingzhimobile.tongqu.view.ResizableLayout
-com.lingzhimobile.tongqu.view.ResizableLayout: ResizableLayout(android.content.Context,android.util.AttributeSet)
-com.lingzhimobile.tongqu.view.ViewFlow
-com.lingzhimobile.tongqu.view.ViewFlow: ViewFlow(android.content.Context)
-com.lingzhimobile.tongqu.view.ViewFlow: ViewFlow(android.content.Context,int)
-com.lingzhimobile.tongqu.view.ViewFlow: ViewFlow(android.content.Context,android.util.AttributeSet)
-com.lingzhimobile.tongqu.view.ViewPagerItemView
-com.lingzhimobile.tongqu.view.ViewPagerItemView: ViewPagerItemView(android.content.Context,android.util.AttributeSet)
+com.lingzhimobile.huodonghaowai.R$anim
+com.lingzhimobile.huodonghaowai.R$anim: int push_left_in
+com.lingzhimobile.huodonghaowai.R$anim: int push_left_out
+com.lingzhimobile.huodonghaowai.R$anim: int push_right_in
+com.lingzhimobile.huodonghaowai.R$anim: int push_right_out
+com.lingzhimobile.huodonghaowai.R$anim: int refreshing
+com.lingzhimobile.huodonghaowai.R$anim: int slide_in_from_bottom
+com.lingzhimobile.huodonghaowai.R$anim: int slide_in_from_top
+com.lingzhimobile.huodonghaowai.R$anim: int slide_out_to_bottom
+com.lingzhimobile.huodonghaowai.R$anim: int slide_out_to_top
+com.lingzhimobile.huodonghaowai.R$array
+com.lingzhimobile.huodonghaowai.R$array: int blood_type_values
+com.lingzhimobile.huodonghaowai.R$array: int constellation_values
+com.lingzhimobile.huodonghaowai.R$array: int day_values_28
+com.lingzhimobile.huodonghaowai.R$array: int day_values_29
+com.lingzhimobile.huodonghaowai.R$array: int day_values_30
+com.lingzhimobile.huodonghaowai.R$array: int day_values_31
+com.lingzhimobile.huodonghaowai.R$array: int edu_status_values
+com.lingzhimobile.huodonghaowai.R$array: int hour_values
+com.lingzhimobile.huodonghaowai.R$array: int minute_values
+com.lingzhimobile.huodonghaowai.R$array: int month_values
+com.lingzhimobile.huodonghaowai.R$array: int month_values_en
+com.lingzhimobile.huodonghaowai.R$array: int school_values
+com.lingzhimobile.huodonghaowai.R$attr
+com.lingzhimobile.huodonghaowai.R$attr: int ptrAdapterViewBackground
+com.lingzhimobile.huodonghaowai.R$attr: int ptrDrawable
+com.lingzhimobile.huodonghaowai.R$attr: int ptrHeaderBackground
+com.lingzhimobile.huodonghaowai.R$attr: int ptrHeaderSubTextColor
+com.lingzhimobile.huodonghaowai.R$attr: int ptrHeaderTextColor
+com.lingzhimobile.huodonghaowai.R$attr: int ptrMode
+com.lingzhimobile.huodonghaowai.R$attr: int ptrShowIndicator
+com.lingzhimobile.huodonghaowai.R$attr: int sidebuffer
+com.lingzhimobile.huodonghaowai.R$color
+com.lingzhimobile.huodonghaowai.R$color: int black
+com.lingzhimobile.huodonghaowai.R$color: int color_radiobutton
+com.lingzhimobile.huodonghaowai.R$color: int dialog_title_blue
+com.lingzhimobile.huodonghaowai.R$color: int font_blue
+com.lingzhimobile.huodonghaowai.R$color: int font_gray
+com.lingzhimobile.huodonghaowai.R$color: int gray
+com.lingzhimobile.huodonghaowai.R$color: int green
+com.lingzhimobile.huodonghaowai.R$color: int half_translucent_black
+com.lingzhimobile.huodonghaowai.R$color: int half_translucent_white
+com.lingzhimobile.huodonghaowai.R$color: int half_transparent
+com.lingzhimobile.huodonghaowai.R$color: int half_transparent_7
+com.lingzhimobile.huodonghaowai.R$color: int light_gray
+com.lingzhimobile.huodonghaowai.R$color: int light_pink_bg
+com.lingzhimobile.huodonghaowai.R$color: int line_gray
+com.lingzhimobile.huodonghaowai.R$color: int orange
+com.lingzhimobile.huodonghaowai.R$color: int pink
+com.lingzhimobile.huodonghaowai.R$color: int pink_bg
+com.lingzhimobile.huodonghaowai.R$color: int text_num_gray
+com.lingzhimobile.huodonghaowai.R$color: int time_gray
+com.lingzhimobile.huodonghaowai.R$color: int title_click
+com.lingzhimobile.huodonghaowai.R$color: int translucent_7_gray
+com.lingzhimobile.huodonghaowai.R$color: int transparent
+com.lingzhimobile.huodonghaowai.R$color: int white
+com.lingzhimobile.huodonghaowai.R$dimen
+com.lingzhimobile.huodonghaowai.R$dimen: int dialog_bottom_margin
+com.lingzhimobile.huodonghaowai.R$dimen: int dialog_btn_close_right_margin
+com.lingzhimobile.huodonghaowai.R$dimen: int dialog_btn_close_top_margin
+com.lingzhimobile.huodonghaowai.R$dimen: int dialog_left_margin
+com.lingzhimobile.huodonghaowai.R$dimen: int dialog_right_margin
+com.lingzhimobile.huodonghaowai.R$dimen: int dialog_title_height
+com.lingzhimobile.huodonghaowai.R$dimen: int dialog_title_logo_left_margin
+com.lingzhimobile.huodonghaowai.R$dimen: int dialog_top_margin
+com.lingzhimobile.huodonghaowai.R$dimen: int indicator_corner_radius
+com.lingzhimobile.huodonghaowai.R$dimen: int indicator_internal_padding
+com.lingzhimobile.huodonghaowai.R$dimen: int indicator_right_padding
+com.lingzhimobile.huodonghaowai.R$drawable
+com.lingzhimobile.huodonghaowai.R$drawable: int alert_dialog_bg
+com.lingzhimobile.huodonghaowai.R$drawable: int alert_refresh
+com.lingzhimobile.huodonghaowai.R$drawable: int alertdialog_corners_stroken
+com.lingzhimobile.huodonghaowai.R$drawable: int app_icon
+com.lingzhimobile.huodonghaowai.R$drawable: int arrow_down
+com.lingzhimobile.huodonghaowai.R$drawable: int arrow_expanding
+com.lingzhimobile.huodonghaowai.R$drawable: int arrow_hide
+com.lingzhimobile.huodonghaowai.R$drawable: int arrow_left
+com.lingzhimobile.huodonghaowai.R$drawable: int arrow_left_bg
+com.lingzhimobile.huodonghaowai.R$drawable: int arrow_left_click
+com.lingzhimobile.huodonghaowai.R$drawable: int arrow_right
+com.lingzhimobile.huodonghaowai.R$drawable: int arrow_up
+com.lingzhimobile.huodonghaowai.R$drawable: int askinfo_female_bg
+com.lingzhimobile.huodonghaowai.R$drawable: int askinfo_female_bg_selected
+com.lingzhimobile.huodonghaowai.R$drawable: int askinfo_male_bg
+com.lingzhimobile.huodonghaowai.R$drawable: int askinfo_male_bg_selected
+com.lingzhimobile.huodonghaowai.R$drawable: int back_button
+com.lingzhimobile.huodonghaowai.R$drawable: int back_button_clicked
+com.lingzhimobile.huodonghaowai.R$drawable: int bg_btn
+com.lingzhimobile.huodonghaowai.R$drawable: int bg_content
+com.lingzhimobile.huodonghaowai.R$drawable: int bg_delwords
+com.lingzhimobile.huodonghaowai.R$drawable: int bg_delwords_nor
+com.lingzhimobile.huodonghaowai.R$drawable: int bg_delwords_sel
+com.lingzhimobile.huodonghaowai.R$drawable: int bg_title
+com.lingzhimobile.huodonghaowai.R$drawable: int block_icon
+com.lingzhimobile.huodonghaowai.R$drawable: int border
+com.lingzhimobile.huodonghaowai.R$drawable: int bottom_bar
+com.lingzhimobile.huodonghaowai.R$drawable: int bottombar_item
+com.lingzhimobile.huodonghaowai.R$drawable: int bottombar_left
+com.lingzhimobile.huodonghaowai.R$drawable: int bottombar_middle
+com.lingzhimobile.huodonghaowai.R$drawable: int bottombar_right
+com.lingzhimobile.huodonghaowai.R$drawable: int btn_back_bg
+com.lingzhimobile.huodonghaowai.R$drawable: int btn_check_off
+com.lingzhimobile.huodonghaowai.R$drawable: int btn_check_on
+com.lingzhimobile.huodonghaowai.R$drawable: int btn_login_bg
+com.lingzhimobile.huodonghaowai.R$drawable: int btn_signup_bg
+com.lingzhimobile.huodonghaowai.R$drawable: int camera
+com.lingzhimobile.huodonghaowai.R$drawable: int cancel
+com.lingzhimobile.huodonghaowai.R$drawable: int chat_grey
+com.lingzhimobile.huodonghaowai.R$drawable: int chat_yellow
+com.lingzhimobile.huodonghaowai.R$drawable: int checkbox_selector
+com.lingzhimobile.huodonghaowai.R$drawable: int close_normal
+com.lingzhimobile.huodonghaowai.R$drawable: int close_press
+com.lingzhimobile.huodonghaowai.R$drawable: int close_selector
+com.lingzhimobile.huodonghaowai.R$drawable: int commit
+com.lingzhimobile.huodonghaowai.R$drawable: int corners_bg
+com.lingzhimobile.huodonghaowai.R$drawable: int corners_gray
+com.lingzhimobile.huodonghaowai.R$drawable: int corners_pink
+com.lingzhimobile.huodonghaowai.R$drawable: int corners_stroke_gray
+com.lingzhimobile.huodonghaowai.R$drawable: int corners_stroke_pink
+com.lingzhimobile.huodonghaowai.R$drawable: int date_chat_box
+com.lingzhimobile.huodonghaowai.R$drawable: int date_edit_background
+com.lingzhimobile.huodonghaowai.R$drawable: int date_filter_left
+com.lingzhimobile.huodonghaowai.R$drawable: int date_filter_left_clicked
+com.lingzhimobile.huodonghaowai.R$drawable: int date_filter_middle
+com.lingzhimobile.huodonghaowai.R$drawable: int date_filter_middle_clicked
+com.lingzhimobile.huodonghaowai.R$drawable: int date_filter_right
+com.lingzhimobile.huodonghaowai.R$drawable: int date_filter_right_clicked
+com.lingzhimobile.huodonghaowai.R$drawable: int date_list_icon
+com.lingzhimobile.huodonghaowai.R$drawable: int date_list_icon_clciked
+com.lingzhimobile.huodonghaowai.R$drawable: int date_pre_bg1
+com.lingzhimobile.huodonghaowai.R$drawable: int date_pre_bg10
+com.lingzhimobile.huodonghaowai.R$drawable: int date_pre_bg2
+com.lingzhimobile.huodonghaowai.R$drawable: int date_pre_bg3
+com.lingzhimobile.huodonghaowai.R$drawable: int date_pre_bg4
+com.lingzhimobile.huodonghaowai.R$drawable: int date_pre_bg5
+com.lingzhimobile.huodonghaowai.R$drawable: int date_pre_bg6
+com.lingzhimobile.huodonghaowai.R$drawable: int date_pre_bg7
+com.lingzhimobile.huodonghaowai.R$drawable: int date_pre_bg8
+com.lingzhimobile.huodonghaowai.R$drawable: int date_pre_bg9
+com.lingzhimobile.huodonghaowai.R$drawable: int date_time_bg
+com.lingzhimobile.huodonghaowai.R$drawable: int date_time_bg_click
+com.lingzhimobile.huodonghaowai.R$drawable: int datetitlelistitembg
+com.lingzhimobile.huodonghaowai.R$drawable: int default_ptr_drawable
+com.lingzhimobile.huodonghaowai.R$drawable: int del_pic
+com.lingzhimobile.huodonghaowai.R$drawable: int dialog_bg
+com.lingzhimobile.huodonghaowai.R$drawable: int dota
+com.lingzhimobile.huodonghaowai.R$drawable: int edittextbg
+com.lingzhimobile.huodonghaowai.R$drawable: int facebook
+com.lingzhimobile.huodonghaowai.R$drawable: int female
+com.lingzhimobile.huodonghaowai.R$drawable: int filter_bottom_bg
+com.lingzhimobile.huodonghaowai.R$drawable: int filter_hide
+com.lingzhimobile.huodonghaowai.R$drawable: int filter_left
+com.lingzhimobile.huodonghaowai.R$drawable: int filter_left_clicked
+com.lingzhimobile.huodonghaowai.R$drawable: int filter_middle
+com.lingzhimobile.huodonghaowai.R$drawable: int filter_middle_clicked
+com.lingzhimobile.huodonghaowai.R$drawable: int filter_right
+com.lingzhimobile.huodonghaowai.R$drawable: int filter_right_clicked
+com.lingzhimobile.huodonghaowai.R$drawable: int filter_show
+com.lingzhimobile.huodonghaowai.R$drawable: int follow_button_click
+com.lingzhimobile.huodonghaowai.R$drawable: int follow_button_normal
+com.lingzhimobile.huodonghaowai.R$drawable: int following_button
+com.lingzhimobile.huodonghaowai.R$drawable: int gender_female
+com.lingzhimobile.huodonghaowai.R$drawable: int gender_male
+com.lingzhimobile.huodonghaowai.R$drawable: int help1
+com.lingzhimobile.huodonghaowai.R$drawable: int help2
+com.lingzhimobile.huodonghaowai.R$drawable: int help3
+com.lingzhimobile.huodonghaowai.R$drawable: int help4
+com.lingzhimobile.huodonghaowai.R$drawable: int helpview
+com.lingzhimobile.huodonghaowai.R$drawable: int ic_pulltorefresh_arrow
+com.lingzhimobile.huodonghaowai.R$drawable: int icon
+com.lingzhimobile.huodonghaowai.R$drawable: int icon_delwords
+com.lingzhimobile.huodonghaowai.R$drawable: int icon_heart
+com.lingzhimobile.huodonghaowai.R$drawable: int icon_heart_click
+com.lingzhimobile.huodonghaowai.R$drawable: int icon_hide
+com.lingzhimobile.huodonghaowai.R$drawable: int icon_show
+com.lingzhimobile.huodonghaowai.R$drawable: int image_background
+com.lingzhimobile.huodonghaowai.R$drawable: int indicator_bg_bottom
+com.lingzhimobile.huodonghaowai.R$drawable: int indicator_bg_top
+com.lingzhimobile.huodonghaowai.R$drawable: int item_first_normal
+com.lingzhimobile.huodonghaowai.R$drawable: int item_last_normal
+com.lingzhimobile.huodonghaowai.R$drawable: int item_middle_normal
+com.lingzhimobile.huodonghaowai.R$drawable: int item_single_normal
+com.lingzhimobile.huodonghaowai.R$drawable: int item_single_pressed
+com.lingzhimobile.huodonghaowai.R$drawable: int like_icon
+com.lingzhimobile.huodonghaowai.R$drawable: int loading
+com.lingzhimobile.huodonghaowai.R$drawable: int male
+com.lingzhimobile.huodonghaowai.R$drawable: int male_clicked
+com.lingzhimobile.huodonghaowai.R$drawable: int male_icon
+com.lingzhimobile.huodonghaowai.R$drawable: int nearby_date_icon
+com.lingzhimobile.huodonghaowai.R$drawable: int nearby_date_icon_clicked
+com.lingzhimobile.huodonghaowai.R$drawable: int none
+com.lingzhimobile.huodonghaowai.R$drawable: int notification_logo
+com.lingzhimobile.huodonghaowai.R$drawable: int photo_icon
+com.lingzhimobile.huodonghaowai.R$drawable: int point_normal
+com.lingzhimobile.huodonghaowai.R$drawable: int point_orange
+com.lingzhimobile.huodonghaowai.R$drawable: int profile_icon
+com.lingzhimobile.huodonghaowai.R$drawable: int profile_icon_clicked
+com.lingzhimobile.huodonghaowai.R$drawable: int profile_photo
+com.lingzhimobile.huodonghaowai.R$drawable: int publish_icon
+com.lingzhimobile.huodonghaowai.R$drawable: int publish_icon_clicked
+com.lingzhimobile.huodonghaowai.R$drawable: int rb_askinfo_female
+com.lingzhimobile.huodonghaowai.R$drawable: int rb_askinfo_male
+com.lingzhimobile.huodonghaowai.R$drawable: int rb_date_filter_left
+com.lingzhimobile.huodonghaowai.R$drawable: int rb_date_filter_middle
+com.lingzhimobile.huodonghaowai.R$drawable: int rb_date_filter_right
+com.lingzhimobile.huodonghaowai.R$drawable: int rb_my_dates
+com.lingzhimobile.huodonghaowai.R$drawable: int rb_nearby_date
+com.lingzhimobile.huodonghaowai.R$drawable: int rb_profile
+com.lingzhimobile.huodonghaowai.R$drawable: int rb_publish_date
+com.lingzhimobile.huodonghaowai.R$drawable: int rb_treat_filter_left
+com.lingzhimobile.huodonghaowai.R$drawable: int rb_treat_filter_middle
+com.lingzhimobile.huodonghaowai.R$drawable: int rb_treat_filter_right
+com.lingzhimobile.huodonghaowai.R$drawable: int refresh
+com.lingzhimobile.huodonghaowai.R$drawable: int reply
+com.lingzhimobile.huodonghaowai.R$drawable: int select_date_time
+com.lingzhimobile.huodonghaowai.R$drawable: int selectdateitembg
+com.lingzhimobile.huodonghaowai.R$drawable: int sign_in_button
+com.lingzhimobile.huodonghaowai.R$drawable: int sign_in_button_clicked
+com.lingzhimobile.huodonghaowai.R$drawable: int sign_in_disable
+com.lingzhimobile.huodonghaowai.R$drawable: int sign_up
+com.lingzhimobile.huodonghaowai.R$drawable: int sign_up_clicked
+com.lingzhimobile.huodonghaowai.R$drawable: int single_bottom_bg
+com.lingzhimobile.huodonghaowai.R$drawable: int singleitemselector
+com.lingzhimobile.huodonghaowai.R$drawable: int tab_selected
+com.lingzhimobile.huodonghaowai.R$drawable: int title_logo
+com.lingzhimobile.huodonghaowai.R$drawable: int top_bar
+com.lingzhimobile.huodonghaowai.R$drawable: int upload_photo
+com.lingzhimobile.huodonghaowai.R$drawable: int weibo_icon
+com.lingzhimobile.huodonghaowai.R$drawable: int x_icon
+com.lingzhimobile.huodonghaowai.R$id
+com.lingzhimobile.huodonghaowai.R$id: int RadioButton01
+com.lingzhimobile.huodonghaowai.R$id: int RadioButton02
+com.lingzhimobile.huodonghaowai.R$id: int RadioButton03
+com.lingzhimobile.huodonghaowai.R$id: int RadioButton04
+com.lingzhimobile.huodonghaowai.R$id: int RadioGroup01
+com.lingzhimobile.huodonghaowai.R$id: int bloodTypeTextView
+com.lingzhimobile.huodonghaowai.R$id: int both
+com.lingzhimobile.huodonghaowai.R$id: int bouncyRefreshViewApply
+com.lingzhimobile.huodonghaowai.R$id: int bouncyRefreshViewInvited
+com.lingzhimobile.huodonghaowai.R$id: int bouncyRefreshViewSend
+com.lingzhimobile.huodonghaowai.R$id: int btnCancel
+com.lingzhimobile.huodonghaowai.R$id: int btnClose
+com.lingzhimobile.huodonghaowai.R$id: int btnConfirm
+com.lingzhimobile.huodonghaowai.R$id: int btnEdit
+com.lingzhimobile.huodonghaowai.R$id: int btnInvite
+com.lingzhimobile.huodonghaowai.R$id: int btnLoadMore
+com.lingzhimobile.huodonghaowai.R$id: int btnLogin
+com.lingzhimobile.huodonghaowai.R$id: int btnMenu
+com.lingzhimobile.huodonghaowai.R$id: int btnOk
+com.lingzhimobile.huodonghaowai.R$id: int btnPreview
+com.lingzhimobile.huodonghaowai.R$id: int btnReply
+com.lingzhimobile.huodonghaowai.R$id: int btnSave
+com.lingzhimobile.huodonghaowai.R$id: int btnSend
+com.lingzhimobile.huodonghaowai.R$id: int btnSignup
+com.lingzhimobile.huodonghaowai.R$id: int btnStart
+com.lingzhimobile.huodonghaowai.R$id: int btnUpload
+com.lingzhimobile.huodonghaowai.R$id: int btnWant
+com.lingzhimobile.huodonghaowai.R$id: int cbFacebook
+com.lingzhimobile.huodonghaowai.R$id: int cbLikes
+com.lingzhimobile.huodonghaowai.R$id: int cbSinaWeibo
+com.lingzhimobile.huodonghaowai.R$id: int chathistoryListView
+com.lingzhimobile.huodonghaowai.R$id: int constellationTextView
+com.lingzhimobile.huodonghaowai.R$id: int container
+com.lingzhimobile.huodonghaowai.R$id: int dateTitleEditText
+com.lingzhimobile.huodonghaowai.R$id: int dayListView
+com.lingzhimobile.huodonghaowai.R$id: int departmentEditText
+com.lingzhimobile.huodonghaowai.R$id: int descriptionEditText
+com.lingzhimobile.huodonghaowai.R$id: int destination
+com.lingzhimobile.huodonghaowai.R$id: int detailPlanEditText
+com.lingzhimobile.huodonghaowai.R$id: int editText1
+com.lingzhimobile.huodonghaowai.R$id: int eduStatusTextView
+com.lingzhimobile.huodonghaowai.R$id: int emailEditText
+com.lingzhimobile.huodonghaowai.R$id: int enterButton
+com.lingzhimobile.huodonghaowai.R$id: int etEdit
+com.lingzhimobile.huodonghaowai.R$id: int etMessage
+com.lingzhimobile.huodonghaowai.R$id: int existPersonCountEditText
+com.lingzhimobile.huodonghaowai.R$id: int femaleButton
+com.lingzhimobile.huodonghaowai.R$id: int filter12
+com.lingzhimobile.huodonghaowai.R$id: int filter14
+com.lingzhimobile.huodonghaowai.R$id: int filter16
+com.lingzhimobile.huodonghaowai.R$id: int filter4
+com.lingzhimobile.huodonghaowai.R$id: int filter6
+com.lingzhimobile.huodonghaowai.R$id: int filter9
+com.lingzhimobile.huodonghaowai.R$id: int filter_black_white
+com.lingzhimobile.huodonghaowai.R$id: int flPic
+com.lingzhimobile.huodonghaowai.R$id: int fragment01
+com.lingzhimobile.huodonghaowai.R$id: int gridview
+com.lingzhimobile.huodonghaowai.R$id: int head_arrowImageView
+com.lingzhimobile.huodonghaowai.R$id: int head_contentLayout
+com.lingzhimobile.huodonghaowai.R$id: int head_lastUpdatedTextView
+com.lingzhimobile.huodonghaowai.R$id: int head_progressBar
+com.lingzhimobile.huodonghaowai.R$id: int head_tipsTextView
+com.lingzhimobile.huodonghaowai.R$id: int heightEditText
+com.lingzhimobile.huodonghaowai.R$id: int homeTownEditText
+com.lingzhimobile.huodonghaowai.R$id: int hometownEditText
+com.lingzhimobile.huodonghaowai.R$id: int horizontalScrollView
+com.lingzhimobile.huodonghaowai.R$id: int hourListView
+com.lingzhimobile.huodonghaowai.R$id: int invitationEditText
+com.lingzhimobile.huodonghaowai.R$id: int ivBack
+com.lingzhimobile.huodonghaowai.R$id: int ivCancel
+com.lingzhimobile.huodonghaowai.R$id: int ivCommit
+com.lingzhimobile.huodonghaowai.R$id: int ivDatePhoto
+com.lingzhimobile.huodonghaowai.R$id: int ivDelPic
+com.lingzhimobile.huodonghaowai.R$id: int ivEditUserPhoto
+com.lingzhimobile.huodonghaowai.R$id: int ivFilter
+com.lingzhimobile.huodonghaowai.R$id: int ivHelpView
+com.lingzhimobile.huodonghaowai.R$id: int ivImage
+com.lingzhimobile.huodonghaowai.R$id: int ivLikeIcon
+com.lingzhimobile.huodonghaowai.R$id: int ivNavigation
+com.lingzhimobile.huodonghaowai.R$id: int ivPickPhoto
+com.lingzhimobile.huodonghaowai.R$id: int ivPreDatePhoto
+com.lingzhimobile.huodonghaowai.R$id: int ivReply
+com.lingzhimobile.huodonghaowai.R$id: int ivUnreadMessage
+com.lingzhimobile.huodonghaowai.R$id: int ivUploadPhoto
+com.lingzhimobile.huodonghaowai.R$id: int ivUserGender
+com.lingzhimobile.huodonghaowai.R$id: int ivUserProfilePhoto
+com.lingzhimobile.huodonghaowai.R$id: int ivUserProfilePhotoLL
+com.lingzhimobile.huodonghaowai.R$id: int linearLayout1
+com.lingzhimobile.huodonghaowai.R$id: int llDateChat
+com.lingzhimobile.huodonghaowai.R$id: int llDateMessageItem
+com.lingzhimobile.huodonghaowai.R$id: int llFacebook
+com.lingzhimobile.huodonghaowai.R$id: int llForgotPassword
+com.lingzhimobile.huodonghaowai.R$id: int llImage
+com.lingzhimobile.huodonghaowai.R$id: int llLeftChatItem
+com.lingzhimobile.huodonghaowai.R$id: int llLogout
+com.lingzhimobile.huodonghaowai.R$id: int llNotifyDialog
+com.lingzhimobile.huodonghaowai.R$id: int llPagePoint
+com.lingzhimobile.huodonghaowai.R$id: int llPickPhoto
+com.lingzhimobile.huodonghaowai.R$id: int llPostto
+com.lingzhimobile.huodonghaowai.R$id: int llProfileHeaderView
+com.lingzhimobile.huodonghaowai.R$id: int llRightChatItem
+com.lingzhimobile.huodonghaowai.R$id: int llSinaWeibo
+com.lingzhimobile.huodonghaowai.R$id: int llViewsContainer
+com.lingzhimobile.huodonghaowai.R$id: int llWeibo
+com.lingzhimobile.huodonghaowai.R$id: int ll_text_limit_unit
+com.lingzhimobile.huodonghaowai.R$id: int lllocation
+com.lingzhimobile.huodonghaowai.R$id: int localEditText
+com.lingzhimobile.huodonghaowai.R$id: int lvConversations
+com.lingzhimobile.huodonghaowai.R$id: int lvDateRespondersList
+com.lingzhimobile.huodonghaowai.R$id: int lvDateTitleList
+com.lingzhimobile.huodonghaowai.R$id: int lvNearbyDate
+com.lingzhimobile.huodonghaowai.R$id: int maleButton
+com.lingzhimobile.huodonghaowai.R$id: int message
+com.lingzhimobile.huodonghaowai.R$id: int monthListView
+com.lingzhimobile.huodonghaowai.R$id: int nameEditText
+com.lingzhimobile.huodonghaowai.R$id: int nameTextView
+com.lingzhimobile.huodonghaowai.R$id: int nearbyheaderview
+com.lingzhimobile.huodonghaowai.R$id: int numberTextView
+com.lingzhimobile.huodonghaowai.R$id: int passwordEditText
+com.lingzhimobile.huodonghaowai.R$id: int pbLoadImage
+com.lingzhimobile.huodonghaowai.R$id: int progress
+com.lingzhimobile.huodonghaowai.R$id: int progressBar1
+com.lingzhimobile.huodonghaowai.R$id: int pullDownFromTop
+com.lingzhimobile.huodonghaowai.R$id: int pullUpFromBottom
+com.lingzhimobile.huodonghaowai.R$id: int rbAA
+com.lingzhimobile.huodonghaowai.R$id: int rbDateFilterLeft
+com.lingzhimobile.huodonghaowai.R$id: int rbDateFilterMiddle
+com.lingzhimobile.huodonghaowai.R$id: int rbDateFilterRight
+com.lingzhimobile.huodonghaowai.R$id: int rbMyTreat
+com.lingzhimobile.huodonghaowai.R$id: int rbNone
+com.lingzhimobile.huodonghaowai.R$id: int reset
+com.lingzhimobile.huodonghaowai.R$id: int rlBottombar
+com.lingzhimobile.huodonghaowai.R$id: int rlDatePreview
+com.lingzhimobile.huodonghaowai.R$id: int rlEditDate
+com.lingzhimobile.huodonghaowai.R$id: int rlEditProfile
+com.lingzhimobile.huodonghaowai.R$id: int rlHeaderPhoto
+com.lingzhimobile.huodonghaowai.R$id: int rlTitle
+com.lingzhimobile.huodonghaowai.R$id: int rlTotal
+com.lingzhimobile.huodonghaowai.R$id: int rlViewProfile
+com.lingzhimobile.huodonghaowai.R$id: int schoolTextView
+com.lingzhimobile.huodonghaowai.R$id: int scrollView1
+com.lingzhimobile.huodonghaowai.R$id: int sendButton
+com.lingzhimobile.huodonghaowai.R$id: int stuNOEditText
+com.lingzhimobile.huodonghaowai.R$id: int timeTextView
+com.lingzhimobile.huodonghaowai.R$id: int tvAddPersonNum
+com.lingzhimobile.huodonghaowai.R$id: int tvAlertString
+com.lingzhimobile.huodonghaowai.R$id: int tvApplyPersonNum
+com.lingzhimobile.huodonghaowai.R$id: int tvCancel
+com.lingzhimobile.huodonghaowai.R$id: int tvCurrentDate
+com.lingzhimobile.huodonghaowai.R$id: int tvDateBodyInfo
+com.lingzhimobile.huodonghaowai.R$id: int tvDateLocationInfo
+com.lingzhimobile.huodonghaowai.R$id: int tvDatePersonNum
+com.lingzhimobile.huodonghaowai.R$id: int tvDatePhoto
+com.lingzhimobile.huodonghaowai.R$id: int tvDateTimeInfo
+com.lingzhimobile.huodonghaowai.R$id: int tvDateTitle
+com.lingzhimobile.huodonghaowai.R$id: int tvDateWhoPay
+com.lingzhimobile.huodonghaowai.R$id: int tvFilter1
+com.lingzhimobile.huodonghaowai.R$id: int tvFilter2
+com.lingzhimobile.huodonghaowai.R$id: int tvFilter3
+com.lingzhimobile.huodonghaowai.R$id: int tvHeaderPhoto
+com.lingzhimobile.huodonghaowai.R$id: int tvLastestMessage
+com.lingzhimobile.huodonghaowai.R$id: int tvLeftChatItem
+com.lingzhimobile.huodonghaowai.R$id: int tvLikerCount
+com.lingzhimobile.huodonghaowai.R$id: int tvNewDate
+com.lingzhimobile.huodonghaowai.R$id: int tvNotifyText
+com.lingzhimobile.huodonghaowai.R$id: int tvPhotoIndex
+com.lingzhimobile.huodonghaowai.R$id: int tvProfileUserDescription
+com.lingzhimobile.huodonghaowai.R$id: int tvProfileUserEdu
+com.lingzhimobile.huodonghaowai.R$id: int tvProfileUserName
+com.lingzhimobile.huodonghaowai.R$id: int tvProfileUserPhotoCount
+com.lingzhimobile.huodonghaowai.R$id: int tvResponderType
+com.lingzhimobile.huodonghaowai.R$id: int tvRightChatItem
+com.lingzhimobile.huodonghaowai.R$id: int tvSubjectType
+com.lingzhimobile.huodonghaowai.R$id: int tvTextNum
+com.lingzhimobile.huodonghaowai.R$id: int tvTimeLine
+com.lingzhimobile.huodonghaowai.R$id: int tvTitle
+com.lingzhimobile.huodonghaowai.R$id: int tvToast
+com.lingzhimobile.huodonghaowai.R$id: int tvTreat
+com.lingzhimobile.huodonghaowai.R$id: int tvUserBasicInfo
+com.lingzhimobile.huodonghaowai.R$id: int tvUserDescription
+com.lingzhimobile.huodonghaowai.R$id: int tvUserEduInfo
+com.lingzhimobile.huodonghaowai.R$id: int tvUserLikeCount
+com.lingzhimobile.huodonghaowai.R$id: int tvUserMessage
+com.lingzhimobile.huodonghaowai.R$id: int tvUserMessageTime
+com.lingzhimobile.huodonghaowai.R$id: int tvUserName
+com.lingzhimobile.huodonghaowai.R$id: int tv_text_limit
+com.lingzhimobile.huodonghaowai.R$id: int umeng_common_app
+com.lingzhimobile.huodonghaowai.R$id: int umeng_common_appIcon
+com.lingzhimobile.huodonghaowai.R$id: int umeng_common_description
+com.lingzhimobile.huodonghaowai.R$id: int umeng_common_notification
+com.lingzhimobile.huodonghaowai.R$id: int umeng_common_progress_bar
+com.lingzhimobile.huodonghaowai.R$id: int umeng_common_progress_text
+com.lingzhimobile.huodonghaowai.R$id: int umeng_common_title
+com.lingzhimobile.huodonghaowai.R$id: int viewflow
+com.lingzhimobile.huodonghaowai.R$id: int vpHelpView
+com.lingzhimobile.huodonghaowai.R$id: int vpNearbyDate
+com.lingzhimobile.huodonghaowai.R$id: int vpSinglePhoto
+com.lingzhimobile.huodonghaowai.R$id: int wantPersonCountEditText
+com.lingzhimobile.huodonghaowai.R$id: int waterfall_container
+com.lingzhimobile.huodonghaowai.R$id: int webview
+com.lingzhimobile.huodonghaowai.R$layout
+com.lingzhimobile.huodonghaowai.R$layout: int askinfo
+com.lingzhimobile.huodonghaowai.R$layout: int chat_detail_item
+com.lingzhimobile.huodonghaowai.R$layout: int conversationitem
+com.lingzhimobile.huodonghaowai.R$layout: int conversations
+com.lingzhimobile.huodonghaowai.R$layout: int datechat
+com.lingzhimobile.huodonghaowai.R$layout: int datefilterdialog
+com.lingzhimobile.huodonghaowai.R$layout: int datelistitem
+com.lingzhimobile.huodonghaowai.R$layout: int datelistitemsend
+com.lingzhimobile.huodonghaowai.R$layout: int datelistuseritem
+com.lingzhimobile.huodonghaowai.R$layout: int datepicker
+com.lingzhimobile.huodonghaowai.R$layout: int dateresponders
+com.lingzhimobile.huodonghaowai.R$layout: int daterespondersitem
+com.lingzhimobile.huodonghaowai.R$layout: int dateresponderstype
+com.lingzhimobile.huodonghaowai.R$layout: int datetitlelist
+com.lingzhimobile.huodonghaowai.R$layout: int datetitlelistitem
+com.lingzhimobile.huodonghaowai.R$layout: int detaildate
+com.lingzhimobile.huodonghaowai.R$layout: int errtoast
+com.lingzhimobile.huodonghaowai.R$layout: int facebookoption
+com.lingzhimobile.huodonghaowai.R$layout: int fragment
+com.lingzhimobile.huodonghaowai.R$layout: int helpview
+com.lingzhimobile.huodonghaowai.R$layout: int helpviewitem
+com.lingzhimobile.huodonghaowai.R$layout: int loadmoreview
+com.lingzhimobile.huodonghaowai.R$layout: int login
+com.lingzhimobile.huodonghaowai.R$layout: int main
+com.lingzhimobile.huodonghaowai.R$layout: int message
+com.lingzhimobile.huodonghaowai.R$layout: int mylistview_head
+com.lingzhimobile.huodonghaowai.R$layout: int nearby
+com.lingzhimobile.huodonghaowai.R$layout: int nearby_date_item
+com.lingzhimobile.huodonghaowai.R$layout: int nearbydatelist
+com.lingzhimobile.huodonghaowai.R$layout: int nearbydatelistitem
+com.lingzhimobile.huodonghaowai.R$layout: int notifydialog
+com.lingzhimobile.huodonghaowai.R$layout: int numberitem
+com.lingzhimobile.huodonghaowai.R$layout: int prelogin
+com.lingzhimobile.huodonghaowai.R$layout: int prelogin_date_item
+com.lingzhimobile.huodonghaowai.R$layout: int profile
+com.lingzhimobile.huodonghaowai.R$layout: int profile_body
+com.lingzhimobile.huodonghaowai.R$layout: int profileheaderview
+com.lingzhimobile.huodonghaowai.R$layout: int progress_dialog
+com.lingzhimobile.huodonghaowai.R$layout: int proposedate
+com.lingzhimobile.huodonghaowai.R$layout: int respondersgalleryitem
+com.lingzhimobile.huodonghaowai.R$layout: int selectdatedialog
+com.lingzhimobile.huodonghaowai.R$layout: int setting
+com.lingzhimobile.huodonghaowai.R$layout: int share
+com.lingzhimobile.huodonghaowai.R$layout: int share_mblog_view
+com.lingzhimobile.huodonghaowai.R$layout: int singlephoto
+com.lingzhimobile.huodonghaowai.R$layout: int spendcreditsdialog
+com.lingzhimobile.huodonghaowai.R$layout: int splash
+com.lingzhimobile.huodonghaowai.R$layout: int umeng_common_download_notification
+com.lingzhimobile.huodonghaowai.R$layout: int uploadphoto
+com.lingzhimobile.huodonghaowai.R$layout: int wantin
+com.lingzhimobile.huodonghaowai.R$string
+com.lingzhimobile.huodonghaowai.R$string: int Account
+com.lingzhimobile.huodonghaowai.R$string: int Adress
+com.lingzhimobile.huodonghaowai.R$string: int Cancel
+com.lingzhimobile.huodonghaowai.R$string: int Conversations
+com.lingzhimobile.huodonghaowai.R$string: int Gallery
+com.lingzhimobile.huodonghaowai.R$string: int Nearby
+com.lingzhimobile.huodonghaowai.R$string: int OK
+com.lingzhimobile.huodonghaowai.R$string: int Profile
+com.lingzhimobile.huodonghaowai.R$string: int Subject
+com.lingzhimobile.huodonghaowai.R$string: int Time
+com.lingzhimobile.huodonghaowai.R$string: int Treat
+com.lingzhimobile.huodonghaowai.R$string: int UMAppUpdate
+com.lingzhimobile.huodonghaowai.R$string: int UMBreak_Network
+com.lingzhimobile.huodonghaowai.R$string: int UMDialog_InstallAPK
+com.lingzhimobile.huodonghaowai.R$string: int UMGprsCondition
+com.lingzhimobile.huodonghaowai.R$string: int UMNewVersion
+com.lingzhimobile.huodonghaowai.R$string: int UMNotNow
+com.lingzhimobile.huodonghaowai.R$string: int UMToast_IsUpdating
+com.lingzhimobile.huodonghaowai.R$string: int UMUpdateNow
+com.lingzhimobile.huodonghaowai.R$string: int UMUpdateTitle
+com.lingzhimobile.huodonghaowai.R$string: int aa
+com.lingzhimobile.huodonghaowai.R$string: int announce_str
+com.lingzhimobile.huodonghaowai.R$string: int app_name
+com.lingzhimobile.huodonghaowai.R$string: int ask_details_plan
+com.lingzhimobile.huodonghaowai.R$string: int askfor_date_describe
+com.lingzhimobile.huodonghaowai.R$string: int askfor_date_photo
+com.lingzhimobile.huodonghaowai.R$string: int askfor_first_photo
+com.lingzhimobile.huodonghaowai.R$string: int attention
+com.lingzhimobile.huodonghaowai.R$string: int back
+com.lingzhimobile.huodonghaowai.R$string: int back_notify
+com.lingzhimobile.huodonghaowai.R$string: int bloodtype
+com.lingzhimobile.huodonghaowai.R$string: int camera
+com.lingzhimobile.huodonghaowai.R$string: int cancel
+com.lingzhimobile.huodonghaowai.R$string: int cancel_add
+com.lingzhimobile.huodonghaowai.R$string: int cancel_date_alert
+com.lingzhimobile.huodonghaowai.R$string: int change_setting
+com.lingzhimobile.huodonghaowai.R$string: int close
+com.lingzhimobile.huodonghaowai.R$string: int comment_alert
+com.lingzhimobile.huodonghaowai.R$string: int comment_good
+com.lingzhimobile.huodonghaowai.R$string: int comment_next_time
+com.lingzhimobile.huodonghaowai.R$string: int confirm_add
+com.lingzhimobile.huodonghaowai.R$string: int confirm_date_alert
+com.lingzhimobile.huodonghaowai.R$string: int constellation
+com.lingzhimobile.huodonghaowai.R$string: int d_day_ago
+com.lingzhimobile.huodonghaowai.R$string: int d_hour_ago
+com.lingzhimobile.huodonghaowai.R$string: int d_minute_ago
+com.lingzhimobile.huodonghaowai.R$string: int d_mount_ago
+com.lingzhimobile.huodonghaowai.R$string: int date_detail
+com.lingzhimobile.huodonghaowai.R$string: int date_info
+com.lingzhimobile.huodonghaowai.R$string: int date_responders
+com.lingzhimobile.huodonghaowai.R$string: int date_title
+com.lingzhimobile.huodonghaowai.R$string: int day_ago
+com.lingzhimobile.huodonghaowai.R$string: int del_pic
+com.lingzhimobile.huodonghaowai.R$string: int delete
+com.lingzhimobile.huodonghaowai.R$string: int delete_all
+com.lingzhimobile.huodonghaowai.R$string: int department
+com.lingzhimobile.huodonghaowai.R$string: int description
+com.lingzhimobile.huodonghaowai.R$string: int detail
+com.lingzhimobile.huodonghaowai.R$string: int edit
+com.lingzhimobile.huodonghaowai.R$string: int edit_profile_ok
+com.lingzhimobile.huodonghaowai.R$string: int educationalStatus
+com.lingzhimobile.huodonghaowai.R$string: int email
+com.lingzhimobile.huodonghaowai.R$string: int email_wrong
+com.lingzhimobile.huodonghaowai.R$string: int enter
+com.lingzhimobile.huodonghaowai.R$string: int err21010
+com.lingzhimobile.huodonghaowai.R$string: int err21020
+com.lingzhimobile.huodonghaowai.R$string: int err21021
+com.lingzhimobile.huodonghaowai.R$string: int err21022
+com.lingzhimobile.huodonghaowai.R$string: int err21023
+com.lingzhimobile.huodonghaowai.R$string: int err21024
+com.lingzhimobile.huodonghaowai.R$string: int err21030
+com.lingzhimobile.huodonghaowai.R$string: int err21040
+com.lingzhimobile.huodonghaowai.R$string: int err21041
+com.lingzhimobile.huodonghaowai.R$string: int err21042
+com.lingzhimobile.huodonghaowai.R$string: int err21043
+com.lingzhimobile.huodonghaowai.R$string: int err21044
+com.lingzhimobile.huodonghaowai.R$string: int err21045
+com.lingzhimobile.huodonghaowai.R$string: int err21050
+com.lingzhimobile.huodonghaowai.R$string: int err21051
+com.lingzhimobile.huodonghaowai.R$string: int err21060
+com.lingzhimobile.huodonghaowai.R$string: int err21070
+com.lingzhimobile.huodonghaowai.R$string: int err21071
+com.lingzhimobile.huodonghaowai.R$string: int err21072
+com.lingzhimobile.huodonghaowai.R$string: int err21082
+com.lingzhimobile.huodonghaowai.R$string: int err21083
+com.lingzhimobile.huodonghaowai.R$string: int err21087
+com.lingzhimobile.huodonghaowai.R$string: int err21088
+com.lingzhimobile.huodonghaowai.R$string: int err21210
+com.lingzhimobile.huodonghaowai.R$string: int err21211
+com.lingzhimobile.huodonghaowai.R$string: int err21212
+com.lingzhimobile.huodonghaowai.R$string: int errMessage
+com.lingzhimobile.huodonghaowai.R$string: int error_please_try_again_later
+com.lingzhimobile.huodonghaowai.R$string: int failed_retreive_location_alert
+com.lingzhimobile.huodonghaowai.R$string: int female
+com.lingzhimobile.huodonghaowai.R$string: int firstNum
+com.lingzhimobile.huodonghaowai.R$string: int firstNum_is_empty
+com.lingzhimobile.huodonghaowai.R$string: int first_name
+com.lingzhimobile.huodonghaowai.R$string: int forgotpassowrd
+com.lingzhimobile.huodonghaowai.R$string: int free
+com.lingzhimobile.huodonghaowai.R$string: int get_invite_code
+com.lingzhimobile.huodonghaowai.R$string: int good_rate_count
+com.lingzhimobile.huodonghaowai.R$string: int have_add
+com.lingzhimobile.huodonghaowai.R$string: int have_apply
+com.lingzhimobile.huodonghaowai.R$string: int headerphoto
+com.lingzhimobile.huodonghaowai.R$string: int height
+com.lingzhimobile.huodonghaowai.R$string: int hello
+com.lingzhimobile.huodonghaowai.R$string: int helpstring2
+com.lingzhimobile.huodonghaowai.R$string: int helpstring3
+com.lingzhimobile.huodonghaowai.R$string: int hometown
+com.lingzhimobile.huodonghaowai.R$string: int hour_ago
+com.lingzhimobile.huodonghaowai.R$string: int i_want
+com.lingzhimobile.huodonghaowai.R$string: int iam
+com.lingzhimobile.huodonghaowai.R$string: int in_place
+com.lingzhimobile.huodonghaowai.R$string: int invitation
+com.lingzhimobile.huodonghaowai.R$string: int invite
+com.lingzhimobile.huodonghaowai.R$string: int invite_code_empty
+com.lingzhimobile.huodonghaowai.R$string: int last_update
+com.lingzhimobile.huodonghaowai.R$string: int latest_activity
+com.lingzhimobile.huodonghaowai.R$string: int likes
+com.lingzhimobile.huodonghaowai.R$string: int loading
+com.lingzhimobile.huodonghaowai.R$string: int loadmore
+com.lingzhimobile.huodonghaowai.R$string: int location_is_empty
+com.lingzhimobile.huodonghaowai.R$string: int login
+com.lingzhimobile.huodonghaowai.R$string: int logout
+com.lingzhimobile.huodonghaowai.R$string: int logout_alert
+com.lingzhimobile.huodonghaowai.R$string: int logout_unlink
+com.lingzhimobile.huodonghaowai.R$string: int male
+com.lingzhimobile.huodonghaowai.R$string: int message
+com.lingzhimobile.huodonghaowai.R$string: int minute_ago
+com.lingzhimobile.huodonghaowai.R$string: int mount_ago
+com.lingzhimobile.huodonghaowai.R$string: int my_dates
+com.lingzhimobile.huodonghaowai.R$string: int my_profile
+com.lingzhimobile.huodonghaowai.R$string: int my_treat
+com.lingzhimobile.huodonghaowai.R$string: int name
+com.lingzhimobile.huodonghaowai.R$string: int name_empty
+com.lingzhimobile.huodonghaowai.R$string: int new_user
+com.lingzhimobile.huodonghaowai.R$string: int no
+com.lingzhimobile.huodonghaowai.R$string: int no_camera_prompt
+com.lingzhimobile.huodonghaowai.R$string: int no_photo
+com.lingzhimobile.huodonghaowai.R$string: int ok
+com.lingzhimobile.huodonghaowai.R$string: int old_user
+com.lingzhimobile.huodonghaowai.R$string: int password
+com.lingzhimobile.huodonghaowai.R$string: int password_wrong
+com.lingzhimobile.huodonghaowai.R$string: int personNum
+com.lingzhimobile.huodonghaowai.R$string: int photo
+com.lingzhimobile.huodonghaowai.R$string: int photo_destination
+com.lingzhimobile.huodonghaowai.R$string: int photo_gallery
+com.lingzhimobile.huodonghaowai.R$string: int please_choose
+com.lingzhimobile.huodonghaowai.R$string: int please_login
+com.lingzhimobile.huodonghaowai.R$string: int post_to
+com.lingzhimobile.huodonghaowai.R$string: int preview
+com.lingzhimobile.huodonghaowai.R$string: int profile_alert
+com.lingzhimobile.huodonghaowai.R$string: int publish
+com.lingzhimobile.huodonghaowai.R$string: int publish_date
+com.lingzhimobile.huodonghaowai.R$string: int pull_to_load_earlier_pull_label
+com.lingzhimobile.huodonghaowai.R$string: int pull_to_load_earlier_release_label
+com.lingzhimobile.huodonghaowai.R$string: int pull_to_load_pull_label
+com.lingzhimobile.huodonghaowai.R$string: int pull_to_load_release_label
+com.lingzhimobile.huodonghaowai.R$string: int pull_to_refresh_pull_label
+com.lingzhimobile.huodonghaowai.R$string: int pull_to_refresh_refreshing_label
+com.lingzhimobile.huodonghaowai.R$string: int pull_to_refresh_release_label
+com.lingzhimobile.huodonghaowai.R$string: int pull_up_to_load_pull_label
+com.lingzhimobile.huodonghaowai.R$string: int rate
+com.lingzhimobile.huodonghaowai.R$string: int rb_date_filter_left
+com.lingzhimobile.huodonghaowai.R$string: int rb_date_filter_middle
+com.lingzhimobile.huodonghaowai.R$string: int rb_date_filter_right
+com.lingzhimobile.huodonghaowai.R$string: int receiver_confirmed
+com.lingzhimobile.huodonghaowai.R$string: int recommend_date
+com.lingzhimobile.huodonghaowai.R$string: int reply
+com.lingzhimobile.huodonghaowai.R$string: int responses
+com.lingzhimobile.huodonghaowai.R$string: int save
+com.lingzhimobile.huodonghaowai.R$string: int sb_send_msg
+com.lingzhimobile.huodonghaowai.R$string: int school
+com.lingzhimobile.huodonghaowai.R$string: int school_empty
+com.lingzhimobile.huodonghaowai.R$string: int send
+com.lingzhimobile.huodonghaowai.R$string: int send_failed
+com.lingzhimobile.huodonghaowai.R$string: int send_sucess
+com.lingzhimobile.huodonghaowai.R$string: int set_profile_photo
+com.lingzhimobile.huodonghaowai.R$string: int settings
+com.lingzhimobile.huodonghaowai.R$string: int share
+com.lingzhimobile.huodonghaowai.R$string: int share_dialog_title
+com.lingzhimobile.huodonghaowai.R$string: int share_to_timeline
+com.lingzhimobile.huodonghaowai.R$string: int share_weibo
+com.lingzhimobile.huodonghaowai.R$string: int sharing_settings
+com.lingzhimobile.huodonghaowai.R$string: int signup
+com.lingzhimobile.huodonghaowai.R$string: int sina_weibo
+com.lingzhimobile.huodonghaowai.R$string: int sms_content
+com.lingzhimobile.huodonghaowai.R$string: int start_app
+com.lingzhimobile.huodonghaowai.R$string: int studentNo
+com.lingzhimobile.huodonghaowai.R$string: int tap_to_retry
+com.lingzhimobile.huodonghaowai.R$string: int time_differentday_withminutes
+com.lingzhimobile.huodonghaowai.R$string: int time_is_wrong
+com.lingzhimobile.huodonghaowai.R$string: int time_proposedate
+com.lingzhimobile.huodonghaowai.R$string: int time_sameday
+com.lingzhimobile.huodonghaowai.R$string: int title_is_empty
+com.lingzhimobile.huodonghaowai.R$string: int title_list
+com.lingzhimobile.huodonghaowai.R$string: int upload
+com.lingzhimobile.huodonghaowai.R$string: int upload_photo_alert
+com.lingzhimobile.huodonghaowai.R$string: int upload_photo_earn_credit
+com.lingzhimobile.huodonghaowai.R$string: int wantNum
+com.lingzhimobile.huodonghaowai.R$string: int wantNum_is_empty
+com.lingzhimobile.huodonghaowai.R$string: int welcome_str
+com.lingzhimobile.huodonghaowai.R$string: int yes
+com.lingzhimobile.huodonghaowai.R$style
+com.lingzhimobile.huodonghaowai.R$style: int AlertDialog
+com.lingzhimobile.huodonghaowai.R$style: int AnimationActivity
+com.lingzhimobile.huodonghaowai.R$style: int AnimationActivity1
+com.lingzhimobile.huodonghaowai.R$style: int AnimationFade
+com.lingzhimobile.huodonghaowai.R$style: int ContentOverlay
+com.lingzhimobile.huodonghaowai.R$style: int MyCheckBox
+com.lingzhimobile.huodonghaowai.R$style: int ProgressDialog
+com.lingzhimobile.huodonghaowai.R$style: int ThemeActivity
+com.lingzhimobile.huodonghaowai.R$style: int ThemeActivity1
+com.lingzhimobile.huodonghaowai.R$style: int radiobutton1
+com.lingzhimobile.huodonghaowai.R$styleable
+com.lingzhimobile.huodonghaowai.R$styleable: int PullToRefresh_ptrAdapterViewBackground
+com.lingzhimobile.huodonghaowai.R$styleable: int PullToRefresh_ptrDrawable
+com.lingzhimobile.huodonghaowai.R$styleable: int PullToRefresh_ptrHeaderBackground
+com.lingzhimobile.huodonghaowai.R$styleable: int PullToRefresh_ptrHeaderSubTextColor
+com.lingzhimobile.huodonghaowai.R$styleable: int PullToRefresh_ptrHeaderTextColor
+com.lingzhimobile.huodonghaowai.R$styleable: int PullToRefresh_ptrMode
+com.lingzhimobile.huodonghaowai.R$styleable: int PullToRefresh_ptrShowIndicator
+com.lingzhimobile.huodonghaowai.R$styleable: int ViewFlow_sidebuffer
+com.lingzhimobile.huodonghaowai.activity.AskInfo
+com.lingzhimobile.huodonghaowai.activity.AskInfo: AskInfo()
+com.lingzhimobile.huodonghaowai.activity.DateChat
+com.lingzhimobile.huodonghaowai.activity.DateChat: DateChat()
+com.lingzhimobile.huodonghaowai.activity.DateDetail
+com.lingzhimobile.huodonghaowai.activity.DateDetail: DateDetail()
+com.lingzhimobile.huodonghaowai.activity.DateList
+com.lingzhimobile.huodonghaowai.activity.DateList: DateList()
+com.lingzhimobile.huodonghaowai.activity.DateTitleList
+com.lingzhimobile.huodonghaowai.activity.DateTitleList: DateTitleList()
+com.lingzhimobile.huodonghaowai.activity.HelpView
+com.lingzhimobile.huodonghaowai.activity.HelpView: HelpView()
+com.lingzhimobile.huodonghaowai.activity.Login
+com.lingzhimobile.huodonghaowai.activity.Login: Login()
+com.lingzhimobile.huodonghaowai.activity.MainTabActivity
+com.lingzhimobile.huodonghaowai.activity.MainTabActivity: MainTabActivity()
+com.lingzhimobile.huodonghaowai.activity.Nearby
+com.lingzhimobile.huodonghaowai.activity.Nearby: Nearby()
+com.lingzhimobile.huodonghaowai.activity.Profile
+com.lingzhimobile.huodonghaowai.activity.Profile: Profile()
+com.lingzhimobile.huodonghaowai.activity.Settings
+com.lingzhimobile.huodonghaowai.activity.Settings: Settings()
+com.lingzhimobile.huodonghaowai.activity.Share
+com.lingzhimobile.huodonghaowai.activity.Share: Share()
+com.lingzhimobile.huodonghaowai.activity.SinglePhoto
+com.lingzhimobile.huodonghaowai.activity.SinglePhoto: SinglePhoto()
+com.lingzhimobile.huodonghaowai.activity.Splash
+com.lingzhimobile.huodonghaowai.activity.Splash: Splash()
+com.lingzhimobile.huodonghaowai.activity.HuoDongHaoWaiActivity
+com.lingzhimobile.huodonghaowai.activity.HuoDongHaoWaiActivity: HuoDongHaoWaiActivity()
+com.lingzhimobile.huodonghaowai.activity.UploadPhoto
+com.lingzhimobile.huodonghaowai.activity.UploadPhoto: UploadPhoto()
+com.lingzhimobile.huodonghaowai.activity.WantIn
+com.lingzhimobile.huodonghaowai.activity.WantIn: WantIn()
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshAdapterViewBase
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshAdapterViewBase: PullToRefreshAdapterViewBase(android.content.Context)
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshAdapterViewBase: PullToRefreshAdapterViewBase(android.content.Context,android.util.AttributeSet)
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshAdapterViewBase: PullToRefreshAdapterViewBase(android.content.Context,com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase$Mode)
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase: PullToRefreshBase(android.content.Context)
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase: PullToRefreshBase(android.content.Context,android.util.AttributeSet)
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase: PullToRefreshBase(android.content.Context,com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase$Mode)
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase$Mode: com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase$Mode[] values()
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase$Mode: com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase$Mode valueOf(java.lang.String)
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshListView
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshListView: PullToRefreshListView(android.content.Context)
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshListView: PullToRefreshListView(android.content.Context,android.util.AttributeSet)
+com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshListView: PullToRefreshListView(android.content.Context,com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase$Mode)
+com.lingzhimobile.huodonghaowai.push.C2DMReceiver
+com.lingzhimobile.huodonghaowai.push.C2DMReceiver: C2DMReceiver()
+com.lingzhimobile.huodonghaowai.view.AutoResizeTextView
+com.lingzhimobile.huodonghaowai.view.AutoResizeTextView: AutoResizeTextView(android.content.Context)
+com.lingzhimobile.huodonghaowai.view.AutoResizeTextView: AutoResizeTextView(android.content.Context,android.util.AttributeSet)
+com.lingzhimobile.huodonghaowai.view.AutoResizeTextView: AutoResizeTextView(android.content.Context,android.util.AttributeSet,int)
+com.lingzhimobile.huodonghaowai.view.BouncyRefreshLazyScrollView
+com.lingzhimobile.huodonghaowai.view.BouncyRefreshLazyScrollView: BouncyRefreshLazyScrollView(android.content.Context,android.util.AttributeSet)
+com.lingzhimobile.huodonghaowai.view.BouncyRefreshLazyScrollView: BouncyRefreshLazyScrollView(android.content.Context,android.util.AttributeSet,int)
+com.lingzhimobile.huodonghaowai.view.BouncyRefreshListView
+com.lingzhimobile.huodonghaowai.view.BouncyRefreshListView: BouncyRefreshListView(android.content.Context,android.util.AttributeSet)
+com.lingzhimobile.huodonghaowai.view.FlowView
+com.lingzhimobile.huodonghaowai.view.FlowView: FlowView(android.content.Context,android.util.AttributeSet,int)
+com.lingzhimobile.huodonghaowai.view.FlowView: FlowView(android.content.Context,android.util.AttributeSet)
+com.lingzhimobile.huodonghaowai.view.NoCenterLockGallery
+com.lingzhimobile.huodonghaowai.view.NoCenterLockGallery: NoCenterLockGallery(android.content.Context,android.util.AttributeSet)
+com.lingzhimobile.huodonghaowai.view.PreLoginViewPagerItemView
+com.lingzhimobile.huodonghaowai.view.PreLoginViewPagerItemView: PreLoginViewPagerItemView(android.content.Context,android.util.AttributeSet)
+com.lingzhimobile.huodonghaowai.view.ResizableLayout
+com.lingzhimobile.huodonghaowai.view.ResizableLayout: ResizableLayout(android.content.Context,android.util.AttributeSet)
+com.lingzhimobile.huodonghaowai.view.ViewFlow
+com.lingzhimobile.huodonghaowai.view.ViewFlow: ViewFlow(android.content.Context)
+com.lingzhimobile.huodonghaowai.view.ViewFlow: ViewFlow(android.content.Context,int)
+com.lingzhimobile.huodonghaowai.view.ViewFlow: ViewFlow(android.content.Context,android.util.AttributeSet)
+com.lingzhimobile.huodonghaowai.view.ViewPagerItemView
+com.lingzhimobile.huodonghaowai.view.ViewPagerItemView: ViewPagerItemView(android.content.Context,android.util.AttributeSet)
 com.umeng.analytics.Gender: com.umeng.analytics.Gender[] values()
 com.umeng.analytics.Gender: com.umeng.analytics.Gender valueOf(java.lang.String)
 com.umeng.common.net.DownloadingService

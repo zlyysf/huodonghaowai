@@ -2,7 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="hello">Hello World!</string>
-    <string name="app_name">同去</string>
+    <string name="app_name">活动号外</string>
     <string name="school">学校</string>
     <string name="invite">邀请</string>
     <string name="invitation">邀请码</string>
@@ -192,7 +192,7 @@
     <string name="err21072">呃...你还没喜欢过这张照片</string>
     <string name="err21082">该电子邮件地址已经被使用，请重新选择新的电子邮件地址进行注册</string>
     <string name="err21083">用户名或密码错</string>
-    <string name="err21087">由于您的不合规使用，该的账号已经被停用。了解详细情况可发送邮件至hitongqu@126.com进行联系</string>
+    <string name="err21087">由于您的不合规使用，该的账号已经被停用。了解详细情况可发送邮件至support@huodonghaowai.com进行联系</string>
     <string name="err21088">前后端session不一致，用户Id不一致，请重新登陆</string>
     <string name="err21211">邀请码错误，请输入正确的邀请码</string>
     <string name="err21210">抱歉，此邀请码已失效</string>

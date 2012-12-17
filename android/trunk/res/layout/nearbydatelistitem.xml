@@ -22,7 +22,7 @@
                 android:layout_height="60dip"
                 android:src="@drawable/profile_photo" />
 
-            <com.lingzhimobile.tongqu.view.AutoResizeTextView
+            <com.lingzhimobile.huodonghaowai.view.AutoResizeTextView
                 android:id="@+id/tvUserName"
                 android:layout_width="60dip"
                 android:layout_height="wrap_content"

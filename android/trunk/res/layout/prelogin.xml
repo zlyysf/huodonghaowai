@@ -32,7 +32,7 @@
     </android.support.v4.view.ViewPager>
     -->
 
-    <com.lingzhimobile.tongqu.view.ViewFlow
+    <com.lingzhimobile.huodonghaowai.view.ViewFlow
         android:id="@+id/viewflow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

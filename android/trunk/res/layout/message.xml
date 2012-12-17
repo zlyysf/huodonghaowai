@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshListView
+        <com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshListView
             android:id="@+id/bouncyRefreshViewSend"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -59,7 +59,7 @@
             android:drawSelectorOnTop="false"
             android:fadingEdgeLength="0.0sp" />
 
-        <com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshListView
+        <com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshListView
             android:id="@+id/bouncyRefreshViewInvited"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -68,7 +68,7 @@
             android:drawSelectorOnTop="false"
             android:fadingEdgeLength="0.0sp" />
 
-        <com.lingzhimobile.tongqu.pulltorefresh.PullToRefreshListView
+        <com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshListView
             android:id="@+id/bouncyRefreshViewApply"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
