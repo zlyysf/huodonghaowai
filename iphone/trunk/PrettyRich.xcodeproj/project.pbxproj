@@ -21,10 +21,11 @@
 		5F0568C01630166A007D74A0 /* bulb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0568B816301667007D74A0 /* bulb@2x.png */; };
 		5F0568C11630166A007D74A0 /* leaf.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0568B916301667007D74A0 /* leaf.png */; };
 		5F0568C21630166A007D74A0 /* leaf@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0568BA1630166A007D74A0 /* leaf@2x.png */; };
-		5F196DBF165A4094003072E5 /* help1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F196DBB165A4094003072E5 /* help1.jpg */; };
-		5F196DC0165A4094003072E5 /* help2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F196DBC165A4094003072E5 /* help2.jpg */; };
-		5F196DC1165A4094003072E5 /* help3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F196DBD165A4094003072E5 /* help3.jpg */; };
-		5F196DC2165A4094003072E5 /* help4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F196DBE165A4094003072E5 /* help4.jpg */; };
+		5F196DBF165A4094003072E5 /* help1@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F196DBB165A4094003072E5 /* help1@2x.jpg */; };
+		5F196DC0165A4094003072E5 /* help2@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F196DBC165A4094003072E5 /* help2@2x.jpg */; };
+		5F196DC1165A4094003072E5 /* help3@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F196DBD165A4094003072E5 /* help3@2x.jpg */; };
+		5F196DC2165A4094003072E5 /* help4@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F196DBE165A4094003072E5 /* help4@2x.jpg */; };
+		5F1984CA167ECE3B00A537BF /* help@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F1984C9167ECE3B00A537BF /* help@2x.png */; };
 		5F2072CE15988E5F009AB5C6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F2072CD15988E5F009AB5C6 /* AudioToolbox.framework */; };
 		5F2B31E016759205008C5EF8 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B315816759205008C5EF8 /* FMDatabase.m */; };
 		5F2B31E116759205008C5EF8 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B315A16759205008C5EF8 /* FMDatabaseAdditions.m */; };
@@ -233,10 +234,11 @@
 		5F0568B816301667007D74A0 /* bulb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bulb@2x.png"; sourceTree = "<group>"; };
 		5F0568B916301667007D74A0 /* leaf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leaf.png; sourceTree = "<group>"; };
 		5F0568BA1630166A007D74A0 /* leaf@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leaf@2x.png"; sourceTree = "<group>"; };
-		5F196DBB165A4094003072E5 /* help1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = help1.jpg; sourceTree = "<group>"; };
-		5F196DBC165A4094003072E5 /* help2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = help2.jpg; sourceTree = "<group>"; };
-		5F196DBD165A4094003072E5 /* help3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = help3.jpg; sourceTree = "<group>"; };
-		5F196DBE165A4094003072E5 /* help4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = help4.jpg; sourceTree = "<group>"; };
+		5F196DBB165A4094003072E5 /* help1@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "help1@2x.jpg"; sourceTree = "<group>"; };
+		5F196DBC165A4094003072E5 /* help2@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "help2@2x.jpg"; sourceTree = "<group>"; };
+		5F196DBD165A4094003072E5 /* help3@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "help3@2x.jpg"; sourceTree = "<group>"; };
+		5F196DBE165A4094003072E5 /* help4@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "help4@2x.jpg"; sourceTree = "<group>"; };
+		5F1984C9167ECE3B00A537BF /* help@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "help@2x.png"; sourceTree = "<group>"; };
 		5F2072CD15988E5F009AB5C6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5F2B315716759205008C5EF8 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		5F2B315816759205008C5EF8 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
@@ -879,10 +881,11 @@
 				5FFD7FBE1677224E00F9221C /* separate-line@2x.png */,
 				5FFD7FC5167726C500F9221C /* login-button@2x.png */,
 				5FFD7FC6167726C500F9221C /* renren-button@2x.png */,
-				5F196DBB165A4094003072E5 /* help1.jpg */,
-				5F196DBC165A4094003072E5 /* help2.jpg */,
-				5F196DBD165A4094003072E5 /* help3.jpg */,
-				5F196DBE165A4094003072E5 /* help4.jpg */,
+				5F1984C9167ECE3B00A537BF /* help@2x.png */,
+				5F196DBB165A4094003072E5 /* help1@2x.jpg */,
+				5F196DBC165A4094003072E5 /* help2@2x.jpg */,
+				5F196DBD165A4094003072E5 /* help3@2x.jpg */,
+				5F196DBE165A4094003072E5 /* help4@2x.jpg */,
 				5F340A34164D011A00EEC488 /* user-head@2x.png */,
 				5FD8E4E31651098F00BA33CE /* MessageEntryBackground@2x.png */,
 				5FD8E4E11651098F00BA33CE /* MessageEntryInputField@2x.png */,
@@ -1259,10 +1262,10 @@
 				5FCB7919165356FC003C5D7C /* dateDefaultImg7.jpg in Resources */,
 				5FCB791A165356FC003C5D7C /* dateDefaultImg8.jpg in Resources */,
 				5FCB791B165356FC003C5D7C /* dateDefaultImg9.jpg in Resources */,
-				5F196DBF165A4094003072E5 /* help1.jpg in Resources */,
-				5F196DC0165A4094003072E5 /* help2.jpg in Resources */,
-				5F196DC1165A4094003072E5 /* help3.jpg in Resources */,
-				5F196DC2165A4094003072E5 /* help4.jpg in Resources */,
+				5F196DBF165A4094003072E5 /* help1@2x.jpg in Resources */,
+				5F196DC0165A4094003072E5 /* help2@2x.jpg in Resources */,
+				5F196DC1165A4094003072E5 /* help3@2x.jpg in Resources */,
+				5F196DC2165A4094003072E5 /* help4@2x.jpg in Resources */,
 				5F2B31F116759205008C5EF8 /* bottom-bar.png in Resources */,
 				5F2B31F216759205008C5EF8 /* bottom-bar@2x.png in Resources */,
 				5F2B31F316759205008C5EF8 /* close.png in Resources */,
@@ -1291,6 +1294,7 @@
 				5FFD7FD116782F3500F9221C /* share-unchecked@2x.png in Resources */,
 				5FFD7FDB1678469C00F9221C /* RenRenSignUpViewController.xib in Resources */,
 				5FFD800616789B2700F9221C /* school.plist in Resources */,
+				5F1984CA167ECE3B00A537BF /* help@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
