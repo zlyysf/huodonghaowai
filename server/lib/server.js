@@ -131,6 +131,10 @@ function Server () {
       function (req, res, next) { self._commonPreConfig(req, res, next);},
       function (req, res) { self.getConfig(req, res);});
 
+  self.app.post('/user/bind3rdPartAccount',
+      function (req, res, next) { self._commonPreConfig(req, res, next);},
+      //function (req, res, next) { self._checkLogInSessionStrict(req, res, next);},
+      function (req, res) { self.bind3rdPartAccount(req, res);});
   self.app.post('/user/generateInviteCodeD',
       function (req, res, next) { self._commonPreConfig(req, res, next);},
       //function (req, res, next) { self._checkLogInSessionStrict(req, res, next);},
@@ -744,8 +748,8 @@ Server.prototype.register = function(req, res) {
 //    }
 //  }
   if (req.body.accountRenRen){
-    if (!req.body.accessTokenRenRen){
-      var err = self.newError({errorKey:'needParameter',messageParams:['accessTokenRenRen'],messagePrefix:messagePrefix,req:req});
+    if (!req.body.renrenAuthJson){
+      var err = self.newError({errorKey:'needParameter',messageParams:['renrenAuthJson'],messagePrefix:messagePrefix,req:req});
       return self.handleError({err:err,req:req,res:res});
     }
   }
@@ -759,7 +763,7 @@ Server.prototype.register = function(req, res) {
   var deviceType = req.body.deviceType;
   var deviceId = req.body.deviceId;
   var accountRenRen = req.body.accountRenRen;
-  var accessTokenRenRen = req.body.accessTokenRenRen;
+  var renrenAuthJson = req.body.renrenAuthJson;
   var accountInfoJson = req.body.accountInfoJson;
   var hometown = req.body.hometown;
 //  var latlng = req.body.latlng;
@@ -772,7 +776,7 @@ Server.prototype.register = function(req, res) {
 
     gender = gender.toLowerCase();
     self.store.registerEmailAccount({req:req,emailAccount:emailAccount,password:password,
-    name:name,gender:gender,school:school, accountRenRen:accountRenRen, accessTokenRenRen:accessTokenRenRen, accountInfoJson:accountInfoJson,
+    name:name,gender:gender,school:school, accountRenRen:accountRenRen, renrenAuthJson:renrenAuthJson, accountInfoJson:accountInfoJson,
     deviceType:deviceType, deviceId:deviceId, hometown:hometown},function(err,userObj){
       if (err) return self.handleError({err:err,req:req,res:res});
       var userId = userObj.userId;
@@ -1000,11 +1004,11 @@ Server.prototype.logIn = function(req, res) {
   self.store.emailLogIn({req:req,emailAccount:emailAccount,password:password,deviceType:deviceType,deviceId:deviceId,
   userFields:['userId','name','gender','primaryPhotoId','height', 'school', 'studentNO', 'department', 'bloodGroup',
               'constellation', 'hometown', 'educationalStatus', 'description', 'goodRateCount'],
-  needPrimaryPhoto:true,primaryPhotoFields:['userId','photoPath']},function(err,userObj){
+  needPrimaryPhoto:true,primaryPhotoFields:['userId','photoPath']},function(err,userInfo){
     if (err) return self.handleError({err:err,req:req,res:res});
+    var userObj = userInfo.user;
     var userId = userObj.userId;
-    var retUserObj = tool.cloneObject(userObj);
-    var httpRetData = {status:'success',result:retUserObj};
+    var httpRetData = {status:'success',result:userInfo};
 //    var httpRetData = {status:'success',result:{
 //        userId:userId, name:userObj.name, height:userObj.height, gender:userObj.gender
 //      }};
@@ -1052,8 +1056,8 @@ Server.prototype.logInFromRenRen = function(req, res) {
     var err = self.newError({errorKey:'needParameter',messageParams:['accountRenRen'],messagePrefix:messagePrefix,req:req});
     return self.handleError({err:err,req:req,res:res});
   }
-  if (!req.body.accessTokenRenRen){
-    var err = self.newError({errorKey:'needParameter',messageParams:['accessTokenRenRen'],messagePrefix:messagePrefix,req:req});
+  if (!req.body.renrenAuthJson){
+    var err = self.newError({errorKey:'needParameter',messageParams:['renrenAuthJson'],messagePrefix:messagePrefix,req:req});
     return self.handleError({err:err,req:req,res:res});
   }
   if (!req.body.deviceType){
@@ -1065,10 +1069,10 @@ Server.prototype.logInFromRenRen = function(req, res) {
     return self.handleError({err:err,req:req,res:res});
   }
   var accountRenRen = req.body.accountRenRen;
-  var accessTokenRenRen = req.body.accessTokenRenRen;
+  var renrenAuthJson = req.body.renrenAuthJson;
   var deviceType = req.body.deviceType;
   var deviceId = req.body.deviceId;
-  self.store.renrenAccountLogIn({req:req,accountRenRen:accountRenRen,accessTokenRenRen:accessTokenRenRen,deviceType:deviceType,deviceId:deviceId,
+  self.store.renrenAccountLogIn({req:req,accountRenRen:accountRenRen,renrenAuthJson:renrenAuthJson,deviceType:deviceType,deviceId:deviceId,
   userFields:['userId','emailAccount','name','gender','primaryPhotoId','height', 'school', 'studentNO', 'department', 'bloodGroup',
               'constellation', 'hometown', 'educationalStatus', 'description', 'goodRateCount'],
   needPrimaryPhoto:true,primaryPhotoFields:['userId','photoPath']},function(err,userInfo){
@@ -1099,6 +1103,54 @@ Server.prototype.logInFromRenRen = function(req, res) {
     });//updateUserStatDailyActive
   });//renrenAccountLogIn
 };//logInFromRenRen
+
+
+
+/**
+*
+* @param req - contains userId, typeOf3rdPart(=renren), accountRenRen, renrenAuthJson, accountInfoJson(optional)
+* @param res
+* @returns
+*   {status:success|fail}
+*/
+Server.prototype.bind3rdPartAccount = function(req, res) {
+  var self = this;
+  //logger.logDebug("Server.bind3rdPartAccount entered, params in body="+util.inspect(req.body,false,100));
+  var messagePrefix = 'in Server.bind3rdPartAccount, ';
+  if (!req.body.userId){
+    var err = self.newError({errorKey:'needParameter',messageParams:['userId'],messagePrefix:messagePrefix,req:req});
+    return self.handleError({err:err,req:req,res:res});
+  }
+  if (!req.body.typeOf3rdPart){
+    var err = self.newError({errorKey:'needParameter',messageParams:['typeOf3rdPart'],messagePrefix:messagePrefix,req:req});
+    return self.handleError({err:err,req:req,res:res});
+  }
+  if (!req.body.accountRenRen){
+    var err = self.newError({errorKey:'needParameter',messageParams:['accountRenRen'],messagePrefix:messagePrefix,req:req});
+    return self.handleError({err:err,req:req,res:res});
+  }
+  if (!req.body.renrenAuthJson){
+    var err = self.newError({errorKey:'needParameter',messageParams:['renrenAuthJson'],messagePrefix:messagePrefix,req:req});
+    return self.handleError({err:err,req:req,res:res});
+  }
+
+  var userIdFront = req.body.userId;
+  var userId = req.session.userId;
+  if (userIdFront != userId){
+    var err = self.newError({errorKey:'sessionNotConsistent',messageParams:[''],messagePrefix:messagePrefix,req:req});
+    return self.handleError({err:err,req:req,res:res});
+  }
+  var typeOf3rdPart = req.body.typeOf3rdPart;
+  var accountRenRen = req.body.accountRenRen;
+  var renrenAuthJson = req.body.renrenAuthJson;
+  var accountInfoJson = req.body.accountInfoJson;
+  self.store.bindRenRenAccount({req:req,userId:userId,accountRenRen:accountRenRen,renrenAuthJson:renrenAuthJson,accountInfoJson:accountInfoJson},function(err){
+    if (err) return self.handleError({err:err,req:req,res:res});
+    var httpRetData = {status:'success'};
+    self.returnDataFromResponse({res:res,req:req,data:httpRetData});
+    return;
+  });//bindRenRenAccount
+};//bind3rdPartAccount
 
 
 

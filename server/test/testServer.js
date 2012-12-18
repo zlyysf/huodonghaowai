@@ -273,7 +273,7 @@ function busRegister1(params,cbFun){
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
           postDataObj:{emailAccount:emailAccount, password:password,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
             assert.ok(outData.status=="success");
-            userId1_2 = outData.result.userId;
+            userId1_2 = outData.result.user.userId;
             assert.ok(userId == userId1_2);
             next();
           });
@@ -320,10 +320,10 @@ function busRegister1(params,cbFun){
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
           postDataObj:{emailAccount:emailAccount, password:password,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
             assert.ok(outData.status=="success");
-            assert.ok(outData.result.name);
-            assert.ok(outData.result.primaryPhotoId);
-            assert.ok(outData.result.primaryPhotoPath);
-            assert.ok(outData.result.school);
+            assert.ok(outData.result.user.name);
+            assert.ok(outData.result.user.primaryPhotoId);
+            assert.ok(outData.result.user.primaryPhotoPath);
+            assert.ok(outData.result.user.school);
             next();
           });
         },
@@ -536,6 +536,8 @@ function testRenRenRegisterAndLogin1ClientSide(params,cbFun){
   });//busRenRenRegisterAndLogin1
 }//testRenRenRegisterAndLogin1ClientSide
 
+
+
 /**
  *
  * @param params - contains host,port; (optional) emailAccount,password,name,height,gender
@@ -557,7 +559,7 @@ function busRenRenRegisterAndLogin1(params,cbFun){
     var emailAccount = name+gMailHostPart;
     var password = gPassword;
     var accountRenRen = "accountRenRen";
-    var accessTokenRenRen = "accessTokenRenRen";
+    var renrenAuthJson = "renrenAuthJson";
     var accountInfoJson = "accountInfoJson";
     var gender = 'male';
     var school = gSchool;
@@ -578,7 +580,7 @@ function busRenRenRegisterAndLogin1(params,cbFun){
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/register',notLogResponseHere:null,
           postDataObj:{emailAccount:emailAccount, password:password, name:name, gender:gender,
           school:school, deviceType:deviceType, deviceId:deviceId, hometown:hometown,
-          accountRenRen:accountRenRen, accessTokenRenRen:accessTokenRenRen, accountInfoJson:accountInfoJson}},function(err,outData){
+          accountRenRen:accountRenRen, renrenAuthJson:renrenAuthJson, accountInfoJson:accountInfoJson}},function(err,outData){
             assert.ok(outData.status=="success");
             userId = outData.result.userId;
             next();
@@ -598,7 +600,8 @@ function busRenRenRegisterAndLogin1(params,cbFun){
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
           postDataObj:{emailAccount:emailAccount, password:password,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
             assert.ok(outData.status=="success");
-            assert.ok(userId == outData.result.userId);
+            assert.ok(userId == outData.result.user.userId);
+            assert.ok(accountRenRen == outData.result.renrenAccount.accountRenRen);
             next();
           });
         },
@@ -623,7 +626,7 @@ function busRenRenRegisterAndLogin1(params,cbFun){
         function(next){
           console.log("\nnormal logInFromRenRen, should ok.");
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logInFromRenRen',notLogResponseHere:null,
-          postDataObj:{accountRenRen:accountRenRen, accessTokenRenRen:accessTokenRenRen,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
+          postDataObj:{accountRenRen:accountRenRen, renrenAuthJson:renrenAuthJson,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
             assert.ok(outData.status=="success");
             assert.ok(outData.result.userExist);
             assert.ok(userId == outData.result.user.userId);
@@ -633,9 +636,20 @@ function busRenRenRegisterAndLogin1(params,cbFun){
         },
 
         function(next){
+          console.log("\nbind3rdPartAccount again, should fail.");
+          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/bind3rdPartAccount',notLogResponseHere:null,
+          postDataObj:{userId:userId,typeOf3rdPart:"renren",accountRenRen:accountRenRen, renrenAuthJson:renrenAuthJson}},function(err,outData){
+            assert.ok(outData.status=="fail");
+            var errInfo = config.config.errors["userAlreadyBindThisRenRenAccount"];
+            assert.ok(outData.code==errInfo.code);
+            next();
+          });
+        },
+
+        function(next){
           console.log("\nlogInFromRenRen with not registered renren user, should ok but return user not exist.");
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logInFromRenRen',notLogResponseHere:null,
-          postDataObj:{accountRenRen:accountRenRen+"XX", accessTokenRenRen:accessTokenRenRen,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
+          postDataObj:{accountRenRen:accountRenRen+"XX", renrenAuthJson:renrenAuthJson,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
             assert.ok(outData.status=="success");
             assert.ok(!outData.result.userExist);
             next();
@@ -655,6 +669,186 @@ function busRenRenRegisterAndLogin1(params,cbFun){
 }//busRenRenRegisterAndLogin1
 
 
+
+
+/**
+*
+* @param params - contains (optional)port, ..
+*     @see busRenRenRegisterAndLogin1
+* @param next - is function(next)
+*/
+function testRenRenBind2LocalBothSides(params,next){
+  handy.log('blue', "running testRenRenBind2LocalBothSides");
+  if (!params) params = {};
+  params.host = 'localhost';
+  if (!params.port) params.port = port;
+  if (!params.securePort) params.securePort = securePort;
+  testlib.setConfigDefaultValue();
+  if (params.disableNotification){
+    notification.config.finelyEnableFlag = false;
+    waitMsTimeOfSendNotification = 10;
+  }
+  testlib.provideServerLifeCycle(
+    {port:params.port,securePort:params.securePort, needInitStore:true, NeedSetConfigDefault:false, notKeepC2dmAuth:true, c2dmAuth:gC2dmAuth},
+    function(cbNext){
+      testRenRenBind2ClientSide(params,function(outData){
+        if (cbNext) cbNext();
+      });
+    },
+    next
+  );//provideServerLifeCycle
+}//testRenRenBind2LocalBothSides
+
+/**
+ * as there is no socket.io, no complicate logic
+ * @param params - contains host,port; ..
+ *     @see busRenRenBind2
+ * @param cbFun - is function(outData)
+ *   outData contains ..
+ */
+function testRenRenBind2ClientSide(params,cbFun){
+  handy.log('blue', "testRenRenBind2ClientSide enter");
+  assert.ok(params.host);
+  assert.ok(params.port);
+  assert.ok(params.securePort);
+  busRenRenBind2(params,function(outDataBus){
+    if (cbFun) cbFun(outDataBus);
+  });//busRenRenBind2
+}//testRenRenBind2ClientSide
+
+/**
+*
+* @param params - contains host,port; (optional) emailAccount,password,name,height,gender
+* @param cbFun - is function(outData)
+*   outData contains deviceId,addDeviceOutData,addUserOutData
+*/
+function busRenRenBind2(params,cbFun){
+   handy.log('blue', "busRenRenBind2 enter");
+   assert.ok(params.host);
+   assert.ok(params.port);
+   assert.ok(params.securePort);
+   var host = params.host;
+   var port = params.port;
+   var securePort = params.securePort;
+   var uploadReally = params.uploadReally;
+
+   var nowTime = handy.getNowOfUTCdate().getTime();
+   var name = "name"+nowTime;
+   var emailAccount = name+gMailHostPart;
+   var password = gPassword;
+   var accountRenRen = "accountRenRen";
+   var renrenAuthJson = "renrenAuthJson";
+   var accountInfoJson = "accountInfoJson";
+   var gender = 'male';
+   var school = gSchool;
+   var deviceType = gDeviceType;
+   var deviceId = "deviceId";
+   var hometown = "hometown";
+   //var studentNO = 'studentNO';
+   var height = 1.61;
+   var height1_2 = 1.62;
+   var bloodGroup = "bloodGroup";
+
+
+   var userId = null;
+   var photoIdU1_2;
+
+   handy.pipeline(
+       function(next){
+         testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/register',notLogResponseHere:null,
+         postDataObj:{emailAccount:emailAccount, password:password, name:name, gender:gender,
+         school:school, deviceType:deviceType, deviceId:deviceId, hometown:hometown}},function(err,outData){
+           assert.ok(outData.status=="success");
+           userId = outData.result.userId;
+           next();
+         });
+       },
+
+       function(next){
+         console.log("\nnormal bind3rdPartAccount, should success.");
+         testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/bind3rdPartAccount',notLogResponseHere:null,
+         postDataObj:{userId:userId,typeOf3rdPart:"renren",accountRenRen:accountRenRen, renrenAuthJson:renrenAuthJson}},function(err,outData){
+           assert.ok(outData.status=="success");
+           next();
+         });
+       },
+
+       function(next){
+         console.log("\nbind3rdPartAccount again, should fail.");
+         testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/bind3rdPartAccount',notLogResponseHere:null,
+         postDataObj:{userId:userId,typeOf3rdPart:"renren",accountRenRen:accountRenRen, renrenAuthJson:renrenAuthJson}},function(err,outData){
+           assert.ok(outData.status=="fail");
+           var errInfo = config.config.errors["userAlreadyBindThisRenRenAccount"];
+           assert.ok(outData.code==errInfo.code);
+           next();
+         });
+       },
+
+       function(next){
+         console.log("\nnormal logout 1, should ok.");
+         testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/logOut',notLogResponseHere:null,
+         postDataObj:{}},function(err,outData){
+           assert.ok(outData.status=="success");
+           next();
+         });
+       },
+
+       function(next){
+         console.log("\nnormal logIn, should ok.");
+         testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
+         postDataObj:{emailAccount:emailAccount, password:password,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
+           assert.ok(outData.status=="success");
+           assert.ok(userId == outData.result.user.userId);
+           assert.ok(accountRenRen == outData.result.renrenAccount.accountRenRen);
+           next();
+         });
+       },
+
+       function(next){
+         console.log("\nnormal logout 2, should ok.");
+         testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/logOut',notLogResponseHere:null,
+         postDataObj:{}},function(err,outData){
+           assert.ok(outData.status=="success");
+           next();
+         });
+       },
+
+       function(next){
+         console.log("\nnormal logInFromRenRen, should ok.");
+         testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logInFromRenRen',notLogResponseHere:null,
+         postDataObj:{accountRenRen:accountRenRen, renrenAuthJson:renrenAuthJson,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
+           assert.ok(outData.status=="success");
+           assert.ok(outData.result.userExist);
+           assert.ok(userId == outData.result.user.userId);
+           assert.ok(emailAccount == outData.result.user.emailAccount);
+           next();
+         });
+       },
+
+
+
+
+       function(next){
+         console.log("\nlogInFromRenRen with not registered renren user, should ok but return user not exist.");
+         testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logInFromRenRen',notLogResponseHere:null,
+         postDataObj:{accountRenRen:accountRenRen+"XX", renrenAuthJson:renrenAuthJson,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
+           assert.ok(outData.status=="success");
+           assert.ok(!outData.result.userExist);
+           next();
+         });
+       },
+
+
+       function(next){
+         //DoAssert
+         next();
+       },
+       function(){
+         var outData = {};
+         if (cbFun) cbFun(outData);
+       }
+   );//handy.pipeline
+}//busRenRenBind2
 
 
 /**
@@ -776,9 +970,9 @@ function busUploadPhoto1(params,cbFun){
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
           postDataObj:{emailAccount:emailAccount, password:password,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
             assert.ok(outData.status=="success");
-            assert.ok(outData.result.name);
-            assert.ok(outData.result.primaryPhotoId);
-            assert.ok(outData.result.primaryPhotoPath);
+            assert.ok(outData.result.user.name);
+            assert.ok(outData.result.user.primaryPhotoId);
+            assert.ok(outData.result.user.primaryPhotoPath);
             next();
           });
         },
@@ -947,7 +1141,7 @@ function busSession1(params,cbFun){
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logIn',notLogResponseHere:null,
           postDataObj:{emailAccount:emailAccount, password:password,deviceType:deviceType,deviceId:gDeviceId}},function(err,outData){
             assert.ok(outData.status=="success");
-            userId1_2 = outData.result.userId;
+            userId1_2 = outData.result.user.userId;
             assert.ok(userId == userId1_2);
             next();
           });
@@ -8625,7 +8819,8 @@ testlib.backConfigDefaultValue();
 
 //testJustStartStopServer();
 //testRegister1LocalBothSides({disableNotification:true,uploadReally:false},null);
-testRenRenRegisterAndLogin1LocalBothSides({disableNotification:true,uploadReally:false},null);
+//testRenRenRegisterAndLogin1LocalBothSides({disableNotification:true,uploadReally:false},null);
+testRenRenBind2LocalBothSides({disableNotification:true,uploadReally:false},null);
 //testUploadPhoto1LocalBothSides({disableNotification:true,uploadReally:false},null);
 
 //testSession1LocalBothSides({disableNotification:true,uploadReally:false},null);

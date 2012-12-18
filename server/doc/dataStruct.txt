@@ -83,7 +83,7 @@ Out:
 关于注册的一些说明。目前v1.1版决定是用户必须要注册进来才能正常使用各种功能。如果不注册，可以看很有限的东西。注册目前只使用email注册。
 这与v1.0版有了很大的不同。从而，deviceId是用不着了。
 
-Bind3rdPartAccount
+bind3rdPartAccount
 In: 
 { userId, typeOf3rdPart(=renren), accountRenRen, renrenAuthJson, accountInfoJson(optional)}
 Out:

@@ -2782,6 +2782,65 @@ Redis.prototype.getUserIdByRenRenAccount = function(params, callback) {
   });//client.hget
 };//getUserIdByRenRenAccount
 
+
+/**
+*
+* @param {Object} params - contains accountRenRen, renrenAccountFields
+* @param {Function} callback - is function(err,renrenAccountInfo)
+*   if the accountRenRen has no correspond data, renrenAccountInfo will be null.
+*
+*/
+Redis.prototype.getRenRenAccount = function(params, callback) {
+  var self = this;
+  //logger.logDebug("Redis.getRenRenAccount entered, params="+handy.inspectWithoutBig(params));
+  var messagePrefix = 'in Redis.getRenRenAccount, ';
+  if(!callback){
+    var err = self.newError({errorKey:'needCallbackFunction',messagePrefix:messagePrefix});
+    return self.handleError({err:err});
+  }
+  var req = params.req;
+  if (!params.accountRenRen){
+    var err = self.newError({errorKey:'needParameter',messageParams:['accountRenRen'],messagePrefix:messagePrefix,req:req});
+    return callback(err);
+  }
+  var accountRenRen = params.accountRenRen;
+  var renrenAccountFields = params.renrenAccountFields;
+  var uerRenRenKey = 'userRenRen:'+accountRenRen;
+
+  if(renrenAccountFields && renrenAccountFields.length > 0){
+    var shouldExistFields = ['userId'];
+    renrenAccountFields = handy.unionArray({ary1:renrenAccountFields, ary2:shouldExistFields});
+  }
+
+  var multi = self.client.multi();
+  if(renrenAccountFields && renrenAccountFields.length > 0){
+    var getRenrenAccountFields = renrenAccountFields.slice(0);
+    getRenrenAccountFields.unshift(uerRenRenKey);
+    multi.hmget(getRenrenAccountFields);
+  }else{
+    multi.hgetall(uerRenRenKey);
+  }
+
+  multi.exec(function(err, retData) {
+    if (err){
+      var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
+      return callback(err2);
+    }
+    var renrenAccountInfo = retData[0];
+    var renrenHash = null;
+    if (renrenAccountFields && renrenAccountFields.length > 0){
+      renrenHash = handy.toHashWith2Array({keyArray:renrenAccountFields, valueArray:renrenAccountInfo});
+    }else{
+      renrenHash = renrenAccountInfo;
+    }
+    renrenHash = handy.removeNullFieldFor1Level(renrenHash);
+    //logger.logDebug("in Redis.getRenRenAccount multi.exec callback, renrenHash="+util.inspect(renrenHash,false,100));
+    if (!renrenHash || !renrenHash.userId) return callback(null,null);
+    return callback(null,renrenHash);
+  });//multi.exec
+};//getRenRenAccount
+
+
 /**
 *
 * @param {Object} params - contains count, userId, expireTime
@@ -2901,7 +2960,7 @@ Redis.prototype.getInviteCodeInfoD = function(params, callback){
 /**
  * if provided accountRenRen, will store renren.com account info.
  * @param {Object} params - contains emailAccount, password, inviteCode, name, gender, school, schoolId(optional),
- *   deviceType, deviceId, accountRenRen(optional), accessTokenRenRen(optional), accountInfoJson(optional), hometown(optional).
+ *   deviceType, deviceId, accountRenRen(optional), renrenAuthJson(optional), accountInfoJson(optional), hometown(optional).
  * @param {Function} callback - is function(err,userObj)
  *   userObj contains userId,createTime,...
  */
@@ -2964,7 +3023,7 @@ Redis.prototype.registerEmailAccount = function(params, callback) {
   var deviceType = params.deviceType;
   var deviceId = params.deviceId;
   var accountRenRen = params.accountRenRen;
-  var accessTokenRenRen = params.accessTokenRenRen;
+  var renrenAuthJson = params.renrenAuthJson;
   var accountInfoJson = params.accountInfoJson;
 //  var latlng = params.latlng;
 //  var region = params.region;
@@ -2976,7 +3035,7 @@ Redis.prototype.registerEmailAccount = function(params, callback) {
 
   function checkAccountRenRen(cbFun){
     if (!accountRenRen) return cbFun(null);
-    //TODO access renren.com to verify accessTokenRenRen and accountRenRen
+    //TODO access renren.com to verify renrenAuthJson and accountRenRen
     self.getUserIdByRenRenAccount({accountRenRen:accountRenRen},function(err,userId){
       if (err) return cbFun(err);
       if (userId){
@@ -3027,7 +3086,7 @@ Redis.prototype.registerEmailAccount = function(params, callback) {
         multi.hset(emailToUserKey,emailAccount,userId);
         if (accountRenRen){
           var userRenRenKey = 'userRenRen:'+accountRenRen;
-          var userRenRenObj = {userId:userId, accountRenRen:accountRenRen, createTime:createTime+'', accessTokenRenRen:accessTokenRenRen};
+          var userRenRenObj = {userId:userId, accountRenRen:accountRenRen, createTime:createTime+'', renrenAuthJson:renrenAuthJson};
           if (accountInfoJson) userRenRenObj.accountInfoJson = accountInfoJson;
           var paramsUserRenRen = handy.toArray(userRenRenKey,userRenRenObj);
           multi.hmset(paramsUserRenRen);
@@ -3051,7 +3110,8 @@ Redis.prototype.registerEmailAccount = function(params, callback) {
 /**
  *
  * @param {Object} params - contains emailAccount, password, deviceType, deviceId, userFields, needPrimaryPhoto, primaryPhotoFields
- * @param {Function} callback - is function(err,userObj)
+ * @param {Function} callback - is function(err,userInfo)
+ *   userInfo contains user, renrenAccount
  *
  */
 Redis.prototype.emailLogIn = function(params, callback) {
@@ -3095,7 +3155,7 @@ Redis.prototype.emailLogIn = function(params, callback) {
       else return self.handleError({err:err});
     }
     if (userFields){
-      var shouldExistFields = ['userId','password','disabled'];
+      var shouldExistFields = ['userId','password','disabled','accountRenRen'];
       userFields = handy.unionArray({ary1:userFields, ary2:shouldExistFields});
     }
 
@@ -3122,14 +3182,31 @@ Redis.prototype.emailLogIn = function(params, callback) {
         if (callback) return callback(err);
         else return self.handleError({err:err});
       }
-      self.updateUser({req:req,userId:userId,updateFields:{deviceType:deviceType,currentDeviceId:deviceId,lastLoginTime:nowTime+''}}, function(err){
+
+      function getRenRenAccountInfo(cbFun){
+        if (!userObj.accountRenRen)  return cbFun(null,null);
+        self.getRenRenAccount({accountRenRen:userObj.accountRenRen,renrenAccountFields:['userId','accountRenRen','renrenAuthJson']}, function(err,renrenAccountInfo){
+          return cbFun(err,renrenAccountInfo);
+        });//getRenRenAccount
+        return;
+      };//getRenRenAccountInfo
+
+      getRenRenAccountInfo(function(err,renrenAccountInfo){
         if (err){
           if (callback) return callback(err);
           else return self.handleError({err:err});
         }
-        if (callback) return callback(null, userObj);
-        return;
-      });//self.updateUser
+        self.updateUser({req:req,userId:userId,updateFields:{deviceType:deviceType,currentDeviceId:deviceId,lastLoginTime:nowTime+''}}, function(err){
+          if (err){
+            if (callback) return callback(err);
+            else return self.handleError({err:err});
+          }
+          var userInfo = {user:userObj};
+          if (renrenAccountInfo) userInfo.renrenAccount = renrenAccountInfo;
+          if (callback) return callback(null, userInfo);
+          return;
+        });//self.updateUser
+      });//getRenRenAccountInfo
     });//getUser
   });//getUserIdByEmailAccount
 };//emailLogIn
@@ -3137,7 +3214,7 @@ Redis.prototype.emailLogIn = function(params, callback) {
 
 /**
 *
-* @param {Object} params - contains accountRenRen, accessTokenRenRen, deviceType, deviceId, userFields, needPrimaryPhoto, primaryPhotoFields
+* @param {Object} params - contains accountRenRen, renrenAuthJson, deviceType, deviceId, userFields, needPrimaryPhoto, primaryPhotoFields
 * @param {Function} callback - is function(err,userInfo)
 *   userInfo contains userExist, user.
 *
@@ -3155,8 +3232,8 @@ Redis.prototype.renrenAccountLogIn = function(params, callback) {
     var err = self.newError({errorKey:'needParameter',messageParams:['accountRenRen'],messagePrefix:messagePrefix,req:req});
     return callback(err);
   }
-  if (!params.accessTokenRenRen){
-    var err = self.newError({errorKey:'needParameter',messageParams:['accessTokenRenRen'],messagePrefix:messagePrefix,req:req});
+  if (!params.renrenAuthJson){
+    var err = self.newError({errorKey:'needParameter',messageParams:['renrenAuthJson'],messagePrefix:messagePrefix,req:req});
     return callback(err);
   }
   if (!params.deviceType){
@@ -3168,13 +3245,13 @@ Redis.prototype.renrenAccountLogIn = function(params, callback) {
     return callback(err);
   }
   var accountRenRen = params.accountRenRen;
-  var accessTokenRenRen = params.accessTokenRenRen;
+  var renrenAuthJson = params.renrenAuthJson;
   var deviceType = params.deviceType;
   var deviceId = params.deviceId;
   var userFields = params.userFields;
   var needPrimaryPhoto = params.needPrimaryPhoto;
   var primaryPhotoFields = params.primaryPhotoFields;
-  //TODO verify accessTokenRenRen with renren api
+  //TODO verify renrenAuthJson with renren api
 
   var nowTime = handy.getNowOfUTCdate().getTime();
   self.getUserIdByRenRenAccount({req:req, accountRenRen:accountRenRen}, function(err,userId){
@@ -3206,6 +3283,88 @@ Redis.prototype.renrenAccountLogIn = function(params, callback) {
     });//getUser
   });//getUserIdByRenRenAccount
 };//renrenAccountLogIn
+
+
+
+/**
+* only support bind, no unbind, no change bind.
+* @param {Object} params - contains userId, accountRenRen, renrenAuthJson, accountInfoJson(optional)
+* @param {Function} callback - is function(err)
+*/
+Redis.prototype.bindRenRenAccount = function(params, callback) {
+  var self = this;
+  var messagePrefix = 'in Redis.bindRenRenAccount, ';
+  var req = params.req;
+  //logger.logDebug("Redis.bindRenRenAccount entered, params="+util.inspect(params,false,100));
+  if(!callback){
+    var err = self.newError({errorKey:'needCallbackFunction',messagePrefix:messagePrefix});
+    return self.handleError({err:err});
+  }
+  if (!params.userId){
+    var err = self.newError({errorKey:'needParameter',messageParams:['userId'],messagePrefix:messagePrefix,req:req});
+    return callback(err);
+  }
+  if (!params.accountRenRen){
+    var err = self.newError({errorKey:'needParameter',messageParams:['accountRenRen'],messagePrefix:messagePrefix,req:req});
+    return callback(err);
+  }
+  if (!params.renrenAuthJson){
+    var err = self.newError({errorKey:'needParameter',messageParams:['renrenAuthJson'],messagePrefix:messagePrefix,req:req});
+    return callback(err);
+  }
+  var userId = params.userId;
+  var accountRenRen = params.accountRenRen;
+  var renrenAuthJson = params.renrenAuthJson;
+  var accountInfoJson = params.accountInfoJson;
+  self.getUser({userId:userId,userFields:['userId','accountRenRen']}, function(err,userObj){
+    if (err) return callback(err);
+    if (!userObj || !userObj.userId){
+      var err = self.newError({errorKey:'userNotExist',messageParams:[userId],messagePrefix:messagePrefix,req:req});
+      return callback(err);
+    }
+    if (userObj.accountRenRen){
+      var err = null;
+      if (userObj.accountRenRen==accountRenRen){
+        err = self.newError({errorKey:'userAlreadyBindThisRenRenAccount',messageParams:[],messagePrefix:messagePrefix,req:req});
+      }else{
+        err = self.newError({errorKey:'userAlreadyBindOtherRenRenAccount',messageParams:[],messagePrefix:messagePrefix,req:req});
+      }
+      return callback(err);
+    }
+    self.getRenRenAccount({accountRenRen:accountRenRen, renrenAccountFields:['userId','accountRenRen']}, function(err,renrenAccountInfo){
+      if (err) return callback(err);
+      if (renrenAccountInfo){
+        if (renrenAccountInfo.userId == userId){
+          err = self.newError({errorKey:'theRenRenAccountAlreadyBindThisUser',messageParams:[accountRenRen],messagePrefix:messagePrefix,req:req});
+          return callback(err);
+        }else{
+          err = self.newError({errorKey:'theRenRenAccountAlreadyBindOtherUser',messageParams:[],messagePrefix:messagePrefix,req:req});
+          return callback(err);
+        }
+      }
+      var nowTime = handy.getNowOfUTCdate().getTime();
+      var multi = self.client.multi();
+      var userKey = "user:"+userId;
+      multi.hset(userKey,'accountRenRen',accountRenRen);
+      var userRenRenKey = 'userRenRen:'+accountRenRen;
+      var userRenRenObj = {userId:userId, accountRenRen:accountRenRen, createTime:nowTime+'', renrenAuthJson:renrenAuthJson};
+      if (accountInfoJson) userRenRenObj.accountInfoJson = accountInfoJson;
+      var paramsUserRenRen = handy.toArray(userRenRenKey,userRenRenObj);
+      multi.hmset(paramsUserRenRen);
+      multi.incr('userRenRenCount');
+      multi.exec(function(err,multiRetValues){
+        if (err){
+          var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
+          if (callback) return callback(err2);
+          else return self.handleError({err:err2});
+        }
+        return callback(null);
+      });//multi.exec
+    });//getRenRenAccount
+  });//getUser
+};//bindRenRenAccount
+
+
 
 
 

@@ -401,6 +401,16 @@ var config = exports.config = {
       'renrenAccountAlreadyRegistered' : {code:'21300', message:'the renren account({0}) has already been registered.',
           msg_zh:"这个人人帐号({0})已经被注册"},
 
+      'userAlreadyBindThisRenRenAccount' : {code:'21301', message:'the user has already been bound with this renren account.',
+          msg_zh:"用户已经与这个人人帐号绑定"},
+      'userAlreadyBindOtherRenRenAccount' : {code:'21302', message:'the user has already been bound with other renren account.',
+          msg_zh:"用户已经与其它的人人帐号绑定"},
+      'theRenRenAccountAlreadyBindThisUser' : {code:'21303', message:'the renren account has already been bound with this user.',
+          msg_zh:"这个人人帐号已经与这个用户绑定"},
+      'theRenRenAccountAlreadyBindOtherUser' : {code:'21304', message:'the renren account has already been bound with other user.',
+          msg_zh:"这个人人帐号已经与其他的用户绑定"},
+
+
       'invalidResetPasswordCode' : {code:'30000', message:'invalid reset password code',
           msg_zh:"不正确的重置密码编码"},
       'invalidResetPasswordInfo' : {code:'30001', message:'invalid reset password info',
