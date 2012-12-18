@@ -67,7 +67,7 @@
     self.activityIndicator.hidden = YES;
     imageDownloadManager = [[ImagesDownloadManager alloc] init];
     imageDownloadManager.imageDownloadDelegate = self;
-
+    
     if(self.uploadImage != nil)
     {
         self.renrenPhotoUrl = nil;
@@ -137,7 +137,7 @@
 	self.curConnection = aConn;
 	[aConn release];
     self.lastActiveField = nil;
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChanged:) name:UITextFieldTextDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -169,11 +169,11 @@
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate.imageCache setObject:downloader.downloadImage forKey:downloader.imageUrl];
         if (renrenPhotoUrl != nil && [renrenPhotoUrl isEqualToString:downloader.imageUrl])
-            {
-                self.uploadImage = downloader.downloadImage;
-                [self.photoImageView setImage:self.uploadImage];
-                self.photoSelected = YES;
-            }
+        {
+            self.uploadImage = downloader.downloadImage;
+            [self.photoImageView setImage:self.uploadImage];
+            self.photoSelected = YES;
+        }
     }
     [imageDownloadManager removeOneDownloadWithUrl:downloader.imageUrl];
 }
@@ -382,8 +382,24 @@
         [errorAlert release];
         return;
     }
-    NSString * deviceUID = [[UIDevice currentDevice] uniqueIdentifier];
     NSString *sessionId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
+    Renren *renren = [Renren sharedRenren];
+    NSMutableDictionary *renrenAuthJson = [[NSMutableDictionary alloc]initWithCapacity:5];
+    if (renren.accessToken) {
+        [renrenAuthJson setObject:renren.accessToken forKey:@"access_Token"];
+    }
+	if (renren.expirationDate) {
+		[renrenAuthJson setObject:renren.expirationDate forKey:@"expiration_Date"];
+	}
+    if (renren.sessionKey) {
+        [renrenAuthJson setObject:renren.sessionKey forKey:@"session_Key"];
+    }
+    if (renren.secret) {
+        [renrenAuthJson setObject:renren.secret forKey:@"secret_Key"];
+    }
+	[renrenAuthJson setObject:sessionId forKey:@"session_UserId"];
+    NSString * deviceUID = [[UIDevice currentDevice] uniqueIdentifier];
+    
     NSDictionary *dict =[[NSDictionary alloc]initWithObjectsAndKeys:
                          deviceUID,@"deviceId",
                          self.emailAccount,@"emailAccount",
@@ -394,9 +410,10 @@
                          self.inviteCode,@"hometown",
                          @"iphone",@"deviceType",
                          sessionId,@"accountRenRen",
-                         [Renren sharedRenren].accessToken,@"accessTokenRenRen",
+                         renrenAuthJson,@"accountInfoJson",
                          self.accountInfoJson,@"accountInfoJson",
                          nil];
+    [renrenAuthJson release];
     NSLog(@"register param :%@",[dict description]);
     self.view.userInteractionEnabled = NO;
     [curConnection cancelDownload];
@@ -553,25 +570,25 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-//    if (textField.tag == 101)
-//    {
-//        [passwordTextField becomeFirstResponder];
-//        return YES;
-//    }
-//    else if(textField.tag == 102)
-//    {
-//        [firstnameTextField becomeFirstResponder];
-//        return YES;
-//    }
-//    else if(textField.tag == 103)
-//    {
-//        [heightTextField becomeFirstResponder];
-//        return YES;
-//    }
-//    else
-//    {
-//        [codeTextField resignFirstResponder];
-//    }
+    //    if (textField.tag == 101)
+    //    {
+    //        [passwordTextField becomeFirstResponder];
+    //        return YES;
+    //    }
+    //    else if(textField.tag == 102)
+    //    {
+    //        [firstnameTextField becomeFirstResponder];
+    //        return YES;
+    //    }
+    //    else if(textField.tag == 103)
+    //    {
+    //        [heightTextField becomeFirstResponder];
+    //        return YES;
+    //    }
+    //    else
+    //    {
+    //        [codeTextField resignFirstResponder];
+    //    }
 	
     return YES;
 }
