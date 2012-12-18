@@ -44,7 +44,7 @@ Out:
 	  result:{
           user:{userId, name, gender, primaryPhotoId, primaryPhotoPath,
 	height, school, studentNO, department, bloodGroup, constellation, hometown, educationalStatus, description, goodRateCount}
-	      renrenAccount:{accountRenRen, renrenAuthJson}
+	      renrenAccount:{accountRenRen, renrenAuthObj}
   }
 }
 注意login之后，每次其他的api调用需要传递userId。
@@ -52,7 +52,7 @@ Out:
 目前session使用express提供的cookie方式。这样，login之后，userId用不着传了，
 logInFromRenRen(https)
 In: 
-{ accountRenRen, renrenAuthJson, deviceType(android|iphone), deviceId }
+{ accountRenRen, renrenAuthObj, deviceType(android|iphone), deviceId }
 accountRenRen 是人人那边返回数据中的uid.
 Out:
 { status:success|fail, 
@@ -73,7 +73,7 @@ Out:
 register(https)
 没有学号，以后认证功能再看。
 In: 
-{ emailAccount, password, inviteCode(optional), name, height, gender, school, studentNO, deviceType(android|iphone), deviceId, hometown(optional), accountRenRen, renrenAuthJson, accountInfoJson(optional)(star, vip, )
+{ emailAccount, password, inviteCode(optional), name, height, gender, school, studentNO, deviceType(android|iphone), deviceId, hometown(optional), accountRenRen, renrenAuthObj, accountInfoObj(optional)(star, vip, )
 	latlng(optional), region(is a json object)(optional), geolibType(=ios| android| google| googleV3)(optional)
 }
 当 region=madeRegion 时，表明这个用户是造出来的一个假用户。
@@ -85,7 +85,7 @@ Out:
 
 bind3rdPartAccount
 In: 
-{ userId, typeOf3rdPart(=renren), accountRenRen, renrenAuthJson, accountInfoJson(optional)}
+{ userId, typeOf3rdPart(=renren), accountRenRen, renrenAuthObj, accountInfoObj(optional)}
 Out:
 { status:success|fail, result:{ }
 }
@@ -785,7 +785,7 @@ UserRenRen
 注意虽然通过人人帐户注册，也需要填邮箱及密码以生成本系统的User。
 userRenRenCount    string
 userRenRen:accountId    hash
-	userId(关联本系统的user), accountRenRen, createTime, renrenAuthJson, accountInfoJson(是存取到的人人帐户的所有信息，format成一个json的字符串存下来，虽然有些东西会提取出来，但这里保存一份原版的)
+	userId(关联本系统的user), accountRenRen, createTime, renrenAuthJson(注意一般从前端传过来的是object，而存起来是要以json格式的字符串保存), accountInfoJson(是存取到的人人帐户的所有信息，format成一个json的字符串存下来，虽然有些东西会提取出来，但这里保存一份原版的)
 	
 User3rdAccount
 后台先不管这个功能，前端那边处理即可。Facebook的帐号每次都让用户输入。

@@ -559,8 +559,8 @@ function busRenRenRegisterAndLogin1(params,cbFun){
     var emailAccount = name+gMailHostPart;
     var password = gPassword;
     var accountRenRen = "accountRenRen";
-    var renrenAuthJson = "renrenAuthJson";
-    var accountInfoJson = "accountInfoJson";
+    var renrenAuthObj = {f1:"renrenAuthJson"};
+    var accountInfoObj = {f1:"accountInfoJson"};
     var gender = 'male';
     var school = gSchool;
     var deviceType = gDeviceType;
@@ -580,7 +580,7 @@ function busRenRenRegisterAndLogin1(params,cbFun){
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/register',notLogResponseHere:null,
           postDataObj:{emailAccount:emailAccount, password:password, name:name, gender:gender,
           school:school, deviceType:deviceType, deviceId:deviceId, hometown:hometown,
-          accountRenRen:accountRenRen, renrenAuthJson:renrenAuthJson, accountInfoJson:accountInfoJson}},function(err,outData){
+          accountRenRen:accountRenRen, renrenAuthObj:renrenAuthObj, accountInfoObj:accountInfoObj}},function(err,outData){
             assert.ok(outData.status=="success");
             userId = outData.result.userId;
             next();
@@ -626,7 +626,7 @@ function busRenRenRegisterAndLogin1(params,cbFun){
         function(next){
           console.log("\nnormal logInFromRenRen, should ok.");
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logInFromRenRen',notLogResponseHere:null,
-          postDataObj:{accountRenRen:accountRenRen, renrenAuthJson:renrenAuthJson,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
+          postDataObj:{accountRenRen:accountRenRen, renrenAuthObj:renrenAuthObj,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
             assert.ok(outData.status=="success");
             assert.ok(outData.result.userExist);
             assert.ok(userId == outData.result.user.userId);
@@ -638,7 +638,7 @@ function busRenRenRegisterAndLogin1(params,cbFun){
         function(next){
           console.log("\nbind3rdPartAccount again, should fail.");
           testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/bind3rdPartAccount',notLogResponseHere:null,
-          postDataObj:{userId:userId,typeOf3rdPart:"renren",accountRenRen:accountRenRen, renrenAuthJson:renrenAuthJson}},function(err,outData){
+          postDataObj:{userId:userId,typeOf3rdPart:"renren",accountRenRen:accountRenRen, renrenAuthObj:renrenAuthObj}},function(err,outData){
             assert.ok(outData.status=="fail");
             var errInfo = config.config.errors["userAlreadyBindThisRenRenAccount"];
             assert.ok(outData.code==errInfo.code);
@@ -649,7 +649,7 @@ function busRenRenRegisterAndLogin1(params,cbFun){
         function(next){
           console.log("\nlogInFromRenRen with not registered renren user, should ok but return user not exist.");
           testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logInFromRenRen',notLogResponseHere:null,
-          postDataObj:{accountRenRen:accountRenRen+"XX", renrenAuthJson:renrenAuthJson,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
+          postDataObj:{accountRenRen:accountRenRen+"XX", renrenAuthObj:renrenAuthObj,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
             assert.ok(outData.status=="success");
             assert.ok(!outData.result.userExist);
             next();
@@ -737,8 +737,8 @@ function busRenRenBind2(params,cbFun){
    var emailAccount = name+gMailHostPart;
    var password = gPassword;
    var accountRenRen = "accountRenRen";
-   var renrenAuthJson = "renrenAuthJson";
-   var accountInfoJson = "accountInfoJson";
+   var renrenAuthObj = {f1:"renrenAuthJson"};
+   var accountInfoObj = {f1:"accountInfoJson"};
    var gender = 'male';
    var school = gSchool;
    var deviceType = gDeviceType;
@@ -767,7 +767,7 @@ function busRenRenBind2(params,cbFun){
        function(next){
          console.log("\nnormal bind3rdPartAccount, should success.");
          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/bind3rdPartAccount',notLogResponseHere:null,
-         postDataObj:{userId:userId,typeOf3rdPart:"renren",accountRenRen:accountRenRen, renrenAuthJson:renrenAuthJson}},function(err,outData){
+         postDataObj:{userId:userId,typeOf3rdPart:"renren",accountRenRen:accountRenRen, renrenAuthObj:renrenAuthObj}},function(err,outData){
            assert.ok(outData.status=="success");
            next();
          });
@@ -776,7 +776,7 @@ function busRenRenBind2(params,cbFun){
        function(next){
          console.log("\nbind3rdPartAccount again, should fail.");
          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/bind3rdPartAccount',notLogResponseHere:null,
-         postDataObj:{userId:userId,typeOf3rdPart:"renren",accountRenRen:accountRenRen, renrenAuthJson:renrenAuthJson}},function(err,outData){
+         postDataObj:{userId:userId,typeOf3rdPart:"renren",accountRenRen:accountRenRen, renrenAuthObj:renrenAuthObj}},function(err,outData){
            assert.ok(outData.status=="fail");
            var errInfo = config.config.errors["userAlreadyBindThisRenRenAccount"];
            assert.ok(outData.code==errInfo.code);
@@ -816,7 +816,7 @@ function busRenRenBind2(params,cbFun){
        function(next){
          console.log("\nnormal logInFromRenRen, should ok.");
          testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logInFromRenRen',notLogResponseHere:null,
-         postDataObj:{accountRenRen:accountRenRen, renrenAuthJson:renrenAuthJson,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
+         postDataObj:{accountRenRen:accountRenRen, renrenAuthObj:renrenAuthObj,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
            assert.ok(outData.status=="success");
            assert.ok(outData.result.userExist);
            assert.ok(userId == outData.result.user.userId);
@@ -831,7 +831,7 @@ function busRenRenBind2(params,cbFun){
        function(next){
          console.log("\nlogInFromRenRen with not registered renren user, should ok but return user not exist.");
          testlib.runPRApi({needHttps:true, host:host,port:securePort,path:'/user/logInFromRenRen',notLogResponseHere:null,
-         postDataObj:{accountRenRen:accountRenRen+"XX", renrenAuthJson:renrenAuthJson,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
+         postDataObj:{accountRenRen:accountRenRen+"XX", renrenAuthObj:renrenAuthObj,deviceType:deviceType,deviceId:deviceId}},function(err,outData){
            assert.ok(outData.status=="success");
            assert.ok(!outData.result.userExist);
            next();
@@ -8819,8 +8819,8 @@ testlib.backConfigDefaultValue();
 
 //testJustStartStopServer();
 //testRegister1LocalBothSides({disableNotification:true,uploadReally:false},null);
-//testRenRenRegisterAndLogin1LocalBothSides({disableNotification:true,uploadReally:false},null);
-testRenRenBind2LocalBothSides({disableNotification:true,uploadReally:false},null);
+testRenRenRegisterAndLogin1LocalBothSides({disableNotification:true,uploadReally:false},null);
+//testRenRenBind2LocalBothSides({disableNotification:true,uploadReally:false},null);
 //testUploadPhoto1LocalBothSides({disableNotification:true,uploadReally:false},null);
 
 //testSession1LocalBothSides({disableNotification:true,uploadReally:false},null);
