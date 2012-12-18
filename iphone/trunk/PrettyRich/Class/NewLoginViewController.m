@@ -387,15 +387,35 @@
 }
 - (void)startRenRenLogin
 {
-    NSString *renrenId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
+    //NSString *renrenId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
+    NSString *sessionId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
+    Renren *renren = [Renren sharedRenren];
+    NSMutableDictionary *renrenAuthJson = [[NSMutableDictionary alloc]initWithCapacity:5];
+    if (renren.accessToken) {
+        [renrenAuthJson setObject:renren.accessToken forKey:@"access_Token"];
+    }
+	if (renren.expirationDate)
+    {
+        NSTimeInterval time = [renren.expirationDate timeIntervalSince1970];
+        NSNumber *timeNumber = [NSNumber numberWithDouble:time];
+		[renrenAuthJson setObject:timeNumber forKey:@"expiration_Date"];
+	}
+    if (renren.sessionKey) {
+        [renrenAuthJson setObject:renren.sessionKey forKey:@"session_Key"];
+    }
+    if (renren.secret) {
+        [renrenAuthJson setObject:renren.secret forKey:@"secret_Key"];
+    }
+	[renrenAuthJson setObject:sessionId forKey:@"session_UserId"];
+
     NSString * deviceUID = [[UIDevice currentDevice] uniqueIdentifier];
-    NSString * accessToken = [Renren sharedRenren].accessToken;
     NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:
                           deviceUID,@"deviceId",
-                          renrenId,@"accountRenRen",
-                          accessToken,@"accessTokenRenRen",
+                          sessionId,@"accountRenRen",
+                          renrenAuthJson,@"renrenAuthObj",
                           @"iphone",@"deviceType",
                           nil];
+    [renrenAuthJson release];
     [curConnection cancelDownload];
     [curConnection startDownload:[NodeAsyncConnection createHttpsRequest:@"/user/logInFromRenRen" parameters:dict] :self :@selector(didEndRenRenLogin:)];
     [dict release];
@@ -515,7 +535,7 @@
             {
                 [defaults setObject:[renrenDict objectForKey:@"accountRenRen"] forKey:@"session_UserId"];
             }
-            NSDictionary *renrenAuthJson = [renrenDict objectForKey:@"renrenAuthJson"];
+            NSDictionary *renrenAuthJson = [renrenDict objectForKey:@"renrenAuthObj"];
             if (![PrettyUtility isNull:renrenAuthJson])
             {
                 if ([renrenAuthJson objectForKey:@"access_Token"]) {
@@ -523,8 +543,11 @@
                     [defaults setObject:[renrenAuthJson objectForKey:@"access_Token"] forKey:@"access_Token"];
                 }
                 if ([renrenAuthJson objectForKey:@"expiration_Date"]) {
-                    renren.expirationDate = [renrenAuthJson objectForKey:@"expiration_Date"];
-                    [defaults setObject:[renrenAuthJson objectForKey:@"expiration_Date"] forKey:@"expiration_Date"];
+                    NSNumber *after = [renrenAuthJson objectForKey:@"expiration_Date"];
+                    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[after doubleValue]];
+
+                    renren.expirationDate = date;
+                    [defaults setObject:date forKey:@"expiration_Date"];
                 }
                 if ([renrenAuthJson objectForKey:@"session_Key"])
                 {
@@ -600,7 +623,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     //[[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"UpdateDateListNotification" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"kNotificationDidGetLoggedInUserId" object:nil];
     [curConnection cancelDownload];
     [curConnection release];
     [emailTextField release];

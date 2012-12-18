@@ -225,6 +225,10 @@ static Renren *sharedRenren = nil;
             self.expirationDate = expirationDate;
             self.secret=[ROUtility getSecretKeyByToken:token];
             self.sessionKey=[ROUtility getSessionKeyByToken:token];
+            
+            //用户信息保存到本地
+            [self saveUserSessionInfo];
+            
             NSString *userId = [ROUtility getLoggedInUserId:token];
             if (userId != nil && ![userId isEqualToString:@""])
             {
@@ -232,12 +236,11 @@ static Renren *sharedRenren = nil;
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"kNotificationDidGetLoggedInUserId" object:nil];
             }
-            //用户信息保存到本地
-            [self saveUserSessionInfo];	
-            [self getLoggedInUserId];
-            if ([_renrenDelegate respondsToSelector:@selector(renrenDidLogin:)]) {  
+            if ([_renrenDelegate respondsToSelector:@selector(renrenDidLogin:)]) {
                 [_renrenDelegate renrenDidLogin:self];
             }
+            [self getLoggedInUserId];
+            
             break;
         case RODialogOperateFailure:
             authError = response.error;

@@ -13,6 +13,7 @@
 #define kNumbers     @"0123456789"
 #import "CustomAlertView.h"
 #import "MobClick.h"
+#import "SettingsViewController.h"
 @interface NNProfileViewController ()
 
 @end
@@ -32,9 +33,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIBarButtonItem *logout = [[UIBarButtonItem alloc]initWithTitle:@"退出" style:UIBarButtonItemStyleBordered target:self action:@selector(logoutClicked)];
-    self.navigationItem.leftBarButtonItem = logout;
-    [logout release];
+    UIBarButtonItem *setting = [[UIBarButtonItem alloc]initWithTitle:@"设置" style:UIBarButtonItemStyleBordered target:self action:@selector(settingButtonClicked)];
+    self.navigationItem.leftBarButtonItem = setting;
+    [setting release];
     UIBarButtonItem *edit = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStyleBordered target:self action:@selector(flipView)];
     self.navigationItem.rightBarButtonItem = edit;
     [edit release];
@@ -358,56 +359,13 @@ replacementString:(NSString *)string
 - (void)flipViewsAnimationStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
     //self.view.userInteractionEnabled = YES;
 }
--(void)logoutClicked
+-(void)settingButtonClicked
 {
-    CustomAlertView *alert = [[CustomAlertView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) messgage:@"你确定要退出么？" otherButton:@"确认" cancelButton:@"取消" delegate:self duration:0];
-    alert.tag = 100;
-    [alert show];
-    [alert release];
-
-}
-- (void)customAlert:(CustomAlertView *)alert DismissWithButtonTitle:(NSString *)buttonTitle
-{
-    if (alert.tag == 100)
-    {
-        if ([buttonTitle isEqualToString:@"确认"])
-        {
-            [self startLogout];
-        }
-    }
-}
--(void)startLogout
-{
-    [self.navigationItem.leftBarButtonItem setEnabled:NO];
-    [self.view bringSubviewToFront:self.activityIndicator];
-    [self.activityIndicator startAnimating];
-    self.activityIndicator.hidden= NO;
-    NSString *userId = [[NSUserDefaults standardUserDefaults]objectForKey:@"PrettyUserId"];
-    NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:
-                          userId,@"userId",
-                          nil];
-    [curConnection cancelDownload];
-    [curConnection startDownload:[NodeAsyncConnection createNodeHttpRequest:@"/user/logOut" parameters:dict] :self :@selector(didEndLogout:)];
-    [dict release];
-}
-- (void)didEndLogout:(NodeAsyncConnection *)connection
-{
-    [self.navigationItem.leftBarButtonItem setEnabled:YES];
-    self.activityIndicator.hidden= YES;
-    [self.activityIndicator stopAnimating];
-    if (connection == nil || connection.result == nil)
-    {
-        return;
-    }
-    if ([[connection.result objectForKey:@"status"]isEqualToString:@"success"])
-    {
-        if (imageDownloadManager != nil)
-        {
-            [imageDownloadManager cancelAllDownloadInProgress];
-        }
-        PrettyGlobalService *globalService = [PrettyGlobalService shareInstance];
-        [globalService prettyRichLogOut];
-    }
+    SettingsViewController *settingViewController = [[SettingsViewController alloc]initWithNibName:@"SettingsViewController" bundle:nil];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:settingViewController];
+    [settingViewController release];
+    [self presentModalViewController:nav animated:YES];
+    [nav release];
 }
 
 -(IBAction)startUpdateProfileWithPhoto

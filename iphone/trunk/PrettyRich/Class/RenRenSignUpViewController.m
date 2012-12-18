@@ -389,7 +389,9 @@
         [renrenAuthJson setObject:renren.accessToken forKey:@"access_Token"];
     }
 	if (renren.expirationDate) {
-		[renrenAuthJson setObject:renren.expirationDate forKey:@"expiration_Date"];
+        NSTimeInterval time = [renren.expirationDate timeIntervalSince1970];
+        NSNumber *timeNumber = [NSNumber numberWithDouble:time];
+		[renrenAuthJson setObject:timeNumber forKey:@"expiration_Date"];
 	}
     if (renren.sessionKey) {
         [renrenAuthJson setObject:renren.sessionKey forKey:@"session_Key"];
@@ -410,7 +412,7 @@
                          self.inviteCode,@"hometown",
                          @"iphone",@"deviceType",
                          sessionId,@"accountRenRen",
-                         renrenAuthJson,@"accountInfoJson",
+                         renrenAuthJson,@"renrenAuthObj",
                          self.accountInfoJson,@"accountInfoJson",
                          nil];
     [renrenAuthJson release];

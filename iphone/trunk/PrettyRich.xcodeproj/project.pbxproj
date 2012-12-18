@@ -196,6 +196,8 @@
 		5FE5128E157359CD00285A1C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE5128D157359CC00285A1C /* Icon.png */; };
 		5FE51294157359DD00285A1C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE51293157359DD00285A1C /* Default@2x.png */; };
 		5FE51298157363C300285A1C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE51297157363C300285A1C /* Icon@2x.png */; };
+		5FEAB2C816806A5B00E3B084 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAB2C616806A5B00E3B084 /* SettingsViewController.m */; };
+		5FEAB2C916806A5B00E3B084 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAB2C716806A5B00E3B084 /* SettingsViewController.xib */; };
 		5FF66AB21569F80F00A35D20 /* CustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF66AB11569F80F00A35D20 /* CustomAlertView.m */; };
 		5FFB62B515C7B84600EE77C3 /* NewLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFB62B315C7B84600EE77C3 /* NewLoginViewController.m */; };
 		5FFB62BB15C7BBB300EE77C3 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFB62B915C7BBB300EE77C3 /* SignUpViewController.m */; };
@@ -506,6 +508,9 @@
 		5FE5128D157359CC00285A1C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = PrettyRich/Icon.png; sourceTree = "<group>"; };
 		5FE51293157359DD00285A1C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "PrettyRich/Default@2x.png"; sourceTree = "<group>"; };
 		5FE51297157363C300285A1C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "PrettyRich/Icon@2x.png"; sourceTree = "<group>"; };
+		5FEAB2C516806A5B00E3B084 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = Class/SettingsViewController.h; sourceTree = "<group>"; };
+		5FEAB2C616806A5B00E3B084 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = Class/SettingsViewController.m; sourceTree = "<group>"; };
+		5FEAB2C716806A5B00E3B084 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsViewController.xib; path = Class/SettingsViewController.xib; sourceTree = "<group>"; };
 		5FF66AB01569F80F00A35D20 /* CustomAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomAlertView.h; path = Class/CustomAlertView.h; sourceTree = "<group>"; };
 		5FF66AB11569F80F00A35D20 /* CustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomAlertView.m; path = Class/CustomAlertView.m; sourceTree = "<group>"; };
 		5FFB62B215C7B84600EE77C3 /* NewLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewLoginViewController.h; path = Class/NewLoginViewController.h; sourceTree = "<group>"; };
@@ -611,6 +616,9 @@
 				5F2D1554164121F400B59BE8 /* DateActivityCell.h */,
 				5F2D1555164121F500B59BE8 /* DateActivityCell.m */,
 				5F2D15571641220A00B59BE8 /* DateActivityCell.xib */,
+				5FEAB2C516806A5B00E3B084 /* SettingsViewController.h */,
+				5FEAB2C616806A5B00E3B084 /* SettingsViewController.m */,
+				5FEAB2C716806A5B00E3B084 /* SettingsViewController.xib */,
 			);
 			name = NN;
 			sourceTree = "<group>";
@@ -1295,6 +1303,7 @@
 				5FFD7FDB1678469C00F9221C /* RenRenSignUpViewController.xib in Resources */,
 				5FFD800616789B2700F9221C /* school.plist in Resources */,
 				5F1984CA167ECE3B00A537BF /* help@2x.png in Resources */,
+				5FEAB2C916806A5B00E3B084 /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1405,6 +1414,7 @@
 				5F2B322416759205008C5EF8 /* ROPublishPhotoDialogModel.m in Sources */,
 				5F2B322516759205008C5EF8 /* ROPublishPhotoInternal.m in Sources */,
 				5FFD7FDA1678469C00F9221C /* RenRenSignUpViewController.m in Sources */,
+				5FEAB2C816806A5B00E3B084 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
