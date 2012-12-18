@@ -47,23 +47,23 @@ function Server () {
   self.notification = notification.create();
   self.notification.init({store:self.store});
   //self.solrClient = solr.create({host:config.config.solrHost, port:config.config.solrPort, commitWithin:config.config.solrCommitWithin, threadInterval:config.config.solrPeriodicThreadInterval});
-  self.mailTransport = nodemailer.createTransport("SMTP", {
-      //host: 'localhost'
-      service: 'Gmail', // use well known service
-      auth: {
-          user: config.config.noreplyMailAccount,
-          pass: handy.decrypt(config.config.noreplyMailAccountPwd)
-      }
-    });
 //  self.mailTransport = nodemailer.createTransport("SMTP", {
-//        host: config.config.noreplyMailHost,
-//        port: config.config.noreplyMailHostPort,
-//        secureConnection : false,
-//        auth: {
-//            user: config.config.noreplyMailAccount,
-//            pass: handy.decrypt(config.config.noreplyMailAccountPwd)
-//        }
+//      //host: 'localhost'
+//      service: 'Gmail', // use well known service
+//      auth: {
+//          user: config.config.noreplyMailAccount,
+//          pass: handy.decrypt(config.config.noreplyMailAccountPwd)
+//      }
 //    });
+  self.mailTransport = nodemailer.createTransport("SMTP", {
+        host: config.config.noreplyMailHost,
+        port: config.config.noreplyMailHostPort,
+        secureConnection : false,
+        auth: {
+            user: config.config.noreplyMailAccount,
+            pass: handy.decrypt(config.config.noreplyMailAccountPwd)
+        }
+    });
 
   self.sessionRedisStore = new RedisStore({port:envSpecialConfig.webSessionRedisPort});
   var expressSessionOptions = {secret:'keyboard cat',

@@ -26,7 +26,7 @@ var colors = exports.colors = {
 
 var config = exports.config = {
     usage: 'prod', //'dev'  // affect applePushNotificationServiceHost and apnsCertFilePath
-    productName : '同去',//'PrettyRich',
+    productName : '活动号外',//'同去',//'PrettyRich',
 
     prodEnv:{
       host:'42.121.122.47',//'ec2-23-23-144-110.compute-1.amazonaws.com',
@@ -434,13 +434,14 @@ var config = exports.config = {
     apnsPayloadLengthLimit : 256, //in bytes
     apnsDeviceTokenLength : 32,
 
-
+//    noreplyMailAccount : 'tongqusupport@yasofon.com',
+//    noreplyMailAccountPwd : 'fa1f95f259b0e23dc333f317e6777384',//encrypted
 //    noreplyMailAccount : 'noreply@prettyri.ch',
 //    noreplyMailAccountPwd : '76bc5d9c9ceb4e22b72d752e8294a5b4',//encrypted
-    noreplyMailAccount : 'tongqusupport@yasofon.com',
-    noreplyMailAccountPwd : 'fa1f95f259b0e23dc333f317e6777384',//encrypted
-//    noreplyMailHost : 'smtp.exmail.qq.com',
-//    noreplyMailHostPort : 25,
+    noreplyMailAccount : 'support@huodonghaowai.com',
+    noreplyMailAccountPwd : '63028f51304840723449b62337880441',//encrypted
+    noreplyMailHost : 'smtp.exmail.qq.com',
+    noreplyMailHostPort : 25,
 
     passwordMinLength : 6,
 
