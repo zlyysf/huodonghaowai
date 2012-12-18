@@ -3297,7 +3297,7 @@ Redis.prototype.renrenAccountLogIn = function(params, callback) {
 
 /**
 * only support bind, no unbind, no change bind.
-* @param {Object} params - contains userId, accountRenRen, renrenAuthObj, accountInfoObj(optional)
+* @param {Object} params - contains req, userId, accountRenRen, renrenAuthObj, accountInfoObj(optional)
 * @param {Function} callback - is function(err)
 */
 Redis.prototype.bindRenRenAccount = function(params, callback) {
