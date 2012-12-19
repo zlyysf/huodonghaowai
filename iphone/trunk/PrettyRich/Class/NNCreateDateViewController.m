@@ -12,6 +12,7 @@
 #import "PrettyUtility.h"
 #define kNumbers     @"0123456789"
 #import "MobClick.h"
+#import "PrettyGlobalService.h"
 @interface NNCreateDateViewController ()
 
 @end
@@ -837,12 +838,23 @@ replacementString:(NSString *)string
     }
 }
 #pragma mark - RenrenDelegate methods
+- (void) didReceiveGetLoggedInUserIdNotification:(NSNotification *)notification
+{
+    //NSString *renrenId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
+    [self startBindingRenRen];
+}
 
 -(void)renrenDidLogin:(Renren *)renren
 {
-    self.shareChecked = YES;
-    [self.renrenImage setImage:[UIImage imageNamed:@"share-checked.png"]];
+//    self.shareChecked = YES;
+//    [self.renrenImage setImage:[UIImage imageNamed:@"share-checked.png"]];
 }
+- (void)renrenDidLogout:(Renren *)renren
+{
+    self.shareChecked = NO;
+    [self.renrenImage setImage:[UIImage imageNamed:@"share-unchecked.png"]];
+}
+
 - (void)renren:(Renren *)renren loginFailWithError:(ROError*)error{
 	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
 	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
@@ -869,6 +881,60 @@ replacementString:(NSString *)string
 	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
 	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
 	NSLog(@"loginfail:%@ %@",title,description);
+}
+- (void)startBindingRenRen
+{
+    NSString *sessionId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
+    Renren *renren = [Renren sharedRenren];
+    NSMutableDictionary *renrenAuthJson = [[NSMutableDictionary alloc]initWithCapacity:5];
+    if (renren.accessToken) {
+        [renrenAuthJson setObject:renren.accessToken forKey:@"access_Token"];
+    }
+	if (renren.expirationDate) {
+		NSTimeInterval time = [renren.expirationDate timeIntervalSince1970];
+        NSNumber *timeNumber = [NSNumber numberWithDouble:time];
+		[renrenAuthJson setObject:timeNumber forKey:@"expiration_Date"];
+	}
+    if (renren.sessionKey) {
+        [renrenAuthJson setObject:renren.sessionKey forKey:@"session_Key"];
+    }
+    if (renren.secret) {
+        [renrenAuthJson setObject:renren.secret forKey:@"secret_Key"];
+    }
+	[renrenAuthJson setObject:sessionId forKey:@"session_UserId"];
+    
+    NSString * selfId = [[NSUserDefaults standardUserDefaults]objectForKey:@"PrettyUserId"];
+    NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:
+                          selfId,@"userId",
+                          sessionId,@"accountRenRen",
+                          renrenAuthJson,@"renrenAuthObj",
+                          @"renren",@"typeOf3rdPart",
+                          nil];
+    [renrenAuthJson release];
+    [curConnection cancelDownload];
+    [curConnection startDownload:[NodeAsyncConnection createNodeHttpRequest:@"/user/bind3rdPartAccount" parameters:dict] :self :@selector(didEndBindingRenRen:)];
+    [dict release];
+    self.view.userInteractionEnabled = NO;
+    [self.activityIndicator startAnimating];
+    self.activityIndicator.hidden = NO;
+    
+}
+- (void)didEndBindingRenRen:(NodeAsyncConnection *)connection
+{
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
+    self.view.userInteractionEnabled = YES;
+    if ([[connection.result objectForKey:@"status"]isEqualToString:@"success"])
+    {
+        self.shareChecked = YES;
+        [self.renrenImage setImage:[UIImage imageNamed:@"share-checked.png"]];
+        [[PrettyGlobalService shareInstance] publishFirstRenRenConnectFeed];
+    }
+    else
+    {
+        [[Renren sharedRenren]logout:self];
+    }
+    
 }
 
 - (void)dealloc {

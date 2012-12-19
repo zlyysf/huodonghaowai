@@ -13,6 +13,7 @@
 #import "PrettyUtility.h"
 #import "MobClick.h"
 #import "TongQuConfig.h"
+#import "PrettyGlobalService.h"
 @interface NewLoginViewController ()
 
 @end
@@ -464,26 +465,10 @@
         }
         else
         {
-            [self publishFirstRenRenConnectFeed];
+            [[PrettyGlobalService shareInstance] publishFirstRenRenConnectFeed];
             [self startQuearyRenRenUserInfo];
         }
     }
-    
-}
--(void)publishFirstRenRenConnectFeed
-{
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   @"feed.publishFeed",@"method",
-                                   @"http://www.huodonghaowai.com",@"url",
-                                   @"活动号外",@"name",
-                                   @"我加入了活动号外",@"message",
-                                   @"加入活动号外",@"action_name",
-                                   @"http://www.huodonghaowai.com",@"action_link",
-                                   @"中国第一个为大学生组织个性化活动的手机平台!",@"description",
-                                   @"http://oss.aliyuncs.com/ysf1/resource/app-icon.png",@"image",
-                                   nil];
-    
-    [[Renren sharedRenren] requestWithParams:params andDelegate:self];
     
 }
 - (void)startLogin

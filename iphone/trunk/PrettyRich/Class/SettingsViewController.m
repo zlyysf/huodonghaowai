@@ -96,7 +96,7 @@
     {
         if ([[Renren sharedRenren]isSessionValid])
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"这是你绑定并登录的主账号，如果你确认要停止使用，请到对应的玩站上取消授权" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"这是你绑定并登录的主账号，如果你确认要停止使用，请到对应的网站上取消授权" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
             [alert release];
         }
@@ -210,7 +210,7 @@
     
     NSString * selfId = [[NSUserDefaults standardUserDefaults]objectForKey:@"PrettyUserId"];
     NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:
-                          selfId,@"deviceId",
+                          selfId,@"userId",
                           sessionId,@"accountRenRen",
                           renrenAuthJson,@"renrenAuthObj",
                           @"renren",@"typeOf3rdPart",
@@ -231,6 +231,7 @@
     self.view.userInteractionEnabled = YES;
     if ([[connection.result objectForKey:@"status"]isEqualToString:@"success"])
     {
+        [[PrettyGlobalService shareInstance]publishFirstRenRenConnectFeed];
         [self.listView reloadData];
     }
     else

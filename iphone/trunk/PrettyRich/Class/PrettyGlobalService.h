@@ -15,4 +15,5 @@
 - (void)didEndUploadPhoto:(NodeAsyncConnection *)connection;
 - (void)handleError:(NSString *)errorCode;
 - (void)prettyRichLogOut;
+-(void)publishFirstRenRenConnectFeed;
 @end
