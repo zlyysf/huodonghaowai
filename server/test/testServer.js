@@ -656,6 +656,35 @@ function busRenRenRegisterAndLogin1(params,cbFun){
           });
         },
 
+        function(next){
+          console.log("\ndeleteUserRenRenAccount normal, should ok.");
+          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/admin/runMethod',notLogResponseHere:null,
+          postDataObj:{libName:"store",methodName:'deleteUserRenRenAccount', emailAccount:emailAccount}},function(err,outData){
+            assert.ok(outData.status=="success");
+            next();
+          });
+        },
+
+        function(next){
+          console.log("\nbind3rdPartAccount after deleteUserRenRenAccount, should ok.");
+          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/bind3rdPartAccount',notLogResponseHere:null,
+          postDataObj:{userId:userId,typeOf3rdPart:"renren",accountRenRen:accountRenRen, renrenAuthObj:renrenAuthObj}},function(err,outData){
+            assert.ok(outData.status=="success");
+            next();
+          });
+        },
+
+        function(next){
+          console.log("\nbind3rdPartAccount again 2, should fail.");
+          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/bind3rdPartAccount',notLogResponseHere:null,
+          postDataObj:{userId:userId,typeOf3rdPart:"renren",accountRenRen:accountRenRen, renrenAuthObj:renrenAuthObj}},function(err,outData){
+            assert.ok(outData.status=="fail");
+            var errInfo = config.config.errors["userAlreadyBindThisRenRenAccount"];
+            assert.ok(outData.code==errInfo.code);
+            next();
+          });
+        },
+
 
         function(next){
           //DoAssert

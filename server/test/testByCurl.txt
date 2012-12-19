@@ -46,7 +46,7 @@ curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "method
 http://aliyunvm:4000/web/runMethod?libName=store&methodName=getBusinessDataByQuery&topEntityType=user
 http://aliyunvm:4000/web/runMethod?libName=store&methodName=getBusinessDataByQuery&topEntityType=user&dataType=busByDevice
 
-
+http://aliyunvm:4000/web/runMethod?libName=store&methodName=deleteUserRenRenAccount&emailAccount=abc@de.com
 
 
 

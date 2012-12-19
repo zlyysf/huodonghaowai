@@ -3376,6 +3376,87 @@ Redis.prototype.bindRenRenAccount = function(params, callback) {
 
 
 
+/**
+* can be taken as counter-function bindRenRenAccount
+* @param {Object} params - contains req, userId(optional), emailAccount(optional), accountRenRen(optional).
+* @param {Function} callback - is function(err)
+*/
+Redis.prototype.deleteUserRenRenAccount = function(params, callback) {
+  var self = this;
+  var messagePrefix = 'in Redis.deleteUserRenRenAccount, ';
+  var req = params.req;
+  //logger.logDebug("Redis.deleteUserRenRenAccount entered, params="+handy.inspectWithoutBig(params));
+  if(!callback){
+    var err = self.newError({errorKey:'needCallbackFunction',messagePrefix:messagePrefix});
+    return self.handleError({err:err});
+  }
+  if (!params.userId && !params.emailAccount && !params.accountRenRen){
+    var err = self.newError({errorKey:'needParameter',messageParams:['userId or emailAccount or accountRenRen'],messagePrefix:messagePrefix,req:req});
+    return callback(err);
+  }
+  var userId = params.userId;
+  var emailAccount = params.emailAccount;
+  var accountRenRen = params.accountRenRen;
+  function getUserIdAndAccountRenRen(cbFun){
+    if (userId){
+      self.getUser({userId:userId,userFields:['userId','accountRenRen']}, function(err,userObj){
+        if (err) return cbFun(err);
+        accountRenRen = userObj.accountRenRen;
+        return cbFun(null);
+      });//getUser
+      return;
+    }else if (emailAccount){
+      self.getUserIdByEmailAccount({emailAccount:emailAccount}, function(err,outUserId){
+        if (err) return cbFun(err);
+        userId = outUserId;
+        if (!userId){
+          var err = self.newError({errorKey:'emailNotRegistered',messageParams:[emailAccount],messagePrefix:messagePrefix,req:req});
+          return cbFun(err);
+        }
+        self.getUser({userId:userId,userFields:['userId','accountRenRen']}, function(err,userObj){
+          if (err) return cbFun(err);
+          accountRenRen = userObj.accountRenRen;
+          return cbFun(null);
+        });//getUser
+      });//getUserIdByEmailAccount
+      return;
+    }else{// accountRenRen should exist
+      self.getRenRenAccount({accountRenRen:accountRenRen,renrenAccountFields:['accountRenRen','userId']}, function(err,renrenAccountInfo){
+        if (err) return cbFun(err);
+        if (!renrenAccountInfo || !renrenAccountInfo.accountRenRen){
+          var err = self.newError({errorKey:'theRenRenAccountNotBindAnyUser',messageParams:[emailAccount],messagePrefix:messagePrefix,req:req});
+          return cbFun(err);
+        }
+        userId = renrenAccountInfo.userId;
+        return cbFun(null);
+      });//getRenRenAccount
+      return;
+    }
+    return;
+  };//getUserIdAndAccountRenRen
+
+  getUserIdAndAccountRenRen(function(err){
+    if (err) return callback(err);
+    var multi = self.client.multi();
+    var userKey = "user:"+userId;
+    multi.hdel(userKey,'accountRenRen');
+    if (accountRenRen){
+      var userRenRenKey = 'userRenRen:'+accountRenRen;
+      multi.del(userRenRenKey);
+    }
+    multi.exec(function(err,multiRetValues){
+      if (err){
+        var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
+        if (callback) return callback(err2);
+        else return self.handleError({err:err2});
+      }
+      //logger.logDebug("Redis.deleteUserRenRenAccount exiting");
+      return callback(null);
+    });//multi.exec
+  });//getUserIdAndAccountRenRen
+};//deleteUserRenRenAccount
+
+
 
 /**
 * a business function, check user in app.

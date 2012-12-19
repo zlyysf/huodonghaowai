@@ -409,6 +409,8 @@ var config = exports.config = {
           msg_zh:"这个人人帐号已经与这个用户绑定"},
       'theRenRenAccountAlreadyBindOtherUser' : {code:'21304', message:'the renren account has already been bound with other user.',
           msg_zh:"这个人人帐号已经与其他的用户绑定"},
+      'theRenRenAccountNotBindAnyUser' : {code:'21305', message:'the renren account has not been bound with any user.',
+          msg_zh:"这个人人帐号尚未与任何用户绑定"},
 
 
       'invalidResetPasswordCode' : {code:'30000', message:'invalid reset password code',
