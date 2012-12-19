@@ -9400,6 +9400,41 @@ Redis.prototype.getAllUserIds = function(params, callback){
   });//getMaxUserId
 };//getAllUserIds
 
+Redis.prototype.getMaxReportId = function(params, callback){
+  var self = this;
+  var req = params.req;
+  self.client.get('report',function(err,maxId){
+    if (err)  return callback(err);
+    maxId = handy.convertToNumber(maxId);
+    if (maxId < 0){
+      var err = self.newError({errorKey:'simpleError',message:" maxId < 0",messageParams:[],messagePrefix:messagePrefix,req:req});
+      return callback(err);
+    }
+    return callback(null,maxId);
+  });//client.get
+};//getMaxReportId
+/**
+*
+* @param params - contains nothing but req(optional)
+* @param callback - is function(err,userIds)
+*/
+Redis.prototype.getAllReportIds = function(params, callback){
+ var self = this;
+ var req = params.req;
+ self.getMaxReportId(params,function(err,maxId){
+   if (err)  return callback(err);
+   if (maxId <= 0){
+     return callback(null,null);
+   }
+   var ids = new Array(maxId);
+   for(var i=1; i<=maxId; i++){
+     ids[i-1] = i;
+   }//for
+   return callback(null,ids);
+ });//getMaxReportId
+};//getAllReportIds
+
+
 /**
 *
 * userId  refId deviceId
@@ -9619,6 +9654,102 @@ Redis.prototype.getStatOfCanNotReceiveC2dmUser = function (params,callback) {
     });//multi.exec
   });//getAllUserIds
 };//getStatOfCanNotReceiveC2dmUser
+
+
+
+/**
+*
+* @param {Object} params - contains reportIds, reportFields(optional)
+* @param {Function} callback - is function(err,reports)
+*
+*/
+Redis.prototype.getReports = function(params, callback) {
+  var messagePrefix = 'in Redis.getReports, ';
+  var self = this;
+  var req = params.req;
+  if(!callback){
+    var err = self.newError({errorKey:'needCallbackFunction',messagePrefix:messagePrefix,req:req});
+    return self.handleError({err:err});
+  }
+  if (!params.reportIds){
+    var err = self.newError({errorKey:'needParameter',messageParams:['reportIds'],messagePrefix:messagePrefix,req:req});
+    return callback(err);
+  }
+  var reportIds = params.reportIds;
+  if (reportIds.length == 0) return callback(null, null);
+  var reportFields = params.reportFields;
+
+  var multi = self.client.multi();
+  for (idx in reportIds) {
+    var reportId = reportIds[idx];
+    var reportKey = 'report:'+reportId;
+    if(reportFields && reportFields.length > 0){
+      var getReportFields = reportFields.slice(0);
+      getReportFields.unshift(reportKey);
+      multi.hmget(getReportFields);
+    }else{
+      multi.hgetall(reportKey);
+    }
+  }//for
+  multi.exec(function(err, retData) {
+    if (err){
+      var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
+      return callback(err2);
+    }
+    var reports = [];
+    for(var i=0; i<retData.length; i+=1){
+      var reportInfo = retData[i];
+      var reportHash;
+      if (reportFields && reportFields.length > 0){
+        reportHash = handy.toHashWith2Array({keyArray:reportFields, valueArray:reportInfo});
+      }else{
+        reportHash = reportInfo;
+      }
+      reportHash = handy.removeNullFieldFor1Level(reportHash);
+      reports.push(reportHash);
+    }//for
+    if (reports && reports.length > 0) {
+      return callback(null, reports);
+    }else{
+      return callback(null, null);
+    }
+    return ;
+  });//multi.exec
+};//getReports
+
+
+
+/**
+*
+* @param {Object} params - contains reportFields(optional)
+* @param {Function} callback - is function(err,reports)
+*
+*/
+Redis.prototype.getAllReports = function(params, callback) {
+  var self = this;
+  var messagePrefix = 'in Redis.getAllReports, ';
+  var req = params.req;
+  if(!callback){
+    var err = self.newError({errorKey:'needCallbackFunction',messagePrefix:messagePrefix,req:req});
+    return self.handleError({err:err});
+  }
+  self.getAllReportIds({}, function(err,reportIds){
+    if (err) return callback(err);
+    if (!reportIds || reportIds.length == 0)
+      return callback(null,null);
+    self.getReports({reportIds:reportIds,reportFields:params.reportFields}, function(err,reports){
+      if (err) return callback(err);
+      return callback(null,reports);
+    });//getReports
+  });//getAllReportIds
+};//getAllReports
+
+
+
+
+
+
+
 
 
 

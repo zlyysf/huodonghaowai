@@ -47,6 +47,7 @@ http://aliyunvm:4000/web/runMethod?libName=store&methodName=getBusinessDataByQue
 http://aliyunvm:4000/web/runMethod?libName=store&methodName=getBusinessDataByQuery&topEntityType=user&dataType=busByDevice
 
 http://aliyunvm:4000/web/runMethod?libName=store&methodName=deleteUserRenRenAccount&emailAccount=abc@de.com
+http://aliyunvm:4000/web/runMethod?libName=store&methodName=getAllReports
 
 
 

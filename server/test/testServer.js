@@ -685,6 +685,15 @@ function busRenRenRegisterAndLogin1(params,cbFun){
           });
         },
 
+        function(next){
+          console.log("\nnormal report");
+          testlib.runPRApi({host:host,port:port,path:'/user/reportUser',notLogResponseHere:null,
+          postDataObj:{userId:userId, targetUserId:userId, description:"description"}},function(err,outData){
+            assert.ok(outData.status=="success");
+            next();
+          });
+        },
+
 
         function(next){
           //DoAssert
