@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "NodeAsyncConnection.h"
-#import "CustomAlertView.h"
-@interface SettingsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,CustomAlertViewDelegate,RenrenDelegate>
+
+@interface SettingsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,RenrenDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *listView;
 @property (readwrite,nonatomic)BOOL hasRenRenId;
 @property (retain, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;

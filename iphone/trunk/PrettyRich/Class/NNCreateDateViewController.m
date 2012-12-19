@@ -13,7 +13,7 @@
 #define kNumbers     @"0123456789"
 #import "MobClick.h"
 #import "PrettyGlobalService.h"
-@interface NNCreateDateViewController ()
+@interface NNCreateDateViewController ()<CustomAlertViewDelegate>
 
 @end
 
@@ -833,8 +833,21 @@ replacementString:(NSString *)string
     }
     else
     {
-        NSArray *permissions = [NSArray arrayWithObjects:@"read_user_album",@"status_update",@"photo_upload",@"publish_feed",@"create_album",@"operate_like",nil];
-        [[Renren sharedRenren] authorizationInNavigationWithPermisson:permissions andDelegate:self];
+        CustomAlertView *alert = [[CustomAlertView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) messgage:@"绑定人人账户，将来你便可以用人人账户来登入活动号外." otherButton:@"现在绑定" cancelButton:@"暂不绑定" delegate:self duration:0];
+        alert.tag = 102;
+        [alert show];
+        [alert release];
+    }
+}
+- (void)customAlert:(CustomAlertView *)alert DismissWithButtonTitle:(NSString *)buttonTitle
+{
+    if (alert.tag == 102)
+    {
+        if ([buttonTitle isEqualToString:@"现在绑定"])
+        {
+            NSArray *permissions = [NSArray arrayWithObjects:@"read_user_album",@"status_update",@"photo_upload",@"publish_feed",@"create_album",@"operate_like",nil];
+            [[Renren sharedRenren] authorizationInNavigationWithPermisson:permissions andDelegate:self];
+        }
     }
 }
 #pragma mark - RenrenDelegate methods

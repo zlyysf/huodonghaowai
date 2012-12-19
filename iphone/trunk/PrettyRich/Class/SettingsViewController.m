@@ -8,7 +8,8 @@
 
 #import "SettingsViewController.h"
 #import "PrettyGlobalService.h"
-@interface SettingsViewController ()
+#import "CustomAlertView.h"
+@interface SettingsViewController ()<CustomAlertViewDelegate>
 
 @end
 
@@ -96,14 +97,16 @@
     {
         if ([[Renren sharedRenren]isSessionValid])
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"这是你绑定并登录的主账号，如果你确认要停止使用，请到对应的网站上取消授权" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"该账号已经与你的活动号外账号绑定，如果你确认要停止使用，请到人人网取消授权." delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
             [alert release];
         }
         else
         {
-            NSArray *permissions = [NSArray arrayWithObjects:@"read_user_album",@"status_update",@"photo_upload",@"publish_feed",@"create_album",@"operate_like",nil];
-            [[Renren sharedRenren] authorizationInNavigationWithPermisson:permissions andDelegate:self];
+            CustomAlertView *alert = [[CustomAlertView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) messgage:@"绑定人人账户，将来你便可以用人人账户来登入活动号外." otherButton:@"现在绑定" cancelButton:@"暂不绑定" delegate:self duration:0];
+            alert.tag = 102;
+            [alert show];
+            [alert release];
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
@@ -125,6 +128,15 @@
             [self startLogout];
         }
     }
+    if (alert.tag == 102)
+    {
+        if ([buttonTitle isEqualToString:@"现在绑定"])
+        {
+            NSArray *permissions = [NSArray arrayWithObjects:@"read_user_album",@"status_update",@"photo_upload",@"publish_feed",@"create_album",@"operate_like",nil];
+            [[Renren sharedRenren] authorizationInNavigationWithPermisson:permissions andDelegate:self];
+        }
+    }
+
 }
 -(void)startLogout
 {
