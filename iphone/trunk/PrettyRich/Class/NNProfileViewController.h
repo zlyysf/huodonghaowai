@@ -11,7 +11,7 @@
 #import "ImagesDownloadManager.h"
 #import "ImageDownloaderDelegate.h"
 #import "CustomAlertView.h"
-@interface NNProfileViewController : UIViewController<ImageDownloaderDelegate,UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate,UITextViewDelegate,CustomAlertViewDelegate>
+@interface NNProfileViewController : UIViewController<ImageDownloaderDelegate,UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate,UITextViewDelegate>
 @property (readwrite,nonatomic)BOOL photoSelected;
 @property (readwrite,nonatomic)BOOL needUpdatePhoto;
 @property (retain,nonatomic)UIImage *uploadPhoto;

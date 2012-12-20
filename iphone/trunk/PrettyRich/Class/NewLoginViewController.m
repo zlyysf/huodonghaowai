@@ -13,6 +13,7 @@
 #import "PrettyUtility.h"
 #import "MobClick.h"
 #import "TongQuConfig.h"
+#import "PrettyGlobalService.h"
 @interface NewLoginViewController ()
 
 @end
@@ -36,12 +37,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-//    UIImage *buttonImage = [UIImage imageNamed:@"navigation-cancel-button.png"];
-//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [button setImage:buttonImage forState:UIControlStateNormal];
-//    button.frame = CGRectMake(0, 0, 28, 16);
-//    [button addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    //    UIImage *buttonImage = [UIImage imageNamed:@"navigation-cancel-button.png"];
+    //    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    [button setImage:buttonImage forState:UIControlStateNormal];
+    //    button.frame = CGRectMake(0, 0, 28, 16);
+    //    [button addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    //    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     //UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc]initWithTitle:@"登录" style:UIBarButtonItemStyleBordered target:self action:@selector(startLogin)];
     //self.navigationItem.rightBarButtonItem = customBarItem;
     //[customBarItem release];
@@ -53,17 +54,17 @@
     [self.renrenCell setBackgroundView:tempView1];
     [tempView1 release];
     [self.renrenCell setBackgroundColor:[UIColor clearColor]];
-
+    
     [self.loginButton addTarget:self action:@selector(startLogin) forControlEvents:UIControlEventTouchUpInside];
     self.emailTextField.tag = 201;
     self.passwordTextField.tag = 202;
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChanged:) name:UITextFieldTextDidChangeNotification object:nil];
     UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 34)];
-    self.emailTextField.leftView = paddingView1;    
+    self.emailTextField.leftView = paddingView1;
     self.emailTextField.leftViewMode = UITextFieldViewModeAlways;
     [paddingView1 release];
     UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 34)];
-    self.passwordTextField.leftView = paddingView2;    
+    self.passwordTextField.leftView = paddingView2;
     self.passwordTextField.leftViewMode = UITextFieldViewModeAlways;
     [paddingView2 release];
     NodeAsyncConnection * aConn = [[NodeAsyncConnection alloc] init];
@@ -125,8 +126,8 @@
         [UIView setAnimationBeginsFromCurrentState:YES];
         [UIView setAnimationDuration:animationDuration];
         self.listView.frame = CGRectMake(self.listView.frame.origin.x, self.listView.frame.origin.y,320 , 416);
-        [UIView commitAnimations]; 
-    } 
+        [UIView commitAnimations];
+    }
     
 }
 
@@ -233,11 +234,11 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-//    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 113, 26)];
-//    UIImageView *imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 113, 26)];
-//    [imgView setImage:[UIImage imageNamed:@"prettyrich-title.png"]];
-//    [titleView addSubview:imgView];
-//    self.navigationItem.titleView = titleView;
+    //    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 113, 26)];
+    //    UIImageView *imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 113, 26)];
+    //    [imgView setImage:[UIImage imageNamed:@"prettyrich-title.png"]];
+    //    [titleView addSubview:imgView];
+    //    self.navigationItem.titleView = titleView;
     [MobClick beginLogPageView:@"LoginView"];
     NSString *preEmail = [[NSUserDefaults standardUserDefaults]objectForKey:@"PreUserEmail"];
     if (![PrettyUtility isNull:preEmail])
@@ -254,8 +255,8 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if (textField.tag == 201)
-    {   
-        [passwordTextField becomeFirstResponder];           
+    {
+        [passwordTextField becomeFirstResponder];
     }
     if (textField.tag == 202)
     {
@@ -387,22 +388,42 @@
 }
 - (void)startRenRenLogin
 {
-    NSString *renrenId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
+    //NSString *renrenId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
+    NSString *sessionId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
+    Renren *renren = [Renren sharedRenren];
+    NSMutableDictionary *renrenAuthJson = [[NSMutableDictionary alloc]initWithCapacity:5];
+    if (renren.accessToken) {
+        [renrenAuthJson setObject:renren.accessToken forKey:@"access_Token"];
+    }
+	if (renren.expirationDate)
+    {
+        NSTimeInterval time = [renren.expirationDate timeIntervalSince1970];
+        NSNumber *timeNumber = [NSNumber numberWithDouble:time];
+		[renrenAuthJson setObject:timeNumber forKey:@"expiration_Date"];
+	}
+    if (renren.sessionKey) {
+        [renrenAuthJson setObject:renren.sessionKey forKey:@"session_Key"];
+    }
+    if (renren.secret) {
+        [renrenAuthJson setObject:renren.secret forKey:@"secret_Key"];
+    }
+	[renrenAuthJson setObject:sessionId forKey:@"session_UserId"];
+
     NSString * deviceUID = [[UIDevice currentDevice] uniqueIdentifier];
-    NSString * accessToken = [Renren sharedRenren].accessToken;
     NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:
                           deviceUID,@"deviceId",
-                          renrenId,@"accountRenRen",
-                          accessToken,@"accessTokenRenRen",
+                          sessionId,@"accountRenRen",
+                          renrenAuthJson,@"renrenAuthObj",
                           @"iphone",@"deviceType",
                           nil];
+    [renrenAuthJson release];
     [curConnection cancelDownload];
     [curConnection startDownload:[NodeAsyncConnection createHttpsRequest:@"/user/logInFromRenRen" parameters:dict] :self :@selector(didEndRenRenLogin:)];
     [dict release];
     self.view.userInteractionEnabled = NO;
     [self.activityIndicator startAnimating];
     self.activityIndicator.hidden = NO;
-
+    
 }
 - (void)didEndRenRenLogin:(NodeAsyncConnection *)connection
 {
@@ -444,27 +465,11 @@
         }
         else
         {
-            [self publishFirstRenRenConnectFeed];
+            [[PrettyGlobalService shareInstance] publishFirstRenRenConnectFeed];
             [self startQuearyRenRenUserInfo];
         }
     }
-
-}
--(void)publishFirstRenRenConnectFeed
-{
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   @"feed.publishFeed",@"method",
-                                   @"http://www.huodonghaowai.com",@"url",
-                                   @"活动号外",@"name",
-                                   @"我加入了活动号外",@"message",
-                                   @"加入活动号外",@"action_name",
-                                   @"http://www.huodonghaowai.com",@"action_link",
-                                   @"中国第一个为大学生组织个性化活动的手机平台!",@"description",
-                                   @"http://oss.aliyuncs.com/ysf1/resource/app-icon.png",@"image",
-                                   nil];
     
-    [[Renren sharedRenren] requestWithParams:params andDelegate:self];
-
 }
 - (void)startLogin
 {
@@ -485,7 +490,7 @@
                           email,@"emailAccount",
                           password,@"password",
                           @"iphone",@"deviceType",
-                        nil];
+                          nil];
     [curConnection cancelDownload];
     [curConnection startDownload:[NodeAsyncConnection createHttpsRequest:@"/user/logIn" parameters:dict] :self :@selector(didEndLogin:)];
     [dict release];
@@ -504,7 +509,47 @@
     }
     if ([[connection.result objectForKey:@"status"]isEqualToString:@"success"])
     {
-        NSDictionary *result = [connection.result objectForKey:@"result"];
+        
+        NSDictionary *results = [connection.result objectForKey:@"result"];
+        NSDictionary *renrenDict = [results objectForKey:@"renrenAccount"];
+        if (![PrettyUtility isNull:renrenDict])
+        {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            Renren *renren = [Renren sharedRenren];
+            if ([renrenDict objectForKey:@"accountRenRen"])
+            {
+                [defaults setObject:[renrenDict objectForKey:@"accountRenRen"] forKey:@"session_UserId"];
+            }
+            NSDictionary *renrenAuthJson = [renrenDict objectForKey:@"renrenAuthObj"];
+            if (![PrettyUtility isNull:renrenAuthJson])
+            {
+                if ([renrenAuthJson objectForKey:@"access_Token"]) {
+                    renren.accessToken = [renrenAuthJson objectForKey:@"access_Token"];
+                    [defaults setObject:[renrenAuthJson objectForKey:@"access_Token"] forKey:@"access_Token"];
+                }
+                if ([renrenAuthJson objectForKey:@"expiration_Date"]) {
+                    NSNumber *after = [renrenAuthJson objectForKey:@"expiration_Date"];
+                    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[after doubleValue]];
+
+                    renren.expirationDate = date;
+                    [defaults setObject:date forKey:@"expiration_Date"];
+                }
+                if ([renrenAuthJson objectForKey:@"session_Key"])
+                {
+                    renren.sessionKey = [renrenAuthJson objectForKey:@"session_Key"];
+                    [defaults setObject:[renrenAuthJson objectForKey:@"session_Key"] forKey:@"session_Key"];
+                    
+                }
+                if ([renrenAuthJson objectForKey:@"secret_Key"])
+                {
+                    renren.secret = [renrenAuthJson objectForKey:@"secret_Key"];
+                    [defaults setObject:[renrenAuthJson objectForKey:@"secret_Key"] forKey:@"secret_Key"];
+                }
+            }
+            [defaults synchronize];
+        }
+        
+        NSDictionary *result = [results objectForKey:@"user"];
         NSString *userId = [result objectForKey:@"userId"];
         NSString *userName = [result objectForKey:@"name"];
         NSString *userGender = [result objectForKey:@"gender"];
@@ -563,7 +608,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     //[[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"UpdateDateListNotification" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"kNotificationDidGetLoggedInUserId" object:nil];
     [curConnection cancelDownload];
     [curConnection release];
     [emailTextField release];

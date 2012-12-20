@@ -1,7 +1,7 @@
-dev test    http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/web/regionList
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getData
-curl -H "Content-Type: application/json" -X POST -d '{}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getData > serverData.dat
-curl -H "Content-Type: application/json" -X POST -d '{}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getStat
+dev test    http://aliyunvm:4000/web/regionList
+http://aliyunvm:4000/admin/getData
+curl -H "Content-Type: application/json" -X POST -d '{}' http://aliyunvm:4000/admin/getData > serverData.dat
+curl -H "Content-Type: application/json" -X POST -d '{}' http://aliyunvm:4000/admin/getStat
 
 prod  http://ec2-23-23-144-110.compute-1.amazonaws.com:4000/web/regionList
 http://ec2-23-23-144-110.compute-1.amazonaws.com:4000/admin/getData
@@ -11,81 +11,82 @@ curl -H "Content-Type: application/json" -X POST -d '{}' http://ec2-23-23-144-11
 
 
 
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getConfig
-https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/admin/getConfig
+http://aliyunvm:4000/admin/getConfig
+https://aliyunvm:4010/admin/getConfig
 
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/web/queryUserData
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/web/queryUserData?dataType=busByDevice
+http://aliyunvm:4000/web/queryUserData
+http://aliyunvm:4000/web/queryUserData?dataType=busByDevice
 
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/web/regionList
+http://aliyunvm:4000/web/regionList
 
-curl -H "Content-Type: application/json" -X POST -d '{}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getStat
-curl -H "Content-Type: application/json" -X POST -d '{}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getData
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getData?filterType=regexRedis&filterValue=user*
-curl --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getData?filterType=regexRedis&filterValue=user*&outFormat=directText"
-
-
-
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getRawDataByQuery?topEntityType=user&userIds=1,2
-curl -H "Content-Type: application/json" -X POST -d '{"topEntityType":"user", "userIds":[1,2]}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getRawDataByQuery
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getRawDataByQuery?topEntityType=user&fieldName=name&fieldValueRegexp=Adam&needCaseInsensitive=true
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getRawDataByQuery?topEntityType=date&dateIds=1,2
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getRawDataByQuery?topEntityType=date&fieldName=description&fieldValueRegexp=date&needCaseInsensitive=true
-
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getRawDataByQuery?topEntityType=region&regions=CN%2bBeijing%2bBeijing,CN%2bHebei%2bTangshan
-curl -H "Content-Type: application/json" -X POST -d '{"topEntityType":"region", "regions":["CN+Beijing+Beijing","CN+Hebei+Tangshan"]}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getRawDataByQuery
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/getRawDataByQuery?topEntityType=region&valueRegexp=beijing&needCaseInsensitive=true
-
-curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"getRawDataByQuery", "topEntityType":"date", "dateIds":["119"]}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/runMethod
-curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"getRawDataByQuery", "topEntityType":"messageByDate2Users", "dateId":"119", "userId1":"41", "userId2":"49"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/runMethod
-curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"getBusinessDataByQuery", "topEntityType":"user","format":"formatJsonText"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/runMethod
-
-curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"getBusinessDataByQuery", "topEntityType":"user"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/runMethod
-curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"getBusinessDataByQuery", "topEntityType":"user", "dataType":"busByDevice"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/runMethod
-curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"getBusinessDataByQuery", "topEntityType":"user", "dataType":"busByDevice", "format":"formatJsonText"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/runMethod
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/web/runMethod?libName=store&methodName=getBusinessDataByQuery&topEntityType=user
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/web/runMethod?libName=store&methodName=getBusinessDataByQuery&topEntityType=user&dataType=busByDevice
+curl -H "Content-Type: application/json" -X POST -d '{}' http://aliyunvm:4000/admin/getStat
+curl -H "Content-Type: application/json" -X POST -d '{}' http://aliyunvm:4000/admin/getData
+http://aliyunvm:4000/admin/getData?filterType=regexRedis&filterValue=user*
+curl --url "http://aliyunvm:4000/admin/getData?filterType=regexRedis&filterValue=user*&outFormat=directText"
 
 
 
+http://aliyunvm:4000/admin/getRawDataByQuery?topEntityType=user&userIds=1,2
+curl -H "Content-Type: application/json" -X POST -d '{"topEntityType":"user", "userIds":[1,2]}' http://aliyunvm:4000/admin/getRawDataByQuery
+http://aliyunvm:4000/admin/getRawDataByQuery?topEntityType=user&fieldName=name&fieldValueRegexp=Adam&needCaseInsensitive=true
+http://aliyunvm:4000/admin/getRawDataByQuery?topEntityType=date&dateIds=1,2
+http://aliyunvm:4000/admin/getRawDataByQuery?topEntityType=date&fieldName=description&fieldValueRegexp=date&needCaseInsensitive=true
 
+http://aliyunvm:4000/admin/getRawDataByQuery?topEntityType=region&regions=CN%2bBeijing%2bBeijing,CN%2bHebei%2bTangshan
+curl -H "Content-Type: application/json" -X POST -d '{"topEntityType":"region", "regions":["CN+Beijing+Beijing","CN+Hebei+Tangshan"]}' http://aliyunvm:4000/admin/getRawDataByQuery
+http://aliyunvm:4000/admin/getRawDataByQuery?topEntityType=region&valueRegexp=beijing&needCaseInsensitive=true
 
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"user1@abc.com", "password":"aaa", "name":"user1", "height":175, "gender":"male", "deviceType":"iphone", "region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios"}' https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/user/register
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"user1@abc.com", "password":"aaa", "deviceType":"iphone"}' https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/user/logIn
+curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"getRawDataByQuery", "topEntityType":"date", "dateIds":["119"]}' http://aliyunvm:4000/admin/runMethod
+curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"getRawDataByQuery", "topEntityType":"messageByDate2Users", "dateId":"119", "userId1":"41", "userId2":"49"}' http://aliyunvm:4000/admin/runMethod
+curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"getBusinessDataByQuery", "topEntityType":"user","format":"formatJsonText"}' http://aliyunvm:4000/admin/runMethod
 
-curl -H "Content-Type: application/json" -X POST -d '{"emailAccount":"user1@abc.com","returnFormat":"json"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/web/requestResetPassword
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/web/requestResetPassword
-https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/web/resetPassword?rpi=4940fbac2e28abd88a7cfce8b4d817316ccaa1244813633e3b2760aabe0a74b23faa5a0e65c001d060e8ac2953eb1f15
+curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"getBusinessDataByQuery", "topEntityType":"user"}' http://aliyunvm:4000/admin/runMethod
+curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"getBusinessDataByQuery", "topEntityType":"user", "dataType":"busByDevice"}' http://aliyunvm:4000/admin/runMethod
+curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"getBusinessDataByQuery", "topEntityType":"user", "dataType":"busByDevice", "format":"formatJsonText"}' http://aliyunvm:4000/admin/runMethod
+http://aliyunvm:4000/web/runMethod?libName=store&methodName=getBusinessDataByQuery&topEntityType=user
+http://aliyunvm:4000/web/runMethod?libName=store&methodName=getBusinessDataByQuery&topEntityType=user&dataType=busByDevice
 
-
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/web/disableUser
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1","returnFormat":"json","showUser":1}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/web/disableUser
-curl -H "Content-Type: application/json" -X POST -d '{"emailAccount":"emailAccount@abc.1344070687473","returnFormat":"json","showUser":1}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/web/disableUser
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1","returnFormat":"json","disableUser":1}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/web/disableUser
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1","returnFormat":"json","enableUser":1}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/web/disableUser
-
-https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/adminWeb/logIn
-curl -k https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/adminWeb/logIn
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/adminWeb/functionList
-http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/adminWeb/logOut
-
-curl -H "Content-Type: application/json" -X POST -d '{"start":0, "count":10}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyDates
-
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"6", "delta":"10000"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/changeUserCredit
-
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "type":"new", "region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios", "count":10,"start":0}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos
-
-curl -H "Content-Type: application/json" -X POST -d '{"region":{"CountryCode":"CN","State":"XXX","City":"XXX"}, "geolibType":"ios", "count":10,"start":0}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos
+http://aliyunvm:4000/web/runMethod?libName=store&methodName=deleteUserRenRenAccount&emailAccount=abc@de.com
+http://aliyunvm:4000/web/runMethod?libName=store&methodName=getAllReports
 
 
 
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"user1@abc.com", "password":"aaa", "name":"user1", "height":175, "gender":"male", "deviceType":"iphone", "region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios"}' https://aliyunvm:4010/user/register
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"user1@abc.com", "password":"aaa", "deviceType":"iphone"}' https://aliyunvm:4010/user/logIn
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "type":"new", "region":"globalRegion", "geolibType":"android", "count":10}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos
+curl -H "Content-Type: application/json" -X POST -d '{"emailAccount":"user1@abc.com","returnFormat":"json"}' http://aliyunvm:4000/web/requestResetPassword
+http://aliyunvm:4000/web/requestResetPassword
+https://aliyunvm:4010/web/resetPassword?rpi=4940fbac2e28abd88a7cfce8b4d817316ccaa1244813633e3b2760aabe0a74b23faa5a0e65c001d060e8ac2953eb1f15
 
-curl -H "Content-Type: application/json" -X POST -d '{"region":{"CountryCode":"CN","State":"XXX","City":"XXX"}, "geolibType":"ios", "count":10,"start":0}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos > nouserGlobalHotF1.dat
-curl -H "Content-Type: application/json" -X POST -d '{"region":{"CountryCode":"CN","State":"XXX","City":"XXX"}, "geolibType":"ios", "count":10,"start":0, "targetGender":"male"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos > nouserGlobalHotM1.dat
-curl -H "Content-Type: application/json" -X POST -d '{"region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios", "count":10,"start":0}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos > nouserBeijingHotF1.dat
-curl -H "Content-Type: application/json" -X POST -d '{"region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios", "count":10,"start":0, "targetGender":"male"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos > nouserBeijingHotM1.dat
+
+http://aliyunvm:4000/web/disableUser
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1","returnFormat":"json","showUser":1}' http://aliyunvm:4000/web/disableUser
+curl -H "Content-Type: application/json" -X POST -d '{"emailAccount":"emailAccount@abc.1344070687473","returnFormat":"json","showUser":1}' http://aliyunvm:4000/web/disableUser
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1","returnFormat":"json","disableUser":1}' http://aliyunvm:4000/web/disableUser
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1","returnFormat":"json","enableUser":1}' http://aliyunvm:4000/web/disableUser
+
+https://aliyunvm:4010/adminWeb/logIn
+curl -k https://aliyunvm:4010/adminWeb/logIn
+http://aliyunvm:4000/adminWeb/functionList
+http://aliyunvm:4000/adminWeb/logOut
+
+curl -H "Content-Type: application/json" -X POST -d '{"start":0, "count":10}' http://aliyunvm:4000/user/getNearbyDates
+
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"6", "delta":"10000"}' http://aliyunvm:4000/admin/changeUserCredit
+
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "type":"new", "region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios", "count":10,"start":0}' http://aliyunvm:4000/user/getNearbyPhotos
+
+curl -H "Content-Type: application/json" -X POST -d '{"region":{"CountryCode":"CN","State":"XXX","City":"XXX"}, "geolibType":"ios", "count":10,"start":0}' http://aliyunvm:4000/user/getNearbyPhotos
+
+
+
+
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "type":"new", "region":"globalRegion", "geolibType":"android", "count":10}' http://aliyunvm:4000/user/getNearbyPhotos
+
+curl -H "Content-Type: application/json" -X POST -d '{"region":{"CountryCode":"CN","State":"XXX","City":"XXX"}, "geolibType":"ios", "count":10,"start":0}' http://aliyunvm:4000/user/getNearbyPhotos > nouserGlobalHotF1.dat
+curl -H "Content-Type: application/json" -X POST -d '{"region":{"CountryCode":"CN","State":"XXX","City":"XXX"}, "geolibType":"ios", "count":10,"start":0, "targetGender":"male"}' http://aliyunvm:4000/user/getNearbyPhotos > nouserGlobalHotM1.dat
+curl -H "Content-Type: application/json" -X POST -d '{"region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios", "count":10,"start":0}' http://aliyunvm:4000/user/getNearbyPhotos > nouserBeijingHotF1.dat
+curl -H "Content-Type: application/json" -X POST -d '{"region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios", "count":10,"start":0, "targetGender":"male"}' http://aliyunvm:4000/user/getNearbyPhotos > nouserBeijingHotM1.dat
 node tools/formatJsonStr.js nouserGlobalHotF1.dat
 node tools/formatJsonStr.js nouserGlobalHotM1.dat
 node tools/formatJsonStr.js nouserBeijingHotF1.dat
@@ -93,16 +94,16 @@ node tools/formatJsonStr.js nouserBeijingHotM1.dat
 
 
 
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+m1@yasofon.com", "password":"password", "deviceType":"iphone"}' https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/user/logIn
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"13", "type":"new", "region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios", "count":10}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos > userM1NewBeijing.dat
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"13", "type":"new", "region":{"CountryCode":"CN","State":"ForGlobal","City":"ForGlobal"}, "geolibType":"ios", "count":10}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos > userM1NewGlobal.dat
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"13", "type":"hot", "region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios", "count":10,"start":0}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos > userM1HotBeijing.dat
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"13", "type":"hot", "region":{"CountryCode":"CN","State":"ForGlobal","City":"ForGlobal"}, "geolibType":"ios", "count":10,"start":0}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos > userM1HotGlobal.dat
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+f1@yasofon.com", "password":"password", "deviceType":"iphone"}' https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/user/logIn
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"17", "type":"new", "region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios", "count":10}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos > userF1NewBeijing.dat
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"17", "type":"new", "region":{"CountryCode":"CN","State":"ForGlobal","City":"ForGlobal"}, "geolibType":"ios", "count":10}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos > userF1NewGlobal.dat
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"17", "type":"hot", "region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios", "count":10,"start":0}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos > userF1HotBeijing.dat
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"17", "type":"hot", "region":{"CountryCode":"CN","State":"ForGlobal","City":"ForGlobal"}, "geolibType":"ios", "count":10,"start":0}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos > userF1HotGlobal.dat
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+m1@yasofon.com", "password":"password", "deviceType":"iphone"}' https://aliyunvm:4010/user/logIn
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"13", "type":"new", "region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios", "count":10}' http://aliyunvm:4000/user/getNearbyPhotos > userM1NewBeijing.dat
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"13", "type":"new", "region":{"CountryCode":"CN","State":"ForGlobal","City":"ForGlobal"}, "geolibType":"ios", "count":10}' http://aliyunvm:4000/user/getNearbyPhotos > userM1NewGlobal.dat
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"13", "type":"hot", "region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios", "count":10,"start":0}' http://aliyunvm:4000/user/getNearbyPhotos > userM1HotBeijing.dat
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"13", "type":"hot", "region":{"CountryCode":"CN","State":"ForGlobal","City":"ForGlobal"}, "geolibType":"ios", "count":10,"start":0}' http://aliyunvm:4000/user/getNearbyPhotos > userM1HotGlobal.dat
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+f1@yasofon.com", "password":"password", "deviceType":"iphone"}' https://aliyunvm:4010/user/logIn
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"17", "type":"new", "region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios", "count":10}' http://aliyunvm:4000/user/getNearbyPhotos > userF1NewBeijing.dat
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"17", "type":"new", "region":{"CountryCode":"CN","State":"ForGlobal","City":"ForGlobal"}, "geolibType":"ios", "count":10}' http://aliyunvm:4000/user/getNearbyPhotos > userF1NewGlobal.dat
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"17", "type":"hot", "region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios", "count":10,"start":0}' http://aliyunvm:4000/user/getNearbyPhotos > userF1HotBeijing.dat
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"17", "type":"hot", "region":{"CountryCode":"CN","State":"ForGlobal","City":"ForGlobal"}, "geolibType":"ios", "count":10,"start":0}' http://aliyunvm:4000/user/getNearbyPhotos > userF1HotGlobal.dat
 node tools/formatJsonStr.js userM1NewBeijing.dat
 node tools/formatJsonStr.js userM1NewGlobal.dat
 node tools/formatJsonStr.js userM1HotBeijing.dat
@@ -115,73 +116,73 @@ node tools/formatJsonStr.js userF1HotGlobal.dat
 
 
 
-curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addDevice
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "name":"un1", "height":180, "gender":"male"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addUser
+curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d1"}' http://aliyunvm:4000/user/addDevice
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "name":"un1", "height":180, "gender":"male"}' http://aliyunvm:4000/user/addUser
 
-curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d2"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addDevice
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "name":"un2", "height":170, "gender":"female"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addUser
+curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d2"}' http://aliyunvm:4000/user/addDevice
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "name":"un2", "height":170, "gender":"female"}' http://aliyunvm:4000/user/addUser
 
-curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d3"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addDevice
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "name":"un3", "height":173, "gender":"female"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addUser
+curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d3"}' http://aliyunvm:4000/user/addDevice
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "name":"un3", "height":173, "gender":"female"}' http://aliyunvm:4000/user/addUser
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getFollowings
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1", "type":"follow"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/followUser
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "targetUserId":"1", "type":"follow"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/followUser
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getFollowings
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1", "type":"unfollow"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/followUser
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getFollowings
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2"}' http://aliyunvm:4000/user/getFollowings
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1", "type":"follow"}' http://aliyunvm:4000/user/followUser
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "targetUserId":"1", "type":"follow"}' http://aliyunvm:4000/user/followUser
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2"}' http://aliyunvm:4000/user/getFollowings
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1", "type":"unfollow"}' http://aliyunvm:4000/user/followUser
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2"}' http://aliyunvm:4000/user/getFollowings
 
-// curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoPath":"photoPathU1F1P1.png"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto
-// curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoPath":"photoPathU1F2P1.png"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto
-// curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoPath":"photoPathU1F2P2.png", "feedId":2}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto
+// curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoPath":"photoPathU1F1P1.png"}' http://aliyunvm:4000/user/uploadPhoto
+// curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoPath":"photoPathU1F2P1.png"}' http://aliyunvm:4000/user/uploadPhoto
+// curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoPath":"photoPathU1F2P2.png", "feedId":2}' http://aliyunvm:4000/user/uploadPhoto
 
-curl -F "image=@/mnt/hgfs/zly/t/tpic/IMG_0087-gd2.JPG" --form-string "userId=1" --form-string "width=400" --form-string "height=298" --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto"
-curl -F "image=@/mnt/hgfs/zly/t/tpic/IMG_0087-moo-l.JPG" --form-string "userId=1" --form-string "width=400" --form-string "height=298" --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto"
-curl -F "image=@/mnt/hgfs/zly/t/tpic/IMG_0087-moo-m.JPG" --form-string "userId=1" --form-string "width=200" --form-string "height=149" --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto"
-
-
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "type":"new", "location":"tobeGiven", "count":10}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos
-
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoId":"1", "type":"like"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/likePhoto
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoId":"1", "type":"unlike"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/likePhoto
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoId":"2", "type":"like"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/likePhoto
-
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "count":10}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getFeed
-
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getUser
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getUser
-
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"1", "count":"10"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getPhotos
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1", "count":"10"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getPhotos
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"2", "count":"10"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getPhotos
-
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1","photoId":"1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getPhoto
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1","photoId":"2"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getPhoto
-
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"2", "description":"a cheater"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/reportUser
-
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "region":"Beijing some", "dateDate":"1337439249633", "whoPay":"0", "money":"123", "monetaryunit":"$", "description":"i want to do something"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/createDate
-
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "region":"Beijing some"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/updateLocation
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "region":"Beijing some"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/updateLocation
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "region":"Beijing some"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/updateLocation
-
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"2", "dateId":"1", "credit":"30"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/sendDate
+curl -F "image=@/mnt/hgfs/zly/t/tpic/IMG_0087-gd2.JPG" --form-string "userId=1" --form-string "width=400" --form-string "height=298" --url "http://aliyunvm:4000/user/uploadPhoto"
+curl -F "image=@/mnt/hgfs/zly/t/tpic/IMG_0087-moo-l.JPG" --form-string "userId=1" --form-string "width=400" --form-string "height=298" --url "http://aliyunvm:4000/user/uploadPhoto"
+curl -F "image=@/mnt/hgfs/zly/t/tpic/IMG_0087-moo-m.JPG" --form-string "userId=1" --form-string "width=200" --form-string "height=149" --url "http://aliyunvm:4000/user/uploadPhoto"
 
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1", "dateId":"1", "messageText":"msg2-1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/sendMessage
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"2", "dateId":"1", "messageText":"msg1-2"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/sendMessage
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "targetUserId":"1", "dateId":"1", "messageText":"msg3-1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/sendMessage
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "type":"new", "location":"tobeGiven", "count":10}' http://aliyunvm:4000/user/getNearbyPhotos
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1", "dateId":"1", "count":"10"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getMessageHistory
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoId":"1", "type":"like"}' http://aliyunvm:4000/user/likePhoto
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoId":"1", "type":"unlike"}' http://aliyunvm:4000/user/likePhoto
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoId":"2", "type":"like"}' http://aliyunvm:4000/user/likePhoto
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "count":"10"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getDates
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "count":"10"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getDates
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "count":10}' http://aliyunvm:4000/user/getFeed
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1", "dateId":"1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/confirmDate
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"2", "dateId":"1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/confirmDate
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"1"}' http://aliyunvm:4000/user/getUser
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1"}' http://aliyunvm:4000/user/getUser
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoId":"1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/deletePhoto
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"1", "count":"10"}' http://aliyunvm:4000/user/getPhotos
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1", "count":"10"}' http://aliyunvm:4000/user/getPhotos
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"2", "count":"10"}' http://aliyunvm:4000/user/getPhotos
+
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1","photoId":"1"}' http://aliyunvm:4000/user/getPhoto
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1","photoId":"2"}' http://aliyunvm:4000/user/getPhoto
+
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"2", "description":"a cheater"}' http://aliyunvm:4000/user/reportUser
+
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "region":"Beijing some", "dateDate":"1337439249633", "whoPay":"0", "money":"123", "monetaryunit":"$", "description":"i want to do something"}' http://aliyunvm:4000/user/createDate
+
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "region":"Beijing some"}' http://aliyunvm:4000/user/updateLocation
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "region":"Beijing some"}' http://aliyunvm:4000/user/updateLocation
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "region":"Beijing some"}' http://aliyunvm:4000/user/updateLocation
+
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"2", "dateId":"1", "credit":"30"}' http://aliyunvm:4000/user/sendDate
+
+
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1", "dateId":"1", "messageText":"msg2-1"}' http://aliyunvm:4000/user/sendMessage
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"2", "dateId":"1", "messageText":"msg1-2"}' http://aliyunvm:4000/user/sendMessage
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "targetUserId":"1", "dateId":"1", "messageText":"msg3-1"}' http://aliyunvm:4000/user/sendMessage
+
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1", "dateId":"1", "count":"10"}' http://aliyunvm:4000/user/getMessageHistory
+
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "count":"10"}' http://aliyunvm:4000/user/getDates
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "count":"10"}' http://aliyunvm:4000/user/getDates
+
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1", "dateId":"1"}' http://aliyunvm:4000/user/confirmDate
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"2", "dateId":"1"}' http://aliyunvm:4000/user/confirmDate
+
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoId":"1"}' http://aliyunvm:4000/user/deletePhoto
 
 -------------------------------------------------
 about photo state
@@ -193,122 +194,122 @@ about photo state
 
 not really upload, just for quick testing
 
-curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addDevice
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "name":"Tom1", "height":180, "gender":"male"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addUser
-curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addDevice
-curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-moo-s.JPG" --form-string "notUploadReally=true" --form-string "userId=1" --form-string "width=100" --form-string "height=74" --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto"
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoId":"1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/setPrimaryPhoto
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getUser
+curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d1"}' http://aliyunvm:4000/user/addDevice
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "name":"Tom1", "height":180, "gender":"male"}' http://aliyunvm:4000/user/addUser
+curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d1"}' http://aliyunvm:4000/user/addDevice
+curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-moo-s.JPG" --form-string "notUploadReally=true" --form-string "userId=1" --form-string "width=100" --form-string "height=74" --url "http://aliyunvm:4000/user/uploadPhoto"
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "photoId":"1"}' http://aliyunvm:4000/user/setPrimaryPhoto
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"1"}' http://aliyunvm:4000/user/getUser
 
-curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d2"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addDevice
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "name":"Jack2", "height":170, "gender":"male"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addUser
-curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-moo-s.JPG" --form-string "notUploadReally=true" --form-string "userId=2" --form-string "width=100" --form-string "height=74" --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto"
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "photoId":"2"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/setPrimaryPhoto
+curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d2"}' http://aliyunvm:4000/user/addDevice
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "name":"Jack2", "height":170, "gender":"male"}' http://aliyunvm:4000/user/addUser
+curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-moo-s.JPG" --form-string "notUploadReally=true" --form-string "userId=2" --form-string "width=100" --form-string "height=74" --url "http://aliyunvm:4000/user/uploadPhoto"
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "photoId":"2"}' http://aliyunvm:4000/user/setPrimaryPhoto
 
-curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d3"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addDevice
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "name":"Betty3", "height":173, "gender":"female"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addUser
-curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-moo-s.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=100" --form-string "height=74" --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto"
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "photoId":"3"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/setPrimaryPhoto
+curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d3"}' http://aliyunvm:4000/user/addDevice
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "name":"Betty3", "height":173, "gender":"female"}' http://aliyunvm:4000/user/addUser
+curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-moo-s.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=100" --form-string "height=74" --url "http://aliyunvm:4000/user/uploadPhoto"
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "photoId":"3"}' http://aliyunvm:4000/user/setPrimaryPhoto
 
-curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d4"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addDevice
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"4", "name":"Alice4", "height":170, "gender":"female"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/addUser
-curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-moo-s.JPG" --form-string "notUploadReally=true" --form-string "userId=4" --form-string "width=100" --form-string "height=74" --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto"
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"4", "photoId":"4"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/setPrimaryPhoto
+curl -H "Content-Type: application/json" -X POST -d '{"deviceId":"d4"}' http://aliyunvm:4000/user/addDevice
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"4", "name":"Alice4", "height":170, "gender":"female"}' http://aliyunvm:4000/user/addUser
+curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-moo-s.JPG" --form-string "notUploadReally=true" --form-string "userId=4" --form-string "width=100" --form-string "height=74" --url "http://aliyunvm:4000/user/uploadPhoto"
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"4", "photoId":"4"}' http://aliyunvm:4000/user/setPrimaryPhoto
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"3", "type":"follow"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/followUser
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"4", "type":"follow"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/followUser
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getFollowings
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"3", "type":"follow"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/followUser
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"3", "type":"follow"}' http://aliyunvm:4000/user/followUser
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"4", "type":"follow"}' http://aliyunvm:4000/user/followUser
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1"}' http://aliyunvm:4000/user/getFollowings
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"3", "type":"follow"}' http://aliyunvm:4000/user/followUser
 
-#curl -F "image=@/mnt/hgfs/zly/t/tpic/IMG_0087-moo-l.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=400" --form-string "height=298" --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto"
-#curl -F "image=@/mnt/hgfs/zly/t/tpic/IMG_0087-moo-m.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=200" --form-string "height=149" --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto"
-#curl -F "image=@/mnt/hgfs/zly/t/tpic/IMG_0087-moo-s.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=100" --form-string "height=74" --form-string "feedId=6" --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto"
-curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-moo-l.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=400" --form-string "height=298" --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto"
-curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-moo-m.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=200" --form-string "height=149" --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto"
-curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-moo-s.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=100" --form-string "height=74" --form-string "feedId=6" --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto"
+#curl -F "image=@/mnt/hgfs/zly/t/tpic/IMG_0087-moo-l.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=400" --form-string "height=298" --url "http://aliyunvm:4000/user/uploadPhoto"
+#curl -F "image=@/mnt/hgfs/zly/t/tpic/IMG_0087-moo-m.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=200" --form-string "height=149" --url "http://aliyunvm:4000/user/uploadPhoto"
+#curl -F "image=@/mnt/hgfs/zly/t/tpic/IMG_0087-moo-s.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=100" --form-string "height=74" --form-string "feedId=6" --url "http://aliyunvm:4000/user/uploadPhoto"
+curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-moo-l.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=400" --form-string "height=298" --url "http://aliyunvm:4000/user/uploadPhoto"
+curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-moo-m.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=200" --form-string "height=149" --url "http://aliyunvm:4000/user/uploadPhoto"
+curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-moo-s.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=100" --form-string "height=74" --form-string "feedId=6" --url "http://aliyunvm:4000/user/uploadPhoto"
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "type":"new", "location":"tobeGiven", "count":10, "targetGender":"female"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "type":"new", "location":"tobeGiven", "count":10, "targetGender":"male"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyPhotos
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "type":"new", "location":"tobeGiven", "count":10, "targetGender":"female"}' http://aliyunvm:4000/user/getNearbyPhotos
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "type":"new", "location":"tobeGiven", "count":10, "targetGender":"male"}' http://aliyunvm:4000/user/getNearbyPhotos
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"3", "count":"10"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getPhotos
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "targetUserId":"3", "count":"10"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getPhotos
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"4", "count":"10"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getPhotos
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"3", "count":"10"}' http://aliyunvm:4000/user/getPhotos
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "targetUserId":"3", "count":"10"}' http://aliyunvm:4000/user/getPhotos
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"4", "count":"10"}' http://aliyunvm:4000/user/getPhotos
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"3"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getUser
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "targetUserId":"3"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getUser
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"3"}' http://aliyunvm:4000/user/getUser
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "targetUserId":"3"}' http://aliyunvm:4000/user/getUser
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "count":100}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getFeed
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "count":100}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getFeed
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"3", "type":"unfollow"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/followUser
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "count":100}' http://aliyunvm:4000/user/getFeed
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "count":100}' http://aliyunvm:4000/user/getFeed
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"3", "type":"unfollow"}' http://aliyunvm:4000/user/followUser
 
-curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-gd2.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=400" --form-string "height=298" --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/uploadPhoto"
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "count":100}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getFeed
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "count":100}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getFeed
+curl -F "image=@/cygdrive/e/zly/t/tpic/IMG_0087-gd2.JPG" --form-string "notUploadReally=true" --form-string "userId=3" --form-string "width=400" --form-string "height=298" --url "http://aliyunvm:4000/user/uploadPhoto"
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "count":100}' http://aliyunvm:4000/user/getFeed
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "count":100}' http://aliyunvm:4000/user/getFeed
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "photoId":"5"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/deletePhoto
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "count":100}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getFeed
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "count":100}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getFeed
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "photoId":"5"}' http://aliyunvm:4000/user/deletePhoto
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "count":100}' http://aliyunvm:4000/user/getFeed
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "count":100}' http://aliyunvm:4000/user/getFeed
 
 
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "region":"Beijing some", "dateDate":"1337539249633", "whoPay":"0", "money":"123", "monetaryunit":"$", "description":"i want to do something"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/createDate
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "region":"Beijing some", "dateDate":"1337539249633", "whoPay":"0", "money":"123", "monetaryunit":"$", "description":"i want to do something"}' http://aliyunvm:4000/user/createDate
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "region":"Beijing some"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/updateLocation
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "region":"Beijing some"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/updateLocation
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "region":"Beijing some"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/updateLocation
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"4", "region":"Beijing some"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/updateLocation
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "region":"Beijing some"}' http://aliyunvm:4000/user/updateLocation
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "region":"Beijing some"}' http://aliyunvm:4000/user/updateLocation
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "region":"Beijing some"}' http://aliyunvm:4000/user/updateLocation
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"4", "region":"Beijing some"}' http://aliyunvm:4000/user/updateLocation
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"2", "dateId":"1", "credit":"30"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/sendDate
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"2", "dateId":"1", "credit":"30"}' http://aliyunvm:4000/user/sendDate
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "targetUserId":"1", "dateId":"1", "messageText":"msg3-1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/sendMessage
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"3", "dateId":"1", "messageText":"msg1-3"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/sendMessage
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"4", "targetUserId":"1", "dateId":"1", "messageText":"msg4-1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/sendMessage
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "targetUserId":"1", "dateId":"1", "messageText":"msg3-1"}' http://aliyunvm:4000/user/sendMessage
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"3", "dateId":"1", "messageText":"msg1-3"}' http://aliyunvm:4000/user/sendMessage
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"4", "targetUserId":"1", "dateId":"1", "messageText":"msg4-1"}' http://aliyunvm:4000/user/sendMessage
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"3", "dateId":"1", "count":"10"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getMessageHistory
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"3", "dateId":"1", "count":"10"}' http://aliyunvm:4000/user/getMessageHistory
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "count":"10"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getDates
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "count":"10"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getDates
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "count":"10"}' http://aliyunvm:4000/user/getDates
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"3", "count":"10"}' http://aliyunvm:4000/user/getDates
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1", "dateId":"1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/confirmDate
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"2", "dateId":"1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/confirmDate
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"2", "targetUserId":"1", "dateId":"1"}' http://aliyunvm:4000/user/confirmDate
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"2", "dateId":"1"}' http://aliyunvm:4000/user/confirmDate
 
 
 
 
 ----------------
 
-curl -H "Content-Type: application/json" -X POST -d '{"count":"1","expireDays":1}' --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/generateInviteCode"
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl1@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "inviteCode":"aaa"}'  --url "https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/user/register"
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl2@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "inviteCode":""}'  --url "https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/user/register"
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl3@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "inviteCode":"toBeSet"}'  --url "https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/user/register"
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl4@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "inviteCode":"toBeSet"}'  --url "https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/user/register"
+curl -H "Content-Type: application/json" -X POST -d '{"count":"1","expireDays":1}' --url "http://aliyunvm:4000/user/generateInviteCode"
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl1@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "inviteCode":"aaa"}'  --url "https://aliyunvm:4010/user/register"
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl2@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "inviteCode":""}'  --url "https://aliyunvm:4010/user/register"
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl3@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "inviteCode":"toBeSet"}'  --url "https://aliyunvm:4010/user/register"
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl4@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "inviteCode":"toBeSet"}'  --url "https://aliyunvm:4010/user/register"
 
 
 
 -------------------------------------------------
 
-curl --cookie-jar prettyRichSessionCookie1 -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+Am5a1@yasofon.com", "password":"password", "deviceType":"iphone"}'  --url "https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/user/logIn"
-curl --cookie prettyRichSessionCookie1 -H "Content-Type: application/json" -X POST -d '{"count":"20"}' --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/generateInviteCode"
+curl --cookie-jar prettyRichSessionCookie1 -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+Am5a1@yasofon.com", "password":"password", "deviceType":"iphone"}'  --url "https://aliyunvm:4010/user/logIn"
+curl --cookie prettyRichSessionCookie1 -H "Content-Type: application/json" -X POST -d '{"count":"20"}' --url "http://aliyunvm:4000/user/generateInviteCode"
 
-curl --cookie prettyRichSessionCookie1 -H "Content-Type: application/json" -X POST -d '{"start":"0", "count":"20"}' --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getNearbyDates"
-curl --cookie prettyRichSessionCookie1 -H "Content-Type: application/json" -X POST -d '{"type":"onlyActiveSend", "count":"20"}' --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getDates"
+curl --cookie prettyRichSessionCookie1 -H "Content-Type: application/json" -X POST -d '{"start":"0", "count":"20"}' --url "http://aliyunvm:4000/user/getNearbyDates"
+curl --cookie prettyRichSessionCookie1 -H "Content-Type: application/json" -X POST -d '{"type":"onlyActiveSend", "count":"20"}' --url "http://aliyunvm:4000/user/getDates"
 
-curl --cookie-jar prettyRichSessionCookie1 -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang@yasofon.com", "password":"123456", "deviceType":"android"}'  --url "https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/user/logIn"
-curl --cookie prettyRichSessionCookie1 -H "Content-Type: application/json" -X POST -d '{"userId":"1", "appToken":"AAAAA"}' --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/updateAppToken"
+curl --cookie-jar prettyRichSessionCookie1 -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang@yasofon.com", "password":"123456", "deviceType":"android"}'  --url "https://aliyunvm:4010/user/logIn"
+curl --cookie prettyRichSessionCookie1 -H "Content-Type: application/json" -X POST -d '{"userId":"1", "appToken":"AAAAA"}' --url "http://aliyunvm:4000/user/updateAppToken"
 
-curl --cookie-jar prTestSessionCookie1 -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"flyouting@gmail.com", "password":"123456", "deviceType":"android"}'  --url "https://ec2-23-21-136-120.compute-1.amazonaws.com:4010/user/logIn"
-curl --cookie prTestSessionCookie1 -H "Content-Type: application/json" -X POST -d '{"userId":"9", "appToken":"AAAAA"}' --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/updateAppToken"
-curl --proxy 127.0.0.1:8888  --cookie prTestSessionCookie1 -H "Content-Type: application/json" -X POST -d '{"userId":"9", "appToken":"AAAAA"}' --url "http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/updateAppToken"
-
-
-
-curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"countInvitingUser"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/admin/runMethod
+curl --cookie-jar prTestSessionCookie1 -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"flyouting@gmail.com", "password":"123456", "deviceType":"android"}'  --url "https://aliyunvm:4010/user/logIn"
+curl --cookie prTestSessionCookie1 -H "Content-Type: application/json" -X POST -d '{"userId":"9", "appToken":"AAAAA"}' --url "http://aliyunvm:4000/user/updateAppToken"
+curl --proxy 127.0.0.1:8888  --cookie prTestSessionCookie1 -H "Content-Type: application/json" -X POST -d '{"userId":"9", "appToken":"AAAAA"}' --url "http://aliyunvm:4000/user/updateAppToken"
 
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"4", "targetUserId":"1", "dateId":"1"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/confirmDate
+
+curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"countInvitingUser"}' http://aliyunvm:4000/admin/runMethod
 
 
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "appToken":"AAAAA"}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/updateAppToken
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"4", "targetUserId":"1", "dateId":"1"}' http://aliyunvm:4000/user/confirmDate
+
+
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "appToken":"AAAAA"}' http://aliyunvm:4000/user/updateAppToken
 
 
 
@@ -319,7 +320,7 @@ curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "appToken":"
 
 
 try if express.bodyParser can deal nested objects, from below output, confirm yes.
-curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"1", "region":{"f1":"aaaa"}}' http://ec2-23-21-136-120.compute-1.amazonaws.com:4000/user/getUser
+curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserId":"1", "region":{"f1":"aaaa"}}' http://aliyunvm:4000/user/getUser
 some output: Server.getPhotos entered, params in body={ userId: '1', targetUserId: '1', region: { f1: 'aaaa' } }
 
 

@@ -26,7 +26,7 @@ var colors = exports.colors = {
 
 var config = exports.config = {
     usage: 'prod', //'dev'  // affect applePushNotificationServiceHost and apnsCertFilePath
-    productName : '同去',//'PrettyRich',
+    productName : '活动号外',//'同去',//'PrettyRich',
 
     prodEnv:{
       host:'42.121.122.47',//'ec2-23-23-144-110.compute-1.amazonaws.com',
@@ -401,6 +401,20 @@ var config = exports.config = {
       'renrenAccountAlreadyRegistered' : {code:'21300', message:'the renren account({0}) has already been registered.',
           msg_zh:"这个人人帐号({0})已经被注册"},
 
+      'userAlreadyBindThisRenRenAccount' : {code:'21301', message:'the user has already been bound with this renren account.',
+          msg_zh:"用户已经与这个人人帐号绑定"},
+      'userAlreadyBindOtherRenRenAccount' : {code:'21302', message:'the user has already been bound with other renren account.',
+          msg_zh:"用户已经与其它的人人帐号绑定"},
+      'theRenRenAccountAlreadyBindThisUser' : {code:'21303', message:'the renren account has already been bound with this user.',
+          msg_zh:"这个人人帐号已经与这个用户绑定"},
+      'theRenRenAccountAlreadyBindOtherUser' : {code:'21304', message:'the renren account has already been bound with other user.',
+          msg_zh:"这个人人帐号已经与其他的用户绑定"},
+      'theRenRenAccountNotBindAnyUser' : {code:'21305', message:'the renren account has not been bound with any user.',
+          msg_zh:"这个人人帐号尚未与任何用户绑定"},
+      'userNotBindRenRenAccount' : {code:'21306', message:'the user has not bound with any renren account.',
+        msg_zh:"这个用户没有绑定任何人人帐号"},
+
+
       'invalidResetPasswordCode' : {code:'30000', message:'invalid reset password code',
           msg_zh:"不正确的重置密码编码"},
       'invalidResetPasswordInfo' : {code:'30001', message:'invalid reset password info',
@@ -434,13 +448,14 @@ var config = exports.config = {
     apnsPayloadLengthLimit : 256, //in bytes
     apnsDeviceTokenLength : 32,
 
-
+//    noreplyMailAccount : 'tongqusupport@yasofon.com',
+//    noreplyMailAccountPwd : 'fa1f95f259b0e23dc333f317e6777384',//encrypted
 //    noreplyMailAccount : 'noreply@prettyri.ch',
 //    noreplyMailAccountPwd : '76bc5d9c9ceb4e22b72d752e8294a5b4',//encrypted
-    noreplyMailAccount : 'tongqusupport@yasofon.com',
-    noreplyMailAccountPwd : 'fa1f95f259b0e23dc333f317e6777384',//encrypted
-//    noreplyMailHost : 'smtp.exmail.qq.com',
-//    noreplyMailHostPort : 25,
+    noreplyMailAccount : 'support@huodonghaowai.com',
+    noreplyMailAccountPwd : '63028f51304840723449b62337880441',//encrypted
+    noreplyMailHost : 'smtp.exmail.qq.com',
+    noreplyMailHostPort : 25,
 
     passwordMinLength : 6,
 

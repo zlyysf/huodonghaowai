@@ -391,6 +391,33 @@ static PrettyGlobalService *instance;
     [appDelegate.mainNavController setViewControllers:[NSArray arrayWithObject:bfNav]];
     [bfNav release];
 }
+-(void)publishFirstRenRenConnectFeed
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   @"feed.publishFeed",@"method",
+                                   @"http://www.huodonghaowai.com",@"url",
+                                   @"活动号外",@"name",
+                                   @"我加入了活动号外",@"message",
+                                   @"加入活动号外",@"action_name",
+                                   @"http://www.huodonghaowai.com",@"action_link",
+                                   @"中国第一个为大学生组织个性化活动的手机平台!",@"description",
+                                   @"http://oss.aliyuncs.com/ysf1/resource/app-icon.png",@"image",
+                                   nil];
+    
+    [[Renren sharedRenren] requestWithParams:params andDelegate:self];
+    
+}
+- (void)renren:(Renren *)renren requestDidReturnResponse:(ROResponse*)response
+{
+    
+}
+- (void)renren:(Renren *)renren requestFailWithError:(ROError*)error
+{
+	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
+	NSLog(@"loginfail:%@ %@",title,description);
+}
+
 - (void)dealloc
 {
     [super dealloc];
