@@ -145,9 +145,24 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveGetLoggedInUserIdNotification:) name:@"kNotificationDidGetLoggedInUserId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeRenRenShareCheck:) name:@"kNotificationRenRenStatusChanged" object:nil];
     //self.listView.hidden = YES;
 }
-
+- (void)changeRenRenShareCheck:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    if ([[userInfo objectForKey:@"renrenAuthed"]boolValue])
+    {
+        self.shareChecked = YES;
+        [self.renrenImage setImage:[UIImage imageNamed:@"share-checked.png"]];
+    }
+    else
+    {
+        self.shareChecked = NO;
+        [self.renrenImage setImage:[UIImage imageNamed:@"share-unchecked.png"]];
+    }
+}
 - (void)textChanged:(NSNotification *)notification
 {
     if([self.descriptionTextView.text length] == 0)
@@ -853,6 +868,10 @@ replacementString:(NSString *)string
 #pragma mark - RenrenDelegate methods
 - (void) didReceiveGetLoggedInUserIdNotification:(NSNotification *)notification
 {
+    AppDelegate *appDelegte = [[UIApplication sharedApplication]delegate];
+    NSString * className = NSStringFromClass([appDelegte.mainNavController.visibleViewController class]);
+    if ([className isEqualToString:@"SettingsViewController"])
+        return;
     //NSString *renrenId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
     [self startBindingRenRen];
 }
@@ -954,6 +973,9 @@ replacementString:(NSString *)string
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"kNotificationDidGetLoggedInUserId" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"kNotificationRenRenStatusChanged" object:nil];
+    
     //[curConnection cancelDownload];
     [curConnection release];
     [selectedTopic release];
