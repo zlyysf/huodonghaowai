@@ -206,9 +206,9 @@
 }
 
 - (void)renren:(Renren *)renren loginFailWithError:(ROError*)error{
-	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
-	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
-	NSLog(@"loginfail:%@ %@",title,description);
+//	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+//	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
+//	NSLog(@"loginfail:%@ %@",title,description);
 }
 - (void)startBindingRenRen
 {

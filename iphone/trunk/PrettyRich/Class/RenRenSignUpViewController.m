@@ -416,7 +416,7 @@
                          self.accountInfoJson,@"accountInfoJson",
                          nil];
     [renrenAuthJson release];
-    NSLog(@"register param :%@",[dict description]);
+//    NSLog(@"register param :%@",[dict description]);
     self.view.userInteractionEnabled = NO;
     [curConnection cancelDownload];
     [curConnection startDownload:[NodeAsyncConnection createHttpsRequest:@"/user/register" parameters:dict] :self :@selector(didEndSignup:)];

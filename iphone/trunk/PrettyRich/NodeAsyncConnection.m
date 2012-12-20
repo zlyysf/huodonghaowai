@@ -135,7 +135,7 @@
 		}
 
 		[deserializer release];
-        NSLog(@"%@", [self.result description]);
+//        NSLog(@"%@", [self.result description]);
     }
 
     // Release the connection now that it's finished
@@ -216,7 +216,7 @@
     {
         host = @"http://42.121.122.47:4000";//stage
     }
-    NSLog(@"%@",host);
+//    NSLog(@"%@",host);
     //static NSString *host = @"http://ec2-23-21-136-120.compute-1.amazonaws.com:4000";//stage
 	if (apiName == nil)
     {
@@ -247,7 +247,7 @@
     {
         host = @"https://42.121.122.47:4010";//stage
     }
-    NSLog(@"%@",host);
+//    NSLog(@"%@",host);
     //static NSString *host = @"https://ec2-23-21-136-120.compute-1.amazonaws.com:4010";//stage
 	if (apiName == nil)
     {
@@ -277,7 +277,7 @@
     {
         host = @"http://42.121.122.47:4000";//stage
     }
-    NSLog(@"%@",host);
+//    NSLog(@"%@",host);
     //static NSString *host = @"http://ec2-23-21-136-120.compute-1.amazonaws.com:4000";//stage
 	if (apiName == nil)
     {

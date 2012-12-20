@@ -342,9 +342,9 @@ static PrettyGlobalService *instance;
 }
 - (void)renren:(Renren *)renren requestFailWithError:(ROError*)error
 {
-	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
-	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
-	NSLog(@"loginfail:%@ %@",title,description);
+//	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+//	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
+//	NSLog(@"loginfail:%@ %@",title,description);
 }
 
 - (void)dealloc

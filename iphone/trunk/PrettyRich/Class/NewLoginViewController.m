@@ -227,7 +227,7 @@
     {
         host = @"http://42.121.122.47:4000";//stage
     }
-    NSLog(@"%@",host);
+//    NSLog(@"%@",host);
     //static NSString *host = @"http://ec2-23-21-136-120.compute-1.amazonaws.com:4000";//stage
     NSString *openUrl = [host stringByAppendingString:@"/web/requestResetPassword"];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:openUrl]];
@@ -300,9 +300,9 @@
     hasRenRenId = NO;
 }
 - (void)renren:(Renren *)renren loginFailWithError:(ROError*)error{
-	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
-	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
-	NSLog(@"loginfail:%@ %@",title,description);
+//	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+//	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
+//	NSLog(@"loginfail:%@ %@",title,description);
 }
 -(void)startQuearyRenRenUserInfo
 {
@@ -324,7 +324,7 @@
             return;
         }
         NSArray *usersInfo = (NSArray *)(response.rootObject);
-        NSLog(@"%@",[usersInfo description]);
+//        NSLog(@"%@",[usersInfo description]);
         NSString *outText = [NSString stringWithFormat:@""];
         NSString *photoUrl;
         NSString *name;
@@ -376,9 +376,9 @@
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
     self.view.userInteractionEnabled = YES;
-	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
-	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
-	NSLog(@"loginfail:%@ %@",title,description);
+//	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+//	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
+//	NSLog(@"loginfail:%@ %@",title,description);
 }
 - (void) didReceiveGetLoggedInUserIdNotification:(NSNotification *)notification
 {

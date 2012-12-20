@@ -888,9 +888,9 @@ replacementString:(NSString *)string
 }
 
 - (void)renren:(Renren *)renren loginFailWithError:(ROError*)error{
-	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
-	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
-	NSLog(@"loginfail:%@ %@",title,description);
+//	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+//	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
+//	NSLog(@"loginfail:%@ %@",title,description);
 }
 - (void)renren:(Renren *)renren requestDidReturnResponse:(ROResponse*)response
 {
@@ -910,9 +910,9 @@ replacementString:(NSString *)string
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
     self.view.userInteractionEnabled = YES;
-	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
-	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
-	NSLog(@"loginfail:%@ %@",title,description);
+//	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+//	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
+//	NSLog(@"loginfail:%@ %@",title,description);
 }
 - (void)startBindingRenRen
 {

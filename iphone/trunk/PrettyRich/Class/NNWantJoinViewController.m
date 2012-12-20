@@ -91,7 +91,7 @@
     NSString *message = [self.messageTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if ([message length]!=0)
     {
-        NSLog(@"%@",message);
+//        NSLog(@"%@",message);
         [self startReportUser:message];
     }
 }
