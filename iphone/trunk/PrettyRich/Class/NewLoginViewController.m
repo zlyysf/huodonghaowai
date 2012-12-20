@@ -473,6 +473,7 @@
 }
 - (void)startLogin
 {
+    [[Renren sharedRenren]logout:self];
     if (lastActiveField != nil)
     {
         [lastActiveField resignFirstResponder];
