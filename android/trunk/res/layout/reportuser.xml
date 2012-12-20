@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/white">
+     <RelativeLayout
+        android:id="@+id/nearbyheaderview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/top_bar" >
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:background="@drawable/back_button"
+            android:text="@string/Cancel" />
+
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dip"
+            android:text="@string/send"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:background="@drawable/btn_signup_bg" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/i_want_report"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />        
+    </RelativeLayout>
+    
+    <EditText android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="10dip"
+         android:layout_marginTop="10dip"
+         android:layout_marginRight="10dip"
+         android:id="@+id/etMessage"
+         android:textSize="14sp"
+         android:paddingLeft="5dip"
+         android:paddingRight="5dip"
+         android:minLines="8"
+         android:background="@drawable/edittextbg"
+         android:gravity="top"/>
+    <TextView android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTextNum"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="5dip"
+        android:text="0/140"
+        android:textColor="@color/font_gray"
+        android:gravity="right"/>
+</LinearLayout>

@@ -42,6 +42,7 @@ import android.widget.Toast;
 
 import com.lingzhimobile.huodonghaowai.R;
 import com.lingzhimobile.huodonghaowai.activity.Nearby;
+import com.lingzhimobile.huodonghaowai.activity.ReportUser;
 import com.lingzhimobile.huodonghaowai.asynctask.GetUserTask;
 import com.lingzhimobile.huodonghaowai.asynctask.LogoutTask;
 import com.lingzhimobile.huodonghaowai.asynctask.UpdateProfileTask;
@@ -92,7 +93,7 @@ public class ProfileFragment extends Fragment {
     // private String tempName, tempHeight, tempBloodType, tempDepartment,
     // tempDescription, tempEduStatus, tempConstellation, tempSchool,
     // tempHomeTown,tempPhotoId,tempPhotoPath;
-    private HashMap<String, String> values = new HashMap<String, String>();
+    private final HashMap<String, String> values = new HashMap<String, String>();
     private int tempPosition = 0;
     private ProgressBar pbLoadImage;
     private boolean isRestricted;
@@ -307,7 +308,18 @@ public class ProfileFragment extends Fragment {
         } else {
             btnCancel.setText(getArguments().getInt("backStrId"));
             btnCancel.setBackgroundResource(R.drawable.btn_back_bg);
-            btnEdit.setVisibility(View.GONE);
+            //btnEdit.setVisibility(View.GONE);
+            btnEdit.setText(R.string.report);
+            btnEdit.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setClass(myAcitivity, ReportUser.class);
+                    intent.putExtra("targetUserId", getArguments().getString("userId"));
+                    startActivity(intent);
+                }
+            });
             btnCancel.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -328,7 +340,8 @@ public class ProfileFragment extends Fragment {
                 pbLoadImage.setVisibility(View.VISIBLE);
                 ivUserPhoto.setTag(mProfileInfo.getPrimaryPhotoPath());
                 mProfileInfo.getPostBitmapAsync(new MethodHandler<Bitmap>() {
-                    public void process(Bitmap para) {
+                    @Override
+					public void process(Bitmap para) {
                         Message msg = refreshImgHandler.obtainMessage(0,
                                 ivUserPhoto);
                         refreshImgHandler.sendMessage(msg);
@@ -491,7 +504,8 @@ public class ProfileFragment extends Fragment {
                 ivUserEditPhoto.setTag(mProfileInfo.getSmallPhotoPath());
                 mProfileInfo
                         .getSmallPostBitmapAsync(new MethodHandler<Bitmap>() {
-                            public void process(Bitmap para) {
+                            @Override
+							public void process(Bitmap para) {
                                 Message msg = refreshImgHandler1.obtainMessage(
                                         0, ivUserEditPhoto);
                                 refreshImgHandler1.sendMessage(msg);
@@ -809,7 +823,8 @@ public class ProfileFragment extends Fragment {
     }
 
     Handler refreshImgHandler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
+        @Override
+		public void handleMessage(android.os.Message msg) {
             ImageView iv = (ImageView) msg.obj;
             if (iv != null
                     && mProfileInfo.getPrimaryPhotoPath().equals(iv.getTag())) {
@@ -820,7 +835,8 @@ public class ProfileFragment extends Fragment {
         };
     };
     Handler refreshImgHandler1 = new Handler() {
-        public void handleMessage(android.os.Message msg) {
+        @Override
+		public void handleMessage(android.os.Message msg) {
             ImageView iv = (ImageView) msg.obj;
             if (iv != null
                     && mProfileInfo.getSmallPhotoPath().equals(iv.getTag())) {
@@ -925,7 +941,7 @@ public class ProfileFragment extends Fragment {
 
     /**
      * Setup a new 3D rotation on the container view.
-     * 
+     *
      * @param position
      *            the item that was clicked to show a picture, or -1 to show the
      *            list
@@ -963,14 +979,17 @@ public class ProfileFragment extends Fragment {
             mPosition = position;
         }
 
-        public void onAnimationStart(Animation animation) {
+        @Override
+		public void onAnimationStart(Animation animation) {
         }
 
-        public void onAnimationEnd(Animation animation) {
+        @Override
+		public void onAnimationEnd(Animation animation) {
             mContainer.post(new SwapViews(mPosition));
         }
 
-        public void onAnimationRepeat(Animation animation) {
+        @Override
+		public void onAnimationRepeat(Animation animation) {
         }
     }
 
@@ -985,7 +1004,8 @@ public class ProfileFragment extends Fragment {
             mType = type;
         }
 
-        public void run() {
+        @Override
+		public void run() {
             final float centerX = mContainer.getWidth() / 2.0f;
             final float centerY = mContainer.getHeight() / 2.0f;
             Rotate3dAnimation rotation;

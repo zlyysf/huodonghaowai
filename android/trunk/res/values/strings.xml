@@ -64,6 +64,9 @@
     <string name="iam">我是XX</string>
     <string name="logout_alert">你确定要退出么？</string>
     <string name="edit_profile_ok">已经成功修改个人资料</string>
+    <string name="report">举报</string>
+    <!-- report user-->
+    <string name="i_want_report">我要举报</string>
 
     <!-- publish date -->
     <string name="Subject">主题</string>

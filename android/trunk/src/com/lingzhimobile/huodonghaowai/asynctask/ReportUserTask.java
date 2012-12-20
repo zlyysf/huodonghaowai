@@ -1,13 +1,12 @@
 package com.lingzhimobile.huodonghaowai.asynctask;
 
-import java.util.ArrayList;
-
 import org.apache.http.client.methods.HttpPost;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.os.Message;
+import android.text.TextUtils;
 
 import com.lingzhimobile.huodonghaowai.cons.MessageID;
 import com.lingzhimobile.huodonghaowai.exception.JSONParseException;
@@ -17,21 +16,20 @@ import com.lingzhimobile.huodonghaowai.net.HttpManager;
 import com.lingzhimobile.huodonghaowai.net.NetProtocol;
 import com.lingzhimobile.huodonghaowai.util.JSONParser;
 
-public class SendMessageTask extends AsyncTask<Void, Void, String> {
+public class ReportUserTask extends AsyncTask<Void, Void, String> {
 	HttpPost httpRequest;
 	Message msg;
-	private final String requestURL = NetProtocol.HTTP_REQUEST_URL + "user/sendMessage";
-	private final String messageText;
-	private final String dateId;
-	private final String targetUserId;
-	private final int itemIndex;
-	private final String userId;
 
-	public SendMessageTask(String userId, String messageText, String dateId, String targetUserId, int itemIndex, Message msg){
+	private final String requestPath = "user/reportUser";
+	private final String requestURL = NetProtocol.HTTP_REQUEST_URL + requestPath;
+	private final String messageText;
+	private final String targetUserId;
+	private final String userId;
+	private final String localLogTag = LogTag.TASK + requestPath;
+
+	public ReportUserTask(String userId, String messageText, String targetUserId, Message msg){
 		this.messageText = messageText;
-		this.dateId = dateId;
 		this.targetUserId = targetUserId;
-		this.itemIndex = itemIndex;
 		this.userId = userId;
 		this.msg = msg;
 	}
@@ -43,23 +41,22 @@ public class SendMessageTask extends AsyncTask<Void, Void, String> {
 		JSONObject parameters = new JSONObject();
 		try {
 		    parameters.put("userId", userId);
-			parameters.put("messageText", messageText);
-			parameters.put("dateId", dateId);
+			parameters.put("description", messageText);
 			parameters.put("targetUserId", targetUserId);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		result = HttpManager.postAPI(httpRequest, requestURL, parameters);
-		LogUtils.Logi(LogTag.TASK, "The result of API request: " + result);
+		LogUtils.Logi(localLogTag, "The result of API request: " + result);
 		return result;
 	}
 
 	@Override
 	protected void onCancelled() {
-	    LogUtils.Logi(LogTag.TASK, "SendMessageTask onCancelled");
+	    LogUtils.Logi(localLogTag, "SendMessageTask onCancelled");
 		if (httpRequest != null) {
 			httpRequest.abort();
-			LogUtils.Logi(LogTag.TASK, "http request abort");
+			LogUtils.Logi(localLogTag, "http request abort");
 		}
 		super.onCancelled();
 	}
@@ -67,17 +64,16 @@ public class SendMessageTask extends AsyncTask<Void, Void, String> {
 	@Override
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
-		ArrayList<String> al = null;
+		String s = null;
         try {
-            al = (ArrayList<String>) JSONParser.getSendMessageResult(result);
+            s = JSONParser.getReportUserResult(result);
         } catch (JSONParseException e) {
             msg.what = MessageID.SERVER_RETURN_NULL;
             msg.obj = e.getCode();
         }
-		if(al != null && al.size() >1){
+        if (!TextUtils.isEmpty(s)){
 			msg.what = MessageID.SEND_MESSAGE_OK;
-			msg.arg1 = itemIndex;
-			msg.obj = al;
+			msg.obj = s;
 		}
 		msg.sendToTarget();
 	}
