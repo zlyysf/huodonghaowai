@@ -90,7 +90,12 @@ Out:
 { status:success|fail, result:{ }
 }
 
-
+unbindRenRenAccount
+In: 
+{ userId}
+Out:
+{ status:success|fail, result:{ }
+}
 
 resetPassword(https)
 In: 

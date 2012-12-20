@@ -133,8 +133,12 @@ function Server () {
 
   self.app.post('/user/bind3rdPartAccount',
       function (req, res, next) { self._commonPreConfig(req, res, next);},
-      //function (req, res, next) { self._checkLogInSessionStrict(req, res, next);},
+      function (req, res, next) { self._checkLogInSessionStrict(req, res, next);},
       function (req, res) { self.bind3rdPartAccount(req, res);});
+  self.app.post('/user/unbindRenRenAccount',
+      function (req, res, next) { self._commonPreConfig(req, res, next);},
+      function (req, res, next) { self._checkLogInSessionStrict(req, res, next);},
+      function (req, res) { self.unbindRenRenAccount(req, res);});
   self.app.post('/user/generateInviteCodeD',
       function (req, res, next) { self._commonPreConfig(req, res, next);},
       //function (req, res, next) { self._checkLogInSessionStrict(req, res, next);},
@@ -1151,6 +1155,38 @@ Server.prototype.bind3rdPartAccount = function(req, res) {
     return;
   });//bindRenRenAccount
 };//bind3rdPartAccount
+
+
+
+/**
+*
+* @param req - contains userId
+* @param res
+* @returns
+*   {status:success|fail}
+*/
+Server.prototype.unbindRenRenAccount = function(req, res) {
+  var self = this;
+  //logger.logDebug("Server.unbindRenRenAccount entered, params in body="+util.inspect(req.body,false,100));
+  var messagePrefix = 'in Server.unbindRenRenAccount, ';
+  if (!req.body.userId){
+    var err = self.newError({errorKey:'needParameter',messageParams:['userId'],messagePrefix:messagePrefix,req:req});
+    return self.handleError({err:err,req:req,res:res});
+  }
+
+  var userIdFront = req.body.userId;
+  var userId = req.session.userId;
+  if (userIdFront != userId){
+    var err = self.newError({errorKey:'sessionNotConsistent',messageParams:[''],messagePrefix:messagePrefix,req:req});
+    return self.handleError({err:err,req:req,res:res});
+  }
+  self.store.deleteUserRenRenAccount({req:req,userId:userId},function(err){
+    if (err) return self.handleError({err:err,req:req,res:res});
+    var httpRetData = {status:'success'};
+    self.returnDataFromResponse({res:res,req:req,data:httpRetData});
+    return;
+  });//deleteUserRenRenAccount
+};//unbindRenRenAccount
 
 
 

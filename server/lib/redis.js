@@ -3401,6 +3401,14 @@ Redis.prototype.deleteUserRenRenAccount = function(params, callback) {
     if (userId){
       self.getUser({userId:userId,userFields:['userId','accountRenRen']}, function(err,userObj){
         if (err) return cbFun(err);
+        if (!userObj || !userObj.userId){
+          var err = self.newError({errorKey:'userNotExist',messageParams:[userId],messagePrefix:messagePrefix,req:req});
+          return cbFun(err);
+        }
+        if (!userObj.accountRenRen){
+          var err = self.newError({errorKey:'userNotBindRenRenAccount',messageParams:[],messagePrefix:messagePrefix,req:req});
+          return cbFun(err);
+        }
         accountRenRen = userObj.accountRenRen;
         return cbFun(null);
       });//getUser

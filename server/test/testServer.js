@@ -657,10 +657,19 @@ function busRenRenRegisterAndLogin1(params,cbFun){
         },
 
         function(next){
-          console.log("\ndeleteUserRenRenAccount normal, should ok.");
-          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/admin/runMethod',notLogResponseHere:null,
-          postDataObj:{libName:"store",methodName:'deleteUserRenRenAccount', emailAccount:emailAccount}},function(err,outData){
+          console.log("\nunbindRenRenAccount normal, should ok.");
+          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/unbindRenRenAccount',notLogResponseHere:null,
+          postDataObj:{userId:userId}},function(err,outData){
             assert.ok(outData.status=="success");
+            next();
+          });
+        },
+
+        function(next){
+          console.log("\nunbindRenRenAccount again, should fail.");
+          testlib.runPRApi({needHttps:false, host:host,port:port,path:'/user/unbindRenRenAccount',notLogResponseHere:null,
+          postDataObj:{userId:userId}},function(err,outData){
+            assert.ok(outData.status=="fail");
             next();
           });
         },
