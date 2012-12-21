@@ -279,10 +279,10 @@ curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserI
 ----------------
 
 curl -H "Content-Type: application/json" -X POST -d '{"count":"1","expireDays":1}' --url "http://aliyunvm:4000/user/generateInviteCode"
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl1@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "inviteCode":"aaa"}'  --url "https://aliyunvm:4010/user/register"
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl2@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "inviteCode":""}'  --url "https://aliyunvm:4010/user/register"
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl3@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "inviteCode":"toBeSet"}'  --url "https://aliyunvm:4010/user/register"
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl4@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "inviteCode":"toBeSet"}'  --url "https://aliyunvm:4010/user/register"
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyuzhang@hitongqu.net", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d"}'  --url "https://aliyunvm:4010/user/register"
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl2@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d"}'  --url "https://aliyunvm:4010/user/register"
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl3@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d"}'  --url "https://aliyunvm:4010/user/register"
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl4@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d"}'  --url "https://aliyunvm:4010/user/register"
 
 
 

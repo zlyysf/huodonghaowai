@@ -935,7 +935,7 @@ Server.prototype._requestResetPassword = function(params, callback) {
 
     var resetPwdUrlInfo = tool.cloneObject(fromUrlInfo);
     tool.copyFields({overrideSameName:true,destObj:resetPwdUrlInfo,srcObj:{
-      protocol:"http", host:null, port:config.config.port, pathname:"/web/resetPassword",search:"?rpi="+resetPwdInfo,query:null
+      protocol:"http", host:null, port:config.getEnvConfig().port, pathname:"/web/resetPassword",search:"?rpi="+resetPwdInfo,query:null
     }});
     delete resetPwdUrlInfo.host;//if host exist, hostname no use. even host be null, hostname no use.
     delete resetPwdUrlInfo.query;
@@ -943,7 +943,7 @@ Server.prototype._requestResetPassword = function(params, callback) {
     if (!resetPwdUrlInfo.hostname){
       var serverHost = config.getHost();
       //resetPwdUrl = "https://"+serverHost+":4010/web/resetPassword?rpi="+resetPwdInfo;
-      resetPwdUrl = "http://"+serverHost+":"+config.config.port+"/web/resetPassword?rpi="+resetPwdInfo;
+      resetPwdUrl = "http://"+serverHost+":"+config.getEnvConfig().port+"/web/resetPassword?rpi="+resetPwdInfo;
     }
 
     //logger.logDebug("in Server._requestResetPassword entered, resetPwdUrl="+util.inspect(resetPwdUrl,false,100));
