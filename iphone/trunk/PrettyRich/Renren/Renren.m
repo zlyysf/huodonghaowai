@@ -68,13 +68,13 @@ static Renren *sharedRenren = nil;
 	[super dealloc];
 }
 
-+ (Renren *)newRenRen{
-    Renren *newRenrenObject = [[Renren alloc] init];
-    [newRenrenObject isSessionValid];
-    newRenrenObject.appKey = kAPI_Key;
-    newRenrenObject.appId = kAPP_ID;
-    return [newRenrenObject autorelease];
-}
+//+ (Renren *)newRenRen{
+//    Renren *newRenrenObject = [[Renren alloc] init];
+//    [newRenrenObject isSessionValid];
+//    newRenrenObject.appKey = kAPI_Key;
+//    newRenrenObject.appId = kAPP_ID;
+//    return [newRenrenObject autorelease];
+//}
 
 + (Renren *)sharedRenren {
     if (!sharedRenren) {
@@ -101,8 +101,8 @@ static Renren *sharedRenren = nil;
 
 -(RenrenPay *)getRenrenPayWithSecret:(NSString *)secret andLocalMem:(BOOL)isUsed
 {
-    RenrenPay *rrPay  = [[[RenrenPay alloc] init] autorelease];
-    [rrPay initPayWithRenren:self andSecretKey:secret andLocalMem:isUsed];
+    RenrenPay *rrPay  = [[[RenrenPay alloc] initPayWithRenren:self andSecretKey:secret andLocalMem:isUsed] autorelease];
+    //[rrPay initPayWithRenren:self andSecretKey:secret andLocalMem:isUsed];
     
     return rrPay;
 }

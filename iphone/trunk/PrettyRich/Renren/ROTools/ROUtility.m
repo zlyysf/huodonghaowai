@@ -178,12 +178,12 @@
     label.textAlignment = UITextAlignmentRight;
     label.backgroundColor = [UIColor clearColor];
     [imageView addSubview:label];
-    
+    [label release];
     UIGraphicsBeginImageContext(imageViewFrame.size);
     [imageView.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *outImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+    [imageView release];
     return outImage;
 }
 

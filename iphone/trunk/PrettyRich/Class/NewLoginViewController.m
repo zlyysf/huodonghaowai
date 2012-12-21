@@ -325,15 +325,13 @@
         }
         NSArray *usersInfo = (NSArray *)(response.rootObject);
 //        NSLog(@"%@",[usersInfo description]);
-        NSString *outText = [NSString stringWithFormat:@""];
         NSString *photoUrl;
         NSString *name;
         NSString *gender;
-        NSString *school;
-        NSString *hometown;
+        NSString *school = nil;
+        NSString *hometown = nil;
         int year = 0;
         ROUserResponseItem *item = [usersInfo objectAtIndex:0];
-        outText = [outText stringByAppendingFormat:@"UserID:%@\n Name:%@\n Sex:%@\n Birthday:%@\n HeadURL:%@\n",item.userId,item.name,item.sex,item.brithday,item.headUrl];
         if (item.universityHistory != nil && [item.universityHistory count]!= 0)
         {
             for (ROUserUniversityInfoItem *uItem in item.universityHistory)

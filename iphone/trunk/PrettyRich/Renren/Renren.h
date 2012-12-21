@@ -77,7 +77,7 @@
  * 需要自行控制Renren对象的生命周期以保证调用的完成
  * @return 返回Renren类实例。
  */
-+ (Renren *)newRenRen;
+//+ (Renren *)newRenRen;
 
 #pragma mark - General Public Methods -
 
