@@ -340,6 +340,11 @@
     if (shareChecked)
     {
         NSString *feedContent = [NSString stringWithFormat:@"时间:%@  地点:%@  详情:%@",self.timeTextField.text,self.addressString,self.descripString];
+        if ([feedContent length]>200)
+        {
+            feedContent = [feedContent substringToIndex:197];
+            feedContent = [feedContent stringByAppendingString:@"..."];
+        }
         NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        @"feed.publishFeed",@"method",
                                        @"http://www.huodonghaowai.com",@"url",

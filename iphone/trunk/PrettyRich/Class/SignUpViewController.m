@@ -135,6 +135,10 @@
 
     backViewSizeAdjusted = NO;
     self.navigationItem.title = @"新用户注册";
+    [[Renren sharedRenren]logout:self];
+}
+- (void)renrenDidLogout:(Renren *)renren
+{
 }
 - (IBAction) clickAddPhoto
 {

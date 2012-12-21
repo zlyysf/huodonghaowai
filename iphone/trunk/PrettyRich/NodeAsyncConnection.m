@@ -135,7 +135,7 @@
 		}
 
 		[deserializer release];
-//        NSLog(@"%@", [self.result description]);
+        NSLog(@"%@", [self.result description]);
     }
 
     // Release the connection now that it's finished
