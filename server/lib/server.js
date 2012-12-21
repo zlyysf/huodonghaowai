@@ -957,7 +957,7 @@ Server.prototype._requestResetPassword = function(params, callback) {
         //text: 'Hello to myself!'
         // HTML body
         html:'<h4>尊敬的用户，您好:</h4>'+
-             '<p>您在同去网点击了“忘记密码”按钮，故系统自动为您发送了这封邮件。您可以点击以下链接修改您的密码：</p>'+
+             '<p>您在'+config.config.productName+'网点击了“忘记密码”按钮，故系统自动为您发送了这封邮件。您可以点击以下链接修改您的密码：</p>'+
              '<p><a href="'+resetPwdUrl+'">'+resetPwdUrl+'</a></p>'+
              '<p>如果您不需要修改密码，或者您从未点击过“忘记密码”按钮，请忽略本邮件。 </p>'
     };
@@ -3424,7 +3424,7 @@ Server.prototype.getSentingSMS = function (req, res) {
     var downUrlForAndroid = config.config.downUrlForAndroid;
     var downUrlForApple = config.config.downUrlForApple;
     //var text = "我正在使用同去应用，很有趣。你也来用吧。\n\n安卓应用的下载地址:"+downUrlForAndroid+"\n\n苹果应用的下载地址:"+downUrlForApple;
-    var text = "我正在使用同去应用，很有趣。你也来用吧。\n\n安卓应用的下载地址:"+downUrlForAndroid;
+    var text = "我正在使用"+config.config.productName+"应用，很有趣。你也来用吧。\n\n安卓应用的下载地址:"+downUrlForAndroid;
     var httpRetData = {status:'success',result:{text:text}};
     self.returnDataFromResponse({res:res,req:req,data:httpRetData});
     return;

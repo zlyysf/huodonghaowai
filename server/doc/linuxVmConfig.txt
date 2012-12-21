@@ -241,6 +241,7 @@ service iptables restart
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 27017 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 28017 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 3000 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 3010 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 3183 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 3690 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 4000 -j ACCEPT
