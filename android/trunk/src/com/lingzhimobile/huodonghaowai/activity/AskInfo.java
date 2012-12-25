@@ -7,6 +7,9 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -37,6 +40,7 @@ import com.lingzhimobile.huodonghaowai.R;
 import com.lingzhimobile.huodonghaowai.asynctask.RegisterTask;
 import com.lingzhimobile.huodonghaowai.asynctask.UploadPhotoTask;
 import com.lingzhimobile.huodonghaowai.cons.MessageID;
+import com.lingzhimobile.huodonghaowai.cons.RenRenLibConst;
 import com.lingzhimobile.huodonghaowai.log.LogTag;
 import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.util.AppInfo;
@@ -44,17 +48,23 @@ import com.lingzhimobile.huodonghaowai.util.AppUtil;
 import com.lingzhimobile.huodonghaowai.util.BitmapManager;
 import com.lingzhimobile.huodonghaowai.util.FileManager;
 import com.lingzhimobile.huodonghaowai.view.myProgressDialog;
+import com.renren.api.connect.android.Renren;
 import com.umeng.analytics.MobclickAgent;
 
 public class AskInfo extends HuoDongHaoWaiActivity {
 
+    private String renrenUserName;
+    private String renrenSex;
+    private String renrenHometown;
+    private String renrenUnverseName;
+
     public String userName;
     public String userGender;
-    private String email, password, userSchool, invitationCode;
+    private String email, password, userSchool, hometown;
     private ImageView ivPickPhoto;
     private LinearLayout llPickPhoto;
     EditText nameEditText,  emailEditText, passwordEditText,
-            invitationEditText;
+        hometownEditText;
     Button femaleButton, maleButton, enter,btnBack;
     private TextView schoolTextView;
 
@@ -65,6 +75,8 @@ public class AskInfo extends HuoDongHaoWaiActivity {
     private Bitmap bm;
     private UploadPhotoTask uploadPhotoTask;
     private myProgressDialog mProgressDialog;
+
+    private Renren renren;
 
     public Handler myHandler = new Handler() {
 
@@ -111,7 +123,40 @@ public class AskInfo extends HuoDongHaoWaiActivity {
         setContentView(R.layout.askinfo);
         setView();
         setListener();
-        femaleButton.performClick();
+        setViewData();
+    }
+
+    void setViewData(){
+        Intent intent1 = getIntent();
+        if (intent1 != null){
+            LogUtils.Logd(LogTag.ACTIVITY, "AskInfo onCreate getIntent=" + intent1.toString());
+            renren = intent1.getParcelableExtra(Renren.RENREN_LABEL);
+            if (renren != null) {
+                renren.init(this);
+            }
+            renrenUserName = intent1.getStringExtra("renrenUserName");
+            renrenSex = intent1.getStringExtra("renrenSex");
+            renrenHometown = intent1.getStringExtra("renrenHometown");
+            renrenUnverseName = intent1.getStringExtra("renrenUnverseName");
+            LogUtils.Logd(LogTag.ACTIVITY, "AskInfo onCreate UserName=" + renrenUserName
+                    + ", Hometown="+renrenHometown  + ", UnverseName="+renrenUnverseName + ", Sex="+renrenSex  );
+        }
+        if (!TextUtils.isEmpty(renrenUserName)) {
+            nameEditText.setText(renrenUserName);
+        }
+        if (!TextUtils.isEmpty(renrenUnverseName)) {
+            schoolTextView.setText(renrenUnverseName);
+        }
+        if (!TextUtils.isEmpty(renrenHometown)) {
+            hometownEditText.setText(renrenHometown);
+        }
+        if ("1".equals(renrenSex)){
+            maleButton.performClick();
+        }else if ("0".equals(renrenSex)){
+            femaleButton.performClick();
+        }else{
+            femaleButton.performClick();
+        }
     }
 
     void setView() {
@@ -119,8 +164,8 @@ public class AskInfo extends HuoDongHaoWaiActivity {
         emailEditText = (EditText) findViewById(R.id.emailEditText);
         schoolTextView = (TextView) findViewById(R.id.schoolTextView);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
+        hometownEditText = (EditText) findViewById(R.id.hometownEditText);
         femaleButton = (Button) findViewById(R.id.femaleButton);
-        invitationEditText = (EditText) findViewById(R.id.invitationEditText);
         maleButton = (Button) findViewById(R.id.maleButton);
         enter = (Button) findViewById(R.id.enterButton);
         btnBack = (Button) findViewById(R.id.btnCancel);
@@ -212,22 +257,45 @@ public class AskInfo extends HuoDongHaoWaiActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                invitationCode = "";
+                hometown = hometownEditText.getText().toString();
+//                invitationCode = "";
 //                invitationCode = invitationEditText.getText().toString();
 //                if (TextUtils.isEmpty(invitationCode)) {
 //                    Toast.makeText(AskInfo.this, R.string.invite_code_empty,
 //                            Toast.LENGTH_SHORT).show();
 //                    return;
 //                }
+                String accountRenRen = null;
+                JSONObject renrenAuthObj = null;
+                if (renren != null){
+                    String currentUid = renren.getCurrentUid()+"";
+                    String sessionKey = renren.getSessionKey();
+                    String accessToken = renren.getAccessToken();
+                    String secret = renren.getSecret();
+                    String expireTime = renren.getExpireTime()+"";
+                    LogUtils.Logd(LogTag.ACTIVITY, "AskInfo.setViewData sessionKey=" + sessionKey
+                        +" accessToken="+accessToken+" currentUid="+currentUid+" secret="+secret+" expireTime="+expireTime);
+                    renrenAuthObj = new JSONObject();
+                    try {
+                        renrenAuthObj.put(RenRenLibConst.fieldcommon_session_userId, currentUid);
+                        renrenAuthObj.put(RenRenLibConst.fieldcommon_session_key, sessionKey);
+                        renrenAuthObj.put(RenRenLibConst.fieldcommon_access_token, accessToken);
+                        renrenAuthObj.put(RenRenLibConst.fieldcommon_secret_key, secret);
+                        renrenAuthObj.put(RenRenLibConst.fieldcommon_expiration_date, expireTime);
+                    } catch (JSONException e) {
+                        LogUtils.Loge(LogTag.ACTIVITY,e.getMessage(), e);
+                        renrenAuthObj = null;
+                    }
+                    accountRenRen = currentUid;
+                }
+
                 if (bm == null) {
-                    Toast.makeText(AskInfo.this, R.string.no_photo,
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AskInfo.this, R.string.no_photo,Toast.LENGTH_SHORT).show();
                     return;
                 }
-                mProgressDialog = myProgressDialog.show(AskInfo.this, null,
-                        R.string.loading);
-                registerTask = new RegisterTask(email, password, userName,
-                        userSchool, userGender, invitationCode, myHandler.obtainMessage());
+                mProgressDialog = myProgressDialog.show(AskInfo.this, null, R.string.loading);
+                registerTask = new RegisterTask(email, password, userName, userSchool, userGender, hometown,
+                        accountRenRen, renrenAuthObj, myHandler.obtainMessage());
                 registerTask.execute();
             }
         });

@@ -2,12 +2,12 @@ package com.lingzhimobile.huodonghaowai.cons;
 
 public class MessageID {
 	public final static int GET_LOCATION_OK = 500;
-	
+
 	public final static int FROM_NEARBY_NEW = 1000;
 	public final static int FROM_PROFILE = 1001;
 	public final static int FROM_FEED = 1002;
 	public final static int FROM_NEARBY_HOT = 1003;
-	
+
 	//-------------------------------------------
 	public final static int SERVER_RETURN_NULL = 2001;
 	public final static int DEVICEID_EXISTED = 2002;
@@ -47,4 +47,7 @@ public class MessageID {
     public static final int STOP_DATE_OK = 2047;
     public static final int RATE_USER_OK = 2048;
     public static final int UPDATE_PROFILE_OK = 2049;
+
+    public final static int RENREN_LOGIN_OK = 2050;
+    public final static int RENREN_REGISTER_OK = 2051;
 }

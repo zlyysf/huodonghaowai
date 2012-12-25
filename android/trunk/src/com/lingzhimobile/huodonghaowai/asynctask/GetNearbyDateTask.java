@@ -19,15 +19,15 @@ import com.lingzhimobile.huodonghaowai.net.NetProtocol;
 import com.lingzhimobile.huodonghaowai.util.JSONParser;
 
 public class GetNearbyDateTask extends AsyncTask<Void, Void, String> {
-    
-    private int count;
-    private Message msg;
-    private int start;
-    
+
+    private final int count;
+    private final Message msg;
+    private final int start;
+
     HttpPost httpRequest;
     private final String requestURL = NetProtocol.HTTP_REQUEST_URL
             + "user/getNearbyDates";
-    
+
     public GetNearbyDateTask(int count, int start, Message msg){
         this.count = count;
         this.start = start;
@@ -43,14 +43,15 @@ public class GetNearbyDateTask extends AsyncTask<Void, Void, String> {
             parameters.put("start", start);
             parameters.put("count", count);
         } catch (JSONException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+        	LogUtils.Loge(LogTag.TASK, e.getMessage(), e);
         }
         result = HttpManager.postAnonymousAPI(httpRequest, requestURL,
                 parameters);
         LogUtils.Logi(LogTag.TASK, "The result of API request: " + result);
         return result;
     }
-    
+
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);

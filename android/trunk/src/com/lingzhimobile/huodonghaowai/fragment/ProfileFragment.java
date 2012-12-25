@@ -65,6 +65,8 @@ public class ProfileFragment extends Fragment {
     private final int TYPE_VIEW = 11;
     private int mCurrentType = 11;
 
+    private static final String LocalLogTag = LogTag.ACTIVITY + " ProfileFragment";
+
     private Activity myAcitivity;
     private View currentView;
     private UserItem mProfileInfo;
@@ -167,6 +169,7 @@ public class ProfileFragment extends Fragment {
         args.putInt("backStrId", backStrId);
         f.setArguments(args);
 
+        LogUtils.Logd(LocalLogTag, "ProfileFragment.newInstance userId="+userId);
         return f;
     }
 

@@ -23,6 +23,7 @@
     <string name="signup">注册</string>
     <string name="forgotpassowrd">忘记密码 ?</string>
     <string name="login">登录</string>
+    <string name="renrenlogin">人人网登录</string>
     <string name="Profile">个人资料</string>
     <string name="old_user">已注册用户</string>
     <string name="new_user">新用户注册</string>

@@ -45,22 +45,22 @@ public class JSONParser {
     public static boolean getUserInfo(String result)
             throws JSONParseException {
         checkSucceed(result);
-        ArrayList<Object> al = new ArrayList<Object>();
         try {
             JSONObject jo = new JSONObject(result);
-            JSONObject event = jo.getJSONObject("result");
-            AppInfo.userId = event.optString("userId");
-            AppInfo.gender = event.optString("gender");
-            AppInfo.userName = event.optString("name");
-            AppInfo.userPhoto = event.optString("primaryPhotoPath");
-            AppInfo.constellation = event.optString("constellation");
-            AppInfo.hometown = event.optString("hometown");
-            AppInfo.bloodType = event.optString("bloodGroup");
-            AppInfo.department = event.optString("department");
-            AppInfo.school = event.optString("school");
-            AppInfo.description = event.optString("description");
-            AppInfo.educationalStatus = event.optString("educationalStatus");
-            AppInfo.height = event.optInt("height");
+            JSONObject resultObj = jo.getJSONObject("result");
+            JSONObject userObj = resultObj.getJSONObject("user");
+            AppInfo.userId = userObj.optString("userId");
+            AppInfo.gender = userObj.optString("gender");
+            AppInfo.userName = userObj.optString("name");
+            AppInfo.userPhoto = userObj.optString("primaryPhotoPath");
+            AppInfo.constellation = userObj.optString("constellation");
+            AppInfo.hometown = userObj.optString("hometown");
+            AppInfo.bloodType = userObj.optString("bloodGroup");
+            AppInfo.department = userObj.optString("department");
+            AppInfo.school = userObj.optString("school");
+            AppInfo.description = userObj.optString("description");
+            AppInfo.educationalStatus = userObj.optString("educationalStatus");
+            AppInfo.height = userObj.optInt("height");
             return true;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -303,31 +303,33 @@ public class JSONParser {
                 }
                 ArrayList<ChatItem> responses = new ArrayList<ChatItem>();
                 try {
-                    JSONArray responders = item.getJSONArray("responders");
-                    for (int k = 0; k < responders.length(); k++) {
-                        ChatItem chatitem = new ChatItem();
-                        JSONObject responder = responders.getJSONObject(k);
-                        chatitem.setUserId(responder.optString("userId"));
-                        chatitem.setName(responder.optString("name"));
-                        chatitem.setPhotoId(responder
-                                .optString("primaryPhotoId"));
-                        chatitem.setPhotoPath(responder
-                                .optString("primaryPhotoPath"));
-                        chatitem.setSenderConfirmed(responder
-                                .optBoolean("senderConfirmed"));
-                        chatitem.setHaveUnViewedMessage(responder.optBoolean("haveUnViewedMessage",false));
-                        chatitem.setHaveRated(responder.optBoolean("haveRate"));
-                        chatitem.setHaveBeenRated(responder.optBoolean("haveBeenRated"));
-                        MessageItem mi = new MessageItem();
-                        JSONObject latestMsg = responder
-                                .getJSONObject("latestMessage");
-                        mi.setMessageId(latestMsg.optString("messageId"));
-                        mi.setCreateTime(latestMsg.optLong("createTime"));
-                        mi.setReceiverId(latestMsg.optString("receiverId"));
-                        mi.setMessageText(latestMsg.optString("messageText"));
-                        mi.setSenderId(latestMsg.optString("senderId"));
-                        chatitem.setLatestMessage(mi);
-                        responses.add(chatitem);
+                    JSONArray responders = item.optJSONArray("responders");
+                    if (responders!=null){
+                        for (int k = 0; k < responders.length(); k++) {
+                            ChatItem chatitem = new ChatItem();
+                            JSONObject responder = responders.getJSONObject(k);
+                            chatitem.setUserId(responder.optString("userId"));
+                            chatitem.setName(responder.optString("name"));
+                            chatitem.setPhotoId(responder
+                                    .optString("primaryPhotoId"));
+                            chatitem.setPhotoPath(responder
+                                    .optString("primaryPhotoPath"));
+                            chatitem.setSenderConfirmed(responder
+                                    .optBoolean("senderConfirmed"));
+                            chatitem.setHaveUnViewedMessage(responder.optBoolean("haveUnViewedMessage",false));
+                            chatitem.setHaveRated(responder.optBoolean("haveRate"));
+                            chatitem.setHaveBeenRated(responder.optBoolean("haveBeenRated"));
+                            MessageItem mi = new MessageItem();
+                            JSONObject latestMsg = responder
+                                    .getJSONObject("latestMessage");
+                            mi.setMessageId(latestMsg.optString("messageId"));
+                            mi.setCreateTime(latestMsg.optLong("createTime"));
+                            mi.setReceiverId(latestMsg.optString("receiverId"));
+                            mi.setMessageText(latestMsg.optString("messageText"));
+                            mi.setSenderId(latestMsg.optString("senderId"));
+                            chatitem.setLatestMessage(mi);
+                            responses.add(chatitem);
+                        }
                     }
                 } catch (Exception e) {
                     LogUtils.Logd("JSONParserException", e.getMessage(), e);
@@ -425,14 +427,14 @@ public class JSONParser {
                     pmi.setUserName(jo.optString("userName"));
                     pmi.setMessageId(jo.optString("messageId"));
                     pmi.setCreateTime(jo.optLong("createTime"));
-                } 
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
         return pmi;
     }
-    
+
     public static void getUploadPhotoResult(String result, HashMap<String, String> values) throws JSONParseException{
         checkSucceed(result);
         try {
@@ -446,7 +448,7 @@ public class JSONParser {
         } catch (Exception e) {
         }
     }
-    
+
     public static ArrayList<ConversationItem> getConversations(String result) throws JSONParseException{
         checkSucceed(result);
         ArrayList<ConversationItem> conversations = null;
@@ -501,7 +503,7 @@ public class JSONParser {
         }
         return conversations;
     }
-    
+
     public static ArrayList<SubjectItem> getDateSubjects(String result) throws JSONParseException{
         checkSucceed(result);
         ArrayList<SubjectItem> event = null;
@@ -534,9 +536,9 @@ public class JSONParser {
             e.printStackTrace();
         }
         return event;
-        
+
     }
-    
+
     public static int getRateResult(String result) throws JSONParseException{
         checkSucceed(result);
         int targetUserGoodRateCount = 0;
@@ -547,7 +549,7 @@ public class JSONParser {
         }
         return targetUserGoodRateCount;
     }
-    
+
     public static String getInviteCode(String result) throws JSONParseException{
         checkSucceed(result);
         String event = null;
