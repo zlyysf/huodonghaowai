@@ -3116,6 +3116,7 @@ Redis.prototype.registerEmailAccount = function(params, callback) {
 };//registerEmailAccount
 
 
+
 /**
  *
  * @param {Object} params - contains emailAccount, password, deviceType, deviceId, userFields, needPrimaryPhoto, primaryPhotoFields
@@ -9756,7 +9757,101 @@ Redis.prototype.getAllReports = function(params, callback) {
 
 
 
+/**
+ * its main purpose is to let same email and renren account be able to register a new user.
+ * not clear about all related about the user, such as date, message, because it is too complicated.
+ *
+ * @param {Object} params - contains userId, emailAccount
+ * @param {Function} callback - is function(err)
+ */
+Redis.prototype.semiSimplyDeleteUser = function(params, callback) {
+  var self = this;
+  var messagePrefix = 'in Redis.semiSimplyDeleteUser, ';
+  var req = params.req;
+  //logger.logDebug("Redis.semiSimplyDeleteUser entered, params="+handy.inspectWithoutBig(params));
+  if(!callback){
+    var err = self.newError({errorKey:'needCallbackFunction',messagePrefix:messagePrefix});
+    return self.handleError({err:err});
+  }
+  if (!params.userId && !params.emailAccount){
+    var err = self.newError({errorKey:'needParameter',messageParams:['userId or emailAccount'],messagePrefix:messagePrefix,req:req});
+    return callback(err);
+  }
+  var userId = params.userId;
+  var emailAccount = params.emailAccount;
+  var accountRenRen = null;
+  function _getUserId(cbFun){
+    if (userId){
+      return cbFun(null);
+    }else if (emailAccount){
+      self.getUserIdByEmailAccount({emailAccount:emailAccount}, function(err,outUserId){
+        if (err) return cbFun(err);
+        userId = outUserId;
+        if (!userId){
+          var err = self.newError({errorKey:'emailNotRegistered',messageParams:[emailAccount],messagePrefix:messagePrefix,req:req});
+          return cbFun(err);
+        }
+        return cbFun(null);
+      });//getUserIdByEmailAccount
+      return;
+    }
+    return cbFun(null);
+  };//_getUserId
 
+  function _getUserAccountInfo(cbFun){
+    self.getUser({userId:userId,userFields:['userId','emailAccount','accountRenRen']}, function(err,userObj){
+      if (err) return cbFun(err);
+      if (!userObj || !userObj.userId){
+        var err = self.newError({errorKey:'userNotExist',messageParams:[userId],messagePrefix:messagePrefix,req:req});
+        return cbFun(err);
+      }
+      emailAccount = userObj.emailAccount;
+      accountRenRen = userObj.accountRenRen;
+      return cbFun(null);
+    });//getUser
+  };//_getUserIdAndAccountRenRen
+
+  function _deleteRenRenAccount(cbFun){
+    if (!accountRenRen){
+      return cbFun(null);
+    }else{
+      var lparams = tool.cloneObject(params);
+      lparams.accountRenRen = accountRenRen;
+      self.deleteUserRenRenAccount(lparams, function(err){
+        if (err) return cbFun(err);
+        return cbFun(null);
+      });//deleteUserRenRenAccount
+    }
+  };//_deleteRenRenAccount
+
+  _getUserId(function(err){
+    if (err) return callback(err);
+    _getUserAccountInfo(function(err){
+      if (err) return callback(err);
+      _deleteRenRenAccount(function(err){
+        if (err) return cbFun(err);
+
+        var nowTime = handy.getNowOfUTCdate().getTime();
+        var multi = self.client.multi();
+        var userKey = "user:"+userId;
+        var emailToUserKey = "emailToUser";
+        var emailAccountDeleted = nowTime+"-del-"+emailAccount;
+        multi.hdel(emailToUserKey,emailAccount);
+        multi.hset(emailToUserKey,emailAccountDeleted,userId);
+        multi.hmset(userKey,"emailAccount",emailAccountDeleted,"disabled",1);
+        multi.exec(function(err) {
+          if (err){
+            var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
+            if (callback) return callback(err2);
+            else return self.handleError({err:err2});
+          }
+          if (callback) return callback(null);
+          return;
+        });//multi.exec
+      });//deleteUserRenRenAccount
+    });//_getUserAccountInfo
+  });//_getUserId
+};//semiSimplyDeleteUser
 
 
 
