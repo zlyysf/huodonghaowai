@@ -396,8 +396,8 @@
 	if (renren.expirationDate)
     {
         NSTimeInterval time = [renren.expirationDate timeIntervalSince1970];
-        NSNumber *timeNumber = [NSNumber numberWithDouble:time];
-		[renrenAuthJson setObject:timeNumber forKey:@"expiration_Date"];
+        NSString *timeStr = [NSString stringWithFormat:@"%d000",(int)time];
+        [renrenAuthJson setObject:timeStr forKey:@"expiration_Date"];
 	}
     if (renren.sessionKey) {
         [renrenAuthJson setObject:renren.sessionKey forKey:@"session_Key"];
@@ -527,9 +527,12 @@
                     [defaults setObject:[renrenAuthJson objectForKey:@"access_Token"] forKey:@"access_Token"];
                 }
                 if ([renrenAuthJson objectForKey:@"expiration_Date"]) {
-                    NSNumber *after = [renrenAuthJson objectForKey:@"expiration_Date"];
-                    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[after doubleValue]];
-
+                    NSNumber *seconds = [NSNumber numberWithLongLong:[[renrenAuthJson objectForKey:@"expiration_Date"]longLongValue]];
+                    
+                    if ([[seconds stringValue] length] > 10) {
+                        seconds	 = [NSNumber numberWithInteger:[[[seconds stringValue] substringToIndex:10] intValue]];
+                    }
+                    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[seconds doubleValue]];
                     renren.expirationDate = date;
                     [defaults setObject:date forKey:@"expiration_Date"];
                 }

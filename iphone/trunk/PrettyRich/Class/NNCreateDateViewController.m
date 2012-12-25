@@ -929,8 +929,8 @@ replacementString:(NSString *)string
     }
 	if (renren.expirationDate) {
 		NSTimeInterval time = [renren.expirationDate timeIntervalSince1970];
-        NSNumber *timeNumber = [NSNumber numberWithDouble:time];
-		[renrenAuthJson setObject:timeNumber forKey:@"expiration_Date"];
+        NSString *timeStr = [NSString stringWithFormat:@"%d000",(int)time];
+        [renrenAuthJson setObject:timeStr forKey:@"expiration_Date"];
 	}
     if (renren.sessionKey) {
         [renrenAuthJson setObject:renren.sessionKey forKey:@"session_Key"];
