@@ -464,7 +464,8 @@ var config = exports.config = {
 
     //downUrlForAndroid :  "http://t.cn/zjLa55G",// "hmu107145.chinaw3.com",
     //downUrlForAndroid :  "http://t.cn/zjLSwyF",// http://hmu107145.chinaw3.com/PrettyRich.apk
-    downUrlForAndroid :  "http://t.cn/zjLjlP5",// http://hmu107145.chinaw3.com/tongqu.apk
+    //downUrlForAndroid :  "http://t.cn/zjLjlP5",// http://hmu107145.chinaw3.com/tongqu.apk
+    downUrlForAndroid :  "www.huodonghaowai.com",//
     downUrlForApple : "tinyurl.com/aan5yxs", //"https://itunes.apple.com/cn/app/prettyrich/id543114421?l=en&mt=8",
 
 

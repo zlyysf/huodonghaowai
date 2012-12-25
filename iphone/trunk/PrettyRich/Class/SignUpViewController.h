@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NodeAsyncConnection.h"
-@interface SignUpViewController : UIViewController<UITextFieldDelegate,UIActionSheetDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
+@interface SignUpViewController : UIViewController<UITextFieldDelegate,UIActionSheetDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate,RenrenDelegate>
 {
     NodeAsyncConnection *curConnection;
     NSString *name;

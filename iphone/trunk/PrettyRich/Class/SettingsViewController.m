@@ -97,7 +97,8 @@
     {
         if ([[Renren sharedRenren]isSessionValid])
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"该账号已经与你的活动号外账号绑定，如果你确认要停止使用，请到人人网取消授权." delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            CustomAlertView *alert = [[CustomAlertView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) messgage:@"解除绑定后，你将不能通过人人网账号登入活动号外，你确定要这样做么？" otherButton:@"确定" cancelButton:@"取消" delegate:self duration:0];
+            alert.tag = 101;
             [alert show];
             [alert release];
         }
@@ -113,7 +114,7 @@
 }
 -(IBAction)logoutClicked
 {
-    CustomAlertView *alert = [[CustomAlertView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) messgage:@"你确定要退出么？" otherButton:@"确认" cancelButton:@"取消" delegate:self duration:0];
+    CustomAlertView *alert = [[CustomAlertView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) messgage:@"你确定要退出么？" otherButton:@"确定" cancelButton:@"取消" delegate:self duration:0];
     alert.tag = 100;
     [alert show];
     [alert release];
@@ -123,12 +124,19 @@
 {
     if (alert.tag == 100)
     {
-        if ([buttonTitle isEqualToString:@"确认"])
+        if ([buttonTitle isEqualToString:@"确定"])
         {
             [self startLogout];
         }
     }
-    if (alert.tag == 102)
+    else if (alert.tag == 101)
+    {
+        if ([buttonTitle isEqualToString:@"确定"])
+        {
+            [self startUnbindRenRenAccount];
+        }
+    }
+    else if (alert.tag == 102)
     {
         if ([buttonTitle isEqualToString:@"现在绑定"])
         {
@@ -192,12 +200,15 @@
 {
     hasRenRenId = NO;
     [self.listView reloadData];
+    NSDictionary *renrenChageNotificationInfo = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithBool:NO],@"renrenAuthed", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kNotificationRenRenStatusChanged" object:nil userInfo:renrenChageNotificationInfo];
+    [renrenChageNotificationInfo release];
 }
 
 - (void)renren:(Renren *)renren loginFailWithError:(ROError*)error{
-	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
-	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
-	NSLog(@"loginfail:%@ %@",title,description);
+//	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+//	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
+//	NSLog(@"loginfail:%@ %@",title,description);
 }
 - (void)startBindingRenRen
 {
@@ -245,12 +256,38 @@
     {
         [[PrettyGlobalService shareInstance]publishFirstRenRenConnectFeed];
         [self.listView reloadData];
+        NSDictionary *renrenChageNotificationInfo = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithBool:YES],@"renrenAuthed", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kNotificationRenRenStatusChanged" object:nil userInfo:renrenChageNotificationInfo];
+        [renrenChageNotificationInfo release];
     }
     else
     {
         [[Renren sharedRenren]logout:self];
     }
     
+}
+- (void)startUnbindRenRenAccount
+{
+    NSString * selfId = [[NSUserDefaults standardUserDefaults]objectForKey:@"PrettyUserId"];
+    NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:
+                          selfId,@"userId",
+                          nil];
+    [curConnection cancelDownload];
+    [curConnection startDownload:[NodeAsyncConnection createNodeHttpRequest:@"/user/unbindRenRenAccount" parameters:dict] :self :@selector(didEndUnbindRenRenAccount:)];
+    [dict release];
+    self.view.userInteractionEnabled = NO;
+    [self.activityIndicator startAnimating];
+    self.activityIndicator.hidden = NO;
+}
+- (void)didEndUnbindRenRenAccount:(NodeAsyncConnection *)connection
+{
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
+    self.view.userInteractionEnabled = YES;
+    if ([[connection.result objectForKey:@"status"]isEqualToString:@"success"])
+    {
+        [[Renren sharedRenren]logout:self];
+    }
 }
 - (void)didReceiveMemoryWarning
 {

@@ -138,63 +138,11 @@ static PrettyGlobalService *instance;
     BOOL useDialog = NO;
     BOOL shouldPop = YES;
     switch ([errorCode intValue]) {
-        case 21010:
-            shouldPop = NO;
-            //errorMessage = @"Sorry, you do not have enough credits. To earn them, please upload more photos.";
-            break;
-        case 21011:
-            shouldPop = NO;
-            //errorMessage = @"Sorry, you do not have enough credits. To earn them, please upload more photos.";
-            break;
-        case 21012:
-            shouldPop = NO;
-            //errorMessage = @"Sorry, you do not have enough credits. To earn them, please upload more photos.";
-            break;
-        case 21013:
-            shouldPop = NO;
-            //errorMessage = @"Sorry, you do not have enough credits. To earn them, please upload more photos.";
-            break;
-        case 21020:
-            shouldPop = NO;
-            //errorMessage = @"呃...你不能确认两次.";
-            break;
-        case 21021:
-            shouldPop = NO;
-            //errorMessage = @"呃...你不能确认两次.";
-            break;
-        case 21022:
-            shouldPop = NO;
-            //errorMessage = @"呃..您已经和另外一个人确认了本次约会!";
-            break;
-        case 21023:
-            shouldPop = NO;
-            //errorMessage = @"呃...你不能确认两次.";
-            break;
-        case 21024:
-            shouldPop = NO;
-            //errorMessage = @"Some other guy has confirmed this date. Remember to take action quickly the next time. Good luck!";
-            break;
-        case 21030:
-            shouldPop = NO;
-            //errorMessage = @"Your date has already been sent to this person.";
-            break;
-        case 21031:
+        case 21010:case 21011:case 21012:case 21013:case 21020:case 21021:case 21022:case 21023:case 21024:case 21030:case 21031:case 21033:case 21034:case 21035:case 21050:case 21051:case 21070:case 21071:case 21072:case 21202:
             shouldPop = NO;
             break;
         case 21032:
             errorMessage = @"这个活动不存在.";
-            break;
-        case 21033:
-            shouldPop = NO;
-            //errorMessage = @"You can't send a date which is not created by you.";
-            break;
-        case 21034:
-            shouldPop = NO;
-            //errorMessage = @"The date has been double confirmed and can't be sent again.";
-            break;
-        case 21035:
-            shouldPop = NO;
-            //errorMessage = @"You've confirmed this date with someone and you can't send to others.";
             break;
         case 21036:
             errorMessage = @"这个活动不存在这个响应者.";
@@ -217,29 +165,9 @@ static PrettyGlobalService *instance;
         case 21045:
             errorMessage = @"抱歉，该照片正在等待审核，请稍等.";
             break;
-        case 21050:
-            shouldPop = NO;
-            //errorMessage = @"You've already followed this guy.";
-            break;
-        case 21051:
-            shouldPop = NO;
-            //errorMessage = @"Hmm, I don't think this guy is on your follow-list now.";
-            break;
         case 21060:
             errorMessage = @"你没有权限做这个操作，因为你没有审核通过的照片.";
             useDialog = YES;
-            break;
-        case 21070:
-            shouldPop = NO;
-            //errorMessage = @"Ok, ok. I know you like your photo.  LOL.";
-            break;
-        case 21071:
-            shouldPop = NO;
-            //errorMessage = @"You've already liked this photo.";
-            break;
-        case 21072:
-            shouldPop = NO;
-            //errorMessage = @"Hmm, I don't think this photo is on your like-list now.";
             break;
         case 21073:
             errorMessage = @"此照片不存在.";
@@ -253,14 +181,12 @@ static PrettyGlobalService *instance;
         case 21082:
             errorMessage = @"该电子邮件地址已经被使用，请重新选择新的电子邮件地址进行注册.";
             break;
-        case 21083:
-            errorMessage = @"用户名或密码错误.";
-            break;
-        case 21084:
+        case 21083:case 21084:
             errorMessage = @"用户名或密码错误.";
             break;
         case 21085:
             errorMessage = @"用户未登陆.";
+            [self prettyRichLogOut];
             break;
         case 21086:
             shouldPop = NO;
@@ -294,20 +220,8 @@ static PrettyGlobalService *instance;
         case 21201:
             errorMessage = @"你已经批准了同一个响应者加入这个聚会.";
             break;
-        case 21202:
-            shouldPop = NO;
-            break;
         case 21203:
             errorMessage = @"只有聚会的发起者才能取消对方加入.";
-            break;
-        case 21210:
-            errorMessage = @"抱歉，此邀请码已失效.";
-            break;
-        case 21211:
-            errorMessage = @"邀请码错误，请输入正确的邀请码.";
-            break;
-        case 21212:
-            errorMessage = @"抱歉，此邀请码已过期.";
             break;
         case 21220:
             errorMessage = @"你已经评价了活动的参与者.";
@@ -333,8 +247,23 @@ static PrettyGlobalService *instance;
         case 21250:
             errorMessage = @"没有这个学校.";
             break;
-        case 21260:
-            errorMessage = @"你超过了邀请码创建数量限额.";
+        case 21300:
+            errorMessage = @"这个人人帐号已经被注册.";
+            break;
+        case 21301:
+            errorMessage = @"用户已经与这个人人帐号绑定.";
+            break;
+        case 21302:
+            errorMessage = @"用户已经与其它的人人帐号绑定.";
+            break;
+        case 21303:
+            errorMessage = @"这个人人帐号已经与这个用户绑定.";
+            break;
+        case 21304:
+            errorMessage = @"这个人人帐号已经与其他的用户绑定.";
+            break;
+        case 21305:
+            errorMessage = @"这个人人帐号尚未与任何用户绑定.";
             break;
         default:
             errorMessage = @"内部错误. 请检查您的网络设置或者稍后重试.";
@@ -413,9 +342,9 @@ static PrettyGlobalService *instance;
 }
 - (void)renren:(Renren *)renren requestFailWithError:(ROError*)error
 {
-	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
-	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
-	NSLog(@"loginfail:%@ %@",title,description);
+//	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+//	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
+//	NSLog(@"loginfail:%@ %@",title,description);
 }
 
 - (void)dealloc

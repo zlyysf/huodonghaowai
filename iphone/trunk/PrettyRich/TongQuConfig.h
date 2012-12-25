@@ -9,6 +9,6 @@
 #ifndef PrettyRich_TongQuConfig_h
 #define PrettyRich_TongQuConfig_h
 
-#define ServerProd NO //ServerProd = YES to use prod,NO to use stage.
+#define ServerProd YES //ServerProd = YES to use prod,NO to use stage.
 
 #endif

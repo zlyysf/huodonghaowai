@@ -145,9 +145,24 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveGetLoggedInUserIdNotification:) name:@"kNotificationDidGetLoggedInUserId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeRenRenShareCheck:) name:@"kNotificationRenRenStatusChanged" object:nil];
     //self.listView.hidden = YES;
 }
-
+- (void)changeRenRenShareCheck:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    if ([[userInfo objectForKey:@"renrenAuthed"]boolValue])
+    {
+        self.shareChecked = YES;
+        [self.renrenImage setImage:[UIImage imageNamed:@"share-checked.png"]];
+    }
+    else
+    {
+        self.shareChecked = NO;
+        [self.renrenImage setImage:[UIImage imageNamed:@"share-unchecked.png"]];
+    }
+}
 - (void)textChanged:(NSNotification *)notification
 {
     if([self.descriptionTextView.text length] == 0)
@@ -325,6 +340,11 @@
     if (shareChecked)
     {
         NSString *feedContent = [NSString stringWithFormat:@"时间:%@  地点:%@  详情:%@",self.timeTextField.text,self.addressString,self.descripString];
+        if ([feedContent length]>200)
+        {
+            feedContent = [feedContent substringToIndex:197];
+            feedContent = [feedContent stringByAppendingString:@"..."];
+        }
         NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        @"feed.publishFeed",@"method",
                                        @"http://www.huodonghaowai.com",@"url",
@@ -853,6 +873,10 @@ replacementString:(NSString *)string
 #pragma mark - RenrenDelegate methods
 - (void) didReceiveGetLoggedInUserIdNotification:(NSNotification *)notification
 {
+    AppDelegate *appDelegte = [[UIApplication sharedApplication]delegate];
+    NSString * className = NSStringFromClass([appDelegte.mainNavController.visibleViewController class]);
+    if ([className isEqualToString:@"SettingsViewController"])
+        return;
     //NSString *renrenId = [[NSUserDefaults standardUserDefaults]objectForKey:@"session_UserId"];
     [self startBindingRenRen];
 }
@@ -869,9 +893,9 @@ replacementString:(NSString *)string
 }
 
 - (void)renren:(Renren *)renren loginFailWithError:(ROError*)error{
-	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
-	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
-	NSLog(@"loginfail:%@ %@",title,description);
+//	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+//	NSString *description = [NSString stringWithFormat:@"%@", [error localizedDescription]];
+//	NSLog(@"loginfail:%@ %@",title,description);
 }
 - (void)renren:(Renren *)renren requestDidReturnResponse:(ROResponse*)response
 {
@@ -891,9 +915,9 @@ replacementString:(NSString *)string
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
     self.view.userInteractionEnabled = YES;
-	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
-	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
-	NSLog(@"loginfail:%@ %@",title,description);
+//	NSString *title = [NSString stringWithFormat:@"Error code:%d", [error code]];
+//	NSString *description = [NSString stringWithFormat:@"%@", [error.userInfo objectForKey:@"error_msg"]];
+//	NSLog(@"loginfail:%@ %@",title,description);
 }
 - (void)startBindingRenRen
 {
@@ -954,6 +978,9 @@ replacementString:(NSString *)string
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"kNotificationDidGetLoggedInUserId" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"kNotificationRenRenStatusChanged" object:nil];
+    
     //[curConnection cancelDownload];
     [curConnection release];
     [selectedTopic release];
