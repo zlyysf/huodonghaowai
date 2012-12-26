@@ -1077,12 +1077,13 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+                LogUtils.Logd(LocalLogTag, "LogoutAlertDialog btnOK onClick enter");
                 Renren renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID,ProfileFragment.this.myAcitivity );
                 if (renren.getCurrentUid()!=0){
-                    renren.logout(ProfileFragment.this.myAcitivity);
-                    LogUtils.Logd(LocalLogTag, "renren.logout");
+                    LogUtils.Logd(LocalLogTag, "renren.logout before, currentUid="+renren.getCurrentUid());
+                    renren.logout(myAcitivity);
+                    LogUtils.Logd(LocalLogTag, "renren.logout after, currentUid="+renren.getCurrentUid());
                 }
-
 
                 logoutTask = new LogoutTask(AppInfo.userId, myHandler
                         .obtainMessage());

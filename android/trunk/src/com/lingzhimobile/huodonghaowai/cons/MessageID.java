@@ -53,7 +53,13 @@ public class MessageID {
     public final static int RENREN_REGISTER_OK = 2061;
     public final static int NEED_REGISTER_RENREN = 2062;
 
+    public final static int Bind3rdPartAccount_OK = 2071;
+    public final static int Bind3rdPartAccount_FAIL = 2072;
+
     public final static int RENRENSDK_getUsersInfo_OK = 3000;
     public final static int RENRENSDK_getUsersInfo_Error = 3001;
     public final static int RENRENSDK_getUsersInfo_Fault = 3002;
+    public final static int RENRENSDK_publishFeed_OK = 3003;
+    public final static int RENRENSDK_publishFeed_Error = 3004;
+    public final static int RENRENSDK_publishFeed_Fault = 3005;
 }

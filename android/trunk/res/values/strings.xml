@@ -92,6 +92,7 @@
     <string name="title_is_empty">请输入活动主题</string>
     <string name="good_rate_count">靠谱指数%1$d</string>
     <string name="get_invite_code">获取邀请码...</string>
+    <string name="publishToRenRen">同步到人人网</string>
 
     <!-- ask info -->
     <string name="name_empty">请输入你的用户名</string>

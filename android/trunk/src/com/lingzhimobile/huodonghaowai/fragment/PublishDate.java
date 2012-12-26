@@ -6,9 +6,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.R.integer;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -30,6 +36,8 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -38,8 +46,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lingzhimobile.huodonghaowai.R;
+import com.lingzhimobile.huodonghaowai.asynctask.Bind3rdPartAccountTask;
 import com.lingzhimobile.huodonghaowai.asynctask.CreateDateTask;
+import com.lingzhimobile.huodonghaowai.asynctask.PublishRenRenFeedTask;
 import com.lingzhimobile.huodonghaowai.cons.MessageID;
+import com.lingzhimobile.huodonghaowai.cons.RenRenLibConst;
 import com.lingzhimobile.huodonghaowai.log.LogTag;
 import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.util.AppInfo;
@@ -52,11 +63,16 @@ import com.lingzhimobile.huodonghaowai.view.CustomizeDatePickerDialog;
 import com.lingzhimobile.huodonghaowai.view.Rotate3dAnimation;
 import com.lingzhimobile.huodonghaowai.view.myProgressDialog;
 import com.lingzhimobile.huodonghaowai.view.CustomizeDatePickerDialog.OnCustomizeDateSetListener;
+import com.renren.api.connect.android.Renren;
+import com.renren.api.connect.android.exception.RenrenAuthError;
+import com.renren.api.connect.android.view.RenrenAuthListener;
 
 public class PublishDate extends Fragment {
     private final int TYPE_EDIT = 10;
     private final int TYPE_VIEW = 11;
     private int mCurrentType = 10;
+
+    private static final String LocalLogTag = LogTag.ACTIVITY + " PublishDate";
 
     private Activity myAcitivity;
     private View currentView;
@@ -68,9 +84,11 @@ public class PublishDate extends Fragment {
     private OnCustomizeDateSetListener mDateSetListener;
     private Button btnPreview, btnSend, btnCancel;
     private RadioButton rbAA, rbMytreat, rbNone;
+    private CheckBox cbPublishToRenRen;
     private int whoPay;
     private InputMethodManager m;
     private CreateDateTask createDateTask;
+
     private String filePath;
     private Bitmap originalBitmap;
     private Dialog dialog;
@@ -86,7 +104,7 @@ public class PublishDate extends Fragment {
             tvPreTreat, tvPreDetail;
 
     private myProgressDialog mProgressDialog;
-    private int[] datePhotoIds = { R.drawable.date_pre_bg1,
+    private final int[] datePhotoIds = { R.drawable.date_pre_bg1,
             R.drawable.date_pre_bg2, R.drawable.date_pre_bg3,
             R.drawable.date_pre_bg4, R.drawable.date_pre_bg5,
             R.drawable.date_pre_bg6, R.drawable.date_pre_bg7,
@@ -94,6 +112,8 @@ public class PublishDate extends Fragment {
             R.drawable.date_pre_bg10};
 
     private TextView tvTitle;
+    private Renren renren;
+    private myProgressDialog prgressDialog;
 
     public Handler myHandler = new Handler() {
         @Override
@@ -118,6 +138,16 @@ public class PublishDate extends Fragment {
                 AppUtil.showErrToast(myAcitivity,
                         R.string.failed_retreive_location_alert,
                         Toast.LENGTH_SHORT);
+                break;
+            case MessageID.Bind3rdPartAccount_OK:
+                prgressDialog.dismiss();
+                break;
+            case MessageID.Bind3rdPartAccount_FAIL:
+                prgressDialog.dismiss();
+                break;
+            case MessageID.RENRENSDK_publishFeed_Error:
+            case MessageID.RENRENSDK_publishFeed_Fault:
+                prgressDialog.dismiss();
                 break;
             }
 
@@ -197,6 +227,8 @@ public class PublishDate extends Fragment {
         tvPreTime = (TextView) currentView.findViewById(R.id.tvDateTimeInfo);
         tvTitle = (TextView) currentView.findViewById(R.id.tvTitle);
         tvTitle.requestFocus();
+
+        cbPublishToRenRen = (CheckBox) currentView.findViewById(R.id.cbPublishToRenRen);
     }
 
     private void initData() {
@@ -299,11 +331,91 @@ public class PublishDate extends Fragment {
                 }
             }
         });
+        renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, myAcitivity);
+        long currentUid = renren.getCurrentUid() ;
+        boolean canDefaultPublishToRenren = (currentUid != 0);
+        cbPublishToRenRen.setChecked(canDefaultPublishToRenren);
+
+        cbPublishToRenRen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                LogUtils.Logd(LocalLogTag, "cbPublishToRenRen onCheckedChanged isChecked=" + isChecked);
+                final RenrenAuthListener rrAuthlistener = new RenrenAuthListener() {
+                    @Override
+                    public void onComplete(Bundle values) {
+                        LogUtils.Logd(LogTag.RENREN, "RenrenAuthListener.onComplete values=" + values.toString());
+                        String currentUid = renren.getCurrentUid()+"";
+                        String sessionKey = renren.getSessionKey();
+                        String accessToken = renren.getAccessToken();
+                        String secret = renren.getSecret();
+                        String expireTime = renren.getExpireTime()+"";
+                        JSONObject renrenAuthObj = new JSONObject();
+                        try {
+                            renrenAuthObj.put(RenRenLibConst.fieldcommon_session_userId, currentUid);
+                            renrenAuthObj.put(RenRenLibConst.fieldcommon_session_key, sessionKey);
+                            renrenAuthObj.put(RenRenLibConst.fieldcommon_access_token, accessToken);
+                            renrenAuthObj.put(RenRenLibConst.fieldcommon_secret_key, secret);
+                            renrenAuthObj.put(RenRenLibConst.fieldcommon_expiration_date, expireTime);
+                        } catch (JSONException e) {
+                            LogUtils.Loge(LogTag.RENREN,e.getMessage(), e);
+                            renrenAuthObj = null;
+                        }
+                        Bind3rdPartAccountTask bind3rdPartAccountTask = new Bind3rdPartAccountTask(AppInfo.userId, currentUid,renrenAuthObj, myHandler.obtainMessage());
+                        bind3rdPartAccountTask.execute();
+                        prgressDialog = myProgressDialog.show(myAcitivity, null, R.string.loading);
+                    }
+
+                    @Override
+                    public void onRenrenAuthError(RenrenAuthError renrenAuthError) {
+                        renrenAuthError.printStackTrace();
+                        LogUtils.Loge(LogTag.RENREN, "onRenrenAuthError err=" + renrenAuthError.toString());
+                        Toast.makeText(myAcitivity, "renren auth failed",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    @Override
+                    public void onCancelLogin() {
+                        cbPublishToRenRen.setChecked(false);
+                    }
+
+                    @Override
+                    public void onCancelAuth(Bundle values) {
+                        cbPublishToRenRen.setChecked(false);
+                    }
+                };//rrAuthlistener
+
+                if (isChecked){
+                    long currentUid = renren.getCurrentUid() ;
+                    if (currentUid != 0){
+                      //suppose have done auth before, so not need to do auth here
+                    }else{//currentUid==0, should do auth
+                        AlertDialog.Builder askToBindRenrenDlgBuilder = new AlertDialog.Builder(myAcitivity);
+                        //askToBindRenrenDlgBuilder.setIcon(R.drawable.xxx);
+                        askToBindRenrenDlgBuilder.setTitle("绑定人人帐户，将来你便可以用人人帐户来登入活动号外");
+                        askToBindRenrenDlgBuilder.setPositiveButton("现在绑定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                renren.authorize(myAcitivity, rrAuthlistener);
+                            }
+                        });
+                        askToBindRenrenDlgBuilder.setNegativeButton("暂不绑定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                cbPublishToRenRen.setChecked(false);
+                            }
+                        });
+                        askToBindRenrenDlgBuilder.show();
+                    }//currentUid==0
+                }//if (isChecked)
+            }//onCheckedChanged
+        });//setOnCheckedChangeListener
+
         btnSend.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                String budget;
+
                 String description = dateDetail.getText().toString().trim();
                 String title = dateTitle.getText().toString().trim();
                 if (System.currentTimeMillis() > calendar.getTimeInMillis()) {
@@ -341,6 +453,9 @@ public class PublishDate extends Fragment {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
+                File imgFile = null;
+                int imgWidth = 0, imgHeight = 0;
+
                 if (originalBitmap != null) {
                     FileManager.init(myAcitivity);
                     String pathWithTime = FileManager.UploadFolder
@@ -349,24 +464,33 @@ public class PublishDate extends Fragment {
                             + "pretty_rich_android_"
                             + new Date().getTime() + ".jpg";
                     BitmapManager.saveBitmap(originalBitmap, pathWithTime);
-                    createDateTask = new CreateDateTask(AppInfo.userId,calendar
-                            .getTimeInMillis(), title, address, whoPay, Integer
-                            .parseInt(wantPersonCountNum), Integer
-                            .parseInt(existPersonCountNum), description,
-                            new File(pathWithTime), originalBitmap.getWidth(),
-                            originalBitmap.getHeight(), myHandler
-                                    .obtainMessage());
-                } else {
-                    createDateTask = new CreateDateTask(AppInfo.userId,calendar
-                            .getTimeInMillis(), title, address, whoPay, Integer
-                            .parseInt(wantPersonCountNum), Integer
-                            .parseInt(existPersonCountNum), description, null,
-                            0, 0, myHandler.obtainMessage());
+                    imgFile = new File(pathWithTime);
+                    imgWidth = originalBitmap.getWidth();
+                    imgHeight = originalBitmap.getHeight();
                 }
+                createDateTask = new CreateDateTask(AppInfo.userId,calendar
+                        .getTimeInMillis(), title, address, whoPay, Integer
+                        .parseInt(wantPersonCountNum), Integer
+                        .parseInt(existPersonCountNum), description,
+                        imgFile, imgWidth, imgHeight, myHandler.obtainMessage());
+
                 createDateTask.execute();
                 btnSend.setEnabled(false);
                 mProgressDialog = myProgressDialog.show(myAcitivity, null,
                         R.string.loading);
+
+                if (cbPublishToRenRen.isChecked()){
+                  //do auth by renren, publish to renren, bind renren to user in the listener
+                    Bundle publishRenrenFeedData = new Bundle();
+                    publishRenrenFeedData.putString("address", address);
+                    publishRenrenFeedData.putString("title", title);
+                    publishRenrenFeedData.putString("description", description);
+                    publishRenrenFeedData.putLong("dateDate", calendar.getTimeInMillis());
+
+                    PublishRenRenFeedTask publishRenRenFeedTask = new PublishRenRenFeedTask(publishRenrenFeedData,renren,myAcitivity, null);//myHandler.obtainMessage());
+                    publishRenRenFeedTask.execute();
+                }
+
                 // if (cbSinaWeibo.isChecked()) {
                 // if (weibo.isSessionValid()) {
                 //
@@ -415,7 +539,7 @@ public class PublishDate extends Fragment {
                 // }
                 // }
             }
-        });
+        });//btnSend.setOnClickListener
 
         menuClickListener = new View.OnClickListener() {
 
@@ -441,7 +565,7 @@ public class PublishDate extends Fragment {
                     try {
                         startActivityForResult(i, 3);
                     } catch (Exception e) {
-                        LogUtils.Loge(LogTag.ACTIVITY, e.getMessage(), e);
+                        LogUtils.Loge(LocalLogTag, e.getMessage(), e);
                         Toast.makeText(myAcitivity, R.string.no_camera_prompt,
                                 Toast.LENGTH_SHORT).show();
                     }
@@ -558,7 +682,7 @@ public class PublishDate extends Fragment {
 
     /**
      * Setup a new 3D rotation on the container view.
-     * 
+     *
      * @param position
      *            the item that was clicked to show a picture, or -1 to show the
      *            list
@@ -596,13 +720,16 @@ public class PublishDate extends Fragment {
             mPosition = position;
         }
 
+        @Override
         public void onAnimationStart(Animation animation) {
         }
 
+        @Override
         public void onAnimationEnd(Animation animation) {
             mContainer.post(new SwapViews(mPosition));
         }
 
+        @Override
         public void onAnimationRepeat(Animation animation) {
         }
     }
@@ -618,6 +745,7 @@ public class PublishDate extends Fragment {
             mType = type;
         }
 
+        @Override
         public void run() {
             final float centerX = mContainer.getWidth() / 2.0f;
             final float centerY = mContainer.getHeight() / 2.0f;

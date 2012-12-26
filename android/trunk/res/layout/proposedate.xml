@@ -378,6 +378,35 @@
                         android:text="@string/publish_date"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
+                    
+                    <LinearLayout
+                        android:id="@+id/publishToRenRen"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dip"
+                        android:layout_marginTop="8dip"
+                        android:layout_marginBottom="48dip"
+                        android:background="@drawable/edittextbg"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:text="@string/publishToRenRen"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/cbPublishToRenRen"
+                            style="@style/MyCheckBox"
+                            android:layout_width="18dip"
+                            android:layout_height="18dip"
+                            android:layout_marginRight="10dip"
+                            android:checked="true" />
+                    </LinearLayout>
                 </LinearLayout>
             </ScrollView>
         </RelativeLayout>

@@ -87,7 +87,7 @@ public class Login extends Activity {
                 finish();
                 break;
             case MessageID.NEED_REGISTER_RENREN:
-                //TODO OPEN ASKINFO ............
+                //will open register ui--askinfo activity, but before that need to get renren userInfo
                 prgressDialog.dismiss();
 
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
@@ -101,7 +101,7 @@ public class Login extends Activity {
                 UserInfo renrenUser = (UserInfo)msg.obj;
 
                 Intent intent = new Intent(Login.this, AskInfo.class);
-                intent.putExtra(Renren.RENREN_LABEL, renren);
+                //intent.putExtra(Renren.RENREN_LABEL, renren);
 
                 String renrenUserName, renrenSex, renrenUserHometown=null, renrenUnverseName=null;
                 renrenUserName = renrenUser.getName();

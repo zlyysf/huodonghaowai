@@ -128,12 +128,13 @@ public class AskInfo extends HuoDongHaoWaiActivity {
 
     void setViewData(){
         Intent intent1 = getIntent();
+        renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, this);
         if (intent1 != null){
             LogUtils.Logd(LogTag.ACTIVITY, "AskInfo onCreate getIntent=" + intent1.toString());
-            renren = intent1.getParcelableExtra(Renren.RENREN_LABEL);
-            if (renren != null) {
-                renren.init(this);
-            }
+//            renren = intent1.getParcelableExtra(Renren.RENREN_LABEL);
+//            if (renren != null) {
+//                renren.init(this);
+//            }
             renrenUserName = intent1.getStringExtra("renrenUserName");
             renrenSex = intent1.getStringExtra("renrenSex");
             renrenHometown = intent1.getStringExtra("renrenHometown");
@@ -202,6 +203,9 @@ public class AskInfo extends HuoDongHaoWaiActivity {
 
             @Override
             public void onClick(View v) {
+                if (renren.getCurrentUid() != 0){
+                    renren.logout(AskInfo.this);
+                }
                 finish();
             }
         });
@@ -267,7 +271,7 @@ public class AskInfo extends HuoDongHaoWaiActivity {
 //                }
                 String accountRenRen = null;
                 JSONObject renrenAuthObj = null;
-                if (renren != null){
+                if (renren != null && renren.getCurrentUid() != 0){
                     String currentUid = renren.getCurrentUid()+"";
                     String sessionKey = renren.getSessionKey();
                     String accessToken = renren.getAccessToken();
