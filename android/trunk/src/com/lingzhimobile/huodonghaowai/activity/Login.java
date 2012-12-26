@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -25,8 +28,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.lingzhimobile.huodonghaowai.R;
+import com.lingzhimobile.huodonghaowai.asynctask.GetRenRenUserInfoTask;
+import com.lingzhimobile.huodonghaowai.asynctask.LoginFromRenRenTask;
 import com.lingzhimobile.huodonghaowai.asynctask.LoginTask;
 import com.lingzhimobile.huodonghaowai.cons.MessageID;
+import com.lingzhimobile.huodonghaowai.cons.RenRenLibConst;
 import com.lingzhimobile.huodonghaowai.log.LogTag;
 import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.net.NetProtocol;
@@ -48,17 +54,16 @@ import com.umeng.analytics.MobclickAgent;
 
 public class Login extends Activity {
 
-	private static final String RENREN_API_KEY = "9990cedd27604053936093cc8774b604";
-	private static final String RENREN_SECRET_KEY = "7c35df3722cc4263bc5f62f0bc1343be";
-	private static final String RENREN_APP_ID = "221243";
-	public static final int RENRENSIGNUP = 110;
 
-	private static final String LocalLogTag = LogTag.ACTIVITY + " Login";
+    public static final int RENRENSIGNUP = 110;
+
+    private static final String LocalLogTag = LogTag.ACTIVITY + " Login";
 
     private EditText etEmail, etPassword;
     private Button btnLogin,btnBack,btnRenRenLogin;
     private LinearLayout llForgotPassword;
     private LoginTask loginTask;
+    private LoginFromRenRenTask loginFromRenRenTask;
     private InputMethodManager imm;
     private String email;
     private myProgressDialog prgressDialog;
@@ -75,12 +80,58 @@ public class Login extends Activity {
                 AppUtil.handleErrorCode(msg.obj.toString(), Login.this);
                 break;
             case MessageID.LOGIN_OK:
+            case MessageID.RENREN_LOGIN_OK:
                 prgressDialog.dismiss();
                 savePrefrerence();
                 setResult(MessageID.LOGIN_OK);
                 finish();
                 break;
+            case MessageID.NEED_REGISTER_RENREN:
+                //TODO OPEN ASKINFO ............
+                prgressDialog.dismiss();
+
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                prgressDialog = myProgressDialog.show(Login.this, null, R.string.loading);
+                String currentUid = renren.getCurrentUid()+"";
+                GetRenRenUserInfoTask getRenRenUserInfoTask = new GetRenRenUserInfoTask(currentUid,renren,myHandler.obtainMessage());
+                getRenRenUserInfoTask.execute();
+
+                break;
+            case MessageID.RENRENSDK_getUsersInfo_OK:
+                UserInfo renrenUser = (UserInfo)msg.obj;
+
+                Intent intent = new Intent(Login.this, AskInfo.class);
+                intent.putExtra(Renren.RENREN_LABEL, renren);
+
+                String renrenUserName, renrenSex, renrenUserHometown=null, renrenUnverseName=null;
+                renrenUserName = renrenUser.getName();
+                intent.putExtra("renrenUserName", renrenUserName);
+                renrenSex = renrenUser.getSex()+"";
+                intent.putExtra("renrenSex", renrenSex);
+                ArrayList<HomeTownLocation> homeTownLocAry = renrenUser.getHomeTownLocation();
+                if (homeTownLocAry != null && homeTownLocAry.size()>0){
+                    HomeTownLocation homeTownLoc = homeTownLocAry.get(0);
+                    renrenUserHometown = homeTownLoc.getProvince();
+                    intent.putExtra("renrenHometown", renrenUserHometown);
+                }
+                ArrayList<UniversityInfo> aryUnv = renrenUser.getUniversityInfo();
+                if (aryUnv != null && aryUnv.size() > 0){
+                    UniversityInfo unv = aryUnv.get(aryUnv.size()-1);
+                    renrenUnverseName = unv.getName();
+                    intent.putExtra("renrenUnverseName", renrenUnverseName);
+                }
+
+                startActivityForResult(intent, RENRENSIGNUP);
+
+                break;
+            case MessageID.RENRENSDK_getUsersInfo_Error:
+
+                break;
+            case MessageID.RENRENSDK_getUsersInfo_Fault:
+
+                break;
             }
+
         }
     };
 
@@ -90,8 +141,8 @@ public class Login extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        LogUtils.Logi(LogTag.ACTIVITY, "Login onCreate");
-        renren = new Renren(RENREN_API_KEY, RENREN_SECRET_KEY, RENREN_APP_ID, this);
+        LogUtils.Logi(LocalLogTag, "Login onCreate");
+        renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, this);
 
         setContentView(R.layout.login);
         imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -160,105 +211,58 @@ public class Login extends Activity {
         });
 
         final RenrenAuthListener rrAuthlistener = new RenrenAuthListener() {
-			@Override
-			public void onComplete(Bundle values) {
-				LogUtils.Logd(LogTag.RENREN, "RenrenAuthListener.onComplete values=" + values.toString());
-				String currentUid = renren.getCurrentUid()+"";
-				AsyncRenren asyncRenren = new AsyncRenren(renren);
-				String[] uids = new String[1];
-				uids[0] = currentUid;
-				UsersGetInfoRequestParam param = new UsersGetInfoRequestParam(uids,UsersGetInfoRequestParam.FIELDS_ALL);
-				AbstractRequestListener<UsersGetInfoResponseBean> renrenCallApiListener = new AbstractRequestListener<UsersGetInfoResponseBean>() {
+            @Override
+            public void onComplete(Bundle values) {
+                LogUtils.Logd(LogTag.RENREN, "RenrenAuthListener.onComplete values=" + values.toString());
+                String currentUid = renren.getCurrentUid()+"";
+                String sessionKey = renren.getSessionKey();
+                String accessToken = renren.getAccessToken();
+                String secret = renren.getSecret();
+                String expireTime = renren.getExpireTime()+"";
+                JSONObject renrenAuthObj = new JSONObject();
+                try {
+                    renrenAuthObj.put(RenRenLibConst.fieldcommon_session_userId, currentUid);
+                    renrenAuthObj.put(RenRenLibConst.fieldcommon_session_key, sessionKey);
+                    renrenAuthObj.put(RenRenLibConst.fieldcommon_access_token, accessToken);
+                    renrenAuthObj.put(RenRenLibConst.fieldcommon_secret_key, secret);
+                    renrenAuthObj.put(RenRenLibConst.fieldcommon_expiration_date, expireTime);
+                } catch (JSONException e) {
+                    LogUtils.Loge(LogTag.RENREN,e.getMessage(), e);
+                    renrenAuthObj = null;
+                }
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                loginFromRenRenTask = new LoginFromRenRenTask(currentUid, renrenAuthObj, myHandler.obtainMessage());
+                loginFromRenRenTask.execute();
+                prgressDialog = myProgressDialog.show(Login.this, null, R.string.loading);
+            }
 
-					@Override
-					public void onComplete(final UsersGetInfoResponseBean bean) {
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								//LogUtils.Logd(LogTag.RENREN, "AbstractRequestListener<UsersGetInfoResponseBean>.onComplete bean=" + bean.toString());
-								Intent intent = new Intent(Login.this, AskInfo.class);
-						    	intent.putExtra(Renren.RENREN_LABEL, renren);
-
-						    	ArrayList<UserInfo> aryUser = bean.getUsersInfo();
-								UserInfo renrenUser = aryUser.get(0);
-								LogUtils.Logd(LogTag.RENREN, "AbstractRequestListener<UsersGetInfoResponseBean>.onComplete user0=" + renrenUser.toString()  );
-						    	String renrenUserName, renrenSex, renrenUserHometown=null, renrenUnverseName=null;
-						    	renrenUserName = renrenUser.getName();
-						    	intent.putExtra("renrenUserName", renrenUserName);
-						    	renrenSex = renrenUser.getSex()+"";
-						    	intent.putExtra("renrenSex", renrenSex);
-						    	ArrayList<HomeTownLocation> homeTownLocAry = renrenUser.getHomeTownLocation();
-						    	if (homeTownLocAry != null && homeTownLocAry.size()>0){
-						    		HomeTownLocation homeTownLoc = homeTownLocAry.get(0);
-						    		renrenUserHometown = homeTownLoc.getProvince();
-						    		intent.putExtra("renrenHometown", renrenUserHometown);
-						    	}
-						    	ArrayList<UniversityInfo> aryUnv = renrenUser.getUniversityInfo();
-						    	if (aryUnv != null && aryUnv.size() > 0){
-						    		UniversityInfo unv = aryUnv.get(aryUnv.size()-1);
-						    		renrenUnverseName = unv.getName();
-						    		intent.putExtra("renrenUnverseName", renrenUnverseName);
-						    	}
-
-						    	startActivityForResult(intent, RENRENSIGNUP);
-							}
-						});
-					}
-
-					@Override
-					public void onRenrenError(final RenrenError renrenError) {
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								LogUtils.Logd(LogTag.RENREN, "AbstractRequestListener<UsersGetInfoResponseBean>.onRenrenError err=" + renrenError.toString());
-								Toast.makeText(Login.this, "renren api err",Toast.LENGTH_SHORT).show();
-							}
-						});
-					}
-
-					@Override
-					public void onFault(final Throwable fault) {
-						runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() {
-								LogUtils.Logd(LogTag.RENREN, "AbstractRequestListener<UsersGetInfoResponseBean>.onFault fault=" + fault.toString());
-								Toast.makeText(Login.this, "renren api fault",Toast.LENGTH_SHORT).show();
-							}
-						});
-					}
-				};
-				asyncRenren.getUsersInfo(param, renrenCallApiListener);
-			}
-
-			@Override
-			public void onRenrenAuthError(RenrenAuthError renrenAuthError) {
-				renrenAuthError.printStackTrace();
-				LogUtils.Loge(LogTag.RENREN, "onRenrenAuthError err=" + renrenAuthError.toString());
-				Toast.makeText(Login.this, "renren auth failed",Toast.LENGTH_SHORT).show();
+            @Override
+            public void onRenrenAuthError(RenrenAuthError renrenAuthError) {
+                renrenAuthError.printStackTrace();
+                LogUtils.Loge(LogTag.RENREN, "onRenrenAuthError err=" + renrenAuthError.toString());
+                Toast.makeText(Login.this, "renren auth failed",Toast.LENGTH_SHORT).show();
                 return;
-			}
+            }
 
-			@Override
-			public void onCancelLogin() {
-			}
+            @Override
+            public void onCancelLogin() {
+            }
 
-			@Override
-			public void onCancelAuth(Bundle values) {
-			}
+            @Override
+            public void onCancelAuth(Bundle values) {
+            }
 
-		};
+        };
 
         btnRenRenLogin = (Button) findViewById(R.id.renrenLoginButton);
         btnRenRenLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-            	LogUtils.Loge(LogTag.RENREN, "btnRenRenLogin onclick enter");
-            	renren.logout(Login.this);
-            	renren.authorize(Login.this, rrAuthlistener);
-            	LogUtils.Loge(LogTag.RENREN, "btnRenRenLogin onclick exit");
+                LogUtils.Loge(LogTag.RENREN, "btnRenRenLogin onclick enter");
+                //renren.logout(Login.this);
+                renren.authorize(Login.this, rrAuthlistener);
+                LogUtils.Loge(LogTag.RENREN, "btnRenRenLogin onclick exit");
             }
         });
 
@@ -356,5 +360,7 @@ public class Login extends Activity {
             break;
         }
     }
+
+
 
 }

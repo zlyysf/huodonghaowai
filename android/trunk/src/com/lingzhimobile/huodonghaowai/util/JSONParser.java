@@ -22,11 +22,12 @@ import com.lingzhimobile.huodonghaowai.model.SubjectItem;
 import com.lingzhimobile.huodonghaowai.model.UserItem;
 
 public class JSONParser {
-    public static void checkSucceed(String result) throws JSONParseException {
+
+    public static JSONObject checkSucceed(String result) throws JSONParseException {
         if (result == null) {
             throw AppUtil.getJSONParseExceptionError();
         }
-        JSONObject resultObj;
+        JSONObject resultObj=null;
         int errorCode;
         String errorMsg;
         try {
@@ -40,15 +41,23 @@ public class JSONParser {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return resultObj;
     }
 
     public static boolean getUserInfo(String result)
             throws JSONParseException {
-        checkSucceed(result);
+        JSONObject jo = checkSucceed(result);
         try {
-            JSONObject jo = new JSONObject(result);
             JSONObject resultObj = jo.getJSONObject("result");
             JSONObject userObj = resultObj.getJSONObject("user");
+            return getUserInfo(userObj);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public static boolean getUserInfo(JSONObject userObj){
+        if (userObj!=null){
             AppInfo.userId = userObj.optString("userId");
             AppInfo.gender = userObj.optString("gender");
             AppInfo.userName = userObj.optString("name");
@@ -62,8 +71,6 @@ public class JSONParser {
             AppInfo.educationalStatus = userObj.optString("educationalStatus");
             AppInfo.height = userObj.optInt("height");
             return true;
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
         return false;
     }

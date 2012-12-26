@@ -48,6 +48,7 @@ import com.lingzhimobile.huodonghaowai.asynctask.LogoutTask;
 import com.lingzhimobile.huodonghaowai.asynctask.UpdateProfileTask;
 import com.lingzhimobile.huodonghaowai.asynctask.UploadPhotoTask;
 import com.lingzhimobile.huodonghaowai.cons.MessageID;
+import com.lingzhimobile.huodonghaowai.cons.RenRenLibConst;
 import com.lingzhimobile.huodonghaowai.log.LogTag;
 import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.model.UserItem;
@@ -59,6 +60,9 @@ import com.lingzhimobile.huodonghaowai.util.GlobalValue;
 import com.lingzhimobile.huodonghaowai.util.MethodHandler;
 import com.lingzhimobile.huodonghaowai.view.Rotate3dAnimation;
 import com.lingzhimobile.huodonghaowai.view.myProgressDialog;
+import com.renren.api.connect.android.Renren;
+import com.renren.api.connect.android.AsyncRenren;
+
 
 public class ProfileFragment extends Fragment {
     private final int TYPE_EDIT = 10;
@@ -1073,10 +1077,18 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+                Renren renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID,ProfileFragment.this.myAcitivity );
+                if (renren.getCurrentUid()!=0){
+                    renren.logout(ProfileFragment.this.myAcitivity);
+                    LogUtils.Logd(LocalLogTag, "renren.logout");
+                }
+
+
                 logoutTask = new LogoutTask(AppInfo.userId, myHandler
                         .obtainMessage());
                 logoutTask.execute();
                 dialog.dismiss();
+
                 mProgressDialog = myProgressDialog.show(myAcitivity, null,
                         R.string.loading);
             }
