@@ -50,9 +50,9 @@ http://aliyunvm:4000/web/runMethod?libName=store&methodName=deleteUserRenRenAcco
 http://aliyunvm:4000/web/runMethod?libName=store&methodName=getAllReports
 
 
-
 curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"user1@abc.com", "password":"aaa", "name":"user1", "height":175, "gender":"male", "deviceType":"iphone", "region":{"CountryCode":"CN","State":"Beijing","City":"Beijing"}, "geolibType":"ios"}' https://aliyunvm:4010/user/register
 curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"user1@abc.com", "password":"aaa", "deviceType":"iphone"}' https://aliyunvm:4010/user/logIn
+curl -k -H "Content-Type: application/json" -X POST -d '{"accountRenRen":"12345678", "deviceType":"iphone","deviceId":"deviceId"}' https://aliyunvm:4010/user/logInFromRenRen
 
 curl -H "Content-Type: application/json" -X POST -d '{"emailAccount":"user1@abc.com","returnFormat":"json"}' http://aliyunvm:4000/web/requestResetPassword
 http://aliyunvm:4000/web/requestResetPassword
@@ -71,6 +71,30 @@ http://aliyunvm:4000/adminWeb/functionList
 http://aliyunvm:4000/adminWeb/logOut
 
 curl -H "Content-Type: application/json" -X POST -d '{"start":0, "count":10}' http://aliyunvm:4000/user/getNearbyDates
+
+
+
+
+
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyuzhang@hitongqu.net", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d"}'  --url "https://aliyunvm:4010/user/register"
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyuzhang@hitongqu.net", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d"}'  --url "https://aliyunvm:4010/user/register"
+curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"semiSimplyDeleteUser", "emailAccount":"lianyuzhang@hitongqu.net"}' http://aliyunvm:4000/admin/runMethod
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyuzhang@hitongqu.net", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d"}'  --url "https://aliyunvm:4010/user/register"
+
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyuzhang+1@hitongqu.net", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "accountRenRen":"accountRenRen", "renrenAuthObj":{"f1":123}}'  --url "https://aliyunvm:4010/user/register"
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyuzhang+1@hitongqu.net", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "accountRenRen":"accountRenRen", "renrenAuthObj":{"f1":123}}'  --url "https://aliyunvm:4010/user/register"
+curl -H "Content-Type: application/json" -X POST -d '{"libName":"store", "methodName":"semiSimplyDeleteUser", "emailAccount":"lianyuzhang+1@hitongqu.net"}' http://aliyunvm:4000/admin/runMethod
+curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyuzhang+1@hitongqu.net", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d", "accountRenRen":"accountRenRen", "renrenAuthObj":{"f1":123}}'  --url "https://aliyunvm:4010/user/register"
+
+
+
+
+
+
+
+
+
+
 
 curl -H "Content-Type: application/json" -X POST -d '{"userId":"6", "delta":"10000"}' http://aliyunvm:4000/admin/changeUserCredit
 
@@ -277,12 +301,6 @@ curl -H "Content-Type: application/json" -X POST -d '{"userId":"1", "targetUserI
 
 
 ----------------
-
-curl -H "Content-Type: application/json" -X POST -d '{"count":"1","expireDays":1}' --url "http://aliyunvm:4000/user/generateInviteCode"
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyuzhang@hitongqu.net", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d"}'  --url "https://aliyunvm:4010/user/register"
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl2@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d"}'  --url "https://aliyunvm:4010/user/register"
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl3@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d"}'  --url "https://aliyunvm:4010/user/register"
-curl -k -H "Content-Type: application/json" -X POST -d '{"emailAccount":"lianyu.zhang+curl4@yasofon.com", "password":"123456", "deviceType":"iphone", "name":"name1", "gender":"male", "school":"北京大学", "deviceId":"d"}'  --url "https://aliyunvm:4010/user/register"
 
 
 
