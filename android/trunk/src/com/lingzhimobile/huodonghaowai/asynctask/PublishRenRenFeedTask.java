@@ -59,8 +59,8 @@ public class PublishRenRenFeedTask {
         AbstractRequestListener<FeedPublishResponseBean> listener =
                 new AbstractRequestListener<FeedPublishResponseBean>() {
             @Override
-            public void onRenrenError(RenrenError renrenError) {
-                LogUtils.Logd(LogTag.RENREN, "publishFeed onRenrenError err=" + renrenError.toString());
+            public void onRenrenError(RenrenError err) {
+                LogUtils.Loge(LogTag.RENREN, "publishFeed onRenrenError err=" + err.getMessage(), err);
                 if (activity != null){
                     activity.runOnUiThread(new Runnable() {
                         @Override
@@ -71,14 +71,15 @@ public class PublishRenRenFeedTask {
                 }
                 if (msg != null){
                     msg.what = MessageID.RENRENSDK_publishFeed_Error;
-                    msg.obj = renrenError;
+                    msg.obj = err;
                     msg.sendToTarget();
                 }
             }
 
             @Override
             public void onFault(Throwable fault) {
-                LogUtils.Logd(LogTag.RENREN, "publishFeed onFault fault=" + fault.toString());
+                LogUtils.Loge(LogTag.RENREN, "publishFeed onFault fault=" + fault.getMessage(),fault);
+
                 if (activity != null){
                     activity.runOnUiThread(new Runnable() {
                         @Override
@@ -98,13 +99,16 @@ public class PublishRenRenFeedTask {
             public void onComplete(FeedPublishResponseBean bean) {
                 LogUtils.Logd(LogTag.RENREN, "PublishRenRenFeedTask onComplete bean=" + bean.toString()  );
                 if (activity != null){
-                    Toast.makeText(activity, "renren publishFeed OK",Toast.LENGTH_SHORT).show();
-//                    activity.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Toast.makeText(activity, "renren publishFeed OK",Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
+
+                    //Toast.makeText(activity, "renren publishFeed OK",Toast.LENGTH_SHORT).show();
+                    //will cause fault=Can't create handler inside thread that has not called Looper.prepare()
+
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(activity, "renren publishFeed OK",Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
                 if (msg != null){
                     msg.what = MessageID.RENRENSDK_publishFeed_OK;
