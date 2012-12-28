@@ -145,6 +145,7 @@ public class PreLogin extends Fragment {
                 LogUtils.Logd(LocalLogTag, "PreLogin onActivityResult LOGIN|SIGNUP LOGIN_OK|REGISTER_OK enter");
                 Intent intent = new Intent();
                 intent.setClass(myAcitivity, MainTabActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("isLogin", true);
                 startActivity(intent);
                 myAcitivity.finish();
