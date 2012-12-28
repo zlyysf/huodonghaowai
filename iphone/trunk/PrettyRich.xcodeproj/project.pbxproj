@@ -25,7 +25,6 @@
 		5F196DC0165A4094003072E5 /* help2@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F196DBC165A4094003072E5 /* help2@2x.jpg */; };
 		5F196DC1165A4094003072E5 /* help3@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F196DBD165A4094003072E5 /* help3@2x.jpg */; };
 		5F196DC2165A4094003072E5 /* help4@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F196DBE165A4094003072E5 /* help4@2x.jpg */; };
-		5F1984CA167ECE3B00A537BF /* help@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F1984C9167ECE3B00A537BF /* help@2x.png */; };
 		5F2072CE15988E5F009AB5C6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F2072CD15988E5F009AB5C6 /* AudioToolbox.framework */; };
 		5F2B31E016759205008C5EF8 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B315816759205008C5EF8 /* FMDatabase.m */; };
 		5F2B31E116759205008C5EF8 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B315A16759205008C5EF8 /* FMDatabaseAdditions.m */; };
@@ -210,6 +209,7 @@
 		5FFD7FDA1678469C00F9221C /* RenRenSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFD7FD81678469C00F9221C /* RenRenSignUpViewController.m */; };
 		5FFD7FDB1678469C00F9221C /* RenRenSignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD7FD91678469C00F9221C /* RenRenSignUpViewController.xib */; };
 		5FFD800616789B2700F9221C /* school.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5FFD800516789B2600F9221C /* school.plist */; };
+		5FFF6BEF168D80260073159E /* help@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5FFF6BEE168D80260073159E /* help@2x.jpg */; };
 		8432969C155A148C00102B12 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969B155A148C00102B12 /* UIKit.framework */; };
 		8432969E155A148C00102B12 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969D155A148C00102B12 /* Foundation.framework */; };
 		843296A0155A148C00102B12 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8432969F155A148C00102B12 /* CoreGraphics.framework */; };
@@ -240,7 +240,6 @@
 		5F196DBC165A4094003072E5 /* help2@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "help2@2x.jpg"; sourceTree = "<group>"; };
 		5F196DBD165A4094003072E5 /* help3@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "help3@2x.jpg"; sourceTree = "<group>"; };
 		5F196DBE165A4094003072E5 /* help4@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "help4@2x.jpg"; sourceTree = "<group>"; };
-		5F1984C9167ECE3B00A537BF /* help@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "help@2x.png"; sourceTree = "<group>"; };
 		5F2072CD15988E5F009AB5C6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5F2B315716759205008C5EF8 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		5F2B315816759205008C5EF8 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
@@ -527,6 +526,7 @@
 		5FFD7FD81678469C00F9221C /* RenRenSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RenRenSignUpViewController.m; path = Class/RenRenSignUpViewController.m; sourceTree = "<group>"; };
 		5FFD7FD91678469C00F9221C /* RenRenSignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RenRenSignUpViewController.xib; path = Class/RenRenSignUpViewController.xib; sourceTree = "<group>"; };
 		5FFD800516789B2600F9221C /* school.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = school.plist; sourceTree = "<group>"; };
+		5FFF6BEE168D80260073159E /* help@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "help@2x.jpg"; sourceTree = "<group>"; };
 		84329697155A148C00102B12 /* 活动号外.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "活动号外.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8432969B155A148C00102B12 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8432969D155A148C00102B12 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -889,7 +889,7 @@
 				5FFD7FBE1677224E00F9221C /* separate-line@2x.png */,
 				5FFD7FC5167726C500F9221C /* login-button@2x.png */,
 				5FFD7FC6167726C500F9221C /* renren-button@2x.png */,
-				5F1984C9167ECE3B00A537BF /* help@2x.png */,
+				5FFF6BEE168D80260073159E /* help@2x.jpg */,
 				5F196DBB165A4094003072E5 /* help1@2x.jpg */,
 				5F196DBC165A4094003072E5 /* help2@2x.jpg */,
 				5F196DBD165A4094003072E5 /* help3@2x.jpg */,
@@ -1302,8 +1302,8 @@
 				5FFD7FD116782F3500F9221C /* share-unchecked@2x.png in Resources */,
 				5FFD7FDB1678469C00F9221C /* RenRenSignUpViewController.xib in Resources */,
 				5FFD800616789B2700F9221C /* school.plist in Resources */,
-				5F1984CA167ECE3B00A537BF /* help@2x.png in Resources */,
 				5FEAB2C916806A5B00E3B084 /* SettingsViewController.xib in Resources */,
+				5FFF6BEF168D80260073159E /* help@2x.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
