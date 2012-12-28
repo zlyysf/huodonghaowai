@@ -50,7 +50,9 @@ public class JSONParser {
         try {
             JSONObject resultObj = jo.getJSONObject("result");
             JSONObject userObj = resultObj.getJSONObject("user");
-            JSONObject renrenAccountObj = resultObj.getJSONObject("renrenAccount");
+
+          //can not use getJSONObject here because when renrenAccount be null and it throw error, will cause user be null
+            JSONObject renrenAccountObj = resultObj.optJSONObject("renrenAccount");
             getRenrenAccountInfo(renrenAccountObj);
             return getUserInfo(userObj);
         } catch (JSONException e) {
