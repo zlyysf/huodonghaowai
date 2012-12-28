@@ -43,6 +43,7 @@ import android.widget.Toast;
 import com.lingzhimobile.huodonghaowai.R;
 import com.lingzhimobile.huodonghaowai.activity.Nearby;
 import com.lingzhimobile.huodonghaowai.activity.ReportUser;
+import com.lingzhimobile.huodonghaowai.activity.Settings;
 import com.lingzhimobile.huodonghaowai.asynctask.GetUserTask;
 import com.lingzhimobile.huodonghaowai.asynctask.LogoutTask;
 import com.lingzhimobile.huodonghaowai.asynctask.UpdateProfileTask;
@@ -67,6 +68,9 @@ import com.renren.api.connect.android.AsyncRenren;
 public class ProfileFragment extends Fragment {
     private final int TYPE_EDIT = 10;
     private final int TYPE_VIEW = 11;
+
+    public static final int ActivityRequest_Settings = 100;
+
     private int mCurrentType = 11;
 
     private static final String LocalLogTag = LogTag.ACTIVITY + " ProfileFragment";
@@ -124,23 +128,23 @@ public class ProfileFragment extends Fragment {
                 tempProfileInfo = mProfileInfo.clone();
                 initProfileData();
                 break;
-            case MessageID.LOGOUT_OK:
-                myAcitivity.getSharedPreferences("UserInfo", 0).edit()
-                        .remove("userId").commit();
-                myAcitivity.getSharedPreferences("UserInfo", 0).edit()
-                        .remove("sessionToken").commit();
-                AppInfo.userId = null;
-                AppInfo.sessionToken = null;
-                GlobalValue.applyDates.clear();
-                GlobalValue.sendDates.clear();
-                GlobalValue.invitedDates.clear();
-                GlobalValue.nearbyDates.clear();
-                Intent intent = new Intent();
-                intent.setClass(myAcitivity, Nearby.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                myAcitivity.finish();
-                break;
+//            case MessageID.LOGOUT_OK:
+//                myAcitivity.getSharedPreferences("UserInfo", 0).edit()
+//                        .remove("userId").commit();
+//                myAcitivity.getSharedPreferences("UserInfo", 0).edit()
+//                        .remove("sessionToken").commit();
+//                AppInfo.userId = null;
+//                AppInfo.sessionToken = null;
+//                GlobalValue.applyDates.clear();
+//                GlobalValue.sendDates.clear();
+//                GlobalValue.invitedDates.clear();
+//                GlobalValue.nearbyDates.clear();
+//                Intent intent = new Intent();
+//                intent.setClass(myAcitivity, Nearby.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//                myAcitivity.finish();
+//                break;
             case MessageID.UPDATE_PROFILE_OK:
                 Toast.makeText(myAcitivity, R.string.edit_profile_ok,
                         Toast.LENGTH_SHORT).show();
@@ -283,12 +287,15 @@ public class ProfileFragment extends Fragment {
         };
 
         if (getArguments().getInt("backStrId") == R.string.logout) {
-            btnCancel.setText(R.string.logout);
+            btnCancel.setText(R.string.settings);
             btnCancel.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    showLogoutAlertDialog();
+                    //showLogoutAlertDialog();
+                    Intent intent = new Intent();
+                    intent.setClass(myAcitivity, Settings.class);
+                    startActivityForResult(intent, ActivityRequest_Settings);
                 }
             });
             btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -890,9 +897,18 @@ public class ProfileFragment extends Fragment {
                     ivUserPhoto.setImageBitmap(originalBitmap);
                 }
 
+
+            }
+            break;
+        case ActivityRequest_Settings:
+            if (resultCode == MessageID.LOGOUT_OK) {
+                myAcitivity.setResult(resultCode);
+                myAcitivity.finish();
+
             }
             break;
         }
+
 
     }
 
@@ -1064,47 +1080,48 @@ public class ProfileFragment extends Fragment {
         editor.putString("userPhoto", AppInfo.userPhoto);
         editor.commit();
     }
-
-    public void showLogoutAlertDialog() {
-        View dialogview = myAcitivity.getLayoutInflater().inflate(
-                R.layout.spendcreditsdialog, null);
-        TextView tvNotify = (TextView) dialogview
-                .findViewById(R.id.tvNotifyText);
-        tvNotify.setText(R.string.logout_alert);
-        Button btnOK = (Button) dialogview.findViewById(R.id.btnOk);
-        Button btnCancel = (Button) dialogview.findViewById(R.id.btnCancel);
-        btnOK.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                LogUtils.Logd(LocalLogTag, "LogoutAlertDialog btnOK onClick enter");
-                Renren renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID,ProfileFragment.this.myAcitivity );
-                if (renren.getCurrentUid()!=0){
-                    LogUtils.Logd(LocalLogTag, "renren.logout before, currentUid="+renren.getCurrentUid());
-                    renren.logout(myAcitivity);
-                    LogUtils.Logd(LocalLogTag, "renren.logout after, currentUid="+renren.getCurrentUid());
-                }
-
-                logoutTask = new LogoutTask(AppInfo.userId, myHandler
-                        .obtainMessage());
-                logoutTask.execute();
-                dialog.dismiss();
-
-                mProgressDialog = myProgressDialog.show(myAcitivity, null,
-                        R.string.loading);
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        if (!dialog.isShowing()) {
-            dialog.setContentView(dialogview);
-            dialog.show();
-        }
-    }
+//
+//    public void showLogoutAlertDialog() {
+//        View dialogview = myAcitivity.getLayoutInflater().inflate(
+//                R.layout.spendcreditsdialog, null);
+//        TextView tvNotify = (TextView) dialogview
+//                .findViewById(R.id.tvNotifyText);
+//        tvNotify.setText(R.string.logout_alert);
+//        Button btnOK = (Button) dialogview.findViewById(R.id.btnOk);
+//        Button btnCancel = (Button) dialogview.findViewById(R.id.btnCancel);
+//        btnOK.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                LogUtils.Logd(LocalLogTag, "LogoutAlertDialog btnOK onClick enter");
+////                Renren renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID,ProfileFragment.this.myAcitivity );
+//                Renren renren = AppUtil.getRenrenSdkInstance(myAcitivity);
+//                if (renren.getCurrentUid()!=0){
+//                    LogUtils.Logd(LocalLogTag, "renren.logout before, currentUid="+renren.getCurrentUid());
+//                    renren.logout(myAcitivity);
+//                    LogUtils.Logd(LocalLogTag, "renren.logout after, currentUid="+renren.getCurrentUid());
+//                }
+//
+//                logoutTask = new LogoutTask(AppInfo.userId, myHandler
+//                        .obtainMessage());
+//                logoutTask.execute();
+//                dialog.dismiss();
+//
+//                mProgressDialog = myProgressDialog.show(myAcitivity, null,
+//                        R.string.loading);
+//            }
+//        });
+//        btnCancel.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
+//        if (!dialog.isShowing()) {
+//            dialog.setContentView(dialogview);
+//            dialog.show();
+//        }
+//    }
 
 }

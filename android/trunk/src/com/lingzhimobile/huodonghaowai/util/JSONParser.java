@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.lingzhimobile.huodonghaowai.cons.MessageType;
+import com.lingzhimobile.huodonghaowai.cons.RenRenLibConst;
 import com.lingzhimobile.huodonghaowai.exception.JSONParseException;
 import com.lingzhimobile.huodonghaowai.log.LogTag;
 import com.lingzhimobile.huodonghaowai.log.LogUtils;
@@ -44,8 +45,20 @@ public class JSONParser {
         return resultObj;
     }
 
-    public static boolean getUserInfo(String result)
-            throws JSONParseException {
+    public static boolean getLoginInfo(String result)throws JSONParseException {
+        JSONObject jo = checkSucceed(result);
+        try {
+            JSONObject resultObj = jo.getJSONObject("result");
+            JSONObject userObj = resultObj.getJSONObject("user");
+            JSONObject renrenAccountObj = resultObj.getJSONObject("renrenAccount");
+            getRenrenAccountInfo(renrenAccountObj);
+            return getUserInfo(userObj);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public static boolean getUserInfo(String result) throws JSONParseException {
         JSONObject jo = checkSucceed(result);
         try {
             JSONObject resultObj = jo.getJSONObject("result");
@@ -73,6 +86,19 @@ public class JSONParser {
             return true;
         }
         return false;
+    }
+    public static void getRenrenAccountInfo(JSONObject renrenAccountObj){
+        JSONObject renrenAuthObj = null;
+        if (renrenAccountObj!=null){
+            renrenAuthObj = renrenAccountObj.optJSONObject("renrenAuthObj");
+        }
+        if (renrenAuthObj!=null){
+            AppInfo.renrenSessionUserId = renrenAuthObj.optString(RenRenLibConst.fieldcommon_session_userId);
+            AppInfo.renrenAccessToken = renrenAuthObj.optString(RenRenLibConst.fieldcommon_access_token);
+            AppInfo.renrenExpirationDate = renrenAuthObj.optString(RenRenLibConst.fieldcommon_expiration_date);
+            AppInfo.renrenSessionKey = renrenAuthObj.optString(RenRenLibConst.fieldcommon_session_key);
+            AppInfo.renrenSecretKey = renrenAuthObj.optString(RenRenLibConst.fieldcommon_secret_key);
+        }
     }
 
     public static String getReportUserResult(String result)

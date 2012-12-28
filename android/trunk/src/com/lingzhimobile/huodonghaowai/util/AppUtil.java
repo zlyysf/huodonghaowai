@@ -37,7 +37,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
+import android.os.Parcel;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,14 +56,19 @@ import com.lingzhimobile.huodonghaowai.R;
 import com.lingzhimobile.huodonghaowai.activity.MainTabActivity;
 import com.lingzhimobile.huodonghaowai.activity.Nearby;
 import com.lingzhimobile.huodonghaowai.cons.MessageID;
+import com.lingzhimobile.huodonghaowai.cons.RenRenLibConst;
 import com.lingzhimobile.huodonghaowai.exception.ErrorCode;
 import com.lingzhimobile.huodonghaowai.exception.JSONParseException;
 import com.lingzhimobile.huodonghaowai.gps.AddressTask;
 import com.lingzhimobile.huodonghaowai.log.LogTag;
 import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.model.ChatItem;
+import com.renren.api.connect.android.AccessTokenManager;
+import com.renren.api.connect.android.Renren;
 
 public class AppUtil {
+    private static final String LocalLogTag = LogTag.UTIL + " AppUtil";
+
     public static Facebook facebook;
     public static AsyncFacebookRunner mAsyncRunner;
 
@@ -263,6 +270,7 @@ public class AppUtil {
                 || locationManager
                         .isProviderEnabled(android.location.LocationManager.NETWORK_PROVIDER)) {
             Thread getLocThread = new Thread() {
+                @Override
                 public void run() {
                     Looper.prepare();
                     getLocation(context, msg);
@@ -403,7 +411,7 @@ public class AppUtil {
     }
 
     /**
-     * 
+     *
      * @param time
      *            the time in second( not millisecond)
      * @return
@@ -479,7 +487,7 @@ public class AppUtil {
 
     /**
      * getStringFromId
-     * 
+     *
      * @param srcid
      * @return
      */
@@ -489,7 +497,7 @@ public class AppUtil {
 
     /**
      * getStringFromIdWithParams
-     * 
+     *
      * @param srcid
      * @param params
      * @return
@@ -671,6 +679,58 @@ public class AppUtil {
         result.add(0, confirmed);
         result.add(1, unConfirmed);
         return result;
+    }
+
+    private static final String KEY_API_KEY = "api_key";
+    private static final String KEY_SECRET = "secret";
+    private static final String KEY_APP_ID = "appid";
+    private static final String KEY_ACCESS_TOKEN = "renren_token_manager_access_token";
+    private static final String KEY_SESSION_KEY = "renren_token_manager_session_key";
+    private static final String KEY_SESSION_SECRET = "renren_token_manager_session_secret";
+    private static final String KEY_UID = "renren_token_manager_user_id";
+    private static final String KEY_SESSION_KEY_EXPIRE_TIME = "renren_token_manager_session_key_expire_time";
+
+    public static Renren getRenrenSdkInstance(Context context){
+        Renren renren = null;
+//        renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, context);
+//        if (renren.getCurrentUid() == 0){
+//            if (!TextUtils.isEmpty(AppInfo.renrenSessionUserId)){
+//                AccessTokenManager accessTokenManager =  renren.getAccessTokenManager();
+//                accessTokenManager.accessToken = AppInfo.renrenAccessToken;
+//                accessTokenManager.expireTime = Long.parseLong(AppInfo.renrenExpirationDate);
+//                accessTokenManager.sessionKey = AppInfo.renrenSessionKey;
+//                accessTokenManager.sessionSecret = AppInfo.renrenSecretKey;
+//                accessTokenManager.uid = Long.parseLong(AppInfo.renrenSessionUserId);
+//            }
+//        }
+        LogUtils.Logd(LocalLogTag, "renrenAccessToken="+AppInfo.renrenAccessToken+
+                ", renrenSessionKey="+AppInfo.renrenSessionKey+
+                ", renrenSecretKey="+AppInfo.renrenSecretKey+
+                ", renrenSessionUserId="+AppInfo.renrenSessionUserId+
+                ", renrenExpirationDate="+AppInfo.renrenExpirationDate);
+        if (!TextUtils.isEmpty(AppInfo.renrenSessionUserId)){
+            Bundle bd1 = new Bundle();
+            bd1.putString(KEY_API_KEY, RenRenLibConst.APP_API_KEY);
+            bd1.putString(KEY_SECRET, RenRenLibConst.APP_SECRET_KEY);
+            bd1.putString(KEY_APP_ID, RenRenLibConst.APP_ID);
+            Bundle bd2 = new Bundle();
+            bd2.putString(KEY_ACCESS_TOKEN, AppInfo.renrenAccessToken);
+            bd2.putString(KEY_SESSION_KEY, AppInfo.renrenSessionKey);
+            bd2.putString(KEY_SESSION_SECRET, AppInfo.renrenSecretKey);
+            bd2.putLong(KEY_UID, Long.parseLong(AppInfo.renrenSessionUserId));
+            bd2.putLong(KEY_SESSION_KEY_EXPIRE_TIME, Long.parseLong(AppInfo.renrenExpirationDate));
+            Parcel parcel = Parcel.obtain();
+            //bd.writeToParcel(parcel, 0);
+            bd1.writeToParcel(parcel, 0);
+            bd2.writeToParcel(parcel, 0);
+            parcel.setDataPosition(0);
+            //parcel.writeBundle(bd);
+            renren = new Renren(parcel);
+            LogUtils.Logd(LocalLogTag,"renren.getCurrentUid()="+renren.getCurrentUid());
+        }else{
+            renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, context);
+        }
+        return renren;
     }
 
 }

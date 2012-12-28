@@ -21,10 +21,14 @@ import com.lingzhimobile.huodonghaowai.activity.MainTabActivity;
 import com.lingzhimobile.huodonghaowai.adapter.PageSwitchAdapter;
 import com.lingzhimobile.huodonghaowai.asynctask.GetNearbyDateTask;
 import com.lingzhimobile.huodonghaowai.cons.MessageID;
+import com.lingzhimobile.huodonghaowai.cons.RenRenLibConst;
+import com.lingzhimobile.huodonghaowai.log.LogTag;
+import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.model.DateListItem;
 import com.lingzhimobile.huodonghaowai.util.AppUtil;
 import com.lingzhimobile.huodonghaowai.view.ViewFlow;
 import com.lingzhimobile.huodonghaowai.view.myProgressDialog;
+import com.renren.api.connect.android.Renren;
 
 public class PreLogin extends Fragment {
 
@@ -34,7 +38,9 @@ public class PreLogin extends Fragment {
     public static final int LOGIN = 100;
     public static final int SIGNUP = 101;
 
-    private ArrayList<DateListItem> dates = new ArrayList<DateListItem>();
+    private static final String LocalLogTag = LogTag.ACTIVITY + " PreLogin";
+
+    private final ArrayList<DateListItem> dates = new ArrayList<DateListItem>();
     private ViewFlow vf;
     private PageSwitchAdapter myPreloginPageSwitchAdapter;
     private Button btnLogin, btnSignup;
@@ -99,6 +105,14 @@ public class PreLogin extends Fragment {
     }
 
     private void initData() {
+        //Renren renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, myAcitivity);
+        Renren renren = AppUtil.getRenrenSdkInstance(myAcitivity);
+        if (renren.getCurrentUid() != 0){
+          //to avoid possible mix-up that old renren auth be taken as the current to-be-login-or-register user
+            renren.logout(myAcitivity);
+        }
+
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -122,10 +136,13 @@ public class PreLogin extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        LogUtils.Logd(LocalLogTag, "PreLogin onActivityResult enter");
         switch (requestCode) {
         case LOGIN:
         case SIGNUP:
+            LogUtils.Logd(LocalLogTag, "PreLogin onActivityResult LOGIN|SIGNUP enter");
             if (resultCode == MessageID.LOGIN_OK || resultCode == MessageID.REGISTER_OK) {
+                LogUtils.Logd(LocalLogTag, "PreLogin onActivityResult LOGIN|SIGNUP LOGIN_OK|REGISTER_OK enter");
                 Intent intent = new Intent();
                 intent.setClass(myAcitivity, MainTabActivity.class);
                 intent.putExtra("isLogin", true);

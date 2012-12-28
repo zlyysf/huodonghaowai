@@ -46,6 +46,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lingzhimobile.huodonghaowai.R;
+import com.lingzhimobile.huodonghaowai.activity.Settings;
 import com.lingzhimobile.huodonghaowai.asynctask.Bind3rdPartAccountTask;
 import com.lingzhimobile.huodonghaowai.asynctask.CreateDateTask;
 import com.lingzhimobile.huodonghaowai.asynctask.PublishRenRenFeedTask;
@@ -331,7 +332,8 @@ public class PublishDate extends Fragment {
                 }
             }
         });
-        renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, myAcitivity);
+        //renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, myAcitivity);
+        renren = AppUtil.getRenrenSdkInstance(myAcitivity);
         long currentUid = renren.getCurrentUid() ;
         boolean canDefaultPublishToRenren = (currentUid != 0);
         cbPublishToRenRen.setChecked(canDefaultPublishToRenren);
@@ -370,7 +372,12 @@ public class PublishDate extends Fragment {
                     public void onRenrenAuthError(RenrenAuthError renrenAuthError) {
                         renrenAuthError.printStackTrace();
                         LogUtils.Loge(LogTag.RENREN, "onRenrenAuthError err=" + renrenAuthError.toString());
-                        Toast.makeText(myAcitivity, "renren auth failed",Toast.LENGTH_SHORT).show();
+                        myAcitivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(myAcitivity, "renren auth failed",Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         return;
                     }
 

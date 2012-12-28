@@ -12,7 +12,7 @@ public class AppInfo {
     public static Context context;
     private static String deviceId;
     public static String userId;
-    
+
 
     public static String gender;
     public static String userName;
@@ -25,8 +25,14 @@ public class AppInfo {
     public static String educationalStatus;
     public static String description;
     public static int height;
-    private static boolean isInit = false; 
+    private static boolean isInit = false;
     public static String sessionToken = null;
+
+    public static String renrenSessionUserId = null;
+    public static String renrenAccessToken = null;
+    public static String renrenExpirationDate = null; //in ms
+    public static String renrenSessionKey = null;
+    public static String renrenSecretKey = null;
 
     // public static String userId;
 
@@ -71,7 +77,7 @@ public class AppInfo {
         deviceId = tm.getDeviceId();
         if (deviceId == null)
             deviceId = Secure.getString(context.getContentResolver(),
-                    Secure.ANDROID_ID); 
+                    Secure.ANDROID_ID);
         if (deviceId.equals("000000000000000"))
               deviceId = String.valueOf(new Random().nextDouble());
         SharedPreferences sp = context.getSharedPreferences("INFO", 0);

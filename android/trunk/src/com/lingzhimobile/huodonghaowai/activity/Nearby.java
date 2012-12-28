@@ -7,17 +7,20 @@ import android.view.KeyEvent;
 import com.lingzhimobile.huodonghaowai.R;
 import com.lingzhimobile.huodonghaowai.fragment.NearbyDateList;
 import com.lingzhimobile.huodonghaowai.fragment.PreLogin;
+import com.lingzhimobile.huodonghaowai.log.LogTag;
+import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.umeng.analytics.MobclickAgent;
 
 public class Nearby extends HuoDongHaoWaiActivity {
 
-    private boolean isLogin;
+    private static final String LocalLogTag = LogTag.ACTIVITY + " Nearby";
 
+    private boolean isLogin;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
          setContentView(R.layout.fragment);
          isLogin = getIntent().getBooleanExtra("isLogin", false);
          if (isLogin) {
@@ -43,9 +46,10 @@ public class Nearby extends HuoDongHaoWaiActivity {
                 getSupportFragmentManager().popBackStack();
                 return true;
             }else if(!isLogin){
+                LogUtils.Logd(LocalLogTag, "Nearby onKeyDown, before finish");
                 finish();
             }
-            
+
         }
         return false;
     }

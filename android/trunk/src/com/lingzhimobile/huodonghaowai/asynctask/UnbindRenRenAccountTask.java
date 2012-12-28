@@ -13,20 +13,18 @@ import com.lingzhimobile.huodonghaowai.log.LogTag;
 import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.net.HttpManager;
 import com.lingzhimobile.huodonghaowai.net.NetProtocol;
-import com.lingzhimobile.huodonghaowai.util.AppInfo;
 import com.lingzhimobile.huodonghaowai.util.JSONParser;
 
-public class LoginTask extends AsyncTask<Void, Void, String> {
-    HttpPost httpRequest;
-    private final String requestURL = NetProtocol.HTTPS_REQUEST_URL
-            + "user/logIn";
-    private final String email, password;
+public class UnbindRenRenAccountTask extends AsyncTask<Void, Void, String> {
+    private final String userId;
     private final Message msg;
+    HttpPost httpRequest;
+    private final String requestURL = NetProtocol.HTTP_REQUEST_URL
+            + "user/unbindRenRenAccount";
 
-    public LoginTask(String email, String password, Message msg){
-        this.email = email;
-        this.password = password;
+    public UnbindRenRenAccountTask(String userId, Message msg){
         this.msg = msg;
+        this.userId = userId;
     }
 
     @Override
@@ -35,14 +33,11 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
         httpRequest = new HttpPost(requestURL);
         JSONObject parameters = new JSONObject();
         try {
-            parameters.put("emailAccount", email);
-            parameters.put("password", password);
-            parameters.put("deviceType", "android");
-            parameters.put("deviceId", AppInfo.getDeviceId());
+            parameters.put("userId", userId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        result = HttpManager.postAnonymousAPI(httpRequest, requestURL, parameters);
+        result = HttpManager.postAPI(httpRequest, requestURL, parameters);
         LogUtils.Logi(LogTag.TASK, "The result of API request: " + result);
         return result;
     }
@@ -51,11 +46,10 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         try {
-            //JSONParser.getUserInfo(result);
-            JSONParser.getLoginInfo(result);
-            msg.what = MessageID.LOGIN_OK;
+            JSONParser.checkSucceed(result);
+            msg.what = MessageID.UnbindRenRenAccount_OK;
         } catch (JSONParseException e) {
-            msg.what = MessageID.SERVER_RETURN_NULL;
+            msg.what = MessageID.UnbindRenRenAccount_FAIL;
             msg.obj = e.getCode();
         }
         msg.sendToTarget();
@@ -63,14 +57,13 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onCancelled() {
-        LogUtils.Logi(LogTag.TASK, "LoginTask onCancelled");
+        LogUtils.Logi(LogTag.TASK, "UnbindRenRenAccountTask onCancelled");
         if (httpRequest != null) {
             httpRequest.abort();
             LogUtils.Logi(LogTag.TASK, "http request abort");
         }
         super.onCancelled();
     }
-
 
 
 }

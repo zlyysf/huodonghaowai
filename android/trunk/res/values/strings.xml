@@ -54,6 +54,14 @@
     <string name="constellation">星座</string>
     <string name="hometown">家乡</string>
     <string name="save">保存</string>
+    <string name="renren">人人网</string>
+    <string name="alreadyBindWithAction">已绑定</string>
+    <string name="notyetBindWithAction">未绑定</string>
+    <string name="bindNow">现在绑定</string>
+    <string name="notBindNow">暂不绑定</string>
+    <string name="to_unbind_renren_alert">解除绑定后，你将不能通过人人网账号登入活动号外，你确定要这样做么？</string>
+    <string name="to_bind_renren_alert">绑定人人账户，将来你便可以用人人账户来登入活动号外.</string>
+    
     <!-- edit profile -->
     <string name="headerphoto">头像</string>
     <string name="name">姓名</string>

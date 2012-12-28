@@ -81,10 +81,12 @@ public class Login extends Activity {
                 break;
             case MessageID.LOGIN_OK:
             case MessageID.RENREN_LOGIN_OK:
+                LogUtils.Logd(LocalLogTag, "Login myHandler LOGIN_OK|RENREN_LOGIN_OK begin");
                 prgressDialog.dismiss();
                 savePrefrerence();
                 setResult(MessageID.LOGIN_OK);
                 finish();
+                LogUtils.Logd(LocalLogTag, "Login myHandler LOGIN_OK|RENREN_LOGIN_OK end");
                 break;
             case MessageID.NEED_REGISTER_RENREN:
                 //will open register ui--askinfo activity, but before that need to get renren userInfo
@@ -142,7 +144,8 @@ public class Login extends Activity {
         super.onCreate(savedInstanceState);
 
         LogUtils.Logi(LocalLogTag, "Login onCreate");
-        renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, this);
+        //renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, this);
+        renren = AppUtil.getRenrenSdkInstance(this);
 
         setContentView(R.layout.login);
         imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -335,6 +338,13 @@ public class Login extends Activity {
         editor.putString("description", AppInfo.description);
         editor.putString("email", email);
         editor.putString("sessionToken", AppInfo.sessionToken);
+
+        editor.putString("renrenSessionUserId", AppInfo.renrenSessionUserId);
+        editor.putString("renrenAccessToken", AppInfo.renrenAccessToken);
+        editor.putString("renrenExpirationDate", AppInfo.renrenExpirationDate);
+        editor.putString("renrenSessionKey", AppInfo.renrenSessionKey);
+        editor.putString("renrenSecretKey", AppInfo.renrenSecretKey);
+
         editor.commit();
         LogUtils.Logd(LocalLogTag, "Login.savePrefrerence AppInfo.userId="+AppInfo.userId);
     }

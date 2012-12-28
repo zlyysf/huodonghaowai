@@ -22,6 +22,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.lingzhimobile.huodonghaowai.R;
 import com.lingzhimobile.huodonghaowai.adapter.NearbyDateListAdapter;
 import com.lingzhimobile.huodonghaowai.asyncloader.GetNearbyDateLoader;
+import com.lingzhimobile.huodonghaowai.log.LogTag;
+import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.model.DateListItem;
 import com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshListView;
 import com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshBase.Mode;
@@ -32,6 +34,8 @@ import com.lingzhimobile.huodonghaowai.view.myProgressDialog;
 
 public class NearbyDateList extends Fragment implements
         LoaderCallbacks<List<DateListItem>> {
+
+    private static final String LocalLogTag = LogTag.ACTIVITY + " NearbyDateList";
 
     private Activity myAcitivity;
     private View currentView;
@@ -66,6 +70,7 @@ public class NearbyDateList extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+        LogUtils.Logd(LocalLogTag, "NearbyDateList onCreateView enter");
         currentView = inflater.inflate(R.layout.nearbydatelist, container,
                 false);
         initView();
@@ -77,7 +82,7 @@ public class NearbyDateList extends Fragment implements
         }else{
             nearbyDateListAdapter.notifyDataSetChanged();
         }
-
+        LogUtils.Logd(LocalLogTag, "NearbyDateList onCreateView exit");
         return currentView;
     }
 
@@ -89,6 +94,7 @@ public class NearbyDateList extends Fragment implements
     }
 
     private void initData() {
+        LogUtils.Logd(LocalLogTag, "NearbyDateList initData enter");
         nearbyDateListAdapter = new NearbyDateListAdapter(myAcitivity,this,
                 GlobalValue.nearbyDates);
         nearbyDateList.getRefreshableView().setAdapter(nearbyDateListAdapter);
@@ -132,12 +138,12 @@ public class NearbyDateList extends Fragment implements
                         ft.commit();
                     }
                 });
-
+        LogUtils.Logd(LocalLogTag, "NearbyDateList initData exit");
     }
 
     @Override
     public Loader<List<DateListItem>> onCreateLoader(int arg0, Bundle arg1) {
-        Log.e("Loader", "onCreateLoader");
+        LogUtils.Logd(LocalLogTag, "NearbyDateList onCreateLoader enter");
         GetNearbyDateLoader nearbyDateLoader = null;
         switch (arg0) {
         case 0:
@@ -148,12 +154,14 @@ public class NearbyDateList extends Fragment implements
                     GlobalValue.nearbyDates.get(GlobalValue.nearbyDates.size()-1)
                             .getOrderScore() + 1, 10, 0);
         }
+        LogUtils.Logd(LocalLogTag, "NearbyDateList onCreateLoader exit");
         return nearbyDateLoader;
     }
 
     @Override
     public void onLoadFinished(Loader<List<DateListItem>> arg0,
             List<DateListItem> arg1) {
+        LogUtils.Logd(LocalLogTag, "NearbyDateList onLoadFinished enter, arg0="+arg0.toString());
         Log.e("LoaderId", arg0.getId() + "");
         if(!isResumed()){
             return;
@@ -170,6 +178,7 @@ public class NearbyDateList extends Fragment implements
             nearbyDateListAdapter.notifyDataSetChanged();
 
         }
+        LogUtils.Logd(LocalLogTag, "NearbyDateList onLoadFinished exit");
     }
 
     @Override

@@ -128,7 +128,8 @@ public class AskInfo extends HuoDongHaoWaiActivity {
 
     void setViewData(){
         Intent intent1 = getIntent();
-        renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, this);
+        //renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, this);
+        renren = AppUtil.getRenrenSdkInstance(this);
         if (intent1 != null){
             LogUtils.Logd(LogTag.ACTIVITY, "AskInfo onCreate getIntent=" + intent1.toString());
 //            renren = intent1.getParcelableExtra(Renren.RENREN_LABEL);

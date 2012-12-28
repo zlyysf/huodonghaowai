@@ -14,4 +14,5 @@ public class LogTag {
     public static final String PUSH = APPNAME+"PUSH";
     public static final String EXCEPTION = APPNAME+"EXCEPTION";
     public static final String RENREN = APPNAME+"RENREN";
+    public static final String UTIL = APPNAME+"UTIL";
 }

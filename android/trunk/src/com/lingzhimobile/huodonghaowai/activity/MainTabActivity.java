@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.google.android.c2dm.C2DMessaging;
 import com.lingzhimobile.huodonghaowai.R;
@@ -30,6 +31,8 @@ import com.umeng.update.UmengUpdateAgent;
 public class MainTabActivity extends ActivityGroup {
     public static final String APP_ID = "336893939727736";
     private String currentTabType;
+
+    private static final String LocalLogTag = LogTag.ACTIVITY + " MainTabActivity";
 
     public static final String LOCAL_PUSH_FLAG = "LOCAL_PUSH_FLAG";
     private boolean registered;
@@ -55,6 +58,7 @@ public class MainTabActivity extends ActivityGroup {
 
         @Override
         public void handleMessage(Message msg) {
+            LogUtils.Logd(LocalLogTag, "MainTabActivity myHanlder handleMessage enter, msg="+msg.toString());
             switch (msg.what) {
             case MessageID.LOGOUT_OK:
                 instance.getSharedPreferences("UserInfo", 0).edit()
@@ -71,6 +75,7 @@ public class MainTabActivity extends ActivityGroup {
                 intent.setClass(MainTabActivity.this, Nearby.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                LogUtils.Logd(LocalLogTag, "MainTabActivity myHanlder LOGOUT_OK, before finish");
                 instance.finish();
                 break;
             }
@@ -80,9 +85,10 @@ public class MainTabActivity extends ActivityGroup {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        LogUtils.Logd(LocalLogTag, "MainTabActivity onCreate enter");
         super.onCreate(savedInstanceState);
         MobclickAgent.onError(this);
-        LogUtils.Loge("newIntent", "onCreate");
+        LogUtils.Loge(LocalLogTag, "onCreate enter");
         setContentView(R.layout.main);
         instance = this;
         AppInfo.init(this.getApplicationContext());
@@ -138,10 +144,11 @@ public class MainTabActivity extends ActivityGroup {
         AppInfo.height = userInfo.getInt("height", 0);
         processExtraData(getIntent());
         // rbNearby.performClick();
+        LogUtils.Logd(LocalLogTag, "MainTabActivity onCreate exit");
     }
 
     private void setListener() {
-
+        LogUtils.Logd(LocalLogTag, "MainTabActivity setListener enter");
         rbNearby.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -223,7 +230,7 @@ public class MainTabActivity extends ActivityGroup {
                 currentTabType = STRING_PROPOSEDATE;
             }
         });
-
+        LogUtils.Logd(LocalLogTag, "MainTabActivity setListener exit");
     }
 
     private void unregister() {
@@ -280,6 +287,7 @@ public class MainTabActivity extends ActivityGroup {
             return;
         }
         myHanlder.postDelayed(new Runnable() {
+            @Override
             public void run() {
                 if (!isInit) {
                     if (pushAvailable) {
@@ -319,19 +327,21 @@ public class MainTabActivity extends ActivityGroup {
 
     @Override
     protected void onNewIntent(Intent intent) {
-        LogUtils.Loge("newIntent", "onNewIntent");
+        LogUtils.Loge(LocalLogTag, "onNewIntent");
         super.onNewIntent(intent);
+        //setIntent(intent);
         processExtraData(intent);
 
     }
 
     private void processExtraData(Intent intent) {
+        LogUtils.Logd(LocalLogTag, "MainTabActivity processExtraData enter");
         // AppUtil.facebook = new Facebook(APP_ID);
         // AppUtil.mAsyncRunner = new AsyncFacebookRunner(AppUtil.facebook);
         // SessionStore.restoreFacebook(AppUtil.facebook, this);
         if (intent != null
                 && intent.getBooleanExtra("isJumpFromNotification", false)) {
-            LogUtils.Logi("dateType_mainTab",
+            LogUtils.Logi(LocalLogTag,
                     intent.getIntExtra("dateType", -1) + "");
             int notificationType = intent.getIntExtra("notificationType", -1);
             if (notificationType == MessageType.PUSH_CONFRIMDATE
@@ -350,8 +360,10 @@ public class MainTabActivity extends ActivityGroup {
                 rbDate.performClick();
             }
         } else {
+            //Toast.makeText(this, "branch", Toast.LENGTH_SHORT).show();
             rbNearby.performClick();
         }
+        LogUtils.Logd(LocalLogTag, "MainTabActivity processExtraData exit");
     }
 
     @Override

@@ -56,6 +56,9 @@ public class MessageID {
     public final static int Bind3rdPartAccount_OK = 2071;
     public final static int Bind3rdPartAccount_FAIL = 2072;
 
+    public final static int UnbindRenRenAccount_OK = 2081;
+    public final static int UnbindRenRenAccount_FAIL = 2082;
+
     public final static int RENRENSDK_getUsersInfo_OK = 3000;
     public final static int RENRENSDK_getUsersInfo_Error = 3001;
     public final static int RENRENSDK_getUsersInfo_Fault = 3002;
