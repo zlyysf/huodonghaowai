@@ -165,7 +165,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">help.png</string>
+									<string key="NSResourceName">help.jpg</string>
 								</object>
 							</object>
 						</array>
@@ -443,7 +443,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="help.png">{16, 16}</string>
+			<string key="help.jpg">{16, 16}</string>
 			<string key="help1.jpg">{16, 16}</string>
 			<string key="help2.jpg">{16, 16}</string>
 			<string key="help3.jpg">{16, 16}</string>
