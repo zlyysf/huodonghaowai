@@ -18,6 +18,7 @@ import com.lingzhimobile.huodonghaowai.util.JSONParser;
 
 public class LoginFromRenRenTask extends AsyncTask<Void, Void, String> {
     HttpPost httpRequest;
+    private static final String LocalLogTag = LogTag.TASK + " LoginFromRenRenTask";
     private final String requestURL = NetProtocol.HTTPS_REQUEST_URL
             + "user/logInFromRenRen";
     private final String accountRenRen;
@@ -51,20 +52,28 @@ public class LoginFromRenRenTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        try {
-            JSONObject jsonObject = JSONParser.checkSucceed(result);
-            JSONObject resultObj = jsonObject.optJSONObject("result");
-            boolean userExist = false;
-            if (resultObj != null){
+        JSONObject jsonResult = JSONParser.getJsonObject(result);
+        if (jsonResult == null){
+            msg.what = MessageID.RENREN_LOGIN_Fail;
+            msg.obj = null;
+        }else{
+            boolean isSucceed = JSONParser.checkServerApiSucceed(jsonResult);
+            if (!isSucceed){
+                msg.what = MessageID.RENREN_LOGIN_Fail;
+                int errCode = jsonResult.optInt("code");//TODO refractor to make code as string
+                String errMsg = jsonResult.optString("message");
+                msg.obj = errCode;
+                LogUtils.Loge(LocalLogTag, errMsg);
+            }else{
+                boolean userExist = false;
+                JSONObject resultObj = jsonResult.optJSONObject("result");
                 userExist = resultObj.optBoolean("userExist",userExist);
+                if (userExist) msg.what = MessageID.RENREN_LOGIN_OK;
+                else msg.what = MessageID.NEED_REGISTER_RENREN;
+                msg.obj = jsonResult;
                 JSONObject userObj = resultObj.optJSONObject("user");
-                JSONParser.getUserInfo(userObj);
+                JSONParser.saveLoginUserInfo(userObj);
             }
-            if (userExist) msg.what = MessageID.RENREN_LOGIN_OK;
-            else msg.what = MessageID.NEED_REGISTER_RENREN;
-        } catch (JSONParseException e) {
-            msg.what = MessageID.SERVER_RETURN_NULL;
-            msg.obj = e.getCode();
         }
         msg.sendToTarget();
     }

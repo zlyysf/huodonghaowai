@@ -18,6 +18,7 @@ import com.lingzhimobile.huodonghaowai.util.JSONParser;
 
 public class LoginTask extends AsyncTask<Void, Void, String> {
     HttpPost httpRequest;
+    private static final String LocalLogTag = LogTag.TASK + " LoginTask";
     private final String requestURL = NetProtocol.HTTPS_REQUEST_URL
             + "user/logIn";
     private final String email, password;
@@ -50,13 +51,23 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        try {
-            //JSONParser.getUserInfo(result);
-            JSONParser.getLoginInfo(result);
-            msg.what = MessageID.LOGIN_OK;
-        } catch (JSONParseException e) {
-            msg.what = MessageID.SERVER_RETURN_NULL;
-            msg.obj = e.getCode();
+        JSONObject jsonResult = JSONParser.getJsonObject(result);
+        if (jsonResult == null){
+            msg.what = MessageID.LOGIN_Fail;
+            msg.obj = null;
+        }else{
+            boolean isSucceed = JSONParser.checkServerApiSucceed(jsonResult);
+            if (isSucceed){
+                msg.what = MessageID.LOGIN_OK;
+                msg.obj = jsonResult;
+                JSONParser.saveLoginInfo(jsonResult);
+            }else{
+                msg.what = MessageID.LOGIN_Fail;
+                int errCode = jsonResult.optInt("code");//TODO refractor to make code as string
+                String errMsg = jsonResult.optString("message");
+                msg.obj = errCode;
+                LogUtils.Loge(LocalLogTag, errMsg);
+            }
         }
         msg.sendToTarget();
     }
@@ -70,7 +81,5 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
         }
         super.onCancelled();
     }
-
-
 
 }

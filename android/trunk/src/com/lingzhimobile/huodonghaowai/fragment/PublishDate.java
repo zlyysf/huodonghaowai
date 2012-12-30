@@ -142,13 +142,21 @@ public class PublishDate extends Fragment {
                 break;
             case MessageID.Bind3rdPartAccount_OK:
                 prgressDialog.dismiss();
+                AppInfo.syncRenrenAuthInfoToMemory();
                 break;
             case MessageID.Bind3rdPartAccount_FAIL:
                 prgressDialog.dismiss();
+                int errCode = ((Integer)msg.obj).intValue();
+                if (errCode == 21301){//userAlreadyBindThisRenRenAccount
+                    AppInfo.syncRenrenAuthInfoToMemory();
+                }else{
+                    AppInfo.clearRenrenAuthInfo();
+                }
                 break;
             case MessageID.RENRENSDK_publishFeed_Error:
             case MessageID.RENRENSDK_publishFeed_Fault:
                 prgressDialog.dismiss();
+                AppInfo.clearRenrenAuthInfo();
                 break;
             }
 
@@ -333,9 +341,8 @@ public class PublishDate extends Fragment {
             }
         });
         //renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, myAcitivity);
-        renren = AppUtil.getRenrenSdkInstance(myAcitivity);
-        long currentUid = renren.getCurrentUid() ;
-        boolean canDefaultPublishToRenren = (currentUid != 0);
+        renren = AppInfo.getRenrenSdkInstance(myAcitivity);
+        boolean canDefaultPublishToRenren = AppInfo.existRenrenAuthInfo();
         cbPublishToRenRen.setChecked(canDefaultPublishToRenren);
 
         cbPublishToRenRen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -343,66 +350,66 @@ public class PublishDate extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 LogUtils.Logd(LocalLogTag, "cbPublishToRenRen onCheckedChanged isChecked=" + isChecked);
-                final RenrenAuthListener rrAuthlistener = new RenrenAuthListener() {
-                    @Override
-                    public void onComplete(Bundle values) {
-                        LogUtils.Logd(LogTag.RENREN, "RenrenAuthListener.onComplete values=" + values.toString());
-                        String currentUid = renren.getCurrentUid()+"";
-                        String sessionKey = renren.getSessionKey();
-                        String accessToken = renren.getAccessToken();
-                        String secret = renren.getSecret();
-                        String expireTime = renren.getExpireTime()+"";
-                        JSONObject renrenAuthObj = new JSONObject();
-                        try {
-                            renrenAuthObj.put(RenRenLibConst.fieldcommon_session_userId, currentUid);
-                            renrenAuthObj.put(RenRenLibConst.fieldcommon_session_key, sessionKey);
-                            renrenAuthObj.put(RenRenLibConst.fieldcommon_access_token, accessToken);
-                            renrenAuthObj.put(RenRenLibConst.fieldcommon_secret_key, secret);
-                            renrenAuthObj.put(RenRenLibConst.fieldcommon_expiration_date, expireTime);
-                        } catch (JSONException e) {
-                            LogUtils.Loge(LogTag.RENREN,e.getMessage(), e);
-                            renrenAuthObj = null;
-                        }
-                        Bind3rdPartAccountTask bind3rdPartAccountTask = new Bind3rdPartAccountTask(AppInfo.userId, currentUid,renrenAuthObj, myHandler.obtainMessage());
-                        bind3rdPartAccountTask.execute();
-                        prgressDialog = myProgressDialog.show(myAcitivity, null, R.string.loading);
-                    }
-
-                    @Override
-                    public void onRenrenAuthError(RenrenAuthError renrenAuthError) {
-                        renrenAuthError.printStackTrace();
-                        LogUtils.Loge(LogTag.RENREN, "onRenrenAuthError err=" + renrenAuthError.toString());
-                        myAcitivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(myAcitivity, "renren auth failed",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        return;
-                    }
-
-                    @Override
-                    public void onCancelLogin() {
-                        cbPublishToRenRen.setChecked(false);
-                    }
-
-                    @Override
-                    public void onCancelAuth(Bundle values) {
-                        cbPublishToRenRen.setChecked(false);
-                    }
-                };//rrAuthlistener
 
                 if (isChecked){
-                    long currentUid = renren.getCurrentUid() ;
-                    if (currentUid != 0){
+                    if (AppInfo.existRenrenAuthInfo()){
                       //suppose have done auth before, so not need to do auth here
-                    }else{//currentUid==0, should do auth
+                    }else{//not existRenrenAuthInfo, should do auth
                         AlertDialog.Builder askToBindRenrenDlgBuilder = new AlertDialog.Builder(myAcitivity);
                         //askToBindRenrenDlgBuilder.setIcon(R.drawable.xxx);
                         askToBindRenrenDlgBuilder.setTitle("绑定人人帐户，将来你便可以用人人帐户来登入活动号外");
                         askToBindRenrenDlgBuilder.setPositiveButton("现在绑定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                final RenrenAuthListener rrAuthlistener = new RenrenAuthListener() {
+                                    @Override
+                                    public void onComplete(Bundle values) {
+                                        LogUtils.Logd(LogTag.RENREN, "RenrenAuthListener.onComplete values=" + values.toString());
+                                        String currentUid = renren.getCurrentUid()+"";
+                                        String sessionKey = renren.getSessionKey();
+                                        String accessToken = renren.getAccessToken();
+                                        String secret = renren.getSecret();
+                                        String expireTime = renren.getExpireTime()+"";
+                                        JSONObject renrenAuthObj = new JSONObject();
+                                        try {
+                                            renrenAuthObj.put(RenRenLibConst.fieldcommon_session_userId, currentUid);
+                                            renrenAuthObj.put(RenRenLibConst.fieldcommon_session_key, sessionKey);
+                                            renrenAuthObj.put(RenRenLibConst.fieldcommon_access_token, accessToken);
+                                            renrenAuthObj.put(RenRenLibConst.fieldcommon_secret_key, secret);
+                                            renrenAuthObj.put(RenRenLibConst.fieldcommon_expiration_date, expireTime);
+                                        } catch (JSONException e) {
+                                            LogUtils.Loge(LogTag.RENREN,e.getMessage(), e);
+                                            renrenAuthObj = null;
+                                        }
+                                        Bind3rdPartAccountTask bind3rdPartAccountTask = new Bind3rdPartAccountTask(AppInfo.userId, currentUid,renrenAuthObj, myHandler.obtainMessage());
+                                        bind3rdPartAccountTask.execute();
+                                        prgressDialog = myProgressDialog.show(myAcitivity, null, R.string.loading);
+                                    }
+
+                                    @Override
+                                    public void onRenrenAuthError(RenrenAuthError renrenAuthError) {
+                                        renrenAuthError.printStackTrace();
+                                        LogUtils.Loge(LogTag.RENREN, "onRenrenAuthError err=" + renrenAuthError.toString());
+                                        myAcitivity.runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(myAcitivity, "renren auth failed",Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                        return;
+                                    }
+
+                                    @Override
+                                    public void onCancelLogin() {
+                                        cbPublishToRenRen.setChecked(false);
+                                    }
+
+                                    @Override
+                                    public void onCancelAuth(Bundle values) {
+                                        cbPublishToRenRen.setChecked(false);
+                                    }
+                                };//rrAuthlistener
+
                                 renren.authorize(myAcitivity, rrAuthlistener);
                             }
                         });
@@ -413,7 +420,7 @@ public class PublishDate extends Fragment {
                             }
                         });
                         askToBindRenrenDlgBuilder.show();
-                    }//currentUid==0
+                    }//not existRenrenAuthInfo
                 }//if (isChecked)
             }//onCheckedChanged
         });//setOnCheckedChangeListener

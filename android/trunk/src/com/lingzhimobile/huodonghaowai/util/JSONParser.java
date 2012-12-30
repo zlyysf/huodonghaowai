@@ -8,6 +8,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.lingzhimobile.huodonghaowai.cons.MessageType;
 import com.lingzhimobile.huodonghaowai.cons.RenRenLibConst;
 import com.lingzhimobile.huodonghaowai.exception.JSONParseException;
@@ -23,6 +26,28 @@ import com.lingzhimobile.huodonghaowai.model.SubjectItem;
 import com.lingzhimobile.huodonghaowai.model.UserItem;
 
 public class JSONParser {
+
+    private static final String LocalLogTag = LogTag.UTIL + " JSONParser";
+
+    public static JSONObject getJsonObject(String strData){
+        if (strData == null)  return null;
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(strData);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+    public static boolean checkServerApiSucceed(JSONObject jsonObj){
+        boolean isSucceed = false;
+        if (jsonObj != null){
+            if ("success".equals(jsonObj.optString("status"))){
+                isSucceed = true;
+            }
+        }
+        return isSucceed;
+    }
 
     public static JSONObject checkSucceed(String result) throws JSONParseException {
         if (result == null) {
@@ -45,62 +70,57 @@ public class JSONParser {
         return resultObj;
     }
 
-    public static boolean getLoginInfo(String result)throws JSONParseException {
-        JSONObject jo = checkSucceed(result);
-        try {
-            JSONObject resultObj = jo.getJSONObject("result");
-            JSONObject userObj = resultObj.getJSONObject("user");
 
-          //can not use getJSONObject here because when renrenAccount be null and it throw error, will cause user be null
-            JSONObject renrenAccountObj = resultObj.optJSONObject("renrenAccount");
-            getRenrenAccountInfo(renrenAccountObj);
-            return getUserInfo(userObj);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return false;
+
+    /*
+     * here just save to memory. let AppInfo provide function to save to SharedPreferences
+     */
+    public static void saveLoginInfo(JSONObject apiRetData){
+        if (apiRetData == null) return;
+        JSONObject resultPartObj = apiRetData.optJSONObject("result");
+        if (resultPartObj == null) return;
+        JSONObject userObj = resultPartObj.optJSONObject("user");
+        JSONObject renrenAccountObj = resultPartObj.optJSONObject("renrenAccount");
+        saveLoginUserInfo(userObj);
+        saveRenrenAccountInfo(renrenAccountObj);
     }
-    public static boolean getUserInfo(String result) throws JSONParseException {
-        JSONObject jo = checkSucceed(result);
-        try {
-            JSONObject resultObj = jo.getJSONObject("result");
-            JSONObject userObj = resultObj.getJSONObject("user");
-            return getUserInfo(userObj);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return false;
+    /*
+     * here just save to memory. let AppInfo provide function to save to SharedPreferences
+     */
+    public static void saveLoginUserInfo(JSONObject userObj){
+        if (userObj == null) return;
+        AppInfo.userId = userObj.optString("userId");
+        AppInfo.gender = userObj.optString("gender");
+        AppInfo.userName = userObj.optString("name");
+        AppInfo.userPhoto = userObj.optString("primaryPhotoPath");
+        AppInfo.constellation = userObj.optString("constellation");
+        AppInfo.hometown = userObj.optString("hometown");
+        AppInfo.bloodType = userObj.optString("bloodGroup");
+        AppInfo.department = userObj.optString("department");
+        AppInfo.school = userObj.optString("school");
+        AppInfo.description = userObj.optString("description");
+        AppInfo.educationalStatus = userObj.optString("educationalStatus");
+        AppInfo.height = userObj.optInt("height");
+        //emailAccount may not exist in some data because it was input, but still can set here to clear old email, and should save it in outer ui
+        AppInfo.emailAccount = userObj.optString("emailAccount");
     }
-    public static boolean getUserInfo(JSONObject userObj){
-        if (userObj!=null){
-            AppInfo.userId = userObj.optString("userId");
-            AppInfo.gender = userObj.optString("gender");
-            AppInfo.userName = userObj.optString("name");
-            AppInfo.userPhoto = userObj.optString("primaryPhotoPath");
-            AppInfo.constellation = userObj.optString("constellation");
-            AppInfo.hometown = userObj.optString("hometown");
-            AppInfo.bloodType = userObj.optString("bloodGroup");
-            AppInfo.department = userObj.optString("department");
-            AppInfo.school = userObj.optString("school");
-            AppInfo.description = userObj.optString("description");
-            AppInfo.educationalStatus = userObj.optString("educationalStatus");
-            AppInfo.height = userObj.optInt("height");
-            return true;
-        }
-        return false;
-    }
-    public static void getRenrenAccountInfo(JSONObject renrenAccountObj){
-        JSONObject renrenAuthObj = null;
-        if (renrenAccountObj!=null){
-            renrenAuthObj = renrenAccountObj.optJSONObject("renrenAuthObj");
-        }
-        if (renrenAuthObj!=null){
-            AppInfo.renrenSessionUserId = renrenAuthObj.optString(RenRenLibConst.fieldcommon_session_userId);
-            AppInfo.renrenAccessToken = renrenAuthObj.optString(RenRenLibConst.fieldcommon_access_token);
-            AppInfo.renrenExpirationDate = renrenAuthObj.optString(RenRenLibConst.fieldcommon_expiration_date);
-            AppInfo.renrenSessionKey = renrenAuthObj.optString(RenRenLibConst.fieldcommon_session_key);
-            AppInfo.renrenSecretKey = renrenAuthObj.optString(RenRenLibConst.fieldcommon_secret_key);
-        }
+    /*
+     * here just save to memory. let AppInfo provide function to save to SharedPreferences
+     */
+    public static void saveRenrenAccountInfo(JSONObject renrenAccountObj){
+        if (renrenAccountObj == null) return;
+        JSONObject renrenAuthObj = renrenAccountObj.optJSONObject("renrenAuthObj");
+        if (renrenAuthObj == null) return;
+        AppInfo.renrenSessionUserId = renrenAuthObj.optString(RenRenLibConst.fieldcommon_session_userId);
+        AppInfo.renrenAccessToken = renrenAuthObj.optString(RenRenLibConst.fieldcommon_access_token);
+        AppInfo.renrenExpirationDate = renrenAuthObj.optString(RenRenLibConst.fieldcommon_expiration_date);
+        AppInfo.renrenSessionKey = renrenAuthObj.optString(RenRenLibConst.fieldcommon_session_key);
+        AppInfo.renrenSecretKey = renrenAuthObj.optString(RenRenLibConst.fieldcommon_secret_key);
+        LogUtils.Logd(LocalLogTag, "saveRenrenAccountInfo end : renrenAccessToken="+AppInfo.renrenAccessToken+
+                ", renrenSessionKey="+AppInfo.renrenSessionKey+
+                ", renrenSecretKey="+AppInfo.renrenSecretKey+
+                ", renrenSessionUserId="+AppInfo.renrenSessionUserId+
+                ", renrenExpirationDate="+AppInfo.renrenExpirationDate);
     }
 
     public static String getReportUserResult(String result)

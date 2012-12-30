@@ -25,6 +25,7 @@ import com.lingzhimobile.huodonghaowai.cons.RenRenLibConst;
 import com.lingzhimobile.huodonghaowai.log.LogTag;
 import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.model.DateListItem;
+import com.lingzhimobile.huodonghaowai.util.AppInfo;
 import com.lingzhimobile.huodonghaowai.util.AppUtil;
 import com.lingzhimobile.huodonghaowai.view.ViewFlow;
 import com.lingzhimobile.huodonghaowai.view.myProgressDialog;
@@ -105,13 +106,8 @@ public class PreLogin extends Fragment {
     }
 
     private void initData() {
-        //Renren renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, myAcitivity);
-        Renren renren = AppUtil.getRenrenSdkInstance(myAcitivity);
-        if (renren.getCurrentUid() != 0){
-          //to avoid possible mix-up that old renren auth be taken as the current to-be-login-or-register user
-            renren.logout(myAcitivity);
-        }
-
+      //to avoid possible mix-up that old renren auth be taken as the current to-be-login-or-register user
+        AppInfo.clearRenrenAuthInfo();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
 

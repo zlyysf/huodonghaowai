@@ -129,7 +129,7 @@ public class AskInfo extends HuoDongHaoWaiActivity {
     void setViewData(){
         Intent intent1 = getIntent();
         //renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, this);
-        renren = AppUtil.getRenrenSdkInstance(this);
+        renren = AppInfo.getRenrenSdkInstance(this);
         if (intent1 != null){
             LogUtils.Logd(LogTag.ACTIVITY, "AskInfo onCreate getIntent=" + intent1.toString());
 //            renren = intent1.getParcelableExtra(Renren.RENREN_LABEL);
@@ -204,9 +204,7 @@ public class AskInfo extends HuoDongHaoWaiActivity {
 
             @Override
             public void onClick(View v) {
-                if (renren.getCurrentUid() != 0){
-                    renren.logout(AskInfo.this);
-                }
+                AppInfo.clearRenrenAuthInfo();
                 finish();
             }
         });
@@ -272,7 +270,7 @@ public class AskInfo extends HuoDongHaoWaiActivity {
 //                }
                 String accountRenRen = null;
                 JSONObject renrenAuthObj = null;
-                if (renren != null && renren.getCurrentUid() != 0){
+                if (AppInfo.existRenrenAuthInfo()){
                     String currentUid = renren.getCurrentUid()+"";
                     String sessionKey = renren.getSessionKey();
                     String accessToken = renren.getAccessToken();
@@ -392,16 +390,36 @@ public class AskInfo extends HuoDongHaoWaiActivity {
     }
 
     protected void savePrefrerence() {
+        AppInfo.userName = userName;
+        AppInfo.gender = userGender;
+        AppInfo.emailAccount = email;
+        //AppInfo.userPhoto = userObj.optString("primaryPhotoPath");
+        AppInfo.school = userSchool;
+        AppInfo.hometown = hometown;
+
+        if (AppInfo.existRenrenAuthInfo()){
+            String currentUid = renren.getCurrentUid()+"";
+            String sessionKey = renren.getSessionKey();
+            String accessToken = renren.getAccessToken();
+            String secret = renren.getSecret();
+            String expireTime = renren.getExpireTime()+"";
+            AppInfo.renrenSessionUserId = currentUid;
+            AppInfo.renrenAccessToken = accessToken;
+            AppInfo.renrenExpirationDate = expireTime;
+            AppInfo.renrenSessionKey = sessionKey;
+            AppInfo.renrenSecretKey = secret;
+        }
+
         SharedPreferences userInfo = getSharedPreferences("UserInfo",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = userInfo.edit();
-        editor.putString("userName", userName);
         editor.putString("userId", AppInfo.userId);
+        editor.putString("userName", userName);
         editor.putString("userGender", userGender);
         editor.putString("email", email);
-        editor.putString("sessionToken", AppInfo.sessionToken);
-        AppInfo.gender = userGender;
         editor.putString("userSchool", userSchool);
+        editor.putString("hometown", hometown);
+        editor.putString("sessionToken", AppInfo.sessionToken);
         editor.commit();
     }
 

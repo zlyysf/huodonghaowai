@@ -1095,10 +1095,10 @@ public class ProfileFragment extends Fragment {
 //            public void onClick(View v) {
 //                LogUtils.Logd(LocalLogTag, "LogoutAlertDialog btnOK onClick enter");
 ////                Renren renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID,ProfileFragment.this.myAcitivity );
-//                Renren renren = AppUtil.getRenrenSdkInstance(myAcitivity);
+//                Renren renren = AppInfo.getRenrenSdkInstance(myAcitivity);
 //                if (renren.getCurrentUid()!=0){
 //                    LogUtils.Logd(LocalLogTag, "renren.logout before, currentUid="+renren.getCurrentUid());
-//                    renren.logout(myAcitivity);
+//                    AppInfo.clearRenrenAuthInfo();
 //                    LogUtils.Logd(LocalLogTag, "renren.logout after, currentUid="+renren.getCurrentUid());
 //                }
 //

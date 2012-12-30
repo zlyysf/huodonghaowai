@@ -39,8 +39,9 @@ public class MessageID {
     public final static int SEND_MESSAGE_OK = 2014;
 
     public final static int LOGIN_OK = 2041;
-    public final static int REGISTER_OK = 2042;
-    public final static int LOGOUT_OK = 2043;
+    public final static int LOGIN_Fail = 2042;
+    public final static int REGISTER_OK = 2043;
+    public final static int LOGOUT_OK = 2044;
     public final static int GET_CONVERSATIONS_OK = 2046;
 
     public static final int GET_NEARBY_DATE_OK = 2050;
@@ -50,8 +51,9 @@ public class MessageID {
     public static final int UPDATE_PROFILE_OK = 2054;
 
     public final static int RENREN_LOGIN_OK = 2060;
-    public final static int RENREN_REGISTER_OK = 2061;
-    public final static int NEED_REGISTER_RENREN = 2062;
+    public final static int RENREN_LOGIN_Fail = 2061;
+    public final static int RENREN_REGISTER_OK = 2062;
+    public final static int NEED_REGISTER_RENREN = 2063;
 
     public final static int Bind3rdPartAccount_OK = 2071;
     public final static int Bind3rdPartAccount_FAIL = 2072;

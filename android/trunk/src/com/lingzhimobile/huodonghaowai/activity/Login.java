@@ -67,7 +67,6 @@ public class Login extends Activity {
     private InputMethodManager imm;
     private String email;
     private myProgressDialog prgressDialog;
-    private Renren renren;
 
     public Handler myHandler = new Handler() {
 
@@ -75,18 +74,30 @@ public class Login extends Activity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-            case MessageID.SERVER_RETURN_NULL:
+            case MessageID.SERVER_RETURN_NULL://TODO to be deleted
                 prgressDialog.dismiss();
                 AppUtil.handleErrorCode(msg.obj.toString(), Login.this);
                 break;
             case MessageID.LOGIN_OK:
-            case MessageID.RENREN_LOGIN_OK:
                 LogUtils.Logd(LocalLogTag, "Login myHandler LOGIN_OK|RENREN_LOGIN_OK begin");
                 prgressDialog.dismiss();
-                savePrefrerence();
+                saveDataAfterLogin();
                 setResult(MessageID.LOGIN_OK);
                 finish();
                 LogUtils.Logd(LocalLogTag, "Login myHandler LOGIN_OK|RENREN_LOGIN_OK end");
+                break;
+            case MessageID.LOGIN_Fail:
+                break;
+            case MessageID.RENREN_LOGIN_OK:
+                LogUtils.Logd(LocalLogTag, "Login myHandler LOGIN_OK|RENREN_LOGIN_OK begin");
+                prgressDialog.dismiss();
+                saveDataAfterLoginFromRenren();
+                setResult(MessageID.LOGIN_OK);
+                finish();
+                LogUtils.Logd(LocalLogTag, "Login myHandler LOGIN_OK|RENREN_LOGIN_OK end");
+                break;
+            case MessageID.RENREN_LOGIN_Fail:
+                AppInfo.clearRenrenAuthInfo();
                 break;
             case MessageID.NEED_REGISTER_RENREN:
                 //will open register ui--askinfo activity, but before that need to get renren userInfo
@@ -94,6 +105,7 @@ public class Login extends Activity {
 
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 prgressDialog = myProgressDialog.show(Login.this, null, R.string.loading);
+                Renren renren = AppInfo.getRenrenSdkInstance(Login.this);
                 String currentUid = renren.getCurrentUid()+"";
                 GetRenRenUserInfoTask getRenRenUserInfoTask = new GetRenRenUserInfoTask(currentUid,renren,myHandler.obtainMessage());
                 getRenRenUserInfoTask.execute();
@@ -144,8 +156,8 @@ public class Login extends Activity {
         super.onCreate(savedInstanceState);
 
         LogUtils.Logi(LocalLogTag, "Login onCreate");
-        //renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, this);
-        renren = AppUtil.getRenrenSdkInstance(this);
+        Renren renren = AppInfo.getRenrenSdkInstance(Login.this);
+        renren = AppInfo.getRenrenSdkInstance(this);
 
         setContentView(R.layout.login);
         imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -217,6 +229,7 @@ public class Login extends Activity {
             @Override
             public void onComplete(Bundle values) {
                 LogUtils.Logd(LogTag.RENREN, "RenrenAuthListener.onComplete values=" + values.toString());
+                Renren renren = AppInfo.getRenrenSdkInstance(Login.this);
                 String currentUid = renren.getCurrentUid()+"";
                 String sessionKey = renren.getSessionKey();
                 String accessToken = renren.getAccessToken();
@@ -263,7 +276,8 @@ public class Login extends Activity {
             @Override
             public void onClick(View v) {
                 LogUtils.Loge(LogTag.RENREN, "btnRenRenLogin onclick enter");
-                //renren.logout(Login.this);
+                //AppInfo.clearRenrenAuthInfo();
+                Renren renren = AppInfo.getRenrenSdkInstance(Login.this);
                 renren.authorize(Login.this, rrAuthlistener);
                 LogUtils.Loge(LogTag.RENREN, "btnRenRenLogin onclick exit");
             }
@@ -318,39 +332,32 @@ public class Login extends Activity {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
-        renren.init(this);
+        //renren.init(this);
     }
 
-    protected void savePrefrerence() {
-        SharedPreferences userInfo = getSharedPreferences("UserInfo",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = userInfo.edit();
-        editor.putString("userName", AppInfo.userName);
-        editor.putString("userId", AppInfo.userId);
-        editor.putString("userGender", AppInfo.gender);
-        editor.putString("userPhoto", AppInfo.userPhoto);
-        editor.putString("constellation", AppInfo.constellation);
-        editor.putString("hometown", AppInfo.hometown);
-        editor.putString("bloodType", AppInfo.bloodType);
-        editor.putString("department", AppInfo.department);
-        editor.putString("school", AppInfo.school);
-        editor.putInt("height", AppInfo.height);
-        editor.putString("educationalStatus", AppInfo.educationalStatus);
-        editor.putString("description", AppInfo.description);
-        editor.putString("email", email);
-        editor.putString("sessionToken", AppInfo.sessionToken);
-
-        editor.putString("renrenSessionUserId", AppInfo.renrenSessionUserId);
-        editor.putString("renrenAccessToken", AppInfo.renrenAccessToken);
-        editor.putString("renrenExpirationDate", AppInfo.renrenExpirationDate);
-        editor.putString("renrenSessionKey", AppInfo.renrenSessionKey);
-        editor.putString("renrenSecretKey", AppInfo.renrenSecretKey);
-
-        editor.commit();
-        LogUtils.Logd(LocalLogTag, "Login.savePrefrerence AppInfo.userId="+AppInfo.userId);
+    private void saveDataAfterLogin(){
+        Bundle bd = new Bundle();
+        bd.putString("emailAccount", email);
+        AppInfo.persistLoginInfo(this,bd);
+        AppInfo.syncMemoryToRenrenAuthInfo();
     }
-
-
-
+    private void saveDataAfterLoginFromRenren(){
+        AppInfo.persistLoginUserInfo(this, null);
+        Renren renren = AppInfo.getRenrenSdkInstance(Login.this);
+        String currentUid = renren.getCurrentUid()+"";
+        String sessionKey = renren.getSessionKey();
+        String accessToken = renren.getAccessToken();
+        String secret = renren.getSecret();
+        String expireTime = renren.getExpireTime()+"";
+        AppInfo.renrenSessionUserId = currentUid;
+        AppInfo.renrenAccessToken = accessToken;
+        AppInfo.renrenExpirationDate = expireTime;
+        AppInfo.renrenSessionKey = sessionKey;
+        AppInfo.renrenSecretKey = secret;
+    }
+    private void saveDataAfterSignupWithRenren(){
+        //already done in AskInfo handler
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -363,7 +370,7 @@ public class Login extends Activity {
 //                intent.putExtra("isLogin", true);
 //                startActivity(intent);
 
-                savePrefrerence();
+                saveDataAfterSignupWithRenren();
                 setResult(MessageID.REGISTER_OK);
                 finish();
             }

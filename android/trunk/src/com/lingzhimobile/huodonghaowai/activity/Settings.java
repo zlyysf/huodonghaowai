@@ -54,7 +54,7 @@ public class Settings extends HuoDongHaoWaiActivity {
     private LogoutTask logoutTask;
     private Dialog dialogAskLogout, dialogAskChangeBindWithRenren;
     private myProgressDialog mProgressDialog;
-    private Renren renren;
+
 
     public Handler myHandler = new Handler() {
 
@@ -87,29 +87,29 @@ public class Settings extends HuoDongHaoWaiActivity {
                 break;
             case MessageID.Bind3rdPartAccount_OK:
                 mProgressDialog.dismiss();
+                AppInfo.syncRenrenAuthInfoToMemory();
                 refreshBindStatusView();
                 break;
             case MessageID.Bind3rdPartAccount_FAIL:
                 mProgressDialog.dismiss();
                 errCode = ((Integer)msg.obj).intValue();
                 if (errCode == 21301){//userAlreadyBindThisRenRenAccount
+                    AppInfo.syncRenrenAuthInfoToMemory();
                 }else{
-                    if (renren.getCurrentUid() != 0)
-                        renren.logout(Settings.this);
+                    AppInfo.clearRenrenAuthInfo();
                 }
                 refreshBindStatusView();
                 break;
             case MessageID.UnbindRenRenAccount_OK:
                 mProgressDialog.dismiss();
-                renren.logout(Settings.this);
+                AppInfo.clearRenrenAuthInfo();
                 refreshBindStatusView();
                 break;
             case MessageID.UnbindRenRenAccount_FAIL:
                 mProgressDialog.dismiss();
                 errCode = ((Integer)msg.obj).intValue();
                 if (errCode == 21306){//userNotBindRenRenAccount
-                    if (renren.getCurrentUid() != 0)
-                        renren.logout(Settings.this);
+                    AppInfo.clearRenrenAuthInfo();
                 }
                 refreshBindStatusView();
                 break;
@@ -142,7 +142,7 @@ public class Settings extends HuoDongHaoWaiActivity {
 
 
     private boolean isUserBindWithRenren(){
-        boolean isBind = (renren.getCurrentUid()!=0);//TODO MODIFY LOGIC
+        boolean isBind = AppInfo.existRenrenAuthInfo();//TODO MODIFY LOGIC
         return isBind;
     }
 
@@ -153,8 +153,8 @@ public class Settings extends HuoDongHaoWaiActivity {
         tvRenrenBindState = (TextView) findViewById(R.id.tvRenrenBindState);
         dialogAskLogout = new Dialog(this, R.style.AlertDialog);
         dialogAskChangeBindWithRenren = new Dialog(this, R.style.AlertDialog);
-        //renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID,this);
-        renren = AppUtil.getRenrenSdkInstance(this);
+
+
     }
     void setViewData() {
         refreshBindStatusView();
@@ -211,11 +211,7 @@ public class Settings extends HuoDongHaoWaiActivity {
             @Override
             public void onClick(View v) {
                 LogUtils.Logd(LocalLogTag, "LogoutAlertDialog btnOK onClick enter");
-                if (renren.getCurrentUid()!=0){
-                    LogUtils.Logd(LocalLogTag, "renren.logout before, currentUid="+renren.getCurrentUid());
-                    renren.logout(Settings.this);
-                    LogUtils.Logd(LocalLogTag, "renren.logout after, currentUid="+renren.getCurrentUid());
-                }
+                AppInfo.clearRenrenAuthInfo();
 
                 logoutTask = new LogoutTask(AppInfo.userId, myHandler
                         .obtainMessage());
@@ -267,7 +263,7 @@ public class Settings extends HuoDongHaoWaiActivity {
                         @Override
                         public void onComplete(Bundle values) {
                             LogUtils.Logd(LogTag.RENREN, "RenrenAuthListener.onComplete values=" + values.toString());
-
+                            Renren renren = AppInfo.getRenrenSdkInstance(Settings.this);
                             String currentUid = renren.getCurrentUid()+"";
                             String sessionKey = renren.getSessionKey();
                             String accessToken = renren.getAccessToken();
@@ -314,11 +310,11 @@ public class Settings extends HuoDongHaoWaiActivity {
                             dialogAskChangeBindWithRenren.dismiss();
                         }
                     };//rrAuthlistener
-
+                    Renren renren = AppInfo.getRenrenSdkInstance(Settings.this);
                     renren.authorize(Settings.this, rrAuthlistener);
                 }
-            }
-        });
+            }//onClick
+        });//btnOK.setOnClickListener
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
