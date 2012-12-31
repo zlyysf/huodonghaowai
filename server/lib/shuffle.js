@@ -559,8 +559,10 @@ var generateWebUrl = exports.generateWebUrl = function(params){
   var path = params.path;
   if (!path) path = '';
 
-  var host = config.getHost();
-  var port = needSecure ? config.config.securePort : config.config.port;
+  var envConfig = config.getEnvConfig();
+
+  var host = envConfig.host;
+  var port = needSecure ? envConfig.securePort : envConfig.port;
   var protocol = needSecure ? 'https' : 'http';
   if (req.headers && req.headers.host){
     var hostPortPart = req.headers.host;

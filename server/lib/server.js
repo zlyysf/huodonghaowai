@@ -1303,6 +1303,7 @@ Server.prototype._checkAdminWebSession = function(req, res, next) {
     }
     var urlInfo = shuffle.generateWebUrl({req:req, needSecure:true,path:'/adminWeb/logIn'});
     var redirectUrl = urlInfo.url;
+
     res.redirect(redirectUrl);
     return;
   }
@@ -4560,6 +4561,7 @@ Server.prototype.viewAdminLogIn = function(req, res) {
   var messagePrefix = 'in Server.viewAdminLogIn, ';
   var requestParams = {} , pageParams = {};
   //logger.logDebug("Server.viewAdminLogIn req="+util.inspect(req,false,100));
+  logger.logDebug("Server.viewAdminLogIn enter");
 
   function parseRequestParams(cbFun){
     requestParams = {};
@@ -4574,7 +4576,7 @@ Server.prototype.viewAdminLogIn = function(req, res) {
   };//parseRequestParams
 
   function renderPage(){
-    //logger.logDebug("Server.viewAdminLogIn renderPage, pageParams="+util.inspect(pageParams,false,100));
+    logger.logDebug("Server.viewAdminLogIn renderPage, pageParams="+util.inspect(pageParams,false,100));
     if (requestParams.returnFormat == 'json'){
       if (pageParams.alreadyLogin){
         var httpRetData = {status:'success'};
@@ -4595,6 +4597,7 @@ Server.prototype.viewAdminLogIn = function(req, res) {
       if (pageParams.alreadyLogin){
         var urlInfo = shuffle.generateWebUrl({req:req, needSecure:false,path:'/adminWeb/functionList'});
         var redirectUrl = urlInfo.url;
+        logger.logDebug("Server.viewAdminLogIn renderPage, alreadyLogin, redirectUrl="+redirectUrl);
         res.redirect(redirectUrl);
         return;
       }
@@ -4605,9 +4608,11 @@ Server.prototype.viewAdminLogIn = function(req, res) {
       if (pageParams.loginSuccess){
         var urlInfo = shuffle.generateWebUrl({req:req, needSecure:false,path:'/adminWeb/functionList'});
         var redirectUrl = urlInfo.url;
+        logger.logDebug("Server.viewAdminLogIn redirectUrl="+util.inspect(redirectUrl,false,100));
         res.redirect(redirectUrl);
         return;
       }else{
+        logger.logDebug("Server.viewAdminLogIn renderPage, before render admin/logIn.ejs");
         res.render('admin/logIn.ejs', pageParams);
         return;
       }
