@@ -7,6 +7,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.lingzhimobile.huodonghaowai.R;
+import com.lingzhimobile.huodonghaowai.log.LogTag;
+import com.lingzhimobile.huodonghaowai.log.LogUtils;
 
 public class myProgressDialog extends AlertDialog {
     private ProgressBar mProgress;
@@ -17,7 +19,7 @@ public class myProgressDialog extends AlertDialog {
     public myProgressDialog(Context context) {
         this(context,R.style.ProgressDialog);
     }
-    
+
     public myProgressDialog(Context context, int theme) {
         super(context, theme);
     }
@@ -40,10 +42,11 @@ public class myProgressDialog extends AlertDialog {
             CharSequence message, boolean indeterminate, boolean cancelable) {
         return show(context, title, message, indeterminate, cancelable, null);
     }
-    
+
     public static myProgressDialog show(Context context, CharSequence title,
             CharSequence message, boolean indeterminate,
             boolean cancelable, OnCancelListener cancelListener) {
+        LogUtils.Logd(LogTag.ACTIVITY, "myProgressDialog show enter");
         myProgressDialog dialog = new myProgressDialog(context);
         dialog.setTitle(title);
         dialog.setMessage(message);
@@ -53,19 +56,19 @@ public class myProgressDialog extends AlertDialog {
         dialog.show();
         return dialog;
     }
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.progress_dialog);
         mProgress = (ProgressBar) findViewById(R.id.progress);
         mMessageView = (TextView) findViewById(R.id.message);
-       
+
         if (mMessage != null) {
             setMessage(mMessage);
         }
     }
-    
+
     @Override
     public void setMessage(CharSequence message) {
         if (mProgress != null) {

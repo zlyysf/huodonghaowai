@@ -354,9 +354,10 @@ public class AppInfo {
         return exist;
     }
     public static void clearRenrenAuthInfo(Context context){
-        LogUtils.Logd(LocalLogTag,"clearRenrenSdkAuthInfo enter");
         Renren renren = getNonEmptyRenrenSdkInstance(context);
-        if (renren.getCurrentUid() != 0){
+        long lCurrentUid = renren.getCurrentUid();
+        LogUtils.Logd(LocalLogTag,"clearRenrenSdkAuthInfo , getCurrentUid="+lCurrentUid);
+        if (lCurrentUid != 0){
             renren.logout(context);
         }
     }
