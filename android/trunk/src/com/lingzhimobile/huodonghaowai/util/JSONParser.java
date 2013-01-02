@@ -76,6 +76,7 @@ public class JSONParser {
      * here just save to memory. let AppInfo provide function to save to SharedPreferences
      */
     public static void saveLoginInfo(JSONObject apiRetData){
+        LogUtils.Logd(LocalLogTag, "saveLoginInfo enter");
         if (apiRetData == null) return;
         JSONObject resultPartObj = apiRetData.optJSONObject("result");
         if (resultPartObj == null) return;
@@ -88,7 +89,9 @@ public class JSONParser {
      * here just save to memory. let AppInfo provide function to save to SharedPreferences
      */
     public static void saveLoginUserInfo(JSONObject userObj){
+        LogUtils.Logd(LocalLogTag, "saveLoginUserInfo enter");
         if (userObj == null) return;
+
         AppInfo.userId = userObj.optString("userId");
         AppInfo.gender = userObj.optString("gender");
         AppInfo.userName = userObj.optString("name");
@@ -103,13 +106,16 @@ public class JSONParser {
         AppInfo.height = userObj.optInt("height");
         //emailAccount may not exist in some data because it was input, but still can set here to clear old email, and should save it in outer ui
         AppInfo.emailAccount = userObj.optString("emailAccount");
+        LogUtils.Logd(LocalLogTag, "saveLoginUserInfo exit, userId="+AppInfo.userId+", emailAccount="+AppInfo.emailAccount);
     }
     /*
      * here just save to memory. let AppInfo provide function to save to SharedPreferences
      */
     public static void saveRenrenAccountInfo(JSONObject renrenAccountObj){
+        LogUtils.Logd(LocalLogTag, "saveRenrenAccountInfo enter");
         if (renrenAccountObj == null) return;
         AppInfo.accountRenRen = renrenAccountObj.optString("accountRenRen");
+        LogUtils.Logd(LocalLogTag, "saveRenrenAccountInfo exit, accountRenRen="+AppInfo.accountRenRen);
 //        JSONObject renrenAuthObj = renrenAccountObj.optJSONObject("renrenAuthObj");
 //        if (renrenAuthObj == null) return;
 //        AppInfo.renrenSessionUserId = renrenAuthObj.optString(RenRenLibConst.fieldcommon_session_userId);

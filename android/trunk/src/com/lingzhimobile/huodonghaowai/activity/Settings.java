@@ -144,6 +144,7 @@ public class Settings extends HuoDongHaoWaiActivity {
 
 
     private boolean isUserBindWithRenren(){
+        LogUtils.Logd(LocalLogTag, "Settings isUserBindWithRenren, AppInfo.accountRenRen="+AppInfo.accountRenRen);
         boolean isBind = AppInfo.accountRenRen != null;//TODO MODIFY LOGIC
         return isBind;
     }

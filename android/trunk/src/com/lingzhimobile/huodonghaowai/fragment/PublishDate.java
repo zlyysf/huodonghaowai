@@ -40,6 +40,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -85,6 +86,7 @@ public class PublishDate extends Fragment {
     private OnCustomizeDateSetListener mDateSetListener;
     private Button btnPreview, btnSend, btnCancel;
     private RadioButton rbAA, rbMytreat, rbNone;
+    private LinearLayout publishToRenRenLayout;
     private CheckBox cbPublishToRenRen;
     private int whoPay;
     private InputMethodManager m;
@@ -153,6 +155,7 @@ public class PublishDate extends Fragment {
 
                 }else{
                   //not clear renren auth info in AppInfo, let it be done in get
+                    cbPublishToRenRen.setChecked(false);
                 }
                 break;
             case MessageID.RENRENSDK_publishFeed_Error:
@@ -239,6 +242,7 @@ public class PublishDate extends Fragment {
         tvTitle = (TextView) currentView.findViewById(R.id.tvTitle);
         tvTitle.requestFocus();
 
+        publishToRenRenLayout = (LinearLayout)currentView.findViewById(R.id.publishToRenRenLayout);
         cbPublishToRenRen = (CheckBox) currentView.findViewById(R.id.cbPublishToRenRen);
     }
 
@@ -343,6 +347,15 @@ public class PublishDate extends Fragment {
             }
         });
 
+        publishToRenRenLayout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                boolean checked = cbPublishToRenRen.isChecked();
+                LogUtils.Logd(LocalLogTag, "publishToRenRenLayout onClick, checked=" + checked);
+                cbPublishToRenRen.setChecked(!checked);
+            }
+        });
 
         boolean canDefaultPublishToRenren = existRenrenAuthInfoForCurrentUser();
         cbPublishToRenRen.setChecked(canDefaultPublishToRenren);

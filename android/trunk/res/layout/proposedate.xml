@@ -380,9 +380,9 @@
                         android:textStyle="bold" />
                     
                     <LinearLayout
-                        android:id="@+id/publishToRenRen"
+                        android:id="@+id/publishToRenRenLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="32dip"
+                        android:layout_height="40dip"
                         android:layout_marginTop="8dip"
                         android:layout_marginBottom="48dip"
                         android:background="@drawable/edittextbg"
