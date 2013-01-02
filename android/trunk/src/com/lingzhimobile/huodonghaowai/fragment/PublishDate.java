@@ -113,7 +113,7 @@ public class PublishDate extends Fragment {
             R.drawable.date_pre_bg10};
 
     private TextView tvTitle;
-    private Renren renren;
+
     private myProgressDialog prgressDialog;
 
     public Handler myHandler = new Handler() {
@@ -142,21 +142,23 @@ public class PublishDate extends Fragment {
                 break;
             case MessageID.Bind3rdPartAccount_OK:
                 prgressDialog.dismiss();
-                AppInfo.syncRenrenAuthInfoToMemory();
+              //run to here, user info and renren auth info should already match because something done in Bind3rdPartAccountTask
+                Renren renren = AppInfo.getRenrenSdkInstanceForCurrentUser(myAcitivity);
+                LogUtils.Logd(LocalLogTag,"PublishDate, Bind3rdPartAccount_OK"+", getCurrentUid()="+renren.getCurrentUid()+", userId="+AppInfo.userId+", accountRenRen="+AppInfo.accountRenRen);
                 break;
             case MessageID.Bind3rdPartAccount_FAIL:
                 prgressDialog.dismiss();
                 int errCode = ((Integer)msg.obj).intValue();
                 if (errCode == 21301){//userAlreadyBindThisRenRenAccount
-                    AppInfo.syncRenrenAuthInfoToMemory();
+
                 }else{
-                    AppInfo.clearRenrenAuthInfo();
+                  //not clear renren auth info in AppInfo, let it be done in get
                 }
                 break;
             case MessageID.RENRENSDK_publishFeed_Error:
             case MessageID.RENRENSDK_publishFeed_Fault:
                 prgressDialog.dismiss();
-                AppInfo.clearRenrenAuthInfo();
+              //not clear renren auth info in AppInfo, let it be done in get
                 break;
             }
 
@@ -340,9 +342,9 @@ public class PublishDate extends Fragment {
                 }
             }
         });
-        //renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, myAcitivity);
-        renren = AppInfo.getRenrenSdkInstance(myAcitivity);
-        boolean canDefaultPublishToRenren = AppInfo.existRenrenAuthInfo();
+
+
+        boolean canDefaultPublishToRenren = existRenrenAuthInfoForCurrentUser();
         cbPublishToRenRen.setChecked(canDefaultPublishToRenren);
 
         cbPublishToRenRen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -352,7 +354,7 @@ public class PublishDate extends Fragment {
                 LogUtils.Logd(LocalLogTag, "cbPublishToRenRen onCheckedChanged isChecked=" + isChecked);
 
                 if (isChecked){
-                    if (AppInfo.existRenrenAuthInfo()){
+                    if (existRenrenAuthInfoForCurrentUser()){
                       //suppose have done auth before, so not need to do auth here
                     }else{//not existRenrenAuthInfo, should do auth
                         AlertDialog.Builder askToBindRenrenDlgBuilder = new AlertDialog.Builder(myAcitivity);
@@ -365,6 +367,9 @@ public class PublishDate extends Fragment {
                                     @Override
                                     public void onComplete(Bundle values) {
                                         LogUtils.Logd(LogTag.RENREN, "RenrenAuthListener.onComplete values=" + values.toString());
+                                      //can not use getRenrenSdkInstanceForCurrentUser because renren.logout in this function according to not-yet sync data
+                                        Renren renren = AppInfo.getNonEmptyRenrenSdkInstance(myAcitivity);//just get existing renren instance
+                                        LogUtils.Logd(LocalLogTag,"PublishDate, RenrenAuthListener.onComplete"+", getCurrentUid()="+renren.getCurrentUid()+", userId="+AppInfo.userId+", accountRenRen="+AppInfo.accountRenRen);
                                         String currentUid = renren.getCurrentUid()+"";
                                         String sessionKey = renren.getSessionKey();
                                         String accessToken = renren.getAccessToken();
@@ -409,7 +414,8 @@ public class PublishDate extends Fragment {
                                         cbPublishToRenRen.setChecked(false);
                                     }
                                 };//rrAuthlistener
-
+                                Renren renren = AppInfo.getRenrenSdkInstanceAtMostPossibleMatchUser(myAcitivity);//if renren auth info exist but not match current user, should be clear and this is done in the get function.
+                                LogUtils.Logd(LocalLogTag,"PublishDate, before renren.authorize"+", getCurrentUid()="+renren.getCurrentUid()+", userId="+AppInfo.userId+", accountRenRen="+AppInfo.accountRenRen);
                                 renren.authorize(myAcitivity, rrAuthlistener);
                             }
                         });
@@ -501,6 +507,7 @@ public class PublishDate extends Fragment {
                     publishRenrenFeedData.putString("description", description);
                     publishRenrenFeedData.putLong("dateDate", calendar.getTimeInMillis());
 
+                    Renren renren = AppInfo.getRenrenSdkInstanceForCurrentUser(myAcitivity);//at this time, need a strict match and need current renren auth info exist
                     PublishRenRenFeedTask publishRenRenFeedTask = new PublishRenRenFeedTask(publishRenrenFeedData,renren,myAcitivity, null);//myHandler.obtainMessage());
                     publishRenRenFeedTask.execute();
                 }
@@ -642,6 +649,27 @@ public class PublishDate extends Fragment {
             break;
         }
 
+    }
+
+    /**
+     * valid when user is logged in.
+     * when exist renren sdk auth info, and the auth info is belong to the user.
+     * @param context
+     * @return
+     */
+    private boolean existRenrenAuthInfoForCurrentUser(){
+        Renren renren = AppInfo.getNonEmptyRenrenSdkInstance(myAcitivity);
+        boolean exist = false;
+        long lCurrentUid = renren.getCurrentUid();
+        if (lCurrentUid != 0){
+            String sCurrentUid = lCurrentUid + "";
+            if (sCurrentUid.equals(AppInfo.accountRenRen)){
+                exist = true;
+            }
+        }
+        LogUtils.Logd(LocalLogTag,"PublishDate, existRenrenAuthInfoForCurrentUser, exist="+exist+
+                ", CurrentUid="+lCurrentUid+", accountRenRen="+AppInfo.accountRenRen);
+        return exist;
     }
 
     private void showMenuDialog() {

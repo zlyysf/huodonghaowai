@@ -33,6 +33,7 @@ import com.lingzhimobile.huodonghaowai.asynctask.LoginFromRenRenTask;
 import com.lingzhimobile.huodonghaowai.asynctask.LoginTask;
 import com.lingzhimobile.huodonghaowai.cons.MessageID;
 import com.lingzhimobile.huodonghaowai.cons.RenRenLibConst;
+import com.lingzhimobile.huodonghaowai.cons.RequestCode;
 import com.lingzhimobile.huodonghaowai.log.LogTag;
 import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.net.NetProtocol;
@@ -97,7 +98,7 @@ public class Login extends Activity {
                 LogUtils.Logd(LocalLogTag, "Login myHandler LOGIN_OK|RENREN_LOGIN_OK end");
                 break;
             case MessageID.RENREN_LOGIN_Fail:
-                AppInfo.clearRenrenAuthInfo();
+              //not clear renren auth info in AppInfo, let it be done in get
                 break;
             case MessageID.NEED_REGISTER_RENREN:
                 //will open register ui--askinfo activity, but before that need to get renren userInfo
@@ -105,7 +106,8 @@ public class Login extends Activity {
 
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 prgressDialog = myProgressDialog.show(Login.this, null, R.string.loading);
-                Renren renren = AppInfo.getRenrenSdkInstance(Login.this);
+              //can not use getRenrenSdkInstanceForCurrentUser because renren.logout in this function according to conditions
+                Renren renren = AppInfo.getNonEmptyRenrenSdkInstance(Login.this);//just get existing
                 String currentUid = renren.getCurrentUid()+"";
                 GetRenRenUserInfoTask getRenRenUserInfoTask = new GetRenRenUserInfoTask(currentUid,renren,myHandler.obtainMessage());
                 getRenRenUserInfoTask.execute();
@@ -116,6 +118,7 @@ public class Login extends Activity {
 
                 Intent intent = new Intent(Login.this, AskInfo.class);
                 //intent.putExtra(Renren.RENREN_LABEL, renren);
+                intent.putExtra(RequestCode.fromActivityField, RequestCode.fromActivity_Login);
 
                 String renrenUserName, renrenSex, renrenUserHometown=null, renrenUnverseName=null;
                 renrenUserName = renrenUser.getName();
@@ -156,8 +159,6 @@ public class Login extends Activity {
         super.onCreate(savedInstanceState);
 
         LogUtils.Logi(LocalLogTag, "Login onCreate");
-        Renren renren = AppInfo.getRenrenSdkInstance(Login.this);
-        renren = AppInfo.getRenrenSdkInstance(this);
 
         setContentView(R.layout.login);
         imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -229,7 +230,8 @@ public class Login extends Activity {
             @Override
             public void onComplete(Bundle values) {
                 LogUtils.Logd(LogTag.RENREN, "RenrenAuthListener.onComplete values=" + values.toString());
-                Renren renren = AppInfo.getRenrenSdkInstance(Login.this);
+                //can not use getRenrenSdkInstanceForCurrentUser because renren.logout in this function according to not-yet sync data
+                Renren renren = AppInfo.getNonEmptyRenrenSdkInstance(Login.this);//just get existing renren instance
                 String currentUid = renren.getCurrentUid()+"";
                 String sessionKey = renren.getSessionKey();
                 String accessToken = renren.getAccessToken();
@@ -276,8 +278,9 @@ public class Login extends Activity {
             @Override
             public void onClick(View v) {
                 LogUtils.Loge(LogTag.RENREN, "btnRenRenLogin onclick enter");
-                //AppInfo.clearRenrenAuthInfo();
-                Renren renren = AppInfo.getRenrenSdkInstance(Login.this);
+                //to use saved renren auth info at possible
+              //can not use getRenrenSdkInstanceForCurrentUser because renren.logout in this function according to conditions
+                Renren renren = AppInfo.getNonEmptyRenrenSdkInstance(Login.this);
                 renren.authorize(Login.this, rrAuthlistener);
                 LogUtils.Loge(LogTag.RENREN, "btnRenRenLogin onclick exit");
             }
@@ -339,21 +342,9 @@ public class Login extends Activity {
         Bundle bd = new Bundle();
         bd.putString("emailAccount", email);
         AppInfo.persistLoginInfo(this,bd);
-        AppInfo.syncMemoryToRenrenAuthInfo();
     }
     private void saveDataAfterLoginFromRenren(){
         AppInfo.persistLoginUserInfo(this, null);
-        Renren renren = AppInfo.getRenrenSdkInstance(Login.this);
-        String currentUid = renren.getCurrentUid()+"";
-        String sessionKey = renren.getSessionKey();
-        String accessToken = renren.getAccessToken();
-        String secret = renren.getSecret();
-        String expireTime = renren.getExpireTime()+"";
-        AppInfo.renrenSessionUserId = currentUid;
-        AppInfo.renrenAccessToken = accessToken;
-        AppInfo.renrenExpirationDate = expireTime;
-        AppInfo.renrenSessionKey = sessionKey;
-        AppInfo.renrenSecretKey = secret;
     }
     private void saveDataAfterSignupWithRenren(){
         //already done in AskInfo handler

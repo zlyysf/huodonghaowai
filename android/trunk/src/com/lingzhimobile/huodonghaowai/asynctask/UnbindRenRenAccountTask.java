@@ -13,6 +13,7 @@ import com.lingzhimobile.huodonghaowai.log.LogTag;
 import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.net.HttpManager;
 import com.lingzhimobile.huodonghaowai.net.NetProtocol;
+import com.lingzhimobile.huodonghaowai.util.AppInfo;
 import com.lingzhimobile.huodonghaowai.util.JSONParser;
 
 public class UnbindRenRenAccountTask extends AsyncTask<Void, Void, String> {
@@ -47,6 +48,7 @@ public class UnbindRenRenAccountTask extends AsyncTask<Void, Void, String> {
         super.onPostExecute(result);
         try {
             JSONParser.checkSucceed(result);
+            AppInfo.accountRenRen = null;
             msg.what = MessageID.UnbindRenRenAccount_OK;
         } catch (JSONParseException e) {
             msg.what = MessageID.UnbindRenRenAccount_FAIL;

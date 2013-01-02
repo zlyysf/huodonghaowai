@@ -22,6 +22,7 @@ import com.lingzhimobile.huodonghaowai.adapter.PageSwitchAdapter;
 import com.lingzhimobile.huodonghaowai.asynctask.GetNearbyDateTask;
 import com.lingzhimobile.huodonghaowai.cons.MessageID;
 import com.lingzhimobile.huodonghaowai.cons.RenRenLibConst;
+import com.lingzhimobile.huodonghaowai.cons.RequestCode;
 import com.lingzhimobile.huodonghaowai.log.LogTag;
 import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.model.DateListItem;
@@ -107,7 +108,7 @@ public class PreLogin extends Fragment {
 
     private void initData() {
       //to avoid possible mix-up that old renren auth be taken as the current to-be-login-or-register user
-        AppInfo.clearRenrenAuthInfo();
+        //AppInfo.clearRenrenAuthInfo(myAcitivity);//not clear to keep renren auth info. but it is impossible to change renren auth info.
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -124,6 +125,7 @@ public class PreLogin extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(myAcitivity, AskInfo.class);
+                intent.putExtra(RequestCode.fromActivityField, RequestCode.fromActivity_PreLogin);
                 startActivityForResult(intent, SIGNUP);
             }
         });

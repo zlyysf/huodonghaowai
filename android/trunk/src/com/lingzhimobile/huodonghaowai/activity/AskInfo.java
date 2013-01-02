@@ -41,6 +41,7 @@ import com.lingzhimobile.huodonghaowai.asynctask.RegisterTask;
 import com.lingzhimobile.huodonghaowai.asynctask.UploadPhotoTask;
 import com.lingzhimobile.huodonghaowai.cons.MessageID;
 import com.lingzhimobile.huodonghaowai.cons.RenRenLibConst;
+import com.lingzhimobile.huodonghaowai.cons.RequestCode;
 import com.lingzhimobile.huodonghaowai.log.LogTag;
 import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.util.AppInfo;
@@ -53,6 +54,9 @@ import com.umeng.analytics.MobclickAgent;
 
 public class AskInfo extends HuoDongHaoWaiActivity {
 
+    private static final String LocalLogTag = LogTag.ACTIVITY + " AskInfo";
+
+    private String fromActivityFlag;
     private String renrenUserName;
     private String renrenSex;
     private String renrenHometown;
@@ -61,6 +65,8 @@ public class AskInfo extends HuoDongHaoWaiActivity {
     public String userName;
     public String userGender;
     private String email, password, userSchool, hometown;
+    private String userId;
+
     private ImageView ivPickPhoto;
     private LinearLayout llPickPhoto;
     EditText nameEditText,  emailEditText, passwordEditText,
@@ -76,8 +82,6 @@ public class AskInfo extends HuoDongHaoWaiActivity {
     private UploadPhotoTask uploadPhotoTask;
     private myProgressDialog mProgressDialog;
 
-    private Renren renren;
-
     public Handler myHandler = new Handler() {
 
         @Override
@@ -92,6 +96,7 @@ public class AskInfo extends HuoDongHaoWaiActivity {
                 break;
             case MessageID.REGISTER_OK:
                 mProgressDialog.dismiss();
+                userId = (String)msg.obj;
                 savePrefrerence();
                 FileManager.init(AskInfo.this);
                 String path = FileManager.UploadFolder.getAbsolutePath() + "/"
@@ -128,14 +133,10 @@ public class AskInfo extends HuoDongHaoWaiActivity {
 
     void setViewData(){
         Intent intent1 = getIntent();
-        //renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, this);
-        renren = AppInfo.getRenrenSdkInstance(this);
+
         if (intent1 != null){
-            LogUtils.Logd(LogTag.ACTIVITY, "AskInfo onCreate getIntent=" + intent1.toString());
-//            renren = intent1.getParcelableExtra(Renren.RENREN_LABEL);
-//            if (renren != null) {
-//                renren.init(this);
-//            }
+            //LogUtils.Logd(LogTag.ACTIVITY, "AskInfo onCreate getIntent=" + intent1.toString());
+            fromActivityFlag = intent1.getStringExtra(RequestCode.fromActivityField);
             renrenUserName = intent1.getStringExtra("renrenUserName");
             renrenSex = intent1.getStringExtra("renrenSex");
             renrenHometown = intent1.getStringExtra("renrenHometown");
@@ -158,6 +159,12 @@ public class AskInfo extends HuoDongHaoWaiActivity {
             femaleButton.performClick();
         }else{
             femaleButton.performClick();
+        }
+
+        //when go from PreLogin, clear renren auth for register the new user
+        //LogUtils.Logd(LocalLogTag,"in setViewData end, fromActivityFlag="+fromActivityFlag);
+        if (RequestCode.fromActivity_PreLogin.equals(fromActivityFlag)){
+            AppInfo.clearRenrenAuthInfo(AskInfo.this);
         }
     }
 
@@ -204,7 +211,10 @@ public class AskInfo extends HuoDongHaoWaiActivity {
 
             @Override
             public void onClick(View v) {
-                AppInfo.clearRenrenAuthInfo();
+                //when go to PreLogin, clear renren auth here
+                if (RequestCode.fromActivity_PreLogin.equals(fromActivityFlag)){
+                    AppInfo.clearRenrenAuthInfo(AskInfo.this);
+                }
                 finish();
             }
         });
@@ -270,7 +280,8 @@ public class AskInfo extends HuoDongHaoWaiActivity {
 //                }
                 String accountRenRen = null;
                 JSONObject renrenAuthObj = null;
-                if (AppInfo.existRenrenAuthInfo()){
+                if (AppInfo.existRenrenAuthInfo(AskInfo.this)){
+                    Renren renren = AppInfo.getNonEmptyRenrenSdkInstance(AskInfo.this);
                     String currentUid = renren.getCurrentUid()+"";
                     String sessionKey = renren.getSessionKey();
                     String accessToken = renren.getAccessToken();
@@ -390,24 +401,21 @@ public class AskInfo extends HuoDongHaoWaiActivity {
     }
 
     protected void savePrefrerence() {
+        AppInfo.clearUserInfo();
+        AppInfo.userId = userId;
         AppInfo.userName = userName;
         AppInfo.gender = userGender;
         AppInfo.emailAccount = email;
         //AppInfo.userPhoto = userObj.optString("primaryPhotoPath");
         AppInfo.school = userSchool;
         AppInfo.hometown = hometown;
+        AppInfo.accountRenRen = null;
 
-        if (AppInfo.existRenrenAuthInfo()){
+        if (AppInfo.existRenrenAuthInfo(this)){
+          //can not use getRenrenSdkInstanceForCurrentUser because renren.logout in this function according to conditions
+            Renren renren = AppInfo.getNonEmptyRenrenSdkInstance(AskInfo.this);//just get
             String currentUid = renren.getCurrentUid()+"";
-            String sessionKey = renren.getSessionKey();
-            String accessToken = renren.getAccessToken();
-            String secret = renren.getSecret();
-            String expireTime = renren.getExpireTime()+"";
-            AppInfo.renrenSessionUserId = currentUid;
-            AppInfo.renrenAccessToken = accessToken;
-            AppInfo.renrenExpirationDate = expireTime;
-            AppInfo.renrenSessionKey = sessionKey;
-            AppInfo.renrenSecretKey = secret;
+            AppInfo.accountRenRen = currentUid;
         }
 
         SharedPreferences userInfo = getSharedPreferences("UserInfo",
@@ -420,14 +428,10 @@ public class AskInfo extends HuoDongHaoWaiActivity {
         editor.putString("userSchool", userSchool);
         editor.putString("hometown", hometown);
         editor.putString("sessionToken", AppInfo.sessionToken);
+        editor.putString("accountRenRen", AppInfo.accountRenRen);
         editor.commit();
     }
 
-    private String getUserId() {
-        SharedPreferences userInfo = getSharedPreferences("UserInfo",
-                Context.MODE_PRIVATE);
-        return userInfo.getString("userId", "");
-    }
 
     @Override
     protected void onDestroy() {

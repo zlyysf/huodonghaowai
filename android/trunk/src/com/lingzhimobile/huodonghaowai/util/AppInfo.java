@@ -37,16 +37,17 @@ public class AppInfo {
     public static String educationalStatus;
     public static String description;
     public static int height;
+    public static String accountRenRen;
     private static boolean isInit = false;
     public static String sessionToken = null;
 
   //renren auth info just be in memory, to be find if necessary in SharedPreferences
-    public static String renrenSessionUserId = null;
-    public static String renrenAccessToken = null;
-    public static String renrenExpirationDate = null; //in ms
-    public static String renrenSessionKey = null;
-    public static String renrenSecretKey = null;
-    private static Context renrenRelatedContext = null;
+//    public static String renrenSessionUserId = null;
+//    public static String renrenAccessToken = null;
+//    public static String renrenExpirationDate = null; //in ms
+//    public static String renrenSessionKey = null;
+//    public static String renrenSecretKey = null;
+//    //private static Context renrenRelatedContext = null;
     private static Renren renrenSdkObj = null;//just sigleton
 
     // public static String userId;
@@ -143,6 +144,7 @@ public class AppInfo {
         if (sessionTokenOverride != null)
             editor.putString("sessionToken", sessionTokenOverride);
         else editor.putString("sessionToken", AppInfo.sessionToken);
+        editor.putString("accountRenRen", AppInfo.accountRenRen);
         editor.commit();
     }
 //    /**
@@ -161,6 +163,23 @@ public class AppInfo {
 //        editor.commit();
 //    }
 
+    public static void clearUserInfo(){
+        userId = null;
+        //emailAccount = null;
+
+        gender = null;
+        userName = null;
+        userPhoto = null;
+        school = null;
+        bloodType = null;
+        department = null;
+        constellation = null;
+        hometown = null;
+        educationalStatus = null;
+        description = null;
+        height = 0;
+        accountRenRen = null;
+    }
 
     private static final String RenrenKeyName_API_KEY = "api_key";
     private static final String RenrenKeyName_SECRET = "secret";
@@ -171,138 +190,267 @@ public class AppInfo {
     private static final String RenrenKeyName_UID = "renren_token_manager_user_id";
     private static final String RenrenKeyName_SESSION_KEY_EXPIRE_TIME = "renren_token_manager_session_key_expire_time";
 
-    public static Renren getRenrenSdkInstance(Context context){
-        LogUtils.Logd(LocalLogTag, "getRenrenSdkInstance renrenAccessToken="+AppInfo.renrenAccessToken+
-                ", renrenSessionKey="+AppInfo.renrenSessionKey+
-                ", renrenSecretKey="+AppInfo.renrenSecretKey+
-                ", renrenSessionUserId="+AppInfo.renrenSessionUserId+
-                ", renrenExpirationDate="+AppInfo.renrenExpirationDate+
-                ", renrenSdkObj!=null?="+(renrenSdkObj!=null));
+//    public static Renren getRenrenSdkInstance(Context context){
+//        LogUtils.Logd(LocalLogTag, "getRenrenSdkInstance renrenAccessToken="+AppInfo.renrenAccessToken+
+//                ", renrenSessionKey="+AppInfo.renrenSessionKey+
+//                ", renrenSecretKey="+AppInfo.renrenSecretKey+
+//                ", renrenSessionUserId="+AppInfo.renrenSessionUserId+
+//                ", renrenExpirationDate="+AppInfo.renrenExpirationDate+
+//                ", renrenSdkObj!=null?="+(renrenSdkObj!=null));
+//        if (renrenSdkObj != null){
+//            LogUtils.Logd(LocalLogTag,"getRenrenSdkInstance renrenSdkObj!=null getCurrentUid()="+renrenSdkObj.getCurrentUid());
+//            return renrenSdkObj;
+//        }
+//
+//        if (!TextUtils.isEmpty(AppInfo.renrenSessionUserId)){
+//            Bundle bd1 = new Bundle();
+//            bd1.putString(RenrenKeyName_API_KEY, RenRenLibConst.APP_API_KEY);
+//            bd1.putString(RenrenKeyName_SECRET, RenRenLibConst.APP_SECRET_KEY);
+//            bd1.putString(RenrenKeyName_APP_ID, RenRenLibConst.APP_ID);
+//            Bundle bd2 = new Bundle();
+//            bd2.putString(RenrenKeyName_ACCESS_TOKEN, AppInfo.renrenAccessToken);
+//            bd2.putString(RenrenKeyName_SESSION_KEY, AppInfo.renrenSessionKey);
+//            bd2.putString(RenrenKeyName_SESSION_SECRET, AppInfo.renrenSecretKey);
+//            bd2.putLong(RenrenKeyName_UID, Long.parseLong(AppInfo.renrenSessionUserId));
+//            bd2.putLong(RenrenKeyName_SESSION_KEY_EXPIRE_TIME, Long.parseLong(AppInfo.renrenExpirationDate));
+//            Parcel parcel = Parcel.obtain();
+//            bd1.writeToParcel(parcel, 0);
+//            bd2.writeToParcel(parcel, 0);
+//            parcel.setDataPosition(0);//it is IMPORTANT to reset dataPosition
+//            renrenSdkObj = new Renren(parcel);
+//            LogUtils.Logd(LocalLogTag,"getRenrenSdkInstance after new Renren(parcel), getCurrentUid()="+renrenSdkObj.getCurrentUid());
+//        }else{
+//            renrenSdkObj = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, context);
+//            renrenRelatedContext = context;
+//            LogUtils.Logd(LocalLogTag,"getRenrenSdkInstance after new Renren with context, getCurrentUid()="+renrenSdkObj.getCurrentUid());
+//        }
+//        return renrenSdkObj;
+//    }
+    public static Renren getNonEmptyRenrenSdkInstance(Context context){
+//        LogUtils.Logd(LocalLogTag, "getNonEmptyRenrenSdkInstance begin, renrenAccessToken="+AppInfo.renrenAccessToken+
+//                ", renrenSessionKey="+AppInfo.renrenSessionKey+
+//                ", renrenSecretKey="+AppInfo.renrenSecretKey+
+//                ", renrenSessionUserId="+AppInfo.renrenSessionUserId+
+//                ", renrenExpirationDate="+AppInfo.renrenExpirationDate+
+//                ", renrenSdkObj!=null?="+(renrenSdkObj!=null));
         if (renrenSdkObj != null){
-            LogUtils.Logd(LocalLogTag,"getRenrenSdkInstance renrenSdkObj!=null getCurrentUid()="+renrenSdkObj.getCurrentUid());
+            LogUtils.Logd(LocalLogTag,"getNonEmptyRenrenSdkInstance renrenSdkObj!=null getCurrentUid()="+renrenSdkObj.getCurrentUid());
+            if (context != null)
+                renrenSdkObj.init(context);
             return renrenSdkObj;
         }
-
-//        Renren renren = null;
-//        renren = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, context);
-//        if (renren.getCurrentUid() == 0){
-//            if (!TextUtils.isEmpty(AppInfo.renrenSessionUserId)){
-//                AccessTokenManager accessTokenManager =  renren.getAccessTokenManager();
-//                accessTokenManager.accessToken = AppInfo.renrenAccessToken;
-//                accessTokenManager.expireTime = Long.parseLong(AppInfo.renrenExpirationDate);
-//                accessTokenManager.sessionKey = AppInfo.renrenSessionKey;
-//                accessTokenManager.sessionSecret = AppInfo.renrenSecretKey;
-//                accessTokenManager.uid = Long.parseLong(AppInfo.renrenSessionUserId);
-//            }
-//        }
-
-        if (!TextUtils.isEmpty(AppInfo.renrenSessionUserId)){
-            Bundle bd1 = new Bundle();
-            bd1.putString(RenrenKeyName_API_KEY, RenRenLibConst.APP_API_KEY);
-            bd1.putString(RenrenKeyName_SECRET, RenRenLibConst.APP_SECRET_KEY);
-            bd1.putString(RenrenKeyName_APP_ID, RenRenLibConst.APP_ID);
-            Bundle bd2 = new Bundle();
-            bd2.putString(RenrenKeyName_ACCESS_TOKEN, AppInfo.renrenAccessToken);
-            bd2.putString(RenrenKeyName_SESSION_KEY, AppInfo.renrenSessionKey);
-            bd2.putString(RenrenKeyName_SESSION_SECRET, AppInfo.renrenSecretKey);
-            bd2.putLong(RenrenKeyName_UID, Long.parseLong(AppInfo.renrenSessionUserId));
-            bd2.putLong(RenrenKeyName_SESSION_KEY_EXPIRE_TIME, Long.parseLong(AppInfo.renrenExpirationDate));
-            Parcel parcel = Parcel.obtain();
-            bd1.writeToParcel(parcel, 0);
-            bd2.writeToParcel(parcel, 0);
-            parcel.setDataPosition(0);//it is IMPORTANT to reset dataPosition
-            renrenSdkObj = new Renren(parcel);
-            LogUtils.Logd(LocalLogTag,"getRenrenSdkInstance after new Renren(parcel), getCurrentUid()="+renrenSdkObj.getCurrentUid());
-        }else{
-            renrenSdkObj = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, context);
-            renrenRelatedContext = context;
-            LogUtils.Logd(LocalLogTag,"getRenrenSdkInstance after new Renren with context, getCurrentUid()="+renrenSdkObj.getCurrentUid());
-        }
+        if (context == null)
+            throw new RuntimeException("in getNonEmptyRenrenSdkInstance, need provide context param");
+        renrenSdkObj = new Renren(RenRenLibConst.APP_API_KEY, RenRenLibConst.APP_SECRET_KEY, RenRenLibConst.APP_ID, context);
+        LogUtils.Logd(LocalLogTag,"getNonEmptyRenrenSdkInstance after new Renren with context, getCurrentUid()="+renrenSdkObj.getCurrentUid());
         return renrenSdkObj;
     }
-    //TODO if need to syncronize?
-    public static void clearRenrenAuthInfo(){
-        renrenSessionUserId = null;
-        renrenAccessToken = null;
-        renrenExpirationDate = null;
-        renrenSessionKey = null;
-        renrenSecretKey = null;
-        clearRenrenSdkAuthInfo();
-    }
-    public static void clearRenrenSdkAuthInfo(){
-        LogUtils.Logd(LocalLogTag,"clearRenrenSdkAuthInfo renrenSdkObj == null?="+(renrenSdkObj == null));
-        if (renrenSdkObj == null)
-            return;
-        LogUtils.Logd(LocalLogTag,"clearRenrenSdkAuthInfo getCurrentUid="+renrenSdkObj.getCurrentUid()+
-                ", renrenRelatedContext==null?"+(renrenRelatedContext==null));
-        if (renrenSdkObj.getCurrentUid() != 0){
-            if (renrenRelatedContext != null){
-                renrenSdkObj.logout(renrenRelatedContext);
-            }else{
-                //renrenSdkObj.setCurrentUid(null);//to see if needed
-            }
-        }
-        renrenSdkObj = null;
-        renrenRelatedContext = null;
-    }
-    public static void syncRenrenAuthInfoToMemory(){
-        Renren renren = renrenSdkObj;
-        String currentUid=null, sessionKey=null, accessToken=null, secret=null, expireTime=null;
-        if (existRenrenAuthInfo()){
-            currentUid = renren.getCurrentUid()+"";
-            sessionKey = renren.getSessionKey();
-            accessToken = renren.getAccessToken();
-            secret = renren.getSecret();
-            expireTime = renren.getExpireTime()+"";
 
-        }
-        AppInfo.renrenSessionUserId = currentUid;
-        AppInfo.renrenAccessToken = accessToken;
-        AppInfo.renrenExpirationDate = expireTime;
-        AppInfo.renrenSessionKey = sessionKey;
-        AppInfo.renrenSecretKey = secret;
-    }
-    public static void syncMemoryToRenrenAuthInfo(){
-        LogUtils.Logd(LocalLogTag,"syncMemoryToRenrenAuthInfo renrenSdkObj == null?="+(renrenSdkObj == null)+", renrenSessionUserId="+renrenSessionUserId);
-        if (renrenSdkObj == null) return;
-        String currentUid=null, sessionKey=null, accessToken=null, secret=null, expireTime=null;
-        Renren renren = renrenSdkObj;
-        currentUid = renren.getCurrentUid()+"";
-        sessionKey = renren.getSessionKey();
-        accessToken = renren.getAccessToken();
-        secret = renren.getSecret();
-        expireTime = renren.getExpireTime()+"";
-        boolean allSame = true;
-        if (currentUid.equals(renrenSessionUserId) || (currentUid.equals("0")&&TextUtils.isEmpty(renrenSessionUserId))) {
-            //uid be same
-            if (!currentUid.equals("0")){//renren have auth info
-                if (!expireTime.equals(renrenExpirationDate)) allSame = false;
-                if (!sessionKey.equals(renrenSessionKey)) allSame = false;
-                if (!accessToken.equals(renrenAccessToken)) allSame = false;
-                if (!secret.equals(renrenSecretKey)) allSame = false;
-            }
-        }
+    /**
+     *
+     * if renren sdk have auth info and does not match the user, then renren sdk should clear auth info.
+     * so the return renren sdk may have sync info, may have no auth info.
+     * @param context
+     * @return
+     */
+    public static Renren getRenrenSdkInstanceForCurrentUser(Context context){
+        Renren renren = getNonEmptyRenrenSdkInstance(context);
+        LogUtils.Logd(LocalLogTag,"getRenrenSdkInstanceForCurrentUser enter"
+                  +", userId="+userId+", accountRenRen="+accountRenRen+", renren.getCurrentUid="+renren.getCurrentUid());
+        if (isRenrenAuthInfoMatchCurrentUser(context, false))
+            return renren;
         else{
-            allSame = false;
+            LogUtils.Logd(LocalLogTag,"getRenrenSdkInstanceForCurrentUser , before renren.logout");
+            renren.logout(context);
         }
-        LogUtils.Logd(LocalLogTag,"syncMemoryToRenrenAuthInfo allSame="+allSame);
-        if(!allSame) clearRenrenSdkAuthInfo();
+        return renren;
     }
-    public static boolean existRenrenAuthInfo(){
-        boolean exist = false;
-        LogUtils.Logd(LocalLogTag,"existRenrenAuthInfo begin, renrenSdkObj==null?="+(renrenSdkObj == null)
-                +", renrenSessionUserId="+renrenSessionUserId);
-        Renren renren = null;
-        if (renrenSdkObj == null && TextUtils.isEmpty(renrenSessionUserId)){
-            //no need to create a renren instance. not to call getRenrenSdkInstance(null) to avoid error
-        }else{
-            renren = getRenrenSdkInstance(null);
+    /**
+     * if all exist, then must be equal. if not exist any, can be match.
+     * if user exist but renren auth info not exist, can do auth to achieve be match, but if strict, be not match.
+     * @param context
+     */
+    public static boolean isRenrenAuthInfoMatchCurrentUser(Context context, boolean isStrict){
+        Renren renren = getNonEmptyRenrenSdkInstance(context);
+        boolean beMatch = false;
+        if (!TextUtils.isEmpty(userId)){//user exist
+            if (renren.getCurrentUid() !=0){//renren auth info exist
+                String sCurrentUid = renren.getCurrentUid()+"";
+                if (sCurrentUid.equals(accountRenRen)){
+                    beMatch = true;
+                }else{
+                    beMatch = false;
+                }
+            }else {//no renren auth info
+                if (isStrict) beMatch = false;
+                else beMatch = true;
+            }
+        }else{//TextUtils.isEmpty(userId)--no user
+            if (renren.getCurrentUid() !=0){//renren auth info exist
+                beMatch = false;
+            }else{//no renren auth info
+                beMatch = true;
+            }
         }
+        LogUtils.Logd(LocalLogTag,"isRenrenAuthInfoMatchCurrentUser exit"+", beMatch="+beMatch
+                +", userId="+userId+", accountRenRen="+accountRenRen+", renren.getCurrentUid="+renren.getCurrentUid());
+        return beMatch;
+    }
 
-        if (renren != null && renren.getCurrentUid() != 0)
+    public static Renren getRenrenSdkInstanceAtMostPossibleMatchUser(Context context){
+        Renren renren = getNonEmptyRenrenSdkInstance(context);
+        LogUtils.Logd(LocalLogTag,"getRenrenSdkInstanceAtMostPossibleMatchUser enter"
+                +", userId="+userId+", accountRenRen="+accountRenRen+", renren.getCurrentUid="+renren.getCurrentUid());
+        if (isRenrenAuthInfoMatchCurrentUserAtMostPossible(context))
+            return renren;
+        else{
+            LogUtils.Logd(LocalLogTag,"getRenrenSdkInstanceAtMostPossibleMatchUser , before renren.logout");
+            renren.logout(context);
+        }
+        return renren;
+    }
+    /**
+     * if current user exist and current user have accountRenren,
+     *   and if current renren auth info exist, and if they are not match,
+     *     then we judge not match, because it obvious not match.
+     * if current renren auth info not exist,
+     *     we consider can be match if later do auth.
+     * if current user exist but have not accountRenren--not bind with renren, and current renren auth info exist,
+     *     if user1 with renren1 login and logout, and user2 login by email, at this time user2 should not match renren1,
+     *     but we consider it is seldom that normal user need to switch renren account or user email. so just let them match in later actions.
+     * if current user not exist, and current renren auth info exist,
+     *     same consider as "if current user exist but have not accountRenren--not bind with renren, and current renren auth info exist".
+     * @param context
+     */
+    public static boolean isRenrenAuthInfoMatchCurrentUserAtMostPossible(Context context){
+        Renren renren = getNonEmptyRenrenSdkInstance(context);
+        boolean beMatch = true;
+        if (!TextUtils.isEmpty(userId) && !TextUtils.isEmpty(accountRenRen) && renren.getCurrentUid() !=0){
+            if (!accountRenRen.equals(renren.getCurrentUid()+"")){
+                beMatch = false;
+            }
+        }
+        LogUtils.Logd(LocalLogTag,"isRenrenAuthInfoMatchCurrentUserAtMostPossible exit"+", beMatch="+beMatch
+                +", userId="+userId+", accountRenRen="+accountRenRen+", renren.getCurrentUid="+renren.getCurrentUid());
+        return beMatch;
+    }
+
+
+
+    /**
+     * only check exist any renren auth info, not consider the relation with current user
+     * @param context
+     * @return
+     */
+    public static boolean existRenrenAuthInfo(Context context){
+        Renren renren = getNonEmptyRenrenSdkInstance(context);
+        boolean exist = false;
+        long lCurrentUid = renren.getCurrentUid();
+        if (lCurrentUid != 0){
             exist = true;
-        LogUtils.Logd(LocalLogTag,"existRenrenAuthInfo exist="+exist);
+        }
+        LogUtils.Logd(LocalLogTag,"existRenrenAuthInfo exist="+exist+
+                ", CurrentUid="+lCurrentUid+", accountRenRen"+accountRenRen);
         return exist;
     }
+    public static void clearRenrenAuthInfo(Context context){
+        LogUtils.Logd(LocalLogTag,"clearRenrenSdkAuthInfo enter");
+        Renren renren = getNonEmptyRenrenSdkInstance(context);
+        if (renren.getCurrentUid() != 0){
+            renren.logout(context);
+        }
+    }
+
+
+//    public static void clearAllRelateRenrenAuth(){
+//        accountRenRen = null;
+//        clearRenrenAuthInfo();
+//    }
+//
+//    public static void clearRenrenAuthInfo(){
+//        renrenSessionUserId = null;
+//        renrenAccessToken = null;
+//        renrenExpirationDate = null;
+//        renrenSessionKey = null;
+//        renrenSecretKey = null;
+//        clearRenrenSdkAuthInfo();
+//    }
+//    public static void clearRenrenSdkAuthInfo(){
+//        LogUtils.Logd(LocalLogTag,"clearRenrenSdkAuthInfo renrenSdkObj == null?="+(renrenSdkObj == null));
+//        if (renrenSdkObj == null)
+//            return;
+//        LogUtils.Logd(LocalLogTag,"clearRenrenSdkAuthInfo getCurrentUid="+renrenSdkObj.getCurrentUid()+
+//                ", renrenRelatedContext==null?"+(renrenRelatedContext==null));
+//        if (renrenSdkObj.getCurrentUid() != 0){
+//            if (renrenRelatedContext != null){
+//                renrenSdkObj.logout(renrenRelatedContext);
+//            }else{
+//                //renrenSdkObj.setCurrentUid(null);//to see if needed
+//            }
+//        }
+//        renrenSdkObj = null;
+//        renrenRelatedContext = null;
+//    }
+//    public static void syncRenrenAuthInfoToMemory(){
+//        Renren renren = renrenSdkObj;
+//        String currentUid=null, sessionKey=null, accessToken=null, secret=null, expireTime=null;
+//        if (existRenrenAuthInfo()){
+//            currentUid = renren.getCurrentUid()+"";
+//            sessionKey = renren.getSessionKey();
+//            accessToken = renren.getAccessToken();
+//            secret = renren.getSecret();
+//            expireTime = renren.getExpireTime()+"";
+//
+//        }
+//        AppInfo.renrenSessionUserId = currentUid;
+//        AppInfo.renrenAccessToken = accessToken;
+//        AppInfo.renrenExpirationDate = expireTime;
+//        AppInfo.renrenSessionKey = sessionKey;
+//        AppInfo.renrenSecretKey = secret;
+//
+//        AppInfo.accountRenRen = currentUid;
+//    }
+//    public static void syncMemoryToRenrenAuthInfo(){
+//        LogUtils.Logd(LocalLogTag,"syncMemoryToRenrenAuthInfo renrenSdkObj == null?="+(renrenSdkObj == null)+", renrenSessionUserId="+renrenSessionUserId);
+//        if (renrenSdkObj == null) return;
+//        String currentUid=null, sessionKey=null, accessToken=null, secret=null, expireTime=null;
+//        Renren renren = renrenSdkObj;
+//        currentUid = renren.getCurrentUid()+"";
+//        sessionKey = renren.getSessionKey();
+//        accessToken = renren.getAccessToken();
+//        secret = renren.getSecret();
+//        expireTime = renren.getExpireTime()+"";
+//        boolean allSame = true;
+//        if (currentUid.equals(renrenSessionUserId) || (currentUid.equals("0")&&TextUtils.isEmpty(renrenSessionUserId))) {
+//            //uid be same
+//            if (!currentUid.equals("0")){//renren have auth info
+//                if (!expireTime.equals(renrenExpirationDate)) allSame = false;
+//                if (!sessionKey.equals(renrenSessionKey)) allSame = false;
+//                if (!accessToken.equals(renrenAccessToken)) allSame = false;
+//                if (!secret.equals(renrenSecretKey)) allSame = false;
+//            }
+//        }
+//        else{
+//            allSame = false;
+//        }
+//        LogUtils.Logd(LocalLogTag,"syncMemoryToRenrenAuthInfo allSame="+allSame);
+//        if(!allSame) clearRenrenSdkAuthInfo();
+//    }
+//    public static boolean existRenrenAuthInfo(){
+//        boolean exist = false;
+//        LogUtils.Logd(LocalLogTag,"existRenrenAuthInfo begin, renrenSdkObj==null?="+(renrenSdkObj == null)
+//                +", renrenSessionUserId="+renrenSessionUserId);
+//        Renren renren = null;
+//        if (renrenSdkObj == null && TextUtils.isEmpty(renrenSessionUserId)){
+//            //no need to create a renren instance. not to call getRenrenSdkInstance(null) to avoid error
+//        }else{
+//            renren = getRenrenSdkInstance(null);
+//        }
+//
+//        if (renren != null && renren.getCurrentUid() != 0)
+//            exist = true;
+//        LogUtils.Logd(LocalLogTag,"existRenrenAuthInfo exist="+exist);
+//        return exist;
+//    }
 
 }

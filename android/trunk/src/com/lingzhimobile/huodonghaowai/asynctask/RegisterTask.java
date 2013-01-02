@@ -71,9 +71,11 @@ public class RegisterTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         try {
-            JSONParser.checkSucceed(result);
-            AppInfo.userId = new JSONObject(result).getJSONObject("result").optString("userId");
+            JSONObject resJsonObject = JSONParser.checkSucceed(result);
+            String userId = resJsonObject.getJSONObject("result").optString("userId");
+            AppInfo.userId = userId;
             msg.what = MessageID.REGISTER_OK;
+            msg.obj = userId;
         } catch (JSONParseException e) {
             msg.what = MessageID.SERVER_RETURN_NULL;
             msg.obj = e.getCode();

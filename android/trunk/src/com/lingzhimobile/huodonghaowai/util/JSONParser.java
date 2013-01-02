@@ -109,18 +109,19 @@ public class JSONParser {
      */
     public static void saveRenrenAccountInfo(JSONObject renrenAccountObj){
         if (renrenAccountObj == null) return;
-        JSONObject renrenAuthObj = renrenAccountObj.optJSONObject("renrenAuthObj");
-        if (renrenAuthObj == null) return;
-        AppInfo.renrenSessionUserId = renrenAuthObj.optString(RenRenLibConst.fieldcommon_session_userId);
-        AppInfo.renrenAccessToken = renrenAuthObj.optString(RenRenLibConst.fieldcommon_access_token);
-        AppInfo.renrenExpirationDate = renrenAuthObj.optString(RenRenLibConst.fieldcommon_expiration_date);
-        AppInfo.renrenSessionKey = renrenAuthObj.optString(RenRenLibConst.fieldcommon_session_key);
-        AppInfo.renrenSecretKey = renrenAuthObj.optString(RenRenLibConst.fieldcommon_secret_key);
-        LogUtils.Logd(LocalLogTag, "saveRenrenAccountInfo end : renrenAccessToken="+AppInfo.renrenAccessToken+
-                ", renrenSessionKey="+AppInfo.renrenSessionKey+
-                ", renrenSecretKey="+AppInfo.renrenSecretKey+
-                ", renrenSessionUserId="+AppInfo.renrenSessionUserId+
-                ", renrenExpirationDate="+AppInfo.renrenExpirationDate);
+        AppInfo.accountRenRen = renrenAccountObj.optString("accountRenRen");
+//        JSONObject renrenAuthObj = renrenAccountObj.optJSONObject("renrenAuthObj");
+//        if (renrenAuthObj == null) return;
+//        AppInfo.renrenSessionUserId = renrenAuthObj.optString(RenRenLibConst.fieldcommon_session_userId);
+//        AppInfo.renrenAccessToken = renrenAuthObj.optString(RenRenLibConst.fieldcommon_access_token);
+//        AppInfo.renrenExpirationDate = renrenAuthObj.optString(RenRenLibConst.fieldcommon_expiration_date);
+//        AppInfo.renrenSessionKey = renrenAuthObj.optString(RenRenLibConst.fieldcommon_session_key);
+//        AppInfo.renrenSecretKey = renrenAuthObj.optString(RenRenLibConst.fieldcommon_secret_key);
+//        LogUtils.Logd(LocalLogTag, "saveRenrenAccountInfo end : renrenAccessToken="+AppInfo.renrenAccessToken+
+//                ", renrenSessionKey="+AppInfo.renrenSessionKey+
+//                ", renrenSecretKey="+AppInfo.renrenSecretKey+
+//                ", renrenSessionUserId="+AppInfo.renrenSessionUserId+
+//                ", renrenExpirationDate="+AppInfo.renrenExpirationDate);
     }
 
     public static String getReportUserResult(String result)

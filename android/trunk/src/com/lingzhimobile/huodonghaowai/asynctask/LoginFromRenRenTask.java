@@ -68,11 +68,15 @@ public class LoginFromRenRenTask extends AsyncTask<Void, Void, String> {
                 boolean userExist = false;
                 JSONObject resultObj = jsonResult.optJSONObject("result");
                 userExist = resultObj.optBoolean("userExist",userExist);
-                if (userExist) msg.what = MessageID.RENREN_LOGIN_OK;
+                if (userExist){
+                    msg.what = MessageID.RENREN_LOGIN_OK;
+                    JSONObject userObj = resultObj.optJSONObject("user");
+                    AppInfo.clearUserInfo();
+                    JSONParser.saveLoginUserInfo(userObj);
+                    AppInfo.accountRenRen = accountRenRen;
+                }
                 else msg.what = MessageID.NEED_REGISTER_RENREN;
                 msg.obj = jsonResult;
-                JSONObject userObj = resultObj.optJSONObject("user");
-                JSONParser.saveLoginUserInfo(userObj);
             }
         }
         msg.sendToTarget();

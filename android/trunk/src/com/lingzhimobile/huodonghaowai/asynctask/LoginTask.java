@@ -60,6 +60,7 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
             if (isSucceed){
                 msg.what = MessageID.LOGIN_OK;
                 msg.obj = jsonResult;
+                AppInfo.clearUserInfo();
                 JSONParser.saveLoginInfo(jsonResult);
             }else{
                 msg.what = MessageID.LOGIN_Fail;

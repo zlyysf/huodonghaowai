@@ -13,6 +13,7 @@ import com.lingzhimobile.huodonghaowai.log.LogTag;
 import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.net.HttpManager;
 import com.lingzhimobile.huodonghaowai.net.NetProtocol;
+import com.lingzhimobile.huodonghaowai.util.AppInfo;
 import com.lingzhimobile.huodonghaowai.util.JSONParser;
 
 public class Bind3rdPartAccountTask extends AsyncTask<Void, Void, String> {
@@ -54,6 +55,7 @@ public class Bind3rdPartAccountTask extends AsyncTask<Void, Void, String> {
         super.onPostExecute(result);
         try {
             JSONParser.checkSucceed(result);
+            AppInfo.accountRenRen = accountRenRen;
             msg.what = MessageID.Bind3rdPartAccount_OK;
         } catch (JSONParseException e) {
             msg.what = MessageID.Bind3rdPartAccount_FAIL;
