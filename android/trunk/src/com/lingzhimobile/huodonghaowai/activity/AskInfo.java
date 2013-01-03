@@ -37,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lingzhimobile.huodonghaowai.R;
+import com.lingzhimobile.huodonghaowai.asynctask.PublishRenRenFeedTask;
 import com.lingzhimobile.huodonghaowai.asynctask.RegisterTask;
 import com.lingzhimobile.huodonghaowai.asynctask.UploadPhotoTask;
 import com.lingzhimobile.huodonghaowai.cons.MessageID;
@@ -117,6 +118,15 @@ public class AskInfo extends HuoDongHaoWaiActivity {
                                 path), true,myHandler.obtainMessage());
                 uploadPhotoTask.execute();
                 setResult(MessageID.REGISTER_OK);
+
+                if (RequestCode.fromActivity_Login.equals(fromActivityFlag)){
+                    Bundle publishRenrenFeedData = new Bundle();
+                    publishRenrenFeedData.putString("actionType", "Register");
+                    Renren renren = AppInfo.getRenrenSdkInstanceForCurrentUser(AskInfo.this);//at this time, can use a strict get
+                    PublishRenRenFeedTask publishRenRenFeedTask = new PublishRenRenFeedTask(publishRenrenFeedData,renren,AskInfo.this, null);//myHandler.obtainMessage());
+                    publishRenRenFeedTask.execute();
+                }
+
                 finish();
                 break;
             }

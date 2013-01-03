@@ -608,6 +608,7 @@ public class PublishDate extends Fragment {
                 if (cbPublishToRenRen.isChecked()){
                   //do auth by renren, publish to renren, bind renren to user in the listener
                     Bundle publishRenrenFeedData = new Bundle();
+                    publishRenrenFeedData.putString("actionType", "PublishDate");
                     publishRenrenFeedData.putString("address", address);
                     publishRenrenFeedData.putString("title", title);
                     publishRenrenFeedData.putString("description", description);

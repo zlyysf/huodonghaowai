@@ -36,25 +36,50 @@ public class PublishRenRenFeedTask {
     }
 
     public void execute(){
-        long dateDate = publishRenrenFeedData.getLong("dateDate");
-        String dateAddress = publishRenrenFeedData.getString("address");
-        String dateTitle = publishRenrenFeedData.getString("title");
-        String dateDescription = publishRenrenFeedData.getString("description");
+        LogUtils.Loge(LogTag.TASK, "PublishRenRenFeedTask execute begin");
+        String actionType = publishRenrenFeedData.getString("actionType");
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(dateDate);
-        String strDateDate = DateTimeUtil.getNextSlotInString(activity, calendar).toString();
-        String renrenDescription = String.format("时间:%s  地点:%s  详情:%s", strDateDate,dateAddress,dateDescription) ;
+        String rrParamName = null;
+        String rrParamDescription = null;
+        String rrParamUrl = "http://www.huodonghaowai.com";
+        String rrParamImageUrl = "http://oss.aliyuncs.com/ysf1/resource/app-icon.png";
+        String rrParamCaption = null;
+        String rrParamActionName = null;
+        String rrParamActionLink = "http://www.huodonghaowai.com";
+        String rrParamMessage = null;
+        if ("PublishDate".equals(actionType)){
+            long dateDate = publishRenrenFeedData.getLong("dateDate");
+            String dateAddress = publishRenrenFeedData.getString("address");
+            String dateTitle = publishRenrenFeedData.getString("title");
+            String dateDescription = publishRenrenFeedData.getString("description");
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(dateDate);
+            String strDateDate = DateTimeUtil.getNextSlotInString(activity, calendar).toString();
+            String renrenDescription = String.format("时间:%s  地点:%s  详情:%s", strDateDate,dateAddress,dateDescription) ;
+
+            rrParamName = "来活动号外加入吧";
+            rrParamDescription = renrenDescription;
+            //rrParamUrl = "http://www.huodonghaowai.com";
+            //rrParamImageUrl = "http://oss.aliyuncs.com/ysf1/resource/app-icon.png";
+            rrParamCaption = "";
+            rrParamActionName = "";
+            //rrParamActionLink = "http://www.huodonghaowai.com";
+            rrParamMessage = dateTitle;
+        }else if ("Register".equals(actionType)){
+            rrParamName = "活动号外";
+            rrParamDescription = "中国第一个为大学生组织个性化活动的手机平台!";
+            //rrParamUrl = "http://www.huodonghaowai.com";
+            //rrParamImageUrl = "http://oss.aliyuncs.com/ysf1/resource/app-icon.png";
+            rrParamCaption = "";
+            rrParamActionName = "加入活动号外";
+            //rrParamActionLink = "http://www.huodonghaowai.com";
+            rrParamMessage = "我加入了活动号外";
+        }
 
         FeedPublishRequestParam feed = new FeedPublishRequestParam(
-                    "来活动号外加入吧",
-                    renrenDescription,
-                    "http://www.huodonghaowai.com",
-                    "http://oss.aliyuncs.com/ysf1/resource/app-icon.png",
-                    "副标题",
-                    "",
-                    "http://www.huodonghaowai.com",
-                    dateTitle);
+            rrParamName,rrParamDescription,rrParamUrl,rrParamImageUrl,
+            rrParamCaption,rrParamActionName,rrParamActionLink,rrParamMessage);
         AsyncRenren asyncRenren = new AsyncRenren(renren);
         AbstractRequestListener<FeedPublishResponseBean> listener =
                 new AbstractRequestListener<FeedPublishResponseBean>() {
