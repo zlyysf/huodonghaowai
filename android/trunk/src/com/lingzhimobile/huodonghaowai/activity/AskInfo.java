@@ -166,6 +166,7 @@ public class AskInfo extends HuoDongHaoWaiActivity {
 //                                Message msg = getWebImageHandler.obtainMessage(0,renrenHeadBmp);
 //                                getWebImageHandler.sendMessage(msg);
                                 bm = renrenHeadBmp;
+                                ivPickPhoto.setImageBitmap(bm);
                             }
                         });
             }
