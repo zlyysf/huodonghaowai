@@ -74,7 +74,8 @@ public class Login extends Activity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            prgressDialog.dismiss();
+            if (prgressDialog!=null)
+                prgressDialog.dismiss();
             switch (msg.what) {
             case MessageID.SERVER_RETURN_NULL://TODO to be deleted
 

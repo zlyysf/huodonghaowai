@@ -69,6 +69,7 @@ import com.lingzhimobile.huodonghaowai.view.CustomizeDatePickerDialog.OnCustomiz
 import com.renren.api.connect.android.Renren;
 import com.renren.api.connect.android.exception.RenrenAuthError;
 import com.renren.api.connect.android.view.RenrenAuthListener;
+import com.umeng.analytics.MobclickAgent;
 
 public class PublishDate extends Fragment {
     private final int TYPE_EDIT = 10;
@@ -109,6 +110,7 @@ public class PublishDate extends Fragment {
             tvPreTreat, tvPreDetail;
 
     private myProgressDialog mProgressDialog;
+    private myProgressDialog prgressDialog;
     private final int[] datePhotoIds = { R.drawable.date_pre_bg1,
             R.drawable.date_pre_bg2, R.drawable.date_pre_bg3,
             R.drawable.date_pre_bg4, R.drawable.date_pre_bg5,
@@ -118,7 +120,7 @@ public class PublishDate extends Fragment {
 
     private TextView tvTitle;
 
-    private myProgressDialog prgressDialog;
+
 
     public Handler myHandler = new Handler() {
         @Override
@@ -129,6 +131,9 @@ public class PublishDate extends Fragment {
             }
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
+            }
+            if (prgressDialog!=null){
+                prgressDialog.dismiss();
             }
             switch (msg.what) {
             case MessageID.SERVER_RETURN_NULL:
@@ -933,6 +938,16 @@ public class PublishDate extends Fragment {
         }
         tvPreDetail.setText(dateDetail.getText());
         tvPreTitle.setText(dateTitle.getText());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (cbPublishToRenRen.isChecked()){
+            if (!existRenrenAuthInfoForCurrentUser()){
+                cbPublishToRenRen.setChecked(false);
+            }
+        }
     }
 
 }
