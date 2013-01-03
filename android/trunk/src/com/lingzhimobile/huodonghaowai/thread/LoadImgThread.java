@@ -16,10 +16,10 @@ import com.lingzhimobile.huodonghaowai.util.MethodHandler;
 public class LoadImgThread implements Runnable, Serializable {
     public final static int ConnectTimeOutTime = 30000;
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = -5919639738216336319L;
-    private MethodHandler<Bitmap> handler;
+    private final MethodHandler<Bitmap> handler;
     private String url;
     HttpURLConnection conn;
     InputStream is;
@@ -28,7 +28,7 @@ public class LoadImgThread implements Runnable, Serializable {
         this.url = url;
         handler = postHandler;
     }
-    
+
 
     public void cancel() {
         try {
@@ -60,6 +60,7 @@ public class LoadImgThread implements Runnable, Serializable {
         return url;
     }
 
+    @Override
     public void run() {
         Bitmap bm = null;
         // if (isInterrupted())
@@ -70,8 +71,12 @@ public class LoadImgThread implements Runnable, Serializable {
                 // if (isInterrupted())
                 // return;
                 if (bm == null) {
-                    LogUtils.Loge("ImageThread", NetProtocol.IMAGE_BASE_URL+url);
-                    URL mUrl = new URL(NetProtocol.IMAGE_BASE_URL+url);
+                    String sUrl = url;
+                    if (!sUrl.startsWith("http")){
+                        sUrl = NetProtocol.IMAGE_BASE_URL+url;
+                    }
+                    LogUtils.Loge("ImageThread", sUrl);
+                    URL mUrl = new URL(sUrl);
                     conn = (HttpURLConnection) mUrl
                             .openConnection();
                     conn.setConnectTimeout(ConnectTimeOutTime);

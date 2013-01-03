@@ -114,6 +114,7 @@ public class Login extends Activity {
 
                 break;
             case MessageID.RENRENSDK_getUsersInfo_OK:
+                prgressDialog.dismiss();
                 UserInfo renrenUser = (UserInfo)msg.obj;
 
                 Intent intent = new Intent(Login.this, AskInfo.class);
@@ -137,6 +138,10 @@ public class Login extends Activity {
                     renrenUnverseName = unv.getName();
                     intent.putExtra("renrenUnverseName", renrenUnverseName);
                 }
+
+                String mailurl = renrenUser.getMainurl();//bigger than headurl and tinyurl
+                //LogUtils.Logd(LocalLogTag, "RENRENSDK_getUsersInfo_OK, mailurl"+mailurl);
+                intent.putExtra("renrenHeadUrl", mailurl);
 
                 startActivityForResult(intent, RENRENSIGNUP);
 

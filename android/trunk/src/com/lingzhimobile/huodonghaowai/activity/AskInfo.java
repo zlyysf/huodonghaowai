@@ -48,6 +48,8 @@ import com.lingzhimobile.huodonghaowai.util.AppInfo;
 import com.lingzhimobile.huodonghaowai.util.AppUtil;
 import com.lingzhimobile.huodonghaowai.util.BitmapManager;
 import com.lingzhimobile.huodonghaowai.util.FileManager;
+import com.lingzhimobile.huodonghaowai.util.ImageLoadUtil;
+import com.lingzhimobile.huodonghaowai.util.MethodHandler;
 import com.lingzhimobile.huodonghaowai.view.myProgressDialog;
 import com.renren.api.connect.android.Renren;
 import com.umeng.analytics.MobclickAgent;
@@ -61,6 +63,7 @@ public class AskInfo extends HuoDongHaoWaiActivity {
     private String renrenSex;
     private String renrenHometown;
     private String renrenUnverseName;
+    private String renrenHeadUrl;
 
     public String userName;
     public String userGender;
@@ -118,8 +121,14 @@ public class AskInfo extends HuoDongHaoWaiActivity {
                 break;
             }
         }
-
     };
+
+//    Handler getWebImageHandler = new Handler() {
+//        @Override
+//        public void handleMessage(android.os.Message msg) {
+//
+//        };
+//    };
 
     /** Called when the activity is first created. */
     @Override
@@ -141,8 +150,25 @@ public class AskInfo extends HuoDongHaoWaiActivity {
             renrenSex = intent1.getStringExtra("renrenSex");
             renrenHometown = intent1.getStringExtra("renrenHometown");
             renrenUnverseName = intent1.getStringExtra("renrenUnverseName");
+            renrenHeadUrl = intent1.getStringExtra("renrenHeadUrl");
             LogUtils.Logd(LogTag.ACTIVITY, "AskInfo onCreate UserName=" + renrenUserName
-                    + ", Hometown="+renrenHometown  + ", UnverseName="+renrenUnverseName + ", Sex="+renrenSex  );
+                    + ", Hometown="+renrenHometown  + ", UnverseName="+renrenUnverseName
+                    + ", Sex="+renrenSex + ", HeadUrl="+renrenHeadUrl );
+            if (!TextUtils.isEmpty(renrenHeadUrl) && !RenRenLibConst.DefaultMainHeadUrl.equals(renrenHeadUrl)){
+                LogUtils.Logd(LogTag.ACTIVITY, "AskInfo setViewData begin ImageLoadUtil.readBitmapAsync");
+                //http://oss.aliyuncs.com/ysf1/http://hdn.xnimg.cn/photos/hdn421/20130102/2115/h_main_BVuj_7b3e000064001375.jpg ..........
+                // LoadImgThread.run ...... to be fix
+                ImageLoadUtil.readBitmapAsync(renrenHeadUrl,
+                        new MethodHandler<Bitmap>() {
+                            @Override
+                            public void process(Bitmap renrenHeadBmp) {
+                                LogUtils.Logd(LogTag.ACTIVITY, "AskInfo setViewData, ImageLoadUtil.readBitmapAsync, process, renrenHeadBmp==null?="+(renrenHeadBmp==null));
+//                                Message msg = getWebImageHandler.obtainMessage(0,renrenHeadBmp);
+//                                getWebImageHandler.sendMessage(msg);
+                                bm = renrenHeadBmp;
+                            }
+                        });
+            }
         }
         if (!TextUtils.isEmpty(renrenUserName)) {
             nameEditText.setText(renrenUserName);
@@ -215,6 +241,11 @@ public class AskInfo extends HuoDongHaoWaiActivity {
                 if (RequestCode.fromActivity_PreLogin.equals(fromActivityFlag)){
                     AppInfo.clearRenrenAuthInfo(AskInfo.this);
                 }
+                if (mProgressDialog != null){
+                    mProgressDialog.dismiss();
+                    mProgressDialog.dismiss();
+                }
+
                 finish();
             }
         });
