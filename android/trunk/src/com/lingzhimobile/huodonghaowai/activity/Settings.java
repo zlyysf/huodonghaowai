@@ -88,12 +88,10 @@ public class Settings extends HuoDongHaoWaiActivity {
                 finish();
                 break;
             case MessageID.Bind3rdPartAccount_OK:
-                mProgressDialog.dismiss();
-
                 refreshBindStatusView();
                 break;
             case MessageID.Bind3rdPartAccount_FAIL:
-                mProgressDialog.dismiss();
+
                 errCode = ((Integer)msg.obj).intValue();
                 if (errCode == 21301){//userAlreadyBindThisRenRenAccount
 
@@ -103,15 +101,17 @@ public class Settings extends HuoDongHaoWaiActivity {
                 refreshBindStatusView();
                 break;
             case MessageID.UnbindRenRenAccount_OK:
-                mProgressDialog.dismiss();
+
               //not clear renren auth info in AppInfo, let it be done in get
                 refreshBindStatusView();
                 break;
             case MessageID.UnbindRenRenAccount_FAIL:
-                mProgressDialog.dismiss();
+
                 errCode = ((Integer)msg.obj).intValue();
                 if (errCode == 21306){//userNotBindRenRenAccount
                   //not clear renren auth info in AppInfo, let it be done in get
+                }else{
+                    AppUtil.handleErrorCode(msg.obj.toString(), Settings.this);
                 }
                 refreshBindStatusView();
                 break;

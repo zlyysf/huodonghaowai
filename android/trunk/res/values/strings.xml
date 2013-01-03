@@ -211,4 +211,6 @@
     <string name="err21210">抱歉，此邀请码已失效</string>
     <string name="err21212">抱歉，此邀请码已过期</string>
     <string name="errMessage">内部错误。请检查您的网络设置或者稍后重试</string>
+    <string name="terr110000">人人接口调用出错</string>
+    <string name="terr110001">人人接口调用失败</string>
 </resources>

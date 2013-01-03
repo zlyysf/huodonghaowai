@@ -5,15 +5,15 @@ import android.util.SparseArray;
 import com.lingzhimobile.huodonghaowai.R;
 
 public class ErrorCode {
-    
+
     public final static SparseArray<Integer> errorMap = new SparseArray<Integer>();
-    
+
     public final static int SERVER_RETURN_ERROR = 1100;
-    
-    
-    
-    
-    
+
+
+
+
+
     static{
         errorMap.put(21010, R.string.err21010);
         errorMap.put(21011, R.string.err21010);
@@ -44,6 +44,9 @@ public class ErrorCode {
         errorMap.put(21211, R.string.err21211);
         errorMap.put(21210, R.string.err21210);
         errorMap.put(21212, R.string.err21212);
+
+        errorMap.put(110000, R.string.terr110000);
+        errorMap.put(110001, R.string.terr110001);
     }
 
 }

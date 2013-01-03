@@ -47,6 +47,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lingzhimobile.huodonghaowai.R;
+import com.lingzhimobile.huodonghaowai.activity.Login;
 import com.lingzhimobile.huodonghaowai.activity.Settings;
 import com.lingzhimobile.huodonghaowai.asynctask.Bind3rdPartAccountTask;
 import com.lingzhimobile.huodonghaowai.asynctask.CreateDateTask;
@@ -144,25 +145,26 @@ public class PublishDate extends Fragment {
                         Toast.LENGTH_SHORT);
                 break;
             case MessageID.Bind3rdPartAccount_OK:
-                prgressDialog.dismiss();
               //run to here, user info and renren auth info should already match because something done in Bind3rdPartAccountTask
                 Renren renren = AppInfo.getRenrenSdkInstanceForCurrentUser(myAcitivity);
                 LogUtils.Logd(LocalLogTag,"PublishDate, Bind3rdPartAccount_OK"+", getCurrentUid()="+renren.getCurrentUid()+", userId="+AppInfo.userId+", accountRenRen="+AppInfo.accountRenRen);
                 break;
             case MessageID.Bind3rdPartAccount_FAIL:
-                prgressDialog.dismiss();
                 int errCode = ((Integer)msg.obj).intValue();
                 if (errCode == 21301){//userAlreadyBindThisRenRenAccount
 
                 }else{
                   //not clear renren auth info in AppInfo, let it be done in get
                     cbPublishToRenRen.setChecked(false);
+                    AppUtil.handleErrorCode(msg.obj.toString(), myAcitivity);
                 }
                 break;
             case MessageID.RENRENSDK_publishFeed_Error:
+                AppUtil.handleErrorCode("110000", myAcitivity);
+                break;
             case MessageID.RENRENSDK_publishFeed_Fault:
-                prgressDialog.dismiss();
               //not clear renren auth info in AppInfo, let it be done in get
+                AppUtil.handleErrorCode("110001", myAcitivity);
                 break;
             }
 

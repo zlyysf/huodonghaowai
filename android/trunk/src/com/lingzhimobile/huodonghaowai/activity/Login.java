@@ -74,24 +74,26 @@ public class Login extends Activity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            prgressDialog.dismiss();
             switch (msg.what) {
             case MessageID.SERVER_RETURN_NULL://TODO to be deleted
-                prgressDialog.dismiss();
+
                 AppUtil.handleErrorCode(msg.obj.toString(), Login.this);
                 break;
             case MessageID.LOGIN_OK:
                 LogUtils.Logd(LocalLogTag, "Login myHandler LOGIN_OK|RENREN_LOGIN_OK begin");
-                prgressDialog.dismiss();
+
                 saveDataAfterLogin();
                 setResult(MessageID.LOGIN_OK);
                 finish();
                 LogUtils.Logd(LocalLogTag, "Login myHandler LOGIN_OK|RENREN_LOGIN_OK end");
                 break;
             case MessageID.LOGIN_Fail:
+                AppUtil.handleErrorCode(msg.obj.toString(), Login.this);
                 break;
             case MessageID.RENREN_LOGIN_OK:
                 LogUtils.Logd(LocalLogTag, "Login myHandler LOGIN_OK|RENREN_LOGIN_OK begin");
-                prgressDialog.dismiss();
+
                 saveDataAfterLoginFromRenren();
                 setResult(MessageID.LOGIN_OK);
                 finish();
@@ -99,11 +101,10 @@ public class Login extends Activity {
                 break;
             case MessageID.RENREN_LOGIN_Fail:
               //not clear renren auth info in AppInfo, let it be done in get
+                AppUtil.handleErrorCode(msg.obj.toString(), Login.this);
                 break;
             case MessageID.NEED_REGISTER_RENREN:
                 //will open register ui--askinfo activity, but before that need to get renren userInfo
-                prgressDialog.dismiss();
-
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 prgressDialog = myProgressDialog.show(Login.this, null, R.string.loading);
               //can not use getRenrenSdkInstanceForCurrentUser because renren.logout in this function according to conditions
@@ -114,7 +115,7 @@ public class Login extends Activity {
 
                 break;
             case MessageID.RENRENSDK_getUsersInfo_OK:
-                prgressDialog.dismiss();
+
                 UserInfo renrenUser = (UserInfo)msg.obj;
 
                 Intent intent = new Intent(Login.this, AskInfo.class);
@@ -147,13 +148,12 @@ public class Login extends Activity {
 
                 break;
             case MessageID.RENRENSDK_getUsersInfo_Error:
-
+                AppUtil.handleErrorCode("110000", Login.this);
                 break;
             case MessageID.RENRENSDK_getUsersInfo_Fault:
-
+                AppUtil.handleErrorCode("110001", Login.this);
                 break;
             }
-
         }
     };
 
