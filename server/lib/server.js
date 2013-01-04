@@ -3425,7 +3425,7 @@ Server.prototype.getSentingSMS = function (req, res) {
     var downUrlForAndroid = config.config.downUrlForAndroid;
     var downUrlForApple = config.config.downUrlForApple;
     //var text = "我正在使用同去应用，很有趣。你也来用吧。\n\n安卓应用的下载地址:"+downUrlForAndroid+"\n\n苹果应用的下载地址:"+downUrlForApple;
-    var text = "我正在使用"+config.config.productName+"应用，很有趣。你也来用吧。\n\n安卓应用的下载地址:"+downUrlForAndroid;
+    var text = "我正在使用"+config.config.productName+"应用，很有趣。你也来用吧。\n\n手机应用的下载地址:"+downUrlForMobileApp;
     var httpRetData = {status:'success',result:{text:text}};
     self.returnDataFromResponse({res:res,req:req,data:httpRetData});
     return;
