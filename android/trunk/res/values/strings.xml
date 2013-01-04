@@ -105,6 +105,7 @@
     <!-- ask info -->
     <string name="name_empty">请输入你的用户名</string>
     <string name="school_empty">请输入你的学校</string>
+    <string name="hometown_empty">请输入你的家乡</string>
     <string name="invite_code_empty">请输入你的邀请码</string>
     <string name="enter">登录</string>
     <string name="female">女性</string>

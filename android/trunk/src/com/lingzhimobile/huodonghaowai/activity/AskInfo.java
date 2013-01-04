@@ -318,6 +318,11 @@ public class AskInfo extends HuoDongHaoWaiActivity {
                     return;
                 }
                 hometown = hometownEditText.getText().toString();
+                if (TextUtils.isEmpty(hometown)) {
+                    Toast.makeText(AskInfo.this, R.string.hometown_empty,
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
 //                invitationCode = "";
 //                invitationCode = invitationEditText.getText().toString();
 //                if (TextUtils.isEmpty(invitationCode)) {
