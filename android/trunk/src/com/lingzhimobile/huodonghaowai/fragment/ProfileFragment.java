@@ -322,15 +322,20 @@ public class ProfileFragment extends Fragment {
         } else {
             btnCancel.setText(getArguments().getInt("backStrId"));
             btnCancel.setBackgroundResource(R.drawable.btn_back_bg);
-            //btnEdit.setVisibility(View.GONE);
+
             btnEdit.setText(R.string.report);
+            final String targetUserId = getArguments().getString("userId");
+            if (targetUserId != null && targetUserId.equals(AppInfo.userId)){
+                btnEdit.setVisibility(View.GONE);//not report self
+            }
+
             btnEdit.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent();
                     intent.setClass(myAcitivity, ReportUser.class);
-                    intent.putExtra("targetUserId", getArguments().getString("userId"));
+                    intent.putExtra("targetUserId", targetUserId);
                     startActivity(intent);
                 }
             });
