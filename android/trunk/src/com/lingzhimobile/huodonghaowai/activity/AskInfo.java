@@ -75,8 +75,8 @@ public class AskInfo extends HuoDongHaoWaiActivity {
     private LinearLayout llPickPhoto;
     EditText nameEditText,  emailEditText, passwordEditText,
         hometownEditText;
-    Button femaleButton, maleButton, enter,btnBack;
-    private TextView schoolTextView;
+    Button femaleButton, maleButton, enterButton,btnBack;
+    private TextView schoolTextView,tvNewUser;
 
     private RegisterTask registerTask;
     private View.OnClickListener menuClickListener;
@@ -202,10 +202,15 @@ public class AskInfo extends HuoDongHaoWaiActivity {
         //LogUtils.Logd(LocalLogTag,"in setViewData end, fromActivityFlag="+fromActivityFlag);
         if (RequestCode.fromActivity_PreLogin.equals(fromActivityFlag)){
             AppInfo.clearRenrenAuthInfo(AskInfo.this);
+        }else if(RequestCode.fromActivity_Login.equals(fromActivityFlag)){
+            btnBack.setText(R.string.back);
+            tvNewUser.setText(R.string.activiteAccount);
+            enterButton.setText(R.string.activite);
         }
     }
 
     void setView() {
+        tvNewUser = (TextView) findViewById(R.id.tvNewUser);
         nameEditText = (EditText) findViewById(R.id.nameEditText);
         emailEditText = (EditText) findViewById(R.id.emailEditText);
         schoolTextView = (TextView) findViewById(R.id.schoolTextView);
@@ -213,7 +218,7 @@ public class AskInfo extends HuoDongHaoWaiActivity {
         hometownEditText = (EditText) findViewById(R.id.hometownEditText);
         femaleButton = (Button) findViewById(R.id.femaleButton);
         maleButton = (Button) findViewById(R.id.maleButton);
-        enter = (Button) findViewById(R.id.enterButton);
+        enterButton = (Button) findViewById(R.id.enterButton);
         btnBack = (Button) findViewById(R.id.btnCancel);
         ivPickPhoto = (ImageView) findViewById(R.id.ivPickPhoto);
         llPickPhoto = (LinearLayout) findViewById(R.id.llPickPhoto);
@@ -279,7 +284,7 @@ public class AskInfo extends HuoDongHaoWaiActivity {
             }
         });
 
-        enter.setOnClickListener(new OnClickListener() {
+        enterButton.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {

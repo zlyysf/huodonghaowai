@@ -115,6 +115,8 @@
     <string name="password_wrong">密码最少应有6位.</string>
     <string name="no_photo">请上传个人照片.</string>
     <string name="email_wrong">请填写正确的电子邮件.</string>
+    <string name="activite">激活</string>
+    <string name="activiteAccount">激活帐号</string>
     <!-- nearby -->
     <string name="askfor_first_photo">To engage with other PrettyRich users, please upload a photo of yourself. This photo has to include your face.</string>
     <string name="back_notify">Welcome back to PrettyRich. We deeply appreciate the time of loyal users. %1$d credit is added to your account on the day you come back to the app.</string>
