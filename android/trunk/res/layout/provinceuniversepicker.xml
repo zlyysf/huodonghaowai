@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/alert_dialog_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <TextView
+            android:layout_width="70dip"
+            android:layout_height="fill_parent"            
+
+            android:layout_marginLeft="15dip"
+            android:layout_marginRight="7dip"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:text="@string/alreadychoose"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        
+        <TextView
+            android:id="@+id/textviewChooseUniverse"
+            android:layout_width="200dip"
+            android:layout_height="fill_parent"            
+
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="270dip"
+        android:layout_height="3px"
+        android:src="@color/line_gray" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ListView
+            android:id="@+id/provListView"            
+            android:layout_width="70dip"
+            android:layout_height="200dip"
+            android:layout_marginBottom="10dip"
+            android:layout_marginLeft="15dip"
+            android:layout_marginRight="7dip"
+            android:layout_marginTop="10dip"
+            
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:scrollbars="none"
+            >
+        </ListView>
+
+        <ListView
+            android:id="@+id/unvListView"
+            android:layout_width="200dip"
+            android:layout_height="200dip"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="10dip"
+            
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:scrollbars="none"
+           
+            >
+        </ListView>
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="270dip"
+        android:layout_height="3px"
+        android:src="@color/line_gray" />
+    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="80dip"
+            android:layout_height="30dip"
+            android:layout_marginRight="8dip"
+            android:background="@drawable/following_button"
+            android:text="@string/Cancel" />
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="80dip"
+            android:layout_height="30dip"
+            android:layout_marginLeft="8dip"
+            android:background="@drawable/btn_signup_bg"
+            android:text="@string/OK" />
+    </LinearLayout>
+
+</LinearLayout>

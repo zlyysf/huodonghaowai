@@ -1,7 +1,17 @@
 package com.lingzhimobile.huodonghaowai.util;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 
+import javax.crypto.NullCipher;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.lingzhimobile.huodonghaowai.cons.RenRenLibConst;
@@ -12,6 +22,7 @@ import com.renren.api.connect.android.Renren;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.provider.Settings.Secure;
@@ -40,6 +51,8 @@ public class AppInfo {
     public static String accountRenRen;
     private static boolean isInit = false;
     public static String sessionToken = null;
+
+    private static HashMap<String,ArrayList<String>> hashmapProvUnv;
 
   //renren auth info just be in memory, to be find if necessary in SharedPreferences
 //    public static String renrenSessionUserId = null;
@@ -453,5 +466,70 @@ public class AppInfo {
 //        LogUtils.Logd(LocalLogTag,"existRenrenAuthInfo exist="+exist);
 //        return exist;
 //    }
+
+    public static HashMap<String,ArrayList<String>> getUniversesData(Context context){
+        if (hashmapProvUnv != null) return hashmapProvUnv;
+        String strUnvData = readAllTextInUniversesFile(context);
+
+        HashMap<String,ArrayList<String>> hm = new HashMap<String,ArrayList<String>>();
+        ArrayList<String> al = new ArrayList<String>();
+        try{
+            JSONObject jsonObj = new JSONObject(strUnvData);
+            Iterator iteraKeys = jsonObj.keys();
+            while (iteraKeys.hasNext()){
+                Object keyObj = iteraKeys.next();
+                String sKey = (String)keyObj;
+                al.add(sKey);
+            }
+            for(int i=0; i<al.size(); i++){
+                String prov = al.get(i);
+                JSONArray jsonAry = jsonObj.optJSONArray(prov);
+                int jsonAryLen = jsonAry.length();
+                ArrayList<String> unvAL = new ArrayList<String>(jsonAryLen);
+                for(int j=0; j<jsonAryLen; j++){
+                    String unv = jsonAry.optString(j);
+                    if (!TextUtils.isEmpty(unv)) {
+                        unvAL.add(unv);
+                    }
+                }//for j
+                hm.put(prov, unvAL);
+            }//for i
+        }catch(JSONException e){
+            LogUtils.Loge(LocalLogTag,e.getMessage(),e);
+        }
+        hashmapProvUnv = hm;
+        LogUtils.Logd(LocalLogTag, "hm="+hm.toString());
+        return hashmapProvUnv;
+    }
+
+    private static String readAllTextInUniversesFile(Context context) {
+        String strFileData = null;
+        AssetManager assetManager = context.getAssets();
+        try {
+            InputStream inputStream = assetManager.open("unvs211ByJsonStr.dat");
+            strFileData = readAllTextFromStream(inputStream);
+            //Log.d(Const.LogTagBase, "getFileData="+strFileData);
+            return strFileData;
+        } catch (IOException e) {
+            LogUtils.Loge(LocalLogTag,e.getMessage(),e);
+        }
+        return strFileData;
+    }
+    private static String readAllTextFromStream(InputStream inputStream) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte buf[] = new byte[1024];
+        int len;
+        try {
+            while ((len = inputStream.read(buf)) != -1) {
+                outputStream.write(buf, 0, len);
+            }
+            outputStream.close();
+            inputStream.close();
+        } catch (IOException e) {
+            LogUtils.Loge(LocalLogTag, e.getMessage(),e);
+        }
+        return outputStream.toString();
+    }
+
 
 }

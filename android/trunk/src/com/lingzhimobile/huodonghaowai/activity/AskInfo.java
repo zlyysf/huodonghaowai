@@ -29,6 +29,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -51,6 +52,8 @@ import com.lingzhimobile.huodonghaowai.util.BitmapManager;
 import com.lingzhimobile.huodonghaowai.util.FileManager;
 import com.lingzhimobile.huodonghaowai.util.ImageLoadUtil;
 import com.lingzhimobile.huodonghaowai.util.MethodHandler;
+import com.lingzhimobile.huodonghaowai.view.ProvinceUniversePickerDialog;
+import com.lingzhimobile.huodonghaowai.view.ProvinceUniversePickerDialog.MyCloseListener;
 import com.lingzhimobile.huodonghaowai.view.myProgressDialog;
 import com.renren.api.connect.android.Renren;
 import com.umeng.analytics.MobclickAgent;
@@ -419,37 +422,54 @@ public class AskInfo extends HuoDongHaoWaiActivity {
 
             @Override
             public void onClick(View v) {
-                userSchool = getResources()
-                        .getStringArray(
-                                R.array.school_values)[0];
-                AlertDialog dialog = new AlertDialog.Builder(AskInfo.this)
-                        .setTitle(R.string.school)
-                        .setSingleChoiceItems(R.array.school_values, 0,
-                                new DialogInterface.OnClickListener() {
+//                userSchool = getResources()
+//                        .getStringArray(
+//                                R.array.school_values)[0];
+//                AlertDialog dialog = new AlertDialog.Builder(AskInfo.this)
+//                        .setTitle(R.string.school)
+//                        .setSingleChoiceItems(R.array.school_values, 0,
+//                                new DialogInterface.OnClickListener() {
+//
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog,
+//                                            int which) {
+//                                        userSchool = getResources()
+//                                                .getStringArray(
+//                                                        R.array.school_values)[which];
+//                                    }
+//                                })
+//                        .setPositiveButton(R.string.OK,
+//                                new DialogInterface.OnClickListener() {
+//
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog,
+//                                            int which) {
+//                                        schoolTextView
+//                                                .setText(userSchool);
+//                                    }
+//                                }).setNegativeButton(R.string.Cancel, null)
+//                        .create();
+//                dialog.show();
+                InputMethodManager m = (InputMethodManager) AskInfo.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                m.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+                MyCloseListener provUnvDialogCloseListener = new MyCloseListener(){
+                    @Override
+                    public void onOK(String prov, String unv){
+                        if (!TextUtils.isEmpty(unv))
+                            schoolTextView.setText(unv);
+                    }
+                    @Override
+                    public void onCancel(){
 
-                                    @Override
-                                    public void onClick(DialogInterface dialog,
-                                            int which) {
-                                        userSchool = getResources()
-                                                .getStringArray(
-                                                        R.array.school_values)[which];
-                                    }
-                                })
-                        .setPositiveButton(R.string.OK,
-                                new DialogInterface.OnClickListener() {
-
-                                    @Override
-                                    public void onClick(DialogInterface dialog,
-                                            int which) {
-                                        schoolTextView
-                                                .setText(userSchool);
-                                    }
-                                }).setNegativeButton(R.string.Cancel, null)
-                        .create();
-                dialog.show();
-
+                    }
+                };
+                ProvinceUniversePickerDialog provUnvDialog = new ProvinceUniversePickerDialog(
+                        AskInfo.this, provUnvDialogCloseListener);
+                if (!provUnvDialog.isShowing()) {
+                    provUnvDialog.show();
+                }
             }
-        });
+        });//schoolTextView.setOnClickListener
     }
 
     protected void savePrefrerence() {
