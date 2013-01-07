@@ -18,6 +18,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -50,6 +53,7 @@ public class Settings extends HuoDongHaoWaiActivity {
     private Button btnCancel,btnLogout;
     private LinearLayout layoutRenrenBindState;
     private TextView tvRenrenBindState;
+    private CheckBox cbBindRenRenState;
 
     private static final String LocalLogTag = LogTag.ACTIVITY + " Settings";
 
@@ -94,6 +98,9 @@ public class Settings extends HuoDongHaoWaiActivity {
 
                 errCode = ((Integer)msg.obj).intValue();
                 if (errCode == 21301){//userAlreadyBindThisRenRenAccount
+                    Renren renren = AppInfo.getNonEmptyRenrenSdkInstance(Settings.this);
+                    if (renren.getCurrentUid()!=0)
+                        AppInfo.accountRenRen = renren.getCurrentUid()+"";
 
                 }else{
                     //not clear renren auth info in AppInfo, let it be done in get
@@ -111,6 +118,7 @@ public class Settings extends HuoDongHaoWaiActivity {
                 errCode = ((Integer)msg.obj).intValue();
                 if (errCode == 21306){//userNotBindRenRenAccount
                   //not clear renren auth info in AppInfo, let it be done in get
+                    AppInfo.accountRenRen = null;
                 }else{
                     AppUtil.handleErrorCode(msg.obj.toString(), Settings.this);
                 }
@@ -126,8 +134,10 @@ public class Settings extends HuoDongHaoWaiActivity {
     private void refreshBindStatusView(){
         if (isUserBindWithRenren()){
             tvRenrenBindState.setText(R.string.alreadyBindWithAction);
+            cbBindRenRenState.setChecked(true);
         }else{
             tvRenrenBindState.setText(R.string.notyetBindWithAction);
+            cbBindRenRenState.setChecked(false);
         }
     }
 
@@ -157,8 +167,7 @@ public class Settings extends HuoDongHaoWaiActivity {
         tvRenrenBindState = (TextView) findViewById(R.id.tvRenrenBindState);
         dialogAskLogout = new Dialog(this, R.style.AlertDialog);
         dialogAskChangeBindWithRenren = new Dialog(this, R.style.AlertDialog);
-
-
+        cbBindRenRenState = (CheckBox) findViewById(R.id.cbBindRenRenState);
     }
     void setViewData() {
         refreshBindStatusView();
@@ -182,6 +191,14 @@ public class Settings extends HuoDongHaoWaiActivity {
                 showChangeBindDialog();
             }
         });
+        cbBindRenRenState.setClickable(false);
+//        cbBindRenRenState.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView,
+//                    boolean isChecked) {
+//                showChangeBindDialog();
+//            }
+//        });
     }
 
     @Override

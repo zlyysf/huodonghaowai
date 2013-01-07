@@ -49,18 +49,27 @@
                 android:id="@+id/renrenLoginButton"
                 android:layout_width="match_parent"
                 android:layout_height="40dip"
-                android:layout_marginTop="16dip"
-                android:background="@drawable/btn_signup_bg"
+                android:layout_marginTop="52dip"
+                android:layout_marginBottom="44dip"
+                android:background="@drawable/renren_login_button"
                 android:enabled="true"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="@string/renrenlogin"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
+            
+            
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="16px"
+                android:background="@drawable/renren_login_separate_line"
+                />
+    
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dip"
-                android:layout_marginTop="16dip"
+                android:layout_marginTop="44dip"
                 android:background="@drawable/item_first_normal"
                 android:gravity="center_vertical" >
 
@@ -128,8 +137,6 @@
                 android:id="@+id/llForgotPassword"
                 android:layout_width="match_parent"
                 android:layout_height="40dip"
-                android:layout_marginTop="16dip"
-                android:background="@drawable/corners_gray"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
@@ -138,15 +145,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/forgotpassowrd"
                     android:textColor="@color/font_gray" 
                     android:textSize="16sp"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="8dip"
-                    android:src="@drawable/arrow_right" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

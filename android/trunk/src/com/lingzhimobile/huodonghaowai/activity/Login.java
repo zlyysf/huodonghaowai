@@ -316,7 +316,7 @@ public class Login extends Activity {
         timer.schedule(new TimerTask(){
             @Override
             public void run() {
-             imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+             //imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             }
         }, 300);
         llForgotPassword = (LinearLayout) findViewById(R.id.llForgotPassword);

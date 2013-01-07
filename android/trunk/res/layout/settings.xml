@@ -48,13 +48,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dip"
                 android:layout_marginRight="12dip"
+                android:layout_marginTop="30dip"
                 android:orientation="vertical" >
 
 
                 <LinearLayout android:id="@+id/layoutRenrenBindState"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
-                    android:background="@drawable/item_middle_normal"
+                    android:background="@drawable/corners_gray"
                     android:gravity="center_vertical" >
 
                     <TextView
@@ -76,13 +77,16 @@
                         android:text="@string/notyetBindWithAction"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
+                    
+                    <CheckBox
+                            android:id="@+id/cbBindRenRenState"
+                            style="@style/MyCheckBox"
+                            android:layout_width="18dip"
+                            android:layout_height="18dip"
+                            android:layout_marginLeft="12dip"
+                            android:layout_marginRight="12dip"                            
+                            android:checked="true" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dip"
-                        android:layout_marginRight="5dip"
-                        android:src="@drawable/arrow_right" />
                 </LinearLayout>
 
 
@@ -91,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="24dip"
+                    android:layout_marginTop="30dip"
                     android:background="@drawable/btn_signup_bg"
                     android:gravity="center"
                     android:text="@string/logout"
