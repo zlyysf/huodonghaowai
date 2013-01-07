@@ -467,6 +467,7 @@ var config = exports.config = {
     //downUrlForAndroid :  "http://t.cn/zjLjlP5",// http://hmu107145.chinaw3.com/tongqu.apk
     downUrlForAndroid :  "www.huodonghaowai.com",//
     downUrlForApple : "tinyurl.com/aan5yxs", //"https://itunes.apple.com/cn/app/prettyrich/id543114421?l=en&mt=8",
+    downUrlForMobileApp :  "www.huodonghaowai.com",//
 
 
     //schools : ['北京大学','清华大学']
