@@ -20,6 +20,7 @@ import com.lingzhimobile.huodonghaowai.util.JSONParser;
 
 public class RegisterTask extends AsyncTask<Void, Void, String> {
     HttpPost httpRequest;
+    private static final String LocalLogTag = LogTag.TASK + " RegisterTask";
     private final String requestURL = NetProtocol.HTTPS_REQUEST_URL
             + "user/register";
     private final String email, password,name,gender,school,hometown,accountRenRen;
@@ -70,21 +71,27 @@ public class RegisterTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        try {
-            JSONObject resJsonObject = JSONParser.checkSucceed(result);
-            String userId = resJsonObject.getJSONObject("result").optString("userId");
-            AppInfo.userId = userId;
-            msg.what = MessageID.REGISTER_OK;
-            msg.obj = userId;
-        } catch (JSONParseException e) {
-            msg.what = MessageID.SERVER_RETURN_NULL;
-            msg.obj = e.getCode();
-        } catch (JSONException e) {
-            msg.what = MessageID.SERVER_RETURN_NULL;
-            msg.obj = AppUtil.getJSONParseExceptionError();
+
+        JSONObject jsonResult = JSONParser.getJsonObject(result);
+        if (jsonResult == null){
+            msg.what = MessageID.REGISTER_Fail;
+            msg.obj = null;
+        }else{
+            boolean isSucceed = JSONParser.checkServerApiSucceed(jsonResult);
+            if (isSucceed){
+                msg.what = MessageID.REGISTER_OK;
+                String userId = jsonResult.optJSONObject("result").optString("userId");
+                AppInfo.userId = userId;
+                msg.obj = userId;
+            }else{
+                msg.what = MessageID.REGISTER_Fail;
+                int errCode = jsonResult.optInt("code");//TODO refractor to make code as string
+                String errMsg = jsonResult.optString("message");
+                msg.obj = errCode;
+                LogUtils.Loge(LocalLogTag, errMsg);
+            }
         }
         msg.sendToTarget();
-
     }
 
     @Override

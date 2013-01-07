@@ -97,6 +97,7 @@ public class Settings extends HuoDongHaoWaiActivity {
 
                 }else{
                     //not clear renren auth info in AppInfo, let it be done in get
+                    AppUtil.handleErrorCode(msg.obj.toString(), Settings.this);
                 }
                 refreshBindStatusView();
                 break;

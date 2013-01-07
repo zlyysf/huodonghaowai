@@ -90,7 +90,7 @@ public class PublishRenRenFeedTask {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(activity, "renren publishFeed err",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(activity, "renren publishFeed err",Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -109,7 +109,7 @@ public class PublishRenRenFeedTask {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(activity, "renren publishFeed fault",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(activity, "renren publishFeed fault",Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -131,7 +131,7 @@ public class PublishRenRenFeedTask {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(activity, "renren publishFeed OK",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(activity, "renren publishFeed OK",Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

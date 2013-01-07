@@ -41,7 +41,8 @@ public class MessageID {
     public final static int LOGIN_OK = 2041;
     public final static int LOGIN_Fail = 2042;
     public final static int REGISTER_OK = 2043;
-    public final static int LOGOUT_OK = 2044;
+    public final static int REGISTER_Fail = 2044;
+    public final static int LOGOUT_OK = 2045;
     public final static int GET_CONVERSATIONS_OK = 2046;
 
     public static final int GET_NEARBY_DATE_OK = 2050;

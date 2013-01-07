@@ -96,13 +96,31 @@ public class AskInfo extends HuoDongHaoWaiActivity {
             if (AskInfo.this.isFinishing()) {
                 return;
             }
+            if (mProgressDialog!=null)
+                mProgressDialog.dismiss();
             switch (msg.what) {
             case MessageID.SERVER_RETURN_NULL:
-                mProgressDialog.dismiss();
                 AppUtil.handleErrorCode(msg.obj.toString(), AskInfo.this);
                 break;
+            case MessageID.REGISTER_Fail:
+                if (msg.obj==null){
+                    AppUtil.handleErrorCode(MessageID.SERVER_RETURN_NULL+"", AskInfo.this);
+                }else{
+                    LogUtils.Logd(LogTag.ACTIVITY, "AskInfo handleMessage msg.obj=" + msg.obj
+                            + ", fromActivityFlag="+fromActivityFlag );
+                    if ("21082".equals(msg.obj.toString())){//emailAlreadyRegistered
+                        if(RequestCode.fromActivity_Login.equals(fromActivityFlag)){
+                            //from register from renren
+                            AppUtil.handleErrorCode("10021082", AskInfo.this);
+                        }else{
+                            AppUtil.handleErrorCode(msg.obj.toString(), AskInfo.this);
+                        }
+                    }else{
+                        AppUtil.handleErrorCode(msg.obj.toString(), AskInfo.this);
+                    }
+                }
+                break;
             case MessageID.REGISTER_OK:
-                mProgressDialog.dismiss();
                 userId = (String)msg.obj;
                 savePrefrerence();
                 FileManager.init(AskInfo.this);

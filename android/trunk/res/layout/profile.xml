@@ -376,7 +376,7 @@
                             android:layout_width="60dip"
                             android:layout_height="wrap_content"
                             android:gravity="right"
-                            android:text="@string/school"
+                            android:text="@string/current_school"
                             android:textColor="@color/font_blue" 
                             android:textSize="14sp" />
 
