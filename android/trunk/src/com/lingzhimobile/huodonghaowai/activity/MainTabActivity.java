@@ -283,6 +283,8 @@ public class MainTabActivity extends ActivityGroup {
     }
 
     private void delayRegister() {
+        LogUtils.Logd(LocalLogTag, "delayRegister myHanlder==null?="+(myHanlder==null)
+                +", isInit="+isInit+", pushAvailable="+pushAvailable);
         if (myHanlder == null) {
             return;
         }
@@ -293,6 +295,7 @@ public class MainTabActivity extends ActivityGroup {
                     if (pushAvailable) {
                         AppInfo.init(instance);
                         selectedAccount = getFirstAccount();
+                        LogUtils.Logd(LocalLogTag, "delayRegister selectedAccount="+selectedAccount);
                         if (selectedAccount != null) {
                             register();
                         }

@@ -51,7 +51,6 @@
                 android:layout_marginTop="32dip"
                 android:orientation="vertical" >
 
-
                 <LinearLayout android:id="@+id/layoutRenrenBindState"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
@@ -77,24 +76,21 @@
                         android:text="@string/notyetBindWithAction"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
-                    
                     <CheckBox
-                            android:id="@+id/cbBindRenRenState"
-                            style="@style/MyCheckBox"
-                            android:layout_width="18dip"
-                            android:layout_height="18dip"
-                            android:layout_marginLeft="8dip"
-                            android:layout_marginRight="8dip"                            
-                            android:checked="true" />
-                    
+                        android:id="@+id/cbBindRenRenState"
+                        style="@style/MyCheckBox"
+                        android:layout_width="18dip"
+                        android:layout_height="18dip"
+                        android:layout_marginLeft="8dip"
+                        android:layout_marginRight="8dip"                            
+                        android:checked="true" />
                     <ImageView
-                        android:id="@+id/ivToBindRenRen"
+                        android:id="@+id/ivArrowToBindRenRen"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dip"
                         android:layout_marginRight="8dip"
-                        android:src="@drawable/arrow_right" />
-
+                        android:src="@drawable/arrow_right_to_bind_renren" />
                 </LinearLayout>
 
 

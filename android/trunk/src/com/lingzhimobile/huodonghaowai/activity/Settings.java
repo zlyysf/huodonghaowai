@@ -55,7 +55,7 @@ public class Settings extends HuoDongHaoWaiActivity {
     private LinearLayout layoutRenrenBindState;
     private TextView tvRenrenBindState;
     private CheckBox cbBindRenRenState;
-    private ImageView ivToBindRenRen;
+    private ImageView ivArrowToBindRenRen;
 
     private static final String LocalLogTag = LogTag.ACTIVITY + " Settings";
 
@@ -138,13 +138,15 @@ public class Settings extends HuoDongHaoWaiActivity {
             tvRenrenBindState.setText(R.string.alreadyBindWithAction);
             cbBindRenRenState.setChecked(true);
             cbBindRenRenState.setVisibility(View.VISIBLE);
-            ivToBindRenRen.setVisibility(View.GONE);
+            //ivRenRenStateChecked.setVisibility(View.VISIBLE);
+            ivArrowToBindRenRen.setVisibility(View.GONE);
 
         }else{
             tvRenrenBindState.setText(R.string.notyetBindWithAction);
             cbBindRenRenState.setChecked(false);
             cbBindRenRenState.setVisibility(View.GONE);
-            ivToBindRenRen.setVisibility(View.VISIBLE);
+            //ivRenRenStateChecked.setVisibility(View.GONE);
+            ivArrowToBindRenRen.setVisibility(View.VISIBLE);
         }
     }
 
@@ -175,7 +177,8 @@ public class Settings extends HuoDongHaoWaiActivity {
         dialogAskLogout = new Dialog(this, R.style.AlertDialog);
         dialogAskChangeBindWithRenren = new Dialog(this, R.style.AlertDialog);
         cbBindRenRenState = (CheckBox) findViewById(R.id.cbBindRenRenState);
-        ivToBindRenRen = (ImageView) findViewById(R.id.ivToBindRenRen);
+        ivArrowToBindRenRen = (ImageView) findViewById(R.id.ivArrowToBindRenRen);
+        //ivRenRenStateChecked = (ImageView) findViewById(R.id.ivRenRenStateChecked);
     }
     void setViewData() {
         refreshBindStatusView();
@@ -200,13 +203,7 @@ public class Settings extends HuoDongHaoWaiActivity {
             }
         });
         cbBindRenRenState.setClickable(false);
-//        cbBindRenRenState.setOnCheckedChangeListener(new OnCheckedChangeListener(){
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView,
-//                    boolean isChecked) {
-//                showChangeBindDialog();
-//            }
-//        });
+
     }
 
     @Override

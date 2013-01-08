@@ -12,7 +12,7 @@
         android:orientation="horizontal" >
         <TextView
             android:layout_width="70dip"
-            android:layout_height="fill_parent"            
+            android:layout_height="fill_parent"
 
             android:layout_marginLeft="15dip"
             android:layout_marginRight="7dip"
@@ -26,7 +26,7 @@
         <TextView
             android:id="@+id/textviewChooseUniverse"
             android:layout_width="200dip"
-            android:layout_height="fill_parent"            
+            android:layout_height="fill_parent"
 
             android:focusable="false"
             android:focusableInTouchMode="false"
@@ -35,10 +35,11 @@
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
+    
     <ImageView
         android:layout_width="270dip"
-        android:layout_height="3px"
-        android:src="@color/line_gray" />
+        android:layout_height="2px"
+        android:src="#f39319" />   
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -46,7 +47,7 @@
         android:orientation="horizontal" >
 
         <ListView
-            android:id="@+id/provListView"            
+            android:id="@+id/provListView"
             android:layout_width="70dip"
             android:layout_height="200dip"
             android:layout_marginBottom="10dip"
@@ -80,8 +81,8 @@
 
     <ImageView
         android:layout_width="270dip"
-        android:layout_height="3px"
-        android:src="@color/line_gray" />
+        android:layout_height="2px"
+        android:src="#f39319" />
     
 
     <LinearLayout
