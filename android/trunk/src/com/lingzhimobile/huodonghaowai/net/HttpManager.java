@@ -38,6 +38,7 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Looper;
+import android.text.TextUtils;
 
 import com.lingzhimobile.huodonghaowai.activity.MainTabActivity;
 import com.lingzhimobile.huodonghaowai.activity.Splash;
@@ -87,12 +88,14 @@ public class HttpManager {
         } catch (Exception e) {
             return null;
         }
-            
+
         }
         try {
             httpRequest.setHeader("Content-Type", "application/json");
-            httpRequest.setHeader("Cookie",
+            if (!TextUtils.isEmpty(AppInfo.sessionToken)){
+                httpRequest.setHeader("Cookie",
                     "connect.sid={1}".replace("{1}", AppInfo.sessionToken));
+            }
             httpRequest.setEntity(new StringEntity(params.toString(),
                     HTTP.UTF_8));
             HttpResponse httpResponse = getNewHttpClient().execute(httpRequest);
@@ -203,7 +206,7 @@ public class HttpManager {
         }
         return strResult;
     }
-    public static String updateProfileWithPhoto(String userId, HashMap<String,String> values,File imgFile, 
+    public static String updateProfileWithPhoto(String userId, HashMap<String,String> values,File imgFile,
             String height, String width, HttpPost httpRequest)
             throws Exception {
         String strResult = null;
@@ -252,14 +255,14 @@ public class HttpManager {
         }
         return strResult;
     }
-    
+
     public static String createDate(HttpPost httpRequest, String urlStr,MultipartEntity reqEntity)
             throws Exception {
         String strResult = null;
         if (urlStr == null) {
             return null;
         }
-       
+
         if (AppInfo.getSessionToken() == null
                 || "".equals(AppInfo.getSessionToken())) {
             Intent intent = new Intent(AppInfo.context, Splash.class);
