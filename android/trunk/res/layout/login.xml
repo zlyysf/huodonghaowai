@@ -61,7 +61,7 @@
             
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="10px"
+                android:layout_height="10dip"
                 android:background="@drawable/renren_login_separate_line"
                 />
     
