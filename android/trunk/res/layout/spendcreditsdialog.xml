@@ -32,7 +32,7 @@
             android:layout_marginLeft="5dip"
             android:text="@string/OK"
             android:id="@+id/btnOk"
-            android:background="@drawable/btn_signup_bg"
+            android:background="@drawable/btn_3state_bg"
             android:textColor="@color/white"/>
     </LinearLayout>
 

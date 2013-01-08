@@ -262,7 +262,7 @@
                     android:layout_height="40dip"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="24dip"
-                    android:background="@drawable/btn_signup_bg"
+                    android:background="@drawable/btn_3state_bg"
                     android:text="@string/signup"
                     android:textColor="@color/white"
                     android:textSize="16sp" />

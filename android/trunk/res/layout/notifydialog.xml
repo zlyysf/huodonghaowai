@@ -28,7 +28,7 @@
             android:layout_width="72dip"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/btn_signup_bg"
+            android:background="@drawable/btn_3state_bg"
             android:text="@string/OK" />
     </RelativeLayout>
 

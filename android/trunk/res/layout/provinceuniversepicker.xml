@@ -104,7 +104,7 @@
             android:layout_width="80dip"
             android:layout_height="30dip"
             android:layout_marginLeft="8dip"
-            android:background="@drawable/btn_signup_bg"
+            android:background="@drawable/btn_3state_bg"
             android:text="@string/OK" />
     </LinearLayout>
 

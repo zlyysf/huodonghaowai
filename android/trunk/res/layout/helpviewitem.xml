@@ -11,7 +11,7 @@
         android:layout_height="40dip"
         android:paddingLeft="20dip"
         android:paddingRight="20dip"
-        android:background="@drawable/btn_signup_bg"
+        android:background="@drawable/btn_3state_bg"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="45dip"
         android:layout_centerHorizontal="true"

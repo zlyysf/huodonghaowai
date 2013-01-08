@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/btn_signup_bg"
+            android:background="@drawable/btn_3state_bg"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/i_want"
             android:textColor="@color/white"
