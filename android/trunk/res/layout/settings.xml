@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dip"
                 android:layout_marginRight="12dip"
-                android:layout_marginTop="30dip"
+                android:layout_marginTop="32dip"
                 android:orientation="vertical" >
 
 
@@ -83,9 +83,17 @@
                             style="@style/MyCheckBox"
                             android:layout_width="18dip"
                             android:layout_height="18dip"
-                            android:layout_marginLeft="12dip"
-                            android:layout_marginRight="12dip"                            
+                            android:layout_marginLeft="8dip"
+                            android:layout_marginRight="8dip"                            
                             android:checked="true" />
+                    
+                    <ImageView
+                        android:id="@+id/ivToBindRenRen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dip"
+                        android:layout_marginRight="8dip"
+                        android:src="@drawable/arrow_right" />
 
                 </LinearLayout>
 
@@ -95,7 +103,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dip"
+                    android:layout_marginTop="32dip"
                     android:background="@drawable/btn_signup_bg"
                     android:gravity="center"
                     android:text="@string/logout"

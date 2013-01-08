@@ -11,6 +11,7 @@ import android.R.anim;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -54,6 +55,7 @@ public class Settings extends HuoDongHaoWaiActivity {
     private LinearLayout layoutRenrenBindState;
     private TextView tvRenrenBindState;
     private CheckBox cbBindRenRenState;
+    private ImageView ivToBindRenRen;
 
     private static final String LocalLogTag = LogTag.ACTIVITY + " Settings";
 
@@ -135,9 +137,14 @@ public class Settings extends HuoDongHaoWaiActivity {
         if (isUserBindWithRenren()){
             tvRenrenBindState.setText(R.string.alreadyBindWithAction);
             cbBindRenRenState.setChecked(true);
+            cbBindRenRenState.setVisibility(View.VISIBLE);
+            ivToBindRenRen.setVisibility(View.GONE);
+
         }else{
             tvRenrenBindState.setText(R.string.notyetBindWithAction);
             cbBindRenRenState.setChecked(false);
+            cbBindRenRenState.setVisibility(View.GONE);
+            ivToBindRenRen.setVisibility(View.VISIBLE);
         }
     }
 
@@ -168,6 +175,7 @@ public class Settings extends HuoDongHaoWaiActivity {
         dialogAskLogout = new Dialog(this, R.style.AlertDialog);
         dialogAskChangeBindWithRenren = new Dialog(this, R.style.AlertDialog);
         cbBindRenRenState = (CheckBox) findViewById(R.id.cbBindRenRenState);
+        ivToBindRenRen = (ImageView) findViewById(R.id.ivToBindRenRen);
     }
     void setViewData() {
         refreshBindStatusView();
