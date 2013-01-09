@@ -372,6 +372,8 @@ public class AppInfo {
         LogUtils.Logd(LocalLogTag,"clearRenrenSdkAuthInfo , getCurrentUid="+lCurrentUid);
         if (lCurrentUid != 0){
             renren.logout(context);
+        }else{//lCurrentUid == 0 , also have renren auth info
+            renren.logout(context);
         }
     }
 
