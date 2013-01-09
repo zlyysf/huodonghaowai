@@ -202,6 +202,7 @@ function test_convertToDate(){
   assert.ok(dtB1.getTime()==dtB2.getTime());
 };//test_convertToDate
 
+//TO BE deleted
 function test_DateLocalFromToUTC(){
   var dt0Local = new Date();
   var dt2Utc = handy.dateLocalToUTC(dt0Local);
@@ -238,7 +239,7 @@ function test_encryptDecrypt(){
   var s1d = handy.decrypt(s1);
   console.log("s1d="+util.inspect(s1d));
 
-  var timeNowUtc = handy.getNowOfUTCdate().getTime();
+  var timeNowUtc = handy.getUTCNowTime();
   var tm1 = timeNowUtc + 24*60*60*1000;
   var tkn1 = tm1 +"M" + "abc@aaa.com";
   console.log("encrypt "+tkn1+"="+handy.encrypt(tkn1));

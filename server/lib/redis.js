@@ -2877,7 +2877,7 @@ Redis.prototype.generateInviteCodeD = function(params, callback){
   var expireTime = params.expireTime;
   var inviteCodeKey = 'inviteCode';
   var userKey = "user:"+userId;
-  var nowUtcTime = handy.getNowOfUTCdate().getTime();
+  var nowUtcTime = handy.getUTCNowTime();
   var multi = self.client.multi();
   multi.hget(userKey,'createInviteCodeCount');
   multi.exec(function(err,multiRetValues){
@@ -2938,7 +2938,7 @@ Redis.prototype.getInviteCodeInfoD = function(params, callback){
   }
   if (!params.inviteCode){
     if (config.config.needNotCheckInviteCode){
-      var nowUTCTime = handy.getNowOfUTCdate().getTime();
+      var nowUTCTime = handy.getUTCNowTime();
       return callback(null,{userId:config.config.users.system.userId, generateTime:nowUTCTime, isValid:true});
     }else{
       var err = self.newError({errorKey:'needParameter',messageParams:['inviteCode'],messagePrefix:messagePrefix,req:req});
@@ -3078,7 +3078,7 @@ Redis.prototype.registerEmailAccount = function(params, callback) {
         }
         userId = newId+'';
         var multi = self.client.multi();
-        var createTime = handy.getNowOfUTCdate().getTime();
+        var createTime = handy.getUTCNowTime();
         var userKey = 'user:'+userId;
         var userObj = {userId:userId, emailAccount:emailAccount, password:encryptedPwd, name:name, gender:gender,
             school:school, deviceType:deviceType, regDeviceId:deviceId, currentDeviceId:deviceId,
@@ -3153,7 +3153,7 @@ Redis.prototype.emailLogIn = function(params, callback) {
   var primaryPhotoFields = params.primaryPhotoFields;
   var encryptedPwd = '';
   if (password) encryptedPwd = handy.encrypt(password);
-  var nowTime = handy.getNowOfUTCdate().getTime();
+  var nowTime = handy.getUTCNowTime();
   self.getUserIdByEmailAccount({req:req,emailAccount:emailAccount}, function(err,userId){
     if (err){
       if (callback) return callback(err);
@@ -3263,7 +3263,7 @@ Redis.prototype.renrenAccountLogIn = function(params, callback) {
   var primaryPhotoFields = params.primaryPhotoFields;
   //TODO verify renrenAuthObj with renren api
 
-  var nowTime = handy.getNowOfUTCdate().getTime();
+  var nowTime = handy.getUTCNowTime();
   self.getUserIdByRenRenAccount({req:req, accountRenRen:accountRenRen}, function(err,userId){
     if (err) return callback(err);
     if (!userId){
@@ -3352,7 +3352,7 @@ Redis.prototype.bindRenRenAccount = function(params, callback) {
           return callback(err);
         }
       }
-      var nowTime = handy.getNowOfUTCdate().getTime();
+      var nowTime = handy.getUTCNowTime();
       var multi = self.client.multi();
       var userKey = "user:"+userId;
       multi.hset(userKey,'accountRenRen',accountRenRen);
@@ -3562,7 +3562,7 @@ Redis.prototype.clearSessionRelated = function(params, callback) {
     else return self.handleError({err:err});
   }
   var userId = params.userId;
-  var nowTime = handy.getNowOfUTCdate().getTime();
+  var nowTime = handy.getUTCNowTime();
   self.updateUser({req:req,userId:userId,updateFields:{appToken:'',lastLogoutTime:nowTime+''}}, function(err){
     if (err){
       if (callback) return callback(err);
@@ -3687,7 +3687,7 @@ Redis.prototype.createPhoto = function(params, callback) {
   var width = params.width;
   var height = params.height;
   var setPrimary = params.setPrimary;
-  var createTime = handy.getNowOfUTCdate().getTime();
+  var createTime = handy.getUTCNowTime();
   self.client.incr('photo', function(err, newId) {
     if (err){
       var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
@@ -3870,7 +3870,7 @@ Redis.prototype.auditPhoto = function(params, callback) {
     state = 'auditPassed';
   else
     state = 'auditDenied';
-  var auditTime = handy.getNowOfUTCdate().getTime();
+  var auditTime = handy.getUTCNowTime();
 
 //  var regionInfo = handy.getCentainLevelRegion({region:photoOwner.region,geolibType:photoOwner.geolibType,regionLevel:4});
 //  if (regionInfo.err){
@@ -4826,7 +4826,7 @@ Redis.prototype.createReport = function(params, callback) {
   var reporterId = params.reporterId;
   var reporteeId = params.reporteeId;
   var description = params.description;
-  var createTime = handy.getNowOfUTCdate().getTime();
+  var createTime = handy.getUTCNowTime();
   self.client.incr('report', function(err, newId) {
     if (err){
       var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
@@ -4948,7 +4948,7 @@ Redis.prototype.createDate = function(params, callback) {
   var userGender = params.userGender;
   var school = params.school;
   var userBeMade = params.userBeMade;
-  var createTime = handy.getNowOfUTCdate().getTime()+'';
+  var createTime = handy.getUTCNowTime()+'';
 
 //  var regionInfo = handy.getCentainLevelRegion({region:region,geolibType:geolibType,regionLevel:4});
 //  if (regionInfo.err){
@@ -5042,7 +5042,7 @@ Redis.prototype.sendDateByReceiverIds = function(params, callback) {
   var senderId = params.senderId;
   var dateDate = params.dateDate;
   var receiverIds = params.receiverIds;
-  var createTime = handy.getNowOfUTCdate().getTime()+"";
+  var createTime = handy.getUTCNowTime()+"";
   var dateReceiversKey = 'date:'+dateId+':receivers';
   var orderScore = shuffle.generateDateDateScore({dateInMs:dateDate, lowSeqPart:senderId});
   var multi = self.client.multi();
@@ -5487,7 +5487,7 @@ Redis.prototype.getValuesOnSortedSetByTime = function(params, callback) {
     directionFromLateToEarly = false;
   if (cutOffTime == null){
     if (!directionFromLateToEarly && excludeExpired){
-      var nowTime = handy.getNowOfUTCdate().getTime();
+      var nowTime = handy.getUTCNowTime();
       var score;
       if (scoreBeInflectionTime) score = shuffle.generateDateDateScore({dateInMs:nowTime, lowSeqPart:0});
       else score = nowTime;
@@ -5662,7 +5662,7 @@ Redis.prototype.getUserDateIdsByFieldCompare = function(params, callback) {
       }
       getToScore = '-inf';
       if (excludeExpired){
-        var nowUTCTime = handy.getNowOfUTCdate().getTime();
+        var nowUTCTime = handy.getUTCNowTime();
         if (dateSortType == 'dateDate'){
           getToScore = shuffle.generateDateDateScore({dateInMs:nowUTCTime, lowSeqPart:0});
         }else{
@@ -5687,7 +5687,7 @@ Redis.prototype.getUserDateIdsByFieldCompare = function(params, callback) {
         getFromScore = cutOffTime + '';
       }
       if (excludeExpired){
-        var nowUTCTime = handy.getNowOfUTCdate().getTime();
+        var nowUTCTime = handy.getUTCNowTime();
         if (dateSortType == 'dateDate'){
           nowUTCTimeScore = shuffle.generateDateDateScore({dateInMs:nowUTCTime, lowSeqPart:0});
         }else{
@@ -7154,7 +7154,7 @@ Redis.prototype.createMessage = function(params, callback) {
   var dateResponderId = params.dateResponderId;
   var onlySendToSingle = params.onlySendToSingle;
 
-  var createTime = handy.getNowOfUTCdate().getTime()+'';
+  var createTime = handy.getUTCNowTime()+'';
   self.client.incr('message', function(err, newId) {
     if (err){
       var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
@@ -7383,7 +7383,7 @@ Redis.prototype.setDateConversationViewed = function(params, callback) {
   var targetUserId = params.targetUserId;
   var dateSenderId = params.dateSenderId;
   var dateResponderId = params.dateResponderId;
-  var nowUtcTime = handy.getNowOfUTCdate().getTime();
+  var nowUtcTime = handy.getUTCNowTime();
   var userLastViewChatTimeFieldName = null;
   if(userId == dateSenderId){
     userLastViewChatTimeFieldName = "senderLastViewChatTime";
@@ -7709,7 +7709,7 @@ Redis.prototype.ConfirmDateByCreator = function(params, callback) {
   var dateDate = params.dateDate;
   var orderScore = shuffle.generateDateDateScore({dateInMs:dateDate, lowSeqPart:senderId});
 
-  var nowTime = handy.getNowOfUTCdate().getTime()+'';
+  var nowTime = handy.getUTCNowTime()+'';
   var multi = self.client.multi();
   var dateKey = 'date:'+dateId;
   //multi.hset(dateKey,'senderLastConfirmTime',nowTime);
@@ -7776,7 +7776,7 @@ Redis.prototype.CancelConfirmDateByCreator = function(params, callback) {
   var senderId = params.senderId;
   var responderId = params.responderId;
 
-  var nowTime = handy.getNowOfUTCdate().getTime()+'';
+  var nowTime = handy.getUTCNowTime()+'';
   var multi = self.client.multi();
   var dateKey = 'date:'+dateId;
 
@@ -7873,7 +7873,7 @@ Redis.prototype.RateByDateSender = function(params, callback) {
   var responderId = params.responderId;
   var type = params.type;
 
-  var nowTime = handy.getNowOfUTCdate().getTime()+'';
+  var nowTime = handy.getUTCNowTime()+'';
   var multi = self.client.multi();
   var dateKey = "date:"+dateId;
   var responderUserKey = "user:"+responderId;
@@ -7934,7 +7934,7 @@ Redis.prototype.RateByDateResponder = function(params, callback) {
   var responderId = params.responderId;
   var type = params.type;
 
-  var nowTime = handy.getNowOfUTCdate().getTime()+'';
+  var nowTime = handy.getUTCNowTime()+'';
   var multi = self.client.multi();
   var dateKey = "date:"+dateId;
   var senderUserKey = "user:"+senderId;
@@ -8068,7 +8068,7 @@ Redis.prototype.updateUserLocationD = function(params, callback) {
   var regionInfo2 = handy.getCentainLevelRegion({regions:regionInfo.regions,regionLevel:3});
   var cityLocation = regionInfo2.centainLevelRegion;
 
-  var nowTime = handy.getNowOfUTCdate().getTime()+'';
+  var nowTime = handy.getUTCNowTime()+'';
 
   self.getUser({req:req,userId:userId,userFields:['userId','gender','latlng','region','geolibType','deviceType','countyLocation']}, function(err,userObj){
     if (err){
@@ -8308,7 +8308,7 @@ Redis.prototype.updateUserStat = function(params, callback) {
   var userId = params.userId;
   var gender = params.gender;
   var updateTime = params.updateTime;
-  if (!updateTime) updateTime = handy.getNowOfUTCdate().getTime();
+  if (!updateTime) updateTime = handy.getUTCNowTime();
   var newDailyField = 'newDaily' + handy.formatDate({dt:updateTime,needUTC:false,needSeparateChar:false,onlyDatePart:true}) ;
   var userStatKey = 'userStat';
   var multi = self.client.multi();
@@ -8345,7 +8345,7 @@ Redis.prototype.updateUserStatDailyActive = function(params, callback) {
   }
   var userId = params.userId;
   var updateTime = params.updateTime;
-  if (!updateTime) updateTime = handy.getNowOfUTCdate().getTime();
+  if (!updateTime) updateTime = handy.getUTCNowTime();
   var datePart = handy.formatDate({dt:updateTime,needUTC:false,needSeparateChar:false,onlyDatePart:true});
   var activeDailyField = 'activeDaily' + datePart ;
   var userStatKey = 'userStat';
@@ -9163,7 +9163,7 @@ Redis.prototype.createBroadcast = function(params, callback) {
   }
   var messageText = params.messageText;
   var userFilters = params.userFilters;
-  var createTime = handy.getNowOfUTCdate().getTime();
+  var createTime = handy.getUTCNowTime();
   self.client.incr('broadcast', function(err, newId) {
     if (err){
       var err2 = self.newError({errorKey:'libraryError',messageParams:['redis'],messagePrefix:messagePrefix,req:req,innerError:err});
@@ -9831,7 +9831,7 @@ Redis.prototype.semiSimplyDeleteUser = function(params, callback) {
       _deleteRenRenAccount(function(err){
         if (err) return cbFun(err);
 
-        var nowTime = handy.getNowOfUTCdate().getTime();
+        var nowTime = handy.getUTCNowTime();
         var multi = self.client.multi();
         var userKey = "user:"+userId;
         var emailToUserKey = "emailToUser";
