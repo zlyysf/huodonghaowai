@@ -97,18 +97,19 @@ public class Settings extends HuoDongHaoWaiActivity {
                 refreshBindStatusView();
                 break;
             case MessageID.Bind3rdPartAccount_FAIL:
+                if (msg.obj!=null){
+                    errCode = ((Integer)msg.obj).intValue();
+                    if (errCode == 21301){//userAlreadyBindThisRenRenAccount
+                        Renren renren = AppInfo.getNonEmptyRenrenSdkInstance(Settings.this);
+                        if (renren.getCurrentUid()!=0)
+                            AppInfo.accountRenRen = renren.getCurrentUid()+"";
 
-                errCode = ((Integer)msg.obj).intValue();
-                if (errCode == 21301){//userAlreadyBindThisRenRenAccount
-                    Renren renren = AppInfo.getNonEmptyRenrenSdkInstance(Settings.this);
-                    if (renren.getCurrentUid()!=0)
-                        AppInfo.accountRenRen = renren.getCurrentUid()+"";
-
-                }else{
-                    //not clear renren auth info in AppInfo, let it be done in get
-                    AppUtil.handleErrorCode(msg.obj.toString(), Settings.this);
+                    }else{
+                        //not clear renren auth info in AppInfo, let it be done in get
+                        AppUtil.handleErrorCode(msg.obj.toString(), Settings.this);
+                    }
+                    refreshBindStatusView();
                 }
-                refreshBindStatusView();
                 break;
             case MessageID.UnbindRenRenAccount_OK:
 
@@ -116,18 +117,20 @@ public class Settings extends HuoDongHaoWaiActivity {
                 refreshBindStatusView();
                 break;
             case MessageID.UnbindRenRenAccount_FAIL:
-
-                errCode = ((Integer)msg.obj).intValue();
-                if (errCode == 21306){//userNotBindRenRenAccount
-                  //not clear renren auth info in AppInfo, let it be done in get
-                    AppInfo.accountRenRen = null;
-                }else{
-                    AppUtil.handleErrorCode(msg.obj.toString(), Settings.this);
+                if (msg.obj!=null){
+                    errCode = ((Integer)msg.obj).intValue();
+                    if (errCode == 21306){//userNotBindRenRenAccount
+                      //not clear renren auth info in AppInfo, let it be done in get
+                        AppInfo.accountRenRen = null;
+                    }else{
+                        AppUtil.handleErrorCode(msg.obj.toString(), Settings.this);
+                    }
+                    refreshBindStatusView();
                 }
-                refreshBindStatusView();
                 break;
             case MessageID.SERVER_RETURN_NULL:
-                AppUtil.handleErrorCode(msg.obj.toString(), Settings.this);
+                if (msg.obj!=null)
+                    AppUtil.handleErrorCode(msg.obj.toString(), Settings.this);
                 break;
             }
         }

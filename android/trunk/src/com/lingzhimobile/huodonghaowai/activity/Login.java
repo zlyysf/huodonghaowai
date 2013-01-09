@@ -78,8 +78,8 @@ public class Login extends Activity {
                 prgressDialog.dismiss();
             switch (msg.what) {
             case MessageID.SERVER_RETURN_NULL://TODO to be deleted
-
-                AppUtil.handleErrorCode(msg.obj.toString(), Login.this);
+                if (msg.obj!=null)
+                    AppUtil.handleErrorCode(msg.obj.toString(), Login.this);
                 break;
             case MessageID.LOGIN_OK:
                 LogUtils.Logd(LocalLogTag, "Login myHandler LOGIN_OK|RENREN_LOGIN_OK begin");
@@ -90,7 +90,8 @@ public class Login extends Activity {
                 LogUtils.Logd(LocalLogTag, "Login myHandler LOGIN_OK|RENREN_LOGIN_OK end");
                 break;
             case MessageID.LOGIN_Fail:
-                AppUtil.handleErrorCode(msg.obj.toString(), Login.this);
+                if (msg.obj!=null)
+                    AppUtil.handleErrorCode(msg.obj.toString(), Login.this);
                 break;
             case MessageID.RENREN_LOGIN_OK:
                 LogUtils.Logd(LocalLogTag, "Login myHandler LOGIN_OK|RENREN_LOGIN_OK begin");
@@ -102,7 +103,8 @@ public class Login extends Activity {
                 break;
             case MessageID.RENREN_LOGIN_Fail:
               //not clear renren auth info in AppInfo, let it be done in get
-                AppUtil.handleErrorCode(msg.obj.toString(), Login.this);
+                if (msg.obj!=null)
+                    AppUtil.handleErrorCode(msg.obj.toString(), Login.this);
                 break;
             case MessageID.NEED_REGISTER_RENREN:
                 //will open register ui--askinfo activity, but before that need to get renren userInfo

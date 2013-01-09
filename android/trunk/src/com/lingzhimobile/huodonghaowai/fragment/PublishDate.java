@@ -137,7 +137,8 @@ public class PublishDate extends Fragment {
             }
             switch (msg.what) {
             case MessageID.SERVER_RETURN_NULL:
-                AppUtil.handleErrorCode(msg.obj.toString(), myAcitivity);
+                if (msg.obj!=null)
+                    AppUtil.handleErrorCode(msg.obj.toString(), myAcitivity);
                 btnSend.setEnabled(true);
                 break;
             case MessageID.CREATE_DATE_OK:
@@ -155,13 +156,15 @@ public class PublishDate extends Fragment {
                 LogUtils.Logd(LocalLogTag,"PublishDate, Bind3rdPartAccount_OK"+", getCurrentUid()="+renren.getCurrentUid()+", userId="+AppInfo.userId+", accountRenRen="+AppInfo.accountRenRen);
                 break;
             case MessageID.Bind3rdPartAccount_FAIL:
-                int errCode = ((Integer)msg.obj).intValue();
-                if (errCode == 21301){//userAlreadyBindThisRenRenAccount
+                if (msg.obj!=null){
+                    int errCode = ((Integer)msg.obj).intValue();
+                    if (errCode == 21301){//userAlreadyBindThisRenRenAccount
 
-                }else{
-                  //not clear renren auth info in AppInfo, let it be done in get
-                    cbPublishToRenRen.setChecked(false);
-                    AppUtil.handleErrorCode(msg.obj.toString(), myAcitivity);
+                    }else{
+                      //not clear renren auth info in AppInfo, let it be done in get
+                        cbPublishToRenRen.setChecked(false);
+                        AppUtil.handleErrorCode(msg.obj.toString(), myAcitivity);
+                    }
                 }
                 break;
             case MessageID.RENRENSDK_publishFeed_Error:

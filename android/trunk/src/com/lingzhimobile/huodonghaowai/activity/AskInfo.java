@@ -100,7 +100,8 @@ public class AskInfo extends HuoDongHaoWaiActivity {
                 mProgressDialog.dismiss();
             switch (msg.what) {
             case MessageID.SERVER_RETURN_NULL:
-                AppUtil.handleErrorCode(msg.obj.toString(), AskInfo.this);
+                if (msg.obj!=null)
+                    AppUtil.handleErrorCode(msg.obj.toString(), AskInfo.this);
                 break;
             case MessageID.REGISTER_Fail:
                 if (msg.obj==null){
