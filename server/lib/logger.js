@@ -207,7 +207,7 @@ var consoleLogLevel = exports.consoleLogLevel = function(level,pick,message){
   var colors = config.colors;
   if (level <= config.config.logLevel){
     var color = colors[pick] == undefined ? colors['yellow'] : colors[pick];
-    var dt = handy.getNowOfUTCdate();
+    var dt = new Date();
     var dtMsStr = dt.getUTCFullYear()+"-"+dt.getUTCMonth()+"-"+dt.getUTCDate()+ " "+dt.getUTCHours()+":"+dt.getUTCMinutes()+":"+dt.getUTCSeconds()+"."+dt.getMilliseconds();
     var msg = dtMsStr+' (UTC) '+message;
     util.print('\033[' + color[0] + 'm');

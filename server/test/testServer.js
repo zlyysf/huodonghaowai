@@ -190,7 +190,7 @@ function busRegister1(params,cbFun){
 
     var inviteCode = null, inviteCode2 = null;
 
-    var nowTime = handy.getNowOfUTCdate().getTime();
+    var nowTime = handy.getUTCNowTime();
     var name = "name"+nowTime;
     var emailAccount = name+gMailHostPart;
     var password = gPassword;
@@ -554,7 +554,7 @@ function busRenRenRegisterAndLogin1(params,cbFun){
     var securePort = params.securePort;
     var uploadReally = params.uploadReally;
 
-    var nowTime = handy.getNowOfUTCdate().getTime();
+    var nowTime = handy.getUTCNowTime();
     var name = "name"+nowTime;
     var emailAccount = name+gMailHostPart;
     var password = gPassword;
@@ -779,7 +779,7 @@ function busRenRenBind2(params,cbFun){
    var securePort = params.securePort;
    var uploadReally = params.uploadReally;
 
-   var nowTime = handy.getNowOfUTCdate().getTime();
+   var nowTime = handy.getUTCNowTime();
    var name = "name"+nowTime;
    var emailAccount = name+gMailHostPart;
    var password = gPassword;
@@ -970,7 +970,7 @@ function busUploadPhoto1(params,cbFun){
 
     var inviteCode = null, inviteCode2 = null;
 
-    var nowTime = handy.getNowOfUTCdate().getTime();
+    var nowTime = handy.getUTCNowTime();
     var name = "name"+nowTime;
     var emailAccount = name+gMailHostPart;
     var password = gPassword;
@@ -1109,7 +1109,7 @@ function busSession1(params,cbFun){
     var gender = params.gender;
     var deviceType = params.deviceType;
 
-    var nowTime = handy.getNowOfUTCdate().getTime();
+    var nowTime = handy.getUTCNowTime();
     var name = "name"+nowTime;
     var emailAccount = "lianyu.zhang+t1@yasofon.com"; //name+gMailHostPart;
     var password = 'password';
@@ -1309,7 +1309,7 @@ function busCountInvitingUser1(params,cbFun){
     var gender = params.gender;
     var deviceType = params.deviceType;
 
-    var nowTime = handy.getNowOfUTCdate().getTime();
+    var nowTime = handy.getUTCNowTime();
 
     var height = 175;
     var gender = 'male';
@@ -1635,7 +1635,7 @@ function busSession1AdminWeb(params,cbFun){
     var gender = params.gender;
     var deviceType = params.deviceType;
 
-    var nowTime = handy.getNowOfUTCdate().getTime();
+    var nowTime = handy.getUTCNowTime();
     var name = "name"+nowTime;
     var emailAccount = name+gMailHostPart;
     var password = 'password';
@@ -1781,7 +1781,7 @@ function busDateBasic1(params,cbFun){
   var emailAccountM1, emailAccountM2, emailAccountF3, emailAccountF4, emailAccountF7, emailAccountF8;
   var dateIdUM1_1, dateIdUM1_2, dateIdUM1_3, dateIdUM1_4, dateIdUM2_1;
   var messageIdM1D1_F3_1, messageIdM1D2_F3_1, messageIdM1D2_M1_1, messageIdM1D3_F3_1;
-  var dateDate0 = handy.getNowOfUTCdate().getTime();
+  var dateDate0 = handy.getUTCNowTime();
   var dateDate1 = dateDate0+1*24*60*60*1000;
   var dateDate2 = dateDate0+2*24*60*60*1000;
   var dateDate4 = dateDate0+4*24*60*60*1000;
@@ -2457,7 +2457,7 @@ function busActiveApplyingDates1(params,cbFun){
   var emailAccountM1, emailAccountM2, emailAccountF3, emailAccountF4, emailAccountF7, emailAccountF8;
   var dateIdUM1_1, dateIdUM1_2, dateIdUM1_3, dateIdUM1_4, dateIdUM2_1;
   var messageIdM1D1_F3_1, messageIdM1D2_F3_1, messageIdM1D2_M1_1, messageIdM1D3_F3_1;
-  var dateDate0 = handy.getNowOfUTCdate().getTime();
+  var dateDate0 = handy.getUTCNowTime();
   var dateDate1 = dateDate0+1*24*60*60*1000;
   var dateDate2 = dateDate0+2*24*60*60*1000;
   var dateDate4 = dateDate0+4*24*60*60*1000;
@@ -2993,7 +2993,7 @@ function busDateActiveResponders1(params,cbFun){
   var emailAccountM1, emailAccountM2, emailAccountF3, emailAccountF4, emailAccountF7, emailAccountF8;
   var dateIdUM1_1, dateIdUM1_2, dateIdUM1_3, dateIdUM1_4, dateIdUM2_1;
   var messageIdM1D1_F3_1, messageIdM1D2_F3_1, messageIdM1D2_M1_1, messageIdM1D3_F3_1;
-  var dateDate0 = handy.getNowOfUTCdate().getTime();
+  var dateDate0 = handy.getUTCNowTime();
   var dateDate1 = dateDate0+1*24*60*60*1000;
   var dateDate2 = dateDate0+2*24*60*60*1000;
   var dateDate4 = dateDate0+4*24*60*60*1000;
@@ -3327,7 +3327,7 @@ function busDateActiveResponders2(params,cbFun){
   var emailAccountM1, emailAccountM2, emailAccountF3, emailAccountF4, emailAccountF7, emailAccountF8;
   var dateIdUM1_1, dateIdUM1_2, dateIdUM1_3, dateIdUM1_4, dateIdUM2_1;
   var messageIdM1D1_F3_1, messageIdM1D2_F3_1, messageIdM1D2_M1_1, messageIdM1D3_F3_1;
-  var dateDate0 = handy.getNowOfUTCdate().getTime();
+  var dateDate0 = handy.getUTCNowTime();
   var dateDate1 = dateDate0+1*24*60*60*1000;
   var dateDate2 = dateDate0+2*24*60*60*1000;
   var dateDate4 = dateDate0+4*24*60*60*1000;
@@ -3565,7 +3565,7 @@ function busGetNearbyDatesA1(params,cbFun){
   var emailAccountM1, emailAccountM2, emailAccountF3, emailAccountF4, emailAccountF7, emailAccountF8;
   var dateIdUM1_1, dateIdUM1_2, dateIdUM1_3, dateIdUM1_4, dateIdUM2_1;
   var messageIdM1D1_F3_1, messageIdM1D2_F3_1, messageIdM1D2_M1_1, messageIdM1D3_F3_1;
-  var dateDate0 = handy.getNowOfUTCdate().getTime();
+  var dateDate0 = handy.getUTCNowTime();
   var dateDateA1 = dateDate0+1*24*60*60*1000;
   var dateDateA2 = dateDate0+2*24*60*60*1000;
   var dateDateA4 = dateDate0+4*24*60*60*1000;
@@ -3733,7 +3733,7 @@ function busGetNearbyDatesMultiSchool1(params,cbFun){
   var emailAccountM1, emailAccountM2, emailAccountF3, emailAccountF4, emailAccountM5, emailAccountM6, emailAccountF7, emailAccountF8;
   var dateIdUM1_1, dateIdUM1_2, dateIdUM1_3, dateIdUM1_4, dateIdUM5_1, dateIdUM5_2;
   var messageIdM1D1_F3_1, messageIdM1D2_F3_1, messageIdM1D2_M1_1, messageIdM1D3_F3_1;
-  var dateDate0 = handy.getNowOfUTCdate().getTime();
+  var dateDate0 = handy.getUTCNowTime();
   var dateDateA1 = dateDate0+1*24*60*60*1000;
   var dateDateA2 = dateDate0+2*24*60*60*1000;
   var dateDateA4 = dateDate0+4*24*60*60*1000;
@@ -3963,7 +3963,7 @@ function busGetDates1(params,cbFun){
   var emailAccountM1, emailAccountM2, emailAccountF3, emailAccountF4, emailAccountF7, emailAccountF8;
   var dateIdUM1_1, dateIdUM1_2, dateIdUM1_3, dateIdUM1_4, dateIdUM2_1;
   var messageIdM1D1_F3_1, messageIdM1D2_F3_1, messageIdM1D2_M1_1, messageIdM1D3_F3_1;
-  var dateDate0 = handy.getNowOfUTCdate().getTime();
+  var dateDate0 = handy.getUTCNowTime();
   var dateDateA1 = dateDate0+1*24*60*60*1000;
   var dateDateA2 = dateDate0+2*24*60*60*1000;
   var dateDateA4 = dateDate0+4*24*60*60*1000;
@@ -4232,7 +4232,7 @@ function busGetNearbyDates1(params,cbFun){
   var emailAccountM1, emailAccountM2, emailAccountF3, emailAccountF4, emailAccountM5, emailAccountM6, emailAccountF7, emailAccountF8;
   var dateIdUM1_1, dateIdUM1_2, dateIdUM1_3, dateIdUM1_4;
 
-  var dateDate0 = handy.getNowOfUTCdate().getTime();
+  var dateDate0 = handy.getUTCNowTime();
   var dateDate1 = dateDate0+1*24*60*60*1000;
   handy.pipeline(
       function(next){
@@ -4501,7 +4501,7 @@ function busCreateDateAndSendToNearbyUser1(params,cbFun){
   var emailAccountM1, emailAccountM2, emailAccountF3, emailAccountF4, emailAccountM5, emailAccountM6, emailAccountF7, emailAccountF8;
   var dateIdUM1_1, dateIdUM1_2, dateIdUM1_3, dateIdUM1_4;
 
-  var dateDate0 = handy.getNowOfUTCdate().getTime();
+  var dateDate0 = handy.getUTCNowTime();
   var dateDate1 = dateDate0+1*24*60*60*1000;
   handy.pipeline(
       function(next){
@@ -4638,7 +4638,7 @@ function busGetMadeDates(params,cbFun){
   var userIdM1, userIdM2, userIdF3, userIdF4, userIdM5, userIdM6, userIdF7, userIdF8;
   var emailAccountM1, emailAccountM2, emailAccountF3, emailAccountF4, emailAccountM5, emailAccountM6, emailAccountF7, emailAccountF8;
   var madeRegion = config.config.madeRegion;
-  var dateDate0 = handy.getNowOfUTCdate().getTime();
+  var dateDate0 = handy.getUTCNowTime();
   var dateDate1 = dateDate0+1*24*60*60*1000;
   var dateDate2 = dateDate0+2*24*60*60*1000;
   var dateDate4 = dateDate0+4*24*60*60*1000;
@@ -5091,7 +5091,7 @@ function busInitUserPhoto(params,cbFun){
     var latlng = params.latlng;
     var region = params.region;
     var geolibType = params.geolibType;
-    var nowTime = handy.getNowOfUTCdate().getTime();
+    var nowTime = handy.getUTCNowTime();
     if (!emailAccount) emailAccount = "emailAccount@abc."+nowTime;
     if (!password) password = 'password';
     if (!name) name = "name"+nowTime;
@@ -5397,7 +5397,7 @@ function busDateLatestMessageAndViewed1(params,cbFun){
   var dateIdUM1_1, dateIdUM3_1, dateIdUM1_2;
   var messageIdDM1_UF3_1, messageIdDM1_UF3_1sys, messageIdDM1_UM1_1, messageIdDM1_UM3_2,
       messageIdDM1_UM1_2sys, messageIdDM1_UF3_2sys, messageIdDM1_UM1_3sys, messageIdDM1_UF3_3sys;
-  var dateDate0 = handy.getNowOfUTCdate().getTime();
+  var dateDate0 = handy.getUTCNowTime();
   var dateDate1 = dateDate0+1*24*60*60*1000;
   var dateDate2 = dateDate0+2*24*60*60*1000;
   var dateDate3 = dateDate0+3*24*60*60*1000;
@@ -5685,8 +5685,8 @@ function busGetDatesByPage3WithActiveSort(params,cbFun){
   var securePort = params.securePort;
   //var dateDate1 = new Date(9999999999999).getTime();// +3 wei, ge wei shang require step 2 //2286-10-21 1:46:39.999
   //var dateDate1 = new Date(4899999999999).getTime();//+3 wei, ge wei shang ok for step 1 // 2125-3-11 7:6:39.999
-  //var dateDate1 = handy.getNowOfUTCdate().getTime();// +4 wei, not OK, for step seems to be 2.
-  var dt = handy.getNowOfUTCdate().getTime();
+  //var dateDate1 = handy.getUTCNowTime();// +4 wei, not OK, for step seems to be 2.
+  var dt = handy.getUTCNowTime();
   var tenMinInMs = 10*60*1000;
   var offset = tenMinInMs *10000;
   var dateDate1 = dt + offset;
@@ -6845,7 +6845,7 @@ function busNotification1(params,cbFun){
       function(next){
         testlib.runPRApi({host:host,port:port,path:'/user/createDate',notLogResponseHere:null,
         postDataObj:{userId:userIdM1,geolibType:'ios',region:gRegionByIos1,cityLocation:gCityLocation1,
-        dateDate:handy.getNowOfUTCdate().getTime()+2000000,whoPay:0,wantPersonCount:1,address:'address',description:"i want to do something"
+        dateDate:handy.getUTCNowTime()+2000000,whoPay:0,wantPersonCount:1,address:'address',description:"i want to do something"
         }},function(err,outData){
           assert.ok(outData.status=="success");
           dateIdUM1_1 = outData.result.dateId;
@@ -6991,7 +6991,7 @@ function busPagedMessage1(params,cbFun){
   var userIdM1,userIdM2, userIdF3,userIdF4;
   var dateIdUM1_1;
   var pageCount = 2;
-  var dateDate1 = handy.getNowOfUTCdate().getTime();
+  var dateDate1 = handy.getUTCNowTime();
   var createTimeOfPageLast1, createTimeOfPageLast2, createTimeOfPageLastB1, createTimeOfPageLastB2;
   handy.pipeline(
       function(next){
@@ -7180,7 +7180,7 @@ function busGetMessageRespective2(params,cbFun){
   var dateIdUM1_1;
   var messageIdU3_U1_1, messageIdU3_U1_1sys, messageIdU1_U3_1, messageIdU3_U1_2;
   var pageCount = 10;
-  var dateDate1 = handy.getNowOfUTCdate().getTime();
+  var dateDate1 = handy.getUTCNowTime();
   var createTimeOfPageLast1, createTimeOfPageLast2, createTimeOfPageLastB1, createTimeOfPageLastB2;
   handy.pipeline(
       function(next){
@@ -7433,7 +7433,7 @@ function busStat1(params,cbFun){
     var user4Info = null;
     var userIdM1, userIdM2, userIdF3, userIdF4;
     var photoIdUM1_1, photoIdUM2_1, photoIdUF3_1 , photoIdUF4_1, photoIdUM1_2;
-    var dtNow = handy.getNowOfUTCdate().getTime();
+    var dtNow = handy.getUTCNowTime();
     var tenMinInMs = 10*60*1000;
     var offset = tenMinInMs *10000;
     var dateDate1 = dtNow + offset;
@@ -7876,7 +7876,7 @@ function busCheckAndNotifyDaters1(params,cbFun){
 
     var span1Hour = 60*60*1000;
     var span2Hour = 2*span1Hour;
-    var timeNowUtc = handy.getNowOfUTCdate().getTime();
+    var timeNowUtc = handy.getUTCNowTime();
     var timeNow1h = timeNowUtc + span1Hour;
     var timeNow1h_1 = timeNowUtc + span1Hour-1;
     var timeNow1h_2 = timeNowUtc + span1Hour-2;
@@ -8373,7 +8373,7 @@ function busUpdateLocation1(params,cbFun){
     var gender = params.gender;
     var deviceType = params.deviceType;
 
-    var nowTime = handy.getNowOfUTCdate().getTime();
+    var nowTime = handy.getUTCNowTime();
     var name = "Adam";
     var emailAccount = name+gMailHostPart;
     var password = gPassword;
@@ -8866,11 +8866,11 @@ testlib.backConfigDefaultValue();
 
 //testJustStartStopServer();
 //testRegister1LocalBothSides({disableNotification:true,uploadReally:false},null);
-testRenRenRegisterAndLogin1LocalBothSides({disableNotification:true,uploadReally:false},null);
+//testRenRenRegisterAndLogin1LocalBothSides({disableNotification:true,uploadReally:false},null);
 //testRenRenBind2LocalBothSides({disableNotification:true,uploadReally:false},null);
 //testUploadPhoto1LocalBothSides({disableNotification:true,uploadReally:false},null);
 
-//testSession1LocalBothSides({disableNotification:true,uploadReally:false},null);
+testSession1LocalBothSides({disableNotification:true,uploadReally:false},null);
 //testCountInvitingUser1LocalBothSides({disableNotification:true},null);
 //testUpdateLocation1LocalBothSides({disableNotification:true},null);
 //testMiscellaneousApis1LocalBothSides({disableNotification:true},null);

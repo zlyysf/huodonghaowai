@@ -1566,36 +1566,38 @@ var convertToDate = exports.convertToDate = function(src){
   return null;
 };//convertToDate
 
-/**
- *
- * @param dt - can be Date or number or string
- *   if be a string, the string should be a digit string to express milliseconds like Date.getTime
- * @returns Date object
- */
-var dateLocalToUTC = exports.dateLocalToUTC = function(dt){
-  if (!dt) return null;
-  dt = convertToDate(dt);
-  var dtUtc = new Date(dt.getTime() + dt.getTimezoneOffset() * 60000);
-  return dtUtc;
-};//dateLocalToUTC
-/**
- *
- * @param dtUTC - can be Date or number or string
- *   if be a string, the string should be a digit string to express milliseconds like Date.getTime
- * @returns Date object
- */
-var dateUTCtoLocal = exports.dateUTCtoLocal = function(dtUTC){
-  if (!dtUTC) return null;
-  dtUTC = convertToDate(dtUTC);
-  var dtLocal = new Date(dtUTC.getTime() - dtUTC.getTimezoneOffset() * 60000);
-  return dtLocal;
-};//dateUTCtoLocal
+///**
+// *
+// * @param dt - can be Date or number or string
+// *   if be a string, the string should be a digit string to express milliseconds like Date.getTime
+// * @returns Date object
+// */
+//var dateLocalToUTC = exports.dateLocalToUTC = function(dt){
+//  if (!dt) return null;
+//  dt = convertToDate(dt);
+//  var dtUtc = new Date(dt.getTime() + dt.getTimezoneOffset() * 60000);
+//  return dtUtc;
+//};//dateLocalToUTC
+///**
+// *
+// * @param dtUTC - can be Date or number or string
+// *   if be a string, the string should be a digit string to express milliseconds like Date.getTime
+// * @returns Date object
+// */
+//var dateUTCtoLocal = exports.dateUTCtoLocal = function(dtUTC){
+//  if (!dtUTC) return null;
+//  dtUTC = convertToDate(dtUTC);
+//  var dtLocal = new Date(dtUTC.getTime() - dtUTC.getTimezoneOffset() * 60000);
+//  return dtLocal;
+//};//dateUTCtoLocal
 
-var getNowOfUTCdate = exports.getNowOfUTCdate = function(){
+var getUTCNowTime = exports.getUTCNowTime = function(){
   var dtNowLocal = new Date();
-  var dtNowUTC = dateLocalToUTC(dtNowLocal);
-  return dtNowUTC;
-};//getNowOfUTCdate
+//  var dtNowUTC = dateLocalToUTC(dtNowLocal);
+//  return dtNowUTC;
+  var timeUtc = dtNowLocal.getTime();
+  return timeUtc;
+};//getUTCNowTime
 
 /**
  * simply do that if a field is null, it should be removed for easy of iphone codes.

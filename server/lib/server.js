@@ -682,7 +682,7 @@ Server.prototype.generateInviteCodeD = function(req, res) {
   var expireTime = null;
   if (expireDays){
     expireDays = handy.convertToNumber(expireDays);
-    var nowUTCTime = handy.getNowOfUTCdate().getTime();
+    var nowUTCTime = handy.getUTCNowTime();
     expireTime = nowUTCTime + expireDays*24*3600*1000;
   }
 
@@ -915,7 +915,7 @@ Server.prototype._requestResetPassword = function(params, callback) {
       var err = self.newError({errorKey:'emailNotRegistered',messageParams:[emailAccount],messagePrefix:messagePrefix,req:req});
       return callback(err);
     }
-    var timeNowUtc = handy.getNowOfUTCdate().getTime();
+    var timeNowUtc = handy.getUTCNowTime();
     var timeExpire = timeNowUtc + 60*60*1000;
     var resetPwdInfo = ""+timeExpire+"M"+emailAccount;
     resetPwdInfo = handy.encrypt(resetPwdInfo);
@@ -1020,7 +1020,7 @@ Server.prototype.logIn = function(req, res) {
 //      httpRetData.result.primaryPhotoId = userObj.primaryPhotoId;
 //      httpRetData.result.primaryPhotoPath = userObj.primaryPhotoPath;
 //    }
-    var dtActionTime = handy.getNowOfUTCdate();
+    var dtActionTime = new Date();
     self.store.updateUserStatDailyActive({req:req,userId:userId,updateTime:dtActionTime.getTime()},function(err,alreadyUpdateThisDay){
       var statErr = err;
       var beDailyFirst = !alreadyUpdateThisDay;
@@ -1087,7 +1087,7 @@ Server.prototype.logInFromRenRen = function(req, res) {
       return;
     }
     var userId = userInfo.user.userId;
-    var dtActionTime = handy.getNowOfUTCdate();
+    var dtActionTime = new Date();
     self.store.updateUserStatDailyActive({req:req,userId:userId,updateTime:dtActionTime.getTime()},function(err,alreadyUpdateThisDay){
       var statErr = err;
       var beDailyFirst = !alreadyUpdateThisDay;
@@ -1428,7 +1428,7 @@ Server.prototype._uploadPhoto = function(params, cbFun) {
     if (config.config.usage == 'dev'){
       objectFolderPath = config.getCloudStorageInfo().objectFolderPath_dev;
     }
-    var nowTime = handy.getNowOfUTCdate().getTime()+'';
+    var nowTime = handy.getUTCNowTime()+'';
     var objectName = ''+userId+'_'+nowTime+'_' +fileName;
     cloudStorage.uploadFileToCloudStorage({
       bucket:bucketName,objectFolderPath:objectFolderPath,objectName:objectName,
@@ -2062,7 +2062,7 @@ Server.prototype._createDate = function(params, callback) {
 //    self._updateLocation({req:req,userId:userId,userBeMade:userBeMade,latlng:latlng,region:region,geolibType:geolibType}, function(err,updateLocationRelateInfo){
 //      if (err) return callback(err);
 
-      var createTime = handy.getNowOfUTCdate().getTime();
+      var createTime = handy.getUTCNowTime();
       self.store.createDate({req:req,senderId:userId, //latlng:latlng, region:region, geolibType:geolibType,
       dateDate:dateDate, address:address, whoPay:whoPay, wantPersonCount:wantPersonCount, existPersonCount:existPersonCount,
       title:title, description:description, userGender:userObj.gender, userBeMade:userBeMade, photoId:photoId,
@@ -3337,7 +3337,7 @@ Server.prototype.signIn = function(req, res) {
       var err = self.newError({errorKey:'userNotExist',messageParams:[userId],messagePrefix:messagePrefix,req:req});
       if (err) return self.handleError({err:err,req:req,res:res});
     }
-    var nowUtcTime = handy.getNowOfUTCdate().getTime();
+    var nowUtcTime = handy.getUTCNowTime();
     self.store.updateUserStatDailyActive({req:req,userId:userId,updateTime:nowUtcTime},function(err,alreadyUpdateThisDay){
       var statErr = err;
       var beDailyFirst = !alreadyUpdateThisDay;
@@ -4197,7 +4197,7 @@ Server.prototype.viewResetPassword = function(req, res) {
       }
       var expireTime = resetPwdInfo.substring(0,sepIdx);
       expireTime = Number(expireTime);
-      var timeNowUtc = handy.getNowOfUTCdate();
+      var timeNowUtc = new Date();
       var emailAccount = resetPwdInfo.substring(sepIdx+1);
       if (expireTime < timeNowUtc){
         var err = self.newError({errorKey:'expireResetPasswordInfo',messageParams:[],messagePrefix:messagePrefix,req:req});
@@ -5194,7 +5194,7 @@ Server.prototype.checkAndNotifyDaters = function(params, callback) {
     var err = self.newError({errorKey:'needCallbackFunction',messagePrefix:messagePrefix,req:req});
     return self.handleError({err:err});
   }
-  var timeNowUtc = handy.getNowOfUTCdate().getTime();
+  var timeNowUtc = handy.getUTCNowTime();
   var notifyDaterUpLimitTime = timeNowUtc + config.config.notifyDaterAdvanceTime;
   var batchCount = config.config.notifyDaterBatchCount;
   var recursiveLevel = 0;

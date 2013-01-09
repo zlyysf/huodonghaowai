@@ -61,7 +61,7 @@ var gSchool = "北京大学";
 
 var gUploadReally = false;
 
-var dateDate0 = handy.getNowOfUTCdate().getTime();
+var dateDate0 = handy.getUTCNowTime();
 var dateDate30 = dateDate0+30*24*60*60*1000;
 
 //THIS need some browsers connect to the server to provide client sockets
