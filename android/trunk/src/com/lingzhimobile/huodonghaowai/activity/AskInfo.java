@@ -75,7 +75,7 @@ public class AskInfo extends HuoDongHaoWaiActivity {
     private String userId;
 
     private ImageView ivPickPhoto;
-    private LinearLayout llPickPhoto;
+    private LinearLayout llPickPhoto,layoutSchool,layoutHometown;
     EditText nameEditText,  emailEditText, passwordEditText,
         hometownEditText;
     Button femaleButton, maleButton, enterButton,btnBack;
@@ -230,6 +230,8 @@ public class AskInfo extends HuoDongHaoWaiActivity {
         //LogUtils.Logd(LocalLogTag,"in setViewData end, fromActivityFlag="+fromActivityFlag);
         if (RequestCode.fromActivity_PreLogin.equals(fromActivityFlag)){
             AppInfo.clearRenrenAuthInfo(AskInfo.this);
+            layoutHometown.setVisibility(View.GONE);
+            layoutSchool.setBackgroundResource(R.drawable.item_last_normal);
         }else if(RequestCode.fromActivity_Login.equals(fromActivityFlag)){
             btnBack.setText(R.string.back);
             tvNewUser.setText(R.string.activiteAccount);
@@ -250,6 +252,8 @@ public class AskInfo extends HuoDongHaoWaiActivity {
         btnBack = (Button) findViewById(R.id.btnCancel);
         ivPickPhoto = (ImageView) findViewById(R.id.ivPickPhoto);
         llPickPhoto = (LinearLayout) findViewById(R.id.llPickPhoto);
+        layoutSchool = (LinearLayout) findViewById(R.id.layoutSchool);
+        layoutHometown = (LinearLayout) findViewById(R.id.layoutHometown);
         dialog = new Dialog(this, R.style.AlertDialog);
     }
     @Override
@@ -345,11 +349,13 @@ public class AskInfo extends HuoDongHaoWaiActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                hometown = hometownEditText.getText().toString();
-                if (TextUtils.isEmpty(hometown)) {
-                    Toast.makeText(AskInfo.this, R.string.hometown_empty,
-                            Toast.LENGTH_SHORT).show();
-                    return;
+                if(RequestCode.fromActivity_Login.equals(fromActivityFlag)){
+                    hometown = hometownEditText.getText().toString();
+                    if (TextUtils.isEmpty(hometown)) {
+                        Toast.makeText(AskInfo.this, R.string.hometown_empty,
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
 //                invitationCode = "";
 //                invitationCode = invitationEditText.getText().toString();

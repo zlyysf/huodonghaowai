@@ -136,6 +136,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layoutSchool"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
                     android:background="@drawable/item_middle_normal"
@@ -162,6 +163,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layoutHometown"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
                     android:background="@drawable/item_last_normal"
