@@ -197,7 +197,13 @@ public class AskInfo extends HuoDongHaoWaiActivity {
 //                                Message msg = getWebImageHandler.obtainMessage(0,renrenHeadBmp);
 //                                getWebImageHandler.sendMessage(msg);
                                 bm = renrenHeadBmp;
-                                ivPickPhoto.setImageBitmap(bm);
+                                //ivPickPhoto.setImageBitmap(bm);//a exception sometimes occur: android.view.ViewRootImpl$CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ivPickPhoto.setImageBitmap(bm);
+                                    }
+                                });
                             }
                         });
             }
