@@ -348,6 +348,7 @@ public class Login extends Activity {
         Bundle bd = new Bundle();
         bd.putString("emailAccount", email);
         AppInfo.persistLoginInfo(this,bd);
+        AppInfo.getRenrenSdkInstanceForCurrentUser(this);//make a strict match
     }
     private void saveDataAfterLoginFromRenren(){
         AppInfo.persistLoginUserInfo(this, null);
