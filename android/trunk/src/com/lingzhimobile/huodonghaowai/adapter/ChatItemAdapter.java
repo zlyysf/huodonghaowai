@@ -18,9 +18,9 @@ import com.lingzhimobile.huodonghaowai.util.AppUtil;
 
 public class ChatItemAdapter extends BaseAdapter {
 
-    private LayoutInflater inflater;
-    private List<MessageItem> chatItems;
-    private Context context;
+    private final LayoutInflater inflater;
+    private final List<MessageItem> chatItems;
+    private final Context context;
 
     public ChatItemAdapter(Context context, List<MessageItem> chatItems) {
         this.context = context;
@@ -79,11 +79,14 @@ public class ChatItemAdapter extends BaseAdapter {
         if(arg0 >0){
             MessageItem preItem = chatItems.get(arg0-1);
             if(tempItem.getCreateTime() - preItem.getCreateTime() > 300000l){
-                viewHolder.tvTimeLine.setText(AppUtil.formatTime(context, preItem.getCreateTime()));
+                viewHolder.tvTimeLine.setText(AppUtil.formatTime(context, tempItem.getCreateTime()));
                 viewHolder.tvTimeLine.setVisibility(View.VISIBLE);
             }else{
                 viewHolder.tvTimeLine.setVisibility(View.GONE);
             }
+        }else{
+            viewHolder.tvTimeLine.setText(AppUtil.formatTime(context, tempItem.getCreateTime()));
+            viewHolder.tvTimeLine.setVisibility(View.VISIBLE);
         }
         return arg1;
     }
