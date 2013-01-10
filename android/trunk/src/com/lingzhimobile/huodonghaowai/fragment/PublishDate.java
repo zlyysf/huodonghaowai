@@ -548,10 +548,22 @@ public class PublishDate extends Fragment {
 
             @Override
             public void onClick(View v) {
-
                 String description = dateDetail.getText().toString().trim();
                 String title = dateTitle.getText().toString().trim();
-                if (System.currentTimeMillis() > calendar.getTimeInMillis()) {
+                Calendar nowCalendar = Calendar.getInstance();
+                Calendar dateDateCanlendar = (Calendar)calendar.clone();
+
+                boolean validDate = true;
+                if (nowCalendar.getTimeInMillis() > dateDateCanlendar.getTimeInMillis()) {
+                    if (nowCalendar.get(Calendar.MONTH)==Calendar.DECEMBER &&
+                            dateDateCanlendar.get(Calendar.MONTH) == Calendar.JANUARY){
+                        //to support next year
+                        dateDateCanlendar.add(Calendar.YEAR, 1);
+                    }else {
+                        validDate = false;
+                    }
+                }
+                if (!validDate){
                     Toast.makeText(myAcitivity, R.string.time_is_wrong,
                             Toast.LENGTH_SHORT).show();
                     return;
@@ -601,7 +613,7 @@ public class PublishDate extends Fragment {
                     imgWidth = originalBitmap.getWidth();
                     imgHeight = originalBitmap.getHeight();
                 }
-                createDateTask = new CreateDateTask(AppInfo.userId,calendar
+                createDateTask = new CreateDateTask(AppInfo.userId,dateDateCanlendar
                         .getTimeInMillis(), title, address, whoPay, Integer
                         .parseInt(wantPersonCountNum), Integer
                         .parseInt(existPersonCountNum), description,
@@ -619,7 +631,7 @@ public class PublishDate extends Fragment {
                     publishRenrenFeedData.putString("address", address);
                     publishRenrenFeedData.putString("title", title);
                     publishRenrenFeedData.putString("description", description);
-                    publishRenrenFeedData.putLong("dateDate", calendar.getTimeInMillis());
+                    publishRenrenFeedData.putLong("dateDate", dateDateCanlendar.getTimeInMillis());
 
                     Renren renren = AppInfo.getRenrenSdkInstanceForCurrentUser(myAcitivity);//at this time, need a strict match and need current renren auth info exist
                     PublishRenRenFeedTask publishRenRenFeedTask = new PublishRenRenFeedTask(publishRenrenFeedData,renren,myAcitivity, null);//myHandler.obtainMessage());
