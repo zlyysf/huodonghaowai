@@ -130,8 +130,7 @@ public class DateSubjects extends Fragment implements LoaderCallbacks<String>{
 
             @Override
             public void onClick(View v) {
-                //mProgressDialog = myProgressDialog.show(myAcitivity, null, R.string.get_invite_code);
-                mProgressDialog = myProgressDialog.show(myAcitivity, null, null);
+                mProgressDialog = myProgressDialog.show(myAcitivity, null, R.string.loading);
                 getLoaderManager().initLoader(0, null, DateSubjects.this);
             }
         });

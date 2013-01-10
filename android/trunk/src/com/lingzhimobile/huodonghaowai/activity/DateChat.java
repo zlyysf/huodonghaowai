@@ -85,6 +85,8 @@ public class DateChat extends HuoDongHaoWaiActivity {
             }
             switch (msg.what) {
             case MessageID.SERVER_RETURN_NULL:
+                if (mProgressDialog!=null && mProgressDialog.isShowing())
+                    mProgressDialog.dismiss();
                 bouncyRefreshViewChat.onRefreshComplete();
                 AppUtil.handleErrorCode(msg.obj.toString(), DateChat.this);
                 break;
@@ -316,6 +318,7 @@ public class DateChat extends HuoDongHaoWaiActivity {
                         } else {
                             ivDatePhoto.setTag(dateItem.getPhotoPath());
                             dateItem.getPostBitmapAsync(new MethodHandler<Bitmap>() {
+                                @Override
                                 public void process(Bitmap para) {
                                     Message msg = refreshImgHandler
                                             .obtainMessage(0, ivDatePhoto);
@@ -337,6 +340,7 @@ public class DateChat extends HuoDongHaoWaiActivity {
                         ImageLoadUtil.readBitmapAsync(dateItem.getResponders()
                                 .get(groupPosition).get(childPosition)
                                 .getPhotoPath(), new MethodHandler<Bitmap>() {
+                            @Override
                             public void process(Bitmap para) {
                                 Message msg = refreshImgHandler1.obtainMessage(
                                         0, ivDatePhoto);
@@ -357,6 +361,7 @@ public class DateChat extends HuoDongHaoWaiActivity {
                                 .getPrimaryPhotoPath());
                         dateItem.getSender().getPostBitmapAsync(
                                 new MethodHandler<Bitmap>() {
+                                    @Override
                                     public void process(Bitmap para) {
                                         Message msg = refreshImgHandler2
                                                 .obtainMessage(0, ivDatePhoto);
@@ -372,6 +377,7 @@ public class DateChat extends HuoDongHaoWaiActivity {
                         } else {
                             ivDatePhoto.setTag(dateItem.getPhotoPath());
                             dateItem.getPostBitmapAsync(new MethodHandler<Bitmap>() {
+                                @Override
                                 public void process(Bitmap para) {
                                     Message msg = refreshImgHandler
                                             .obtainMessage(0, ivDatePhoto);
@@ -654,6 +660,7 @@ public class DateChat extends HuoDongHaoWaiActivity {
     }
 
     Handler refreshImgHandler = new Handler() {
+        @Override
         public void handleMessage(android.os.Message msg) {
             ImageView iv = (ImageView) msg.obj;
             if (iv != null && dateItem.getPhotoPath().equals(iv.getTag())) {
@@ -662,6 +669,7 @@ public class DateChat extends HuoDongHaoWaiActivity {
         };
     };
     Handler refreshImgHandler1 = new Handler() {
+        @Override
         public void handleMessage(android.os.Message msg) {
             ImageView iv = (ImageView) msg.obj;
             if (iv != null
@@ -674,6 +682,7 @@ public class DateChat extends HuoDongHaoWaiActivity {
         };
     };
     Handler refreshImgHandler2 = new Handler() {
+        @Override
         public void handleMessage(android.os.Message msg) {
             ImageView iv = (ImageView) msg.obj;
             if (iv != null

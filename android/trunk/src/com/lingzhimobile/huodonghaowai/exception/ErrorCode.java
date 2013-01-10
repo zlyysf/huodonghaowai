@@ -43,9 +43,18 @@ public class ErrorCode {
         errorMap.put(21083, R.string.err21083);
         errorMap.put(21084, R.string.err21083);
         errorMap.put(21087, R.string.err21087);
+
+        errorMap.put(21200, R.string.err21200);
+        errorMap.put(21203, R.string.err21203);
+
         errorMap.put(21211, R.string.err21211);
         errorMap.put(21210, R.string.err21210);
         errorMap.put(21212, R.string.err21212);
+
+        errorMap.put(21230, R.string.err21230);
+        errorMap.put(21231, R.string.err21231);
+        errorMap.put(21232, R.string.err21232);
+        errorMap.put(21233, R.string.err21233);
 
         errorMap.put(21300, R.string.err21300);
         errorMap.put(21301, R.string.err21301);
