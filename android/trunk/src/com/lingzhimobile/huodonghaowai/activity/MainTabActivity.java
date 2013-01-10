@@ -142,6 +142,7 @@ public class MainTabActivity extends ActivityGroup {
         AppInfo.description = userInfo.getString("description", "");
         AppInfo.educationalStatus = userInfo.getString("educationalStatus", "");
         AppInfo.height = userInfo.getInt("height", 0);
+        AppInfo.accountRenRen = userInfo.getString("accountRenRen", null);
         processExtraData(getIntent());
         // rbNearby.performClick();
         LogUtils.Logd(LocalLogTag, "MainTabActivity onCreate exit");
