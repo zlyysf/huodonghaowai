@@ -160,6 +160,10 @@ public class PublishDate extends Fragment {
                     int errCode = ((Integer)msg.obj).intValue();
                     if (errCode == 21301){//userAlreadyBindThisRenRenAccount
 
+                    }else if (errCode == 21304){//theRenRenAccountAlreadyBindOtherUser
+                        cbPublishToRenRen.setChecked(false);
+                        AppInfo.clearRenrenAuthInfo(myAcitivity);
+                        AppUtil.handleErrorCode(msg.obj.toString(), myAcitivity);
                     }else{
                       //not clear renren auth info in AppInfo, let it be done in get
                         cbPublishToRenRen.setChecked(false);

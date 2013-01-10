@@ -103,7 +103,9 @@ public class Settings extends HuoDongHaoWaiActivity {
                         Renren renren = AppInfo.getNonEmptyRenrenSdkInstance(Settings.this);
                         if (renren.getCurrentUid()!=0)
                             AppInfo.accountRenRen = renren.getCurrentUid()+"";
-
+                    }else if (errCode == 21304){//theRenRenAccountAlreadyBindOtherUser
+                        AppInfo.clearRenrenAuthInfo(Settings.this);
+                        AppUtil.handleErrorCode(msg.obj.toString(), Settings.this);
                     }else{
                         //not clear renren auth info in AppInfo, let it be done in get
                         AppUtil.handleErrorCode(msg.obj.toString(), Settings.this);
