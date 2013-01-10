@@ -38,7 +38,7 @@ public class DateSubjects extends Fragment implements LoaderCallbacks<String>{
     private Button btnInvite;
     private DateSubjectListAdapter titleAdapter;
     private myProgressDialog mProgressDialog;
-    
+
     public Handler myHandler = new Handler() {
 
         @Override
@@ -61,7 +61,7 @@ public class DateSubjects extends Fragment implements LoaderCallbacks<String>{
             }
         }
     };
-    
+
     public static DateSubjects newInstance() {
         DateSubjects f = new DateSubjects();
         Bundle args = new Bundle();
@@ -75,7 +75,7 @@ public class DateSubjects extends Fragment implements LoaderCallbacks<String>{
         super.onAttach(activity);
         this.myAcitivity = activity;
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -89,7 +89,7 @@ public class DateSubjects extends Fragment implements LoaderCallbacks<String>{
         }
         return currentView;
     }
-    
+
     private void initView(){
         lvDateTitle = (PullToRefreshListView) currentView.findViewById(R.id.lvDateTitleList);
         btnInvite = (Button) currentView.findViewById(R.id.btnInvite);
@@ -108,10 +108,10 @@ public class DateSubjects extends Fragment implements LoaderCallbacks<String>{
 //                startActivityForResult(intent, 100);
                 PublishDate newFragment = PublishDate.newInstance(position-1);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                
-                ft.setCustomAnimations(R.anim.push_left_in, 
-                        R.anim.push_left_out,  
-                        R.anim.push_right_in,  
+
+                ft.setCustomAnimations(R.anim.push_left_in,
+                        R.anim.push_left_out,
+                        R.anim.push_right_in,
                         R.anim.push_right_out);
                 ft.replace(R.id.fragment01, newFragment);
 //                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -127,10 +127,11 @@ public class DateSubjects extends Fragment implements LoaderCallbacks<String>{
             }
         });
         btnInvite.setOnClickListener(new View.OnClickListener() {
-            
+
             @Override
             public void onClick(View v) {
-                mProgressDialog = myProgressDialog.show(myAcitivity, null, R.string.get_invite_code);
+                //mProgressDialog = myProgressDialog.show(myAcitivity, null, R.string.get_invite_code);
+                mProgressDialog = myProgressDialog.show(myAcitivity, null, null);
                 getLoaderManager().initLoader(0, null, DateSubjects.this);
             }
         });
@@ -148,7 +149,7 @@ public class DateSubjects extends Fragment implements LoaderCallbacks<String>{
 
     @Override
     public Loader<String> onCreateLoader(int arg0, Bundle arg1) {
-        GetInviteCodeLoader getInviteCodeLoader = new GetInviteCodeLoader(myAcitivity, AppInfo.userId); 
+        GetInviteCodeLoader getInviteCodeLoader = new GetInviteCodeLoader(myAcitivity, AppInfo.userId);
         return getInviteCodeLoader;
     }
 
@@ -169,7 +170,7 @@ public class DateSubjects extends Fragment implements LoaderCallbacks<String>{
 
     @Override
     public void onLoaderReset(Loader<String> arg0) {
-        
+
     }
 
 
