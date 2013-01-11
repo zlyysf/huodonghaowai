@@ -208,6 +208,7 @@
     <string name="err21070">自己喜欢自己可不算数...</string>
     <string name="err21071">呃...您已经喜欢过这张照片了</string>
     <string name="err21072">呃...你还没喜欢过这张照片</string>
+    <string name="err21081">用户名或密码错</string>
     <string name="err21082">该电子邮件地址已经被使用，请重新选择新的电子邮件地址进行注册</string>
     <string name="err10021082">该电子邮件地址已经被使用，如果想把它与当前人人帐号关联，可以用邮件地址登入再在设置中绑定人人帐号</string>
     <string name="err21083">用户名或密码错</string>
