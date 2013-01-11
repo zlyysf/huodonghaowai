@@ -23,15 +23,17 @@ import com.lingzhimobile.huodonghaowai.log.LogUtils;
 
 /**
  * images buffer.
- * 
+ *
  */
 public class ImageBuffer {
+    private static final String LocalLogTag = LogTag.DATABASE + " ImageBuffer";
+
 //	private static Context context;
 	private static String bufferFolderPath = FileManager.ImageBufferFolder
 			.getAbsolutePath();
 	private static File bufferFolder = FileManager.ImageBufferFolder;
 
-	public final static int MaxBufferSize = (int) (5 * 1024 * 1024);
+	public final static int MaxBufferSize = (5 * 1024 * 1024);
 	private static List<File> bufferImgs;
 	private static int curBufferSize;
 
@@ -146,7 +148,7 @@ public class ImageBuffer {
 	private static Object readLock = new Object();
 
 	private static final int MaxSingleFileSize = 400 * 1024;
-	
+
 	private static final int MaxSingleGIFFileSize = 2 * 1024 * 1024;
 
 	/***
@@ -157,6 +159,7 @@ public class ImageBuffer {
 		if (url == null || url.length() == 0 ||"null".equals(url))
 			return null;
 		try {
+		    LogUtils.Logd(LocalLogTag, "readImg enter, url="+url);
 			synchronized (readLock) {
 				Bitmap ub = readImgFromMem(url);
 				if (ub != null) {
@@ -176,6 +179,7 @@ public class ImageBuffer {
 									+ file.length() + ", file url:" + url);
 					return null;
 				}
+				LogUtils.Logd(LocalLogTag, "readImg file exists, url="+url+", pathName="+pathName);
 				Bitmap bt = BitmapManager
 						.getAppropriateBitmapFromFile(pathName);
 				// Bitmap bt = BitmapFactory.decodeFile(pathName);
@@ -247,7 +251,7 @@ public class ImageBuffer {
 
 	/**
 	 * delete specified file by url.
-	 * 
+	 *
 	 * @param url
 	 */
 	private static void deleteFileFromBuffer(String url) {

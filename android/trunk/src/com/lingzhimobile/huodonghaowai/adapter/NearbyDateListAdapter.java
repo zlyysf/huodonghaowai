@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.lingzhimobile.huodonghaowai.R;
 import com.lingzhimobile.huodonghaowai.fragment.ProfileFragment;
+import com.lingzhimobile.huodonghaowai.log.LogTag;
+import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.model.DateListItem;
 import com.lingzhimobile.huodonghaowai.util.AppInfo;
 import com.lingzhimobile.huodonghaowai.util.AppUtil;
@@ -26,10 +28,12 @@ import com.lingzhimobile.huodonghaowai.util.MethodHandler;
 
 public class NearbyDateListAdapter extends BaseAdapter {
 
-    private List<DateListItem> dateItems;
-    private Context context;
-    private Fragment frag;
-    private LayoutInflater inflater;
+    private static final String LocalLogTag = LogTag.ACTIVITY + " NearbyDateListAdapter";
+
+    private final List<DateListItem> dateItems;
+    private final Context context;
+    private final Fragment frag;
+    private final LayoutInflater inflater;
 
     public NearbyDateListAdapter(Context context, Fragment frag,
             List<DateListItem> dateItems) {
@@ -83,11 +87,13 @@ public class NearbyDateListAdapter extends BaseAdapter {
         }
         Bitmap senderBm = tempItem.getSender().getSmallBitmap();
         if (senderBm != null) {
+            LogUtils.Logd(LocalLogTag, "NearbyDateListAdapter.getView, senderBm != null, getPhotoPath="+tempItem.getPhotoPath());
             viewHolder.ivUserPhoto.setImageBitmap(senderBm);
             viewHolder.ivUserPhoto.setTag(null);
         } else {
             viewHolder.ivUserPhoto.setImageResource(R.drawable.profile_photo);
             String user_image = tempItem.getSender().getSmallPhotoPath();
+
             if (viewHolder.ivUserPhoto.getTag() != null) {
                 if (user_image.equals(viewHolder.ivUserPhoto.getTag()
                         .toString())) {
@@ -100,8 +106,10 @@ public class NearbyDateListAdapter extends BaseAdapter {
             if (needNewInitThread
                     && !ImageLoadUtil.urlPool.containsKey(user_image)) {
                 viewHolder.ivUserPhoto.setTag(user_image);
+                LogUtils.Logd(LocalLogTag, "NearbyDateListAdapter.getView, before getSmallPostBitmapAsync, user_image="+user_image);
                 tempItem.getSender().getSmallPostBitmapAsync(
                         new MethodHandler<Bitmap>() {
+                            @Override
                             public void process(Bitmap para) {
                                 Message msg = refreshImgHandler.obtainMessage(
                                         position, viewHolder.ivUserPhoto);
@@ -130,7 +138,7 @@ public class NearbyDateListAdapter extends BaseAdapter {
         });
         viewHolder.tvUserName.setText(tempItem.getSender().getName());
         viewHolder.tvUserName.setOnClickListener(new View.OnClickListener() {
-            
+
             @Override
             public void onClick(View v) {
                 ProfileFragment newFragment = ProfileFragment.newInstance(
@@ -170,6 +178,7 @@ public class NearbyDateListAdapter extends BaseAdapter {
     }
 
     Handler refreshImgHandler = new Handler() {
+        @Override
         public void handleMessage(android.os.Message msg) {
             ImageView iv = (ImageView) msg.obj;
             int position = msg.what;

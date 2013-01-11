@@ -17,6 +17,7 @@ import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.thread.LoadImgThread;
 
 public class ImageLoadUtil {
+    private static final String LocalLogTag = LogTag.UTIL + " ImageLoadUtil";
 
 	// static HashMap<String,Bitmap> buffer = new HashMap<String,Bitmap>();
 	static ThreadPoolExecutor threadPool = new ThreadPoolExecutor(20, 40, 3,TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(50),new ThreadPoolExecutor.DiscardOldestPolicy());
@@ -58,6 +59,7 @@ public class ImageLoadUtil {
 			MethodHandler<Bitmap> handler) {
 		if (url == null || url.length() == 0 ||"null".equals(url))
 			return;
+		LogUtils.Logd(LocalLogTag, "readBitmapAsync enter, url="+url);
 		Bitmap bt = ImageLoadUtil.readImg(url);
 		if (bt == null) {
                 LoadImgThread thread = new LoadImgThread(url, handler);

@@ -18,18 +18,22 @@ import android.widget.TextView;
 
 import com.lingzhimobile.huodonghaowai.R;
 import com.lingzhimobile.huodonghaowai.fragment.ProfileFragment;
+import com.lingzhimobile.huodonghaowai.log.LogTag;
+import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.model.ChatItem;
 import com.lingzhimobile.huodonghaowai.util.AppUtil;
 import com.lingzhimobile.huodonghaowai.util.ImageLoadUtil;
 import com.lingzhimobile.huodonghaowai.util.MethodHandler;
 
 public class DateResponderAdapter extends BaseExpandableListAdapter {
+    private static final String LocalLogTag = LogTag.ACTIVITY + " DateResponderAdapter";
+
     private List<ArrayList<ChatItem>> dateList;
-    private Context context;
-    private Fragment frag;
-    private LayoutInflater inflater;
-    private int[] group = {R.string.have_add,R.string.have_apply}; 
-    
+    private final Context context;
+    private final Fragment frag;
+    private final LayoutInflater inflater;
+    private final int[] group = {R.string.have_add,R.string.have_apply};
+
     public DateResponderAdapter(Context context, Fragment frag, List<ArrayList<ChatItem>> dateList){
         this.dateList = dateList;
         this.context = context;
@@ -106,14 +110,19 @@ public class DateResponderAdapter extends BaseExpandableListAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        Bitmap bm = tempItem.getBitmap();
+        //Bitmap bm = tempItem.getBitmap();
+        Bitmap bm = tempItem.getSmallBitmap();
         if (bm != null) {
+            LogUtils.Logd(LocalLogTag, "DateResponderAdapter.getChildView, bm != null, getPhotoPath="+tempItem.getPhotoPath());
             viewHolder.ivUserPhoto.setImageBitmap(bm);
             viewHolder.ivUserPhoto.setTag(null);
         } else {
-            viewHolder.ivUserPhoto.setTag(tempItem.getSmallPhotoPath());
-            ImageLoadUtil.readBitmapAsync(tempItem.getSmallPhotoPath(),
+            String photoPath = tempItem.getSmallPhotoPath();
+            LogUtils.Logd(LocalLogTag, "DateResponderAdapter.getChildView, before readBitmapAsync, photoPath="+photoPath);
+            viewHolder.ivUserPhoto.setTag(photoPath);
+            ImageLoadUtil.readBitmapAsync(photoPath,
                     new MethodHandler<Bitmap>() {
+                        @Override
                         public void process(Bitmap para) {
                             Message msg = refreshImgHandler.obtainMessage(
                                     groupPosition, childPosition, 0, viewHolder.ivUserPhoto);
@@ -128,10 +137,10 @@ public class DateResponderAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 ProfileFragment newFragment = ProfileFragment.newInstance(tempItem.getUserId(),R.string.date_responders);
                 FragmentTransaction ft = frag.getFragmentManager().beginTransaction();
-                
-                ft.setCustomAnimations(R.anim.push_left_in, 
-                        R.anim.push_left_out,  
-                        R.anim.push_right_in,  
+
+                ft.setCustomAnimations(R.anim.push_left_in,
+                        R.anim.push_left_out,
+                        R.anim.push_right_in,
                         R.anim.push_right_out);
                 ft.replace(R.id.fragment01, newFragment);
                 ft.addToBackStack(null);
@@ -145,10 +154,10 @@ public class DateResponderAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 ProfileFragment newFragment = ProfileFragment.newInstance(tempItem.getUserId(),R.string.date_responders);
                 FragmentTransaction ft = frag.getFragmentManager().beginTransaction();
-                
-                ft.setCustomAnimations(R.anim.push_left_in, 
-                        R.anim.push_left_out,  
-                        R.anim.push_right_in,  
+
+                ft.setCustomAnimations(R.anim.push_left_in,
+                        R.anim.push_left_out,
+                        R.anim.push_right_in,
                         R.anim.push_right_out);
                 ft.replace(R.id.fragment01, newFragment);
                 ft.addToBackStack(null);
@@ -165,7 +174,7 @@ public class DateResponderAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
-    
+
     class ViewHolder {
         public TextView tvUserName;
         public TextView tvTime;
@@ -174,11 +183,12 @@ public class DateResponderAdapter extends BaseExpandableListAdapter {
     }
 
     Handler refreshImgHandler = new Handler() {
+        @Override
         public void handleMessage(Message msg) {
             ImageView iv = (ImageView) msg.obj;
             int groupPosition = msg.what;
             int childPosition = msg.arg1;
-            
+
             if (dateList == null || groupPosition >= dateList.size() || childPosition >= dateList.get(groupPosition).size() || childPosition < 0)
                 return;
             ChatItem ci = dateList.get(groupPosition).get(childPosition);

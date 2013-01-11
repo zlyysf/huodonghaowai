@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lingzhimobile.huodonghaowai.R;
+import com.lingzhimobile.huodonghaowai.log.LogTag;
+import com.lingzhimobile.huodonghaowai.log.LogUtils;
 import com.lingzhimobile.huodonghaowai.model.ChatItem;
 import com.lingzhimobile.huodonghaowai.model.DateListItem;
 import com.lingzhimobile.huodonghaowai.util.AppUtil;
@@ -21,10 +23,12 @@ import com.lingzhimobile.huodonghaowai.util.ImageLoadUtil;
 import com.lingzhimobile.huodonghaowai.util.MethodHandler;
 
 public class DateRespondersAdapter extends BaseAdapter {
-    private DateListItem item;
+    private static final String LocalLogTag = LogTag.ACTIVITY + " DateRespondersAdapter";
+
+    private final DateListItem item;
     private List<ChatItem> messages;
-    private LayoutInflater inflater;
-    private Context context;
+    private final LayoutInflater inflater;
+    private final Context context;
 
     public DateRespondersAdapter(Context context, DateListItem item) {
         this.context = context;
@@ -75,15 +79,18 @@ public class DateRespondersAdapter extends BaseAdapter {
             viewHolder.ivUserPhoto.setImageBitmap(bm);
             viewHolder.ivUserPhoto.setTag(null);
         } else {
-            viewHolder.ivUserPhoto.setTag(tempItem.getSmallPhotoPath());
-            ImageLoadUtil.readBitmapAsync(tempItem.getSmallPhotoPath(),
-                    new MethodHandler<Bitmap>() {
-                        public void process(Bitmap para) {
-                            Message msg = refreshImgHandler.obtainMessage(
-                                    position, viewHolder.ivUserPhoto);
-                            refreshImgHandler.sendMessage(msg);
-                        }
-                    });
+            String photoPath = tempItem.getSmallPhotoPath();
+            viewHolder.ivUserPhoto.setTag(photoPath);
+            LogUtils.Logd(LocalLogTag, "before readBitmapAsync, photoPath="+photoPath);
+            ImageLoadUtil.readBitmapAsync(photoPath,
+                new MethodHandler<Bitmap>() {
+                    @Override
+                    public void process(Bitmap para) {
+                        Message msg = refreshImgHandler.obtainMessage(
+                                position, viewHolder.ivUserPhoto);
+                        refreshImgHandler.sendMessage(msg);
+                    }
+                });
         }
         viewHolder.tvUserName.setText(tempItem.getName());
         viewHolder.tvTime.setText(AppUtil.getInterval(String.valueOf(tempItem.getLatestMessage().getCreateTime())));
@@ -98,7 +105,7 @@ public class DateRespondersAdapter extends BaseAdapter {
                 viewHolder.tvUserType.setText(AppUtil.getStringFromIdWithParams(R.string.have_apply, item.getDateResponderCount()-item.getConfirmedPersonCount()));
             }
         }
-        
+
         return convertView;
     }
 
@@ -111,6 +118,7 @@ public class DateRespondersAdapter extends BaseAdapter {
     }
 
     Handler refreshImgHandler = new Handler() {
+        @Override
         public void handleMessage(Message msg) {
             ImageView iv = (ImageView) msg.obj;
             int position = msg.what;
