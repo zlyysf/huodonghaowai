@@ -304,8 +304,13 @@ public class ProfileFragment extends Fragment {
                 public void onClick(View v) {
                     if (mCurrentType == TYPE_EDIT) {
                         if (imm.isActive()) {
-                            imm.hideSoftInputFromWindow(myAcitivity
-                                    .getCurrentFocus().getWindowToken(), 0);
+                            //to avoid a NullPointerException, not know the reason .....
+                            if (myAcitivity != null){
+                                View currentFocusView = myAcitivity.getCurrentFocus();
+                                if (currentFocusView != null){
+                                    imm.hideSoftInputFromWindow(currentFocusView.getWindowToken(), 0);
+                                }
+                            }
                         }
                         initProfileData();
                         applyRotation(TYPE_EDIT, 0, -90);
