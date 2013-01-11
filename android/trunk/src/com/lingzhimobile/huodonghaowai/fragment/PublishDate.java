@@ -78,6 +78,7 @@ public class PublishDate extends Fragment {
 
     private static final String LocalLogTag = LogTag.ACTIVITY + " PublishDate";
 
+
     private Activity myAcitivity;
     private View currentView;
 
@@ -350,6 +351,10 @@ public class PublishDate extends Fragment {
 
             @Override
             public void onClick(View v) {
+                View curFocusView = myAcitivity.getCurrentFocus();
+                if (curFocusView != null)
+                    m.hideSoftInputFromWindow(curFocusView.getWindowToken(), 0);
+
                 if (mCurrentType == TYPE_EDIT) {
                     initPreviewData();
                     applyRotation(TYPE_EDIT, 0, -90);
