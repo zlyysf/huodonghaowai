@@ -318,10 +318,12 @@ public class ProfileFragment extends Fragment {
                         mCurrentType = TYPE_VIEW;
                         btnEdit.setText(R.string.edit);
                     } else {
-                        initEditDate();
-                        applyRotation(TYPE_VIEW, 0, 90);
-                        mCurrentType = TYPE_EDIT;
-                        btnEdit.setText(R.string.preview);
+                        if (mProfileInfo!=null){
+                            initEditDate();
+                            applyRotation(TYPE_VIEW, 0, 90);
+                            mCurrentType = TYPE_EDIT;
+                            btnEdit.setText(R.string.preview);
+                        }
                     }
                 }
             });
