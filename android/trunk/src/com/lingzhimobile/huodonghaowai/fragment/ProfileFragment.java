@@ -308,6 +308,7 @@ public class ProfileFragment extends Fragment {
                             if (myAcitivity != null){
                                 View currentFocusView = myAcitivity.getCurrentFocus();
                                 if (currentFocusView != null){
+                                    currentFocusView.clearFocus();
                                     imm.hideSoftInputFromWindow(currentFocusView.getWindowToken(), 0);
                                 }
                             }

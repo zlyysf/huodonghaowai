@@ -353,6 +353,7 @@ public class PublishDate extends Fragment {
             public void onClick(View v) {
                 View curFocusView = myAcitivity.getCurrentFocus();
                 if (curFocusView != null)
+                    curFocusView.clearFocus();
                     m.hideSoftInputFromWindow(curFocusView.getWindowToken(), 0);
 
                 if (mCurrentType == TYPE_EDIT) {
