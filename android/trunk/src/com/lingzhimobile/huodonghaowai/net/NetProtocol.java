@@ -4,7 +4,7 @@ public class NetProtocol {
 
     private static final String DOMAIN_URL_PROD = "42.121.122.47";//"ec2-23-23-144-110.compute-1.amazonaws.com";
     private static final String DOMAIN_URL_STAGE = "42.121.122.47";// "ec2-23-21-136-120.compute-1.amazonaws.com";
-    private static final String DOMAIN_URL = DOMAIN_URL_STAGE;
+    private static final String DOMAIN_URL = DOMAIN_URL_PROD;
 
     private static final String HTTP_PORT_PROD = "3000";
     private static final String HTTPS_PORT_PROD = "3010";
@@ -20,8 +20,8 @@ public class NetProtocol {
     public static final String HTTPS_REQUEST_URL_STAGE = "https://" + DOMAIN_URL
         + ":"+HTTPS_PORT_STAGE+"/";
 
-    public static final String HTTP_REQUEST_URL = HTTP_REQUEST_URL_STAGE;
-    public static final String HTTPS_REQUEST_URL = HTTPS_REQUEST_URL_STAGE;
+    public static final String HTTP_REQUEST_URL = HTTP_REQUEST_URL_PROD;
+    public static final String HTTPS_REQUEST_URL = HTTPS_REQUEST_URL_PROD;
 
     public static final String IMAGE_BASE_URL = "http://oss.aliyuncs.com/ysf1/";//"http://s3.amazonaws.com/ysf1/";
 
