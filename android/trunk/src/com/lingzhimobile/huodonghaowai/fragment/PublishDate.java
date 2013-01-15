@@ -231,8 +231,12 @@ public class PublishDate extends Fragment {
         dateTitle = (EditText) currentView.findViewById(R.id.dateTitleEditText);
         int position = getArguments().getInt("position", 0);
         if (position != 0) {
-            dateTitle.setText(GlobalValue.dateTitleList.get(position)
-                    .getDetail());
+            if (position >=0 && position<GlobalValue.dateTitleList.size()){
+                //NOT KNOW WHEN GlobalValue.dateTitleList become 0 size ......
+                dateTitle.setText(GlobalValue.dateTitleList.get(position)
+                        .getDetail());
+            }
+
         }
         tvDatePhoto = (TextView) currentView.findViewById(R.id.tvDatePhoto);
         rbAA = (RadioButton) currentView.findViewById(R.id.rbAA);
