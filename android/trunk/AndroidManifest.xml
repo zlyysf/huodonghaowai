@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lingzhimobile.huodonghaowai"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="1.0.1" >
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -22,6 +22,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     
     <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-sdk android:minSdkVersion="8" />
 
@@ -194,6 +195,23 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
+        
+        <!-- renren sdk中的Activity -->
+        <!-- 辅助完成SSO、Oauth的Activity ，必须在AndroidManifest.xml中声明 -->
+        <activity
+            android:name="com.renren.api.connect.android.AuthorizationHelper$BlockActivity"
+            android:theme="@android:style/Theme.Dialog"></activity>
+            
+        <!-- 发布状态的Activity，如需使用一键发布状态的功能，则必须在AndroidManifest.xml中声明 -->
+        <activity android:name="com.renren.api.connect.android.status.StatusPubActivity"></activity>
+        
+        <!-- 发布照片的Activity，如需使用一键上传图片的功能，则必须在AndroidManifest.xml中声明 -->
+        <activity android:name="com.renren.api.connect.android.photos.UploadPhotoActivity"></activity>
+        
+        <!-- 创建相册的Activity，如需使用一键创建相册的功能，则必须在AndroidManifest.xml中声明 -->
+        <activity android:name="com.renren.api.connect.android.photos.CreateAlbumActivity"></activity>
+        
+        
     </application>
 
 </manifest>
