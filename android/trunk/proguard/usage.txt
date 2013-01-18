@@ -1,20 +1,15 @@
 android.annotation.SuppressLint
 android.annotation.TargetApi
-android.net.http.SslError
-android.webkit.WebViewClient:
-    40:40:public boolean shouldOverrideUrlLoading(android.webkit.WebView,java.lang.String)
-    56:56:public void onPageStarted(android.webkit.WebView,java.lang.String,android.graphics.Bitmap)
-    68:68:public void onPageFinished(android.webkit.WebView,java.lang.String)
-    78:78:public void onLoadResource(android.webkit.WebView,java.lang.String)
-    92:93:public void onTooManyRedirects(android.webkit.WebView,android.os.Message,android.os.Message)
-    106:106:public void onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String)
-    119:120:public void onFormResubmission(android.webkit.WebView,android.os.Message,android.os.Message)
-    131:131:public void doUpdateVisitedHistory(android.webkit.WebView,java.lang.String,boolean)
-    149:150:public void onReceivedSslError(android.webkit.WebView,android.webkit.SslErrorHandler,android.net.http.SslError)
-    164:165:public void onReceivedHttpAuthRequest(android.webkit.WebView,android.webkit.HttpAuthHandler,java.lang.String,java.lang.String)
-    180:180:public boolean shouldOverrideKeyEvent(android.webkit.WebView,android.view.KeyEvent)
-    194:194:public void onUnhandledKeyEvent(android.webkit.WebView,android.view.KeyEvent)
-    205:205:public void onScaleChanged(android.webkit.WebView,float,float)
+android.net.http.SslError:
+    public static final int SSL_NOTYETVALID
+    public static final int SSL_EXPIRED
+    public static final int SSL_IDMISMATCH
+    public static final int SSL_UNTRUSTED
+    public static final int SSL_MAX_ERROR
+    71:74:public SslError(int,android.net.http.SslCertificate)
+    81:84:public SslError(int,java.security.cert.X509Certificate)
+    99:104:public boolean addError(int)
+    112:117:public boolean hasError(int)
 com.facebook.android.AsyncFacebookRunner:
     80:99:public void logout(android.content.Context,com.facebook.android.AsyncFacebookRunner$RequestListener,java.lang.Object)
     102:103:public void logout(android.content.Context,com.facebook.android.AsyncFacebookRunner$RequestListener)
@@ -70,19 +65,8 @@ com.facebook.android.FbDialog:
     static final int PADDING
     static final java.lang.String DISPLAY_STRING
     static final java.lang.String FB_ICON
-    56:56:static synthetic android.app.ProgressDialog access$1(com.facebook.android.FbDialog)
-    59:59:static synthetic android.widget.FrameLayout access$2(com.facebook.android.FbDialog)
-    58:58:static synthetic android.webkit.WebView access$3(com.facebook.android.FbDialog)
-    57:57:static synthetic android.widget.ImageView access$4(com.facebook.android.FbDialog)
-com.facebook.android.FbDialog$FbWebViewClient:
-    135:165:public boolean shouldOverrideUrlLoading(android.webkit.WebView,java.lang.String)
-    171:175:public void onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String)
-    179:182:public void onPageStarted(android.webkit.WebView,java.lang.String,android.graphics.Bitmap)
-    186:195:public void onPageFinished(android.webkit.WebView,java.lang.String)
 com.facebook.android.Util:
     48:48:public Util()
-    103:114:public static android.os.Bundle decodeUrl(java.lang.String)
-    125:132:public static android.os.Bundle parseUrl(java.lang.String)
     241:244:public static void clearCookies(android.content.Context)
     267:296:public static org.json.JSONObject parseJson(java.lang.String)
 com.google.android.c2dm.C2DMBaseReceiver:
@@ -121,29 +105,33 @@ com.lingzhimobile.huodonghaowai.Manifest$permission
 com.lingzhimobile.huodonghaowai.R:
     10:10:public R()
 com.lingzhimobile.huodonghaowai.activity.AskInfo:
-    335:337:private java.lang.String getUserId()
+    private static final java.lang.String LocalLogTag
 com.lingzhimobile.huodonghaowai.activity.DateChat:
     private com.lingzhimobile.huodonghaowai.model.ConversationItem conversationItem
-    479:498:public void showAlertDialog()
+    485:504:public void showAlertDialog()
 com.lingzhimobile.huodonghaowai.activity.DateChat$15
+com.lingzhimobile.huodonghaowai.activity.Login:
+    public static final int RENRENSIGNUP
+    private static final java.lang.String LocalLogTag
 com.lingzhimobile.huodonghaowai.activity.MainTabActivity:
     public static final java.lang.String APP_ID
+    private static final java.lang.String LocalLogTag
     public static final java.lang.String LOCAL_PUSH_FLAG
     public static final java.lang.String STRING_NEARBY
     public static final java.lang.String STRING_DATE
     public static final java.lang.String STRING_PROFILE
     public static final java.lang.String STRING_PROPOSEDATE
     public static java.lang.String userAgent
-    212:217:private void unregister()
-com.lingzhimobile.huodonghaowai.activity.Settings:
+    238:243:private void unregister()
+com.lingzhimobile.huodonghaowai.activity.Nearby:
+    private static final java.lang.String LocalLogTag
+com.lingzhimobile.huodonghaowai.activity.OldSettings:
     private java.lang.String tempStuNO
     private java.lang.String tempDepartment
     private java.lang.String tempDescription
     private java.lang.String tempHomeTown
-com.lingzhimobile.huodonghaowai.activity.Settings$AuthDialogListener:
-    333:340:public void onComplete(android.os.Bundle)
-    349:352:public void onWeiboException(com.weibo.net.WeiboException)
-    357:357:public void onError(com.weibo.net.DialogError)
+com.lingzhimobile.huodonghaowai.activity.Settings:
+    private static final java.lang.String LocalLogTag
 com.lingzhimobile.huodonghaowai.activity.Share:
     static final int UPLOAD
     private com.lingzhimobile.huodonghaowai.asynctask.UploadPhotoTask uploadPhotoTask
@@ -151,10 +139,6 @@ com.lingzhimobile.huodonghaowai.activity.Share$2$1:
     186:187:public void onFacebookError(com.facebook.android.FacebookError,java.lang.Object)
 com.lingzhimobile.huodonghaowai.activity.Share$2$2:
     209:210:public void onIOException(java.io.IOException)
-com.lingzhimobile.huodonghaowai.activity.Share$AuthDialogListener:
-    336:342:public void onComplete(android.os.Bundle)
-    353:356:public void onWeiboException(com.weibo.net.WeiboException)
-    361:361:public void onError(com.weibo.net.DialogError)
 com.lingzhimobile.huodonghaowai.activity.UploadPhoto:
     static final int MULTIPLY
     static final int OVERLAY
@@ -164,6 +148,8 @@ com.lingzhimobile.huodonghaowai.activity.UploadPhoto:
     static final int UPLOAD
     int[] merge
     int[] result
+com.lingzhimobile.huodonghaowai.adapter.DateResponderAdapter:
+    private static final java.lang.String LocalLogTag
 com.lingzhimobile.huodonghaowai.adapter.DateRespondersAdapter
 com.lingzhimobile.huodonghaowai.adapter.DateRespondersAdapter$1
 com.lingzhimobile.huodonghaowai.adapter.DateRespondersAdapter$2
@@ -171,6 +157,8 @@ com.lingzhimobile.huodonghaowai.adapter.DateRespondersAdapter$ViewHolder
 com.lingzhimobile.huodonghaowai.adapter.HelpViewPagerAdapter:
     14:14:public java.util.List getmListViews()
     18:19:public void setmListViews(java.util.List)
+com.lingzhimobile.huodonghaowai.adapter.NearbyDateListAdapter:
+    private static final java.lang.String LocalLogTag
 com.lingzhimobile.huodonghaowai.adapter.NearbyDateViewPagerAdapter:
     34:35:public void setData(java.util.List)
 com.lingzhimobile.huodonghaowai.adapter.PreLoginDateAdapter
@@ -191,6 +179,12 @@ com.lingzhimobile.huodonghaowai.asyncloader.GetNearbyDateLoader:
     31:32:public GetNearbyDateLoader(android.content.Context)
 com.lingzhimobile.huodonghaowai.asynctask.GetConversationsTask
 com.lingzhimobile.huodonghaowai.asynctask.GetPhotosTask
+com.lingzhimobile.huodonghaowai.asynctask.LoginFromRenRenTask:
+    private static final java.lang.String LocalLogTag
+com.lingzhimobile.huodonghaowai.asynctask.LoginTask:
+    private static final java.lang.String LocalLogTag
+com.lingzhimobile.huodonghaowai.asynctask.RegisterTask:
+    private static final java.lang.String LocalLogTag
 com.lingzhimobile.huodonghaowai.asynctask.SignInTask
 com.lingzhimobile.huodonghaowai.asynctask.StopDateTask
 com.lingzhimobile.huodonghaowai.asynctask.UpdateProfileTask:
@@ -203,7 +197,9 @@ com.lingzhimobile.huodonghaowai.asynctask.UpdateProfileTask:
 com.lingzhimobile.huodonghaowai.cons.MessageID
 com.lingzhimobile.huodonghaowai.cons.MessageType:
     3:3:public MessageType()
-com.lingzhimobile.huodonghaowai.cons.RequestCode
+com.lingzhimobile.huodonghaowai.cons.RenRenLibConst
+com.lingzhimobile.huodonghaowai.cons.RequestCode:
+    3:3:public RequestCode()
 com.lingzhimobile.huodonghaowai.exception.AppException:
     private static final long serialVersionUID
     17:18:public void setCode(int)
@@ -229,11 +225,19 @@ com.lingzhimobile.huodonghaowai.fragment.DateListFragment:
     public static final int APPLY_MORE_LOADER_ID
 com.lingzhimobile.huodonghaowai.fragment.DateResponderList:
     private android.widget.ListView lvDateResponders
+com.lingzhimobile.huodonghaowai.fragment.NearbyDateList:
+    private static final java.lang.String LocalLogTag
 com.lingzhimobile.huodonghaowai.fragment.PreLogin:
     public static final int LOGIN
     public static final int SIGNUP
+    private static final java.lang.String LocalLogTag
 com.lingzhimobile.huodonghaowai.fragment.ProfileFragment:
+    public static final int ActivityRequest_Settings
+    private static final java.lang.String LocalLogTag
+    private com.lingzhimobile.huodonghaowai.asynctask.LogoutTask logoutTask
     private com.lingzhimobile.huodonghaowai.asynctask.UploadPhotoTask uploadPhotoTask
+com.lingzhimobile.huodonghaowai.fragment.PublishDate:
+    private static final java.lang.String LocalLogTag
 com.lingzhimobile.huodonghaowai.gps.AddressTask:
     public static final int DO_APN
     public static final int DO_WIFI
@@ -307,8 +311,8 @@ com.lingzhimobile.huodonghaowai.model.UserItem:
     138:138:public java.lang.String getCreateTime()
     141:142:public void setCreateTime(java.lang.String)
 com.lingzhimobile.huodonghaowai.net.HttpManager:
-    46:46:public HttpManager()
-    67:68:public static void cancelRequest(org.apache.http.client.methods.HttpPost)
+    51:51:public HttpManager()
+    72:73:public static void cancelRequest(org.apache.http.client.methods.HttpPost)
 com.lingzhimobile.huodonghaowai.net.NetProtocol
 com.lingzhimobile.huodonghaowai.pulltorefresh.PullToRefreshAdapterViewBase:
     static final boolean DEFAULT_SHOW_INDICATOR
@@ -357,16 +361,26 @@ com.lingzhimobile.huodonghaowai.thread.LoadImgThread:
     public static final int ConnectTimeOutTime
     private static final long serialVersionUID
 com.lingzhimobile.huodonghaowai.util.AppInfo:
-    11:11:public AppInfo()
+    private static final java.lang.String LocalLogTag
+    private static final java.lang.String RenrenKeyName_API_KEY
+    private static final java.lang.String RenrenKeyName_SECRET
+    private static final java.lang.String RenrenKeyName_APP_ID
+    private static final java.lang.String RenrenKeyName_ACCESS_TOKEN
+    private static final java.lang.String RenrenKeyName_SESSION_KEY
+    private static final java.lang.String RenrenKeyName_SESSION_SECRET
+    private static final java.lang.String RenrenKeyName_UID
+    private static final java.lang.String RenrenKeyName_SESSION_KEY_EXPIRE_TIME
+    32:32:public AppInfo()
 com.lingzhimobile.huodonghaowai.util.AppUtil:
-    64:64:public AppUtil()
-    114:119:public static int[] convertMeterToFootAndInch(int)
-    124:151:public static void setListViewHeightBasedOnChildren(android.widget.ExpandableListView,boolean)
-    388:398:public static java.lang.String getFixWidthPhoto(java.lang.String)
-    502:506:public static java.lang.String subString(java.lang.String)
-    593:620:public static java.lang.String getLocationStr(org.json.JSONObject,java.lang.String)
-    624:645:public static android.graphics.Bitmap getRoundedCornerBitmap(android.graphics.Bitmap)
-    649:656:public static android.graphics.Bitmap getRotationBitmap(android.content.Context,int)
+    private static final java.lang.String LocalLogTag
+    69:69:public AppUtil()
+    121:126:public static int[] convertMeterToFootAndInch(int)
+    131:158:public static void setListViewHeightBasedOnChildren(android.widget.ExpandableListView,boolean)
+    396:406:public static java.lang.String getFixWidthPhoto(java.lang.String)
+    510:514:public static java.lang.String subString(java.lang.String)
+    601:628:public static java.lang.String getLocationStr(org.json.JSONObject,java.lang.String)
+    632:653:public static android.graphics.Bitmap getRoundedCornerBitmap(android.graphics.Bitmap)
+    657:664:public static android.graphics.Bitmap getRotationBitmap(android.content.Context,int)
 com.lingzhimobile.huodonghaowai.util.BitmapManager:
     public static final int MAX_HEAD_SCALE
     public static final int MAX_STATUS_SCALE
@@ -388,20 +402,22 @@ com.lingzhimobile.huodonghaowai.util.GlobalValue:
     public static final java.lang.String REDIRECT_RUL
     14:14:public GlobalValue()
 com.lingzhimobile.huodonghaowai.util.ImageBuffer:
+    private static final java.lang.String LocalLogTag
     public static final int MaxBufferSize
     private static final int MaxSingleFileSize
     private static final int MaxSingleGIFFileSize
     28:28:public ImageBuffer()
 com.lingzhimobile.huodonghaowai.util.ImageLoadUtil:
+    private static final java.lang.String LocalLogTag
     19:19:public ImageLoadUtil()
-    25:53:public static android.graphics.Bitmap loadImageFromURL(java.lang.String)
+    26:54:public static android.graphics.Bitmap loadImageFromURL(java.lang.String)
 com.lingzhimobile.huodonghaowai.util.JSONParser:
-    24:24:public JSONParser()
-    73:81:public static java.lang.String getReportUserResult(java.lang.String)
-    136:177:public static java.util.List getNearbyPhotos(java.lang.String)
-    219:247:public static java.util.ArrayList getPhotos(java.lang.String)
-    381:395:public static java.util.HashMap getCreditDelta(java.lang.String)
-    451:502:public static java.util.ArrayList getConversations(java.lang.String)
+    private static final java.lang.String LocalLogTag
+    28:28:public JSONParser()
+    198:239:public static java.util.List getNearbyPhotos(java.lang.String)
+    281:309:public static java.util.ArrayList getPhotos(java.lang.String)
+    445:459:public static java.util.HashMap getCreditDelta(java.lang.String)
+    515:566:public static java.util.ArrayList getConversations(java.lang.String)
 com.lingzhimobile.huodonghaowai.util.NotificationUtil:
     5:5:public NotificationUtil()
 com.lingzhimobile.huodonghaowai.util.SessionStore:
@@ -410,7 +426,6 @@ com.lingzhimobile.huodonghaowai.util.SessionStore:
     27:27:public SessionStore()
     55:62:public static boolean restoreFacebook(com.facebook.android.Facebook,android.content.Context)
     66:73:public static void clearFacebook(android.content.Context)
-    76:83:public static boolean saveSinaWeibo(com.weibo.net.Weibo,android.content.Context)
 com.lingzhimobile.huodonghaowai.view.AutoResizeTextView:
     public static final float MIN_TEXT_SIZE
     private static final java.lang.String mEllipsis
@@ -488,6 +503,11 @@ com.lingzhimobile.huodonghaowai.view.PreLoginViewPagerItemView:
     36:36:static synthetic int access$3(com.lingzhimobile.huodonghaowai.view.PreLoginViewPagerItemView)
 com.lingzhimobile.huodonghaowai.view.PreLoginViewPagerItemView$2
 com.lingzhimobile.huodonghaowai.view.PreLoginViewPagerItemView$3
+com.lingzhimobile.huodonghaowai.view.ProvinceUniversePickerDialog:
+    private static final java.lang.String LocalLogTag
+com.lingzhimobile.huodonghaowai.view.ProvinceUniversePickerDialog$UniverseAdapter:
+    195:194:public ProvinceUniversePickerDialog$UniverseAdapter(com.lingzhimobile.huodonghaowai.view.ProvinceUniversePickerDialog,android.content.Context,java.lang.String)
+    199:198:public ProvinceUniversePickerDialog$UniverseAdapter(com.lingzhimobile.huodonghaowai.view.ProvinceUniversePickerDialog,android.content.Context,java.util.ArrayList)
 com.lingzhimobile.huodonghaowai.view.ViewFlow:
     private static final int SNAP_VELOCITY
     private static final int INVALID_SCREEN
@@ -496,8 +516,8 @@ com.lingzhimobile.huodonghaowai.view.ViewFlow:
     138:138:public int getViewsCount()
     447:448:public void setOnViewSwitchListener(com.lingzhimobile.huodonghaowai.view.ViewFlow$ViewSwitchListener)
 com.lingzhimobile.huodonghaowai.view.myProgressDialog:
-    31:31:public static com.lingzhimobile.huodonghaowai.view.myProgressDialog show(android.content.Context,java.lang.CharSequence,java.lang.CharSequence)
-    41:41:public static com.lingzhimobile.huodonghaowai.view.myProgressDialog show(android.content.Context,java.lang.CharSequence,java.lang.CharSequence,boolean,boolean)
+    33:33:public static com.lingzhimobile.huodonghaowai.view.myProgressDialog show(android.content.Context,java.lang.CharSequence,java.lang.CharSequence)
+    43:43:public static com.lingzhimobile.huodonghaowai.view.myProgressDialog show(android.content.Context,java.lang.CharSequence,java.lang.CharSequence,boolean,boolean)
 com.umeng.analytics.Gender
 com.umeng.analytics.MobclickAgent:
     public MobclickAgent()
@@ -698,507 +718,60 @@ com.umeng.update.UmengUpdateAgent:
     public static void update(android.content.Context,long)
     private static android.content.SharedPreferences a(android.content.Context)
 com.umeng.update.UpdateStatus
-com.weibo.android.Manifest
-com.weibo.android.Manifest$permission
 com.weibo.android.R:
-    10:10:public R()
-com.weibo.android.R$anim
-com.weibo.android.R$array
-com.weibo.android.R$attr
+    9:9:public R()
 com.weibo.android.R$color:
-    public static final int black
-    public static final int color_radiobutton
-    public static final int dialog_title_blue
-    public static final int font_blue
-    public static final int font_gray
-    public static final int gray
-    public static final int green
-    public static final int half_translucent_black
-    public static final int half_translucent_white
-    public static final int half_transparent
-    public static final int half_transparent_7
-    public static final int light_gray
-    public static final int light_pink_bg
-    public static final int line_gray
-    public static final int orange
-    public static final int pink
-    public static final int pink_bg
-    public static final int time_gray
-    public static final int title_click
-    public static final int translucent_7_gray
     public static final int transparent
-    public static final int white
-    91:91:public R$color()
+    public static final int dialog_title_blue
+    26:26:public R$color()
 com.weibo.android.R$dimen:
-    public static final int dialog_btn_close_right_margin
-    public static final int dialog_btn_close_top_margin
-    public static final int dialog_title_height
     public static final int dialog_title_logo_left_margin
-    public static final int indicator_corner_radius
-    public static final int indicator_internal_padding
-    public static final int indicator_right_padding
-    116:116:public R$dimen()
-com.weibo.android.R$drawable
+    public static final int dialog_btn_close_top_margin
+    public static final int dialog_btn_close_right_margin
+    public static final int dialog_title_height
+    67:67:public R$dimen()
+com.weibo.android.R$drawable:
+    public static final int bg_content
+    public static final int del_pic
+    public static final int icon
+    public static final int bg_btn
+    public static final int bg_title
+    public static final int dota
+    public static final int image_background
+    public static final int bg_delwords_sel
+    public static final int title_logo
+    public static final int bg_delwords_nor
+    public static final int close_press
+    public static final int icon_delwords
+    public static final int bg_delwords
+    public static final int close_selector
+    public static final int close_normal
+    49:49:public R$drawable()
 com.weibo.android.R$id:
-    public static final int RadioButton01
-    public static final int RadioButton02
-    public static final int RadioButton03
-    public static final int RadioButton04
-    public static final int RadioGroup01
-    public static final int bloodTypeTextView
-    public static final int both
-    public static final int bouncyRefreshViewApply
-    public static final int bouncyRefreshViewInvited
-    public static final int bouncyRefreshViewSend
-    public static final int btnCancel
-    public static final int btnConfirm
-    public static final int btnEdit
-    public static final int btnInvite
-    public static final int btnLoadMore
-    public static final int btnLogin
-    public static final int btnMenu
-    public static final int btnOk
-    public static final int btnPreview
-    public static final int btnReply
-    public static final int btnSave
-    public static final int btnSignup
-    public static final int btnStart
-    public static final int btnUpload
-    public static final int btnWant
-    public static final int cbFacebook
-    public static final int cbLikes
-    public static final int cbSinaWeibo
-    public static final int chathistoryListView
-    public static final int constellationTextView
-    public static final int container
-    public static final int dateTitleEditText
-    public static final int dayListView
-    public static final int departmentEditText
-    public static final int descriptionEditText
-    public static final int destination
-    public static final int detailPlanEditText
-    public static final int editText1
-    public static final int eduStatusTextView
-    public static final int emailEditText
-    public static final int enterButton
-    public static final int etMessage
-    public static final int existPersonCountEditText
-    public static final int femaleButton
-    public static final int filter12
-    public static final int filter14
-    public static final int filter16
-    public static final int filter4
-    public static final int filter6
-    public static final int filter9
-    public static final int filter_black_white
-    public static final int fragment01
-    public static final int gridview
-    public static final int head_arrowImageView
-    public static final int head_contentLayout
-    public static final int head_lastUpdatedTextView
-    public static final int head_progressBar
-    public static final int head_tipsTextView
-    public static final int heightEditText
-    public static final int homeTownEditText
-    public static final int hometownEditText
-    public static final int horizontalScrollView
-    public static final int hourListView
-    public static final int invitationEditText
-    public static final int ivBack
-    public static final int ivCancel
-    public static final int ivCommit
-    public static final int ivDatePhoto
-    public static final int ivEditUserPhoto
-    public static final int ivFilter
-    public static final int ivHelpView
-    public static final int ivLikeIcon
-    public static final int ivNavigation
-    public static final int ivPickPhoto
-    public static final int ivPreDatePhoto
-    public static final int ivReply
-    public static final int ivUnreadMessage
-    public static final int ivUploadPhoto
-    public static final int ivUserGender
-    public static final int ivUserProfilePhoto
-    public static final int ivUserProfilePhotoLL
-    public static final int linearLayout1
-    public static final int llDateChat
-    public static final int llDateMessageItem
-    public static final int llFacebook
-    public static final int llForgotPassword
     public static final int llImage
-    public static final int llLeftChatItem
-    public static final int llLogout
-    public static final int llNotifyDialog
-    public static final int llPagePoint
-    public static final int llPickPhoto
-    public static final int llPostto
-    public static final int llProfileHeaderView
-    public static final int llRightChatItem
-    public static final int llSinaWeibo
-    public static final int llViewsContainer
-    public static final int llWeibo
-    public static final int lllocation
-    public static final int localEditText
-    public static final int lvConversations
-    public static final int lvDateRespondersList
-    public static final int lvDateTitleList
-    public static final int lvNearbyDate
-    public static final int maleButton
-    public static final int message
-    public static final int monthListView
-    public static final int nameEditText
-    public static final int nameTextView
-    public static final int nearbyheaderview
-    public static final int numberTextView
-    public static final int passwordEditText
-    public static final int pbLoadImage
-    public static final int progress
-    public static final int progressBar1
-    public static final int pullDownFromTop
-    public static final int pullUpFromBottom
-    public static final int rbAA
-    public static final int rbDateFilterLeft
-    public static final int rbDateFilterMiddle
-    public static final int rbDateFilterRight
-    public static final int rbMyTreat
-    public static final int rbNone
-    public static final int reset
-    public static final int rlBottombar
-    public static final int rlDatePreview
-    public static final int rlEditDate
-    public static final int rlEditProfile
-    public static final int rlHeaderPhoto
-    public static final int rlTitle
     public static final int rlTotal
-    public static final int rlViewProfile
-    public static final int schoolTextView
-    public static final int scrollView1
-    public static final int sendButton
-    public static final int stuNOEditText
-    public static final int timeTextView
-    public static final int tvAddPersonNum
-    public static final int tvAlertString
-    public static final int tvApplyPersonNum
-    public static final int tvCancel
-    public static final int tvCurrentDate
-    public static final int tvDateBodyInfo
-    public static final int tvDateLocationInfo
-    public static final int tvDatePersonNum
-    public static final int tvDatePhoto
-    public static final int tvDateTimeInfo
-    public static final int tvDateTitle
-    public static final int tvDateWhoPay
-    public static final int tvFilter1
-    public static final int tvFilter2
-    public static final int tvFilter3
-    public static final int tvHeaderPhoto
-    public static final int tvLastestMessage
-    public static final int tvLeftChatItem
-    public static final int tvLikerCount
-    public static final int tvNewDate
-    public static final int tvNotifyText
-    public static final int tvPhotoIndex
-    public static final int tvProfileUserDescription
-    public static final int tvProfileUserEdu
-    public static final int tvProfileUserName
-    public static final int tvProfileUserPhotoCount
-    public static final int tvResponderType
-    public static final int tvRightChatItem
-    public static final int tvSubjectType
-    public static final int tvTextNum
-    public static final int tvTimeLine
-    public static final int tvTitle
-    public static final int tvToast
-    public static final int tvTreat
-    public static final int tvUserBasicInfo
-    public static final int tvUserDescription
-    public static final int tvUserEduInfo
-    public static final int tvUserLikeCount
-    public static final int tvUserMessage
-    public static final int tvUserMessageTime
-    public static final int tvUserName
-    public static final int umeng_common_app
-    public static final int umeng_common_appIcon
-    public static final int umeng_common_description
-    public static final int umeng_common_notification
-    public static final int umeng_common_progress_bar
-    public static final int umeng_common_progress_text
-    public static final int umeng_common_title
-    public static final int viewflow
-    public static final int vpHelpView
-    public static final int vpNearbyDate
-    public static final int vpSinglePhoto
-    public static final int wantPersonCountEditText
-    public static final int waterfall_container
-    public static final int webview
-    291:291:public R$id()
+    public static final int rlTitle
+    10:10:public R$id()
 com.weibo.android.R$layout:
-    public static final int askinfo
-    public static final int chat_detail_item
-    public static final int conversationitem
-    public static final int conversations
-    public static final int datechat
-    public static final int datefilterdialog
-    public static final int datelistitem
-    public static final int datelistitemsend
-    public static final int datelistuseritem
-    public static final int datepicker
-    public static final int dateresponders
-    public static final int daterespondersitem
-    public static final int dateresponderstype
-    public static final int datetitlelist
-    public static final int datetitlelistitem
-    public static final int detaildate
-    public static final int errtoast
-    public static final int facebookoption
-    public static final int fragment
-    public static final int helpview
-    public static final int helpviewitem
-    public static final int loadmoreview
-    public static final int login
-    public static final int main
-    public static final int message
-    public static final int mylistview_head
-    public static final int nearby
-    public static final int nearby_date_item
-    public static final int nearbydatelist
-    public static final int nearbydatelistitem
-    public static final int notifydialog
-    public static final int numberitem
-    public static final int prelogin
-    public static final int prelogin_date_item
-    public static final int profile
-    public static final int profile_body
-    public static final int profileheaderview
-    public static final int progress_dialog
-    public static final int proposedate
-    public static final int respondersgalleryitem
-    public static final int selectdatedialog
-    public static final int setting
-    public static final int share
-    public static final int singlephoto
-    public static final int spendcreditsdialog
-    public static final int splash
-    public static final int umeng_common_download_notification
-    public static final int uploadphoto
-    public static final int wantin
-    493:493:public R$layout()
+    46:46:public R$layout()
 com.weibo.android.R$string:
-    public static final int Account
-    public static final int Adress
-    public static final int Cancel
-    public static final int Conversations
-    public static final int Gallery
-    public static final int Nearby
-    public static final int OK
-    public static final int Profile
-    public static final int Subject
-    public static final int Time
-    public static final int Treat
-    public static final int UMAppUpdate
-    public static final int UMBreak_Network
-    public static final int UMDialog_InstallAPK
-    public static final int UMGprsCondition
-    public static final int UMNewVersion
-    public static final int UMNotNow
-    public static final int UMToast_IsUpdating
-    public static final int UMUpdateNow
-    public static final int UMUpdateTitle
-    public static final int aa
-    public static final int announce_str
-    public static final int app_name
-    public static final int ask_details_plan
-    public static final int askfor_date_describe
-    public static final int askfor_date_photo
-    public static final int askfor_first_photo
-    public static final int back
-    public static final int back_notify
-    public static final int bloodtype
-    public static final int camera
-    public static final int cancel_add
-    public static final int cancel_date_alert
-    public static final int change_setting
-    public static final int close
-    public static final int comment_alert
-    public static final int comment_good
-    public static final int comment_next_time
-    public static final int confirm_add
-    public static final int confirm_date_alert
-    public static final int constellation
-    public static final int d_day_ago
-    public static final int d_hour_ago
-    public static final int d_minute_ago
-    public static final int d_mount_ago
-    public static final int date_detail
-    public static final int date_info
-    public static final int date_responders
-    public static final int date_title
-    public static final int day_ago
-    public static final int delete
-    public static final int department
-    public static final int description
-    public static final int detail
-    public static final int edit
-    public static final int edit_profile_ok
-    public static final int educationalStatus
-    public static final int email
-    public static final int email_wrong
-    public static final int enter
-    public static final int err21010
-    public static final int err21020
-    public static final int err21021
-    public static final int err21022
-    public static final int err21023
-    public static final int err21024
-    public static final int err21030
-    public static final int err21040
-    public static final int err21041
-    public static final int err21042
-    public static final int err21043
-    public static final int err21044
-    public static final int err21045
-    public static final int err21050
-    public static final int err21051
-    public static final int err21060
-    public static final int err21070
-    public static final int err21071
-    public static final int err21072
-    public static final int err21082
-    public static final int err21083
-    public static final int err21087
-    public static final int err21088
-    public static final int err21210
-    public static final int err21211
-    public static final int err21212
-    public static final int errMessage
-    public static final int error_please_try_again_later
-    public static final int failed_retreive_location_alert
-    public static final int female
-    public static final int firstNum
-    public static final int firstNum_is_empty
-    public static final int first_name
-    public static final int forgotpassowrd
-    public static final int free
-    public static final int get_invite_code
-    public static final int good_rate_count
-    public static final int have_add
-    public static final int have_apply
-    public static final int headerphoto
-    public static final int height
-    public static final int hello
-    public static final int helpstring2
-    public static final int helpstring3
-    public static final int hometown
-    public static final int hour_ago
-    public static final int i_want
-    public static final int iam
-    public static final int in_place
-    public static final int invitation
-    public static final int invite
-    public static final int invite_code_empty
-    public static final int last_update
-    public static final int latest_activity
-    public static final int likes
-    public static final int loading
-    public static final int loadmore
-    public static final int location_is_empty
-    public static final int login
-    public static final int logout
-    public static final int logout_alert
-    public static final int logout_unlink
-    public static final int male
-    public static final int message
-    public static final int minute_ago
-    public static final int mount_ago
-    public static final int my_dates
-    public static final int my_profile
-    public static final int my_treat
-    public static final int name
-    public static final int name_empty
-    public static final int new_user
-    public static final int no
-    public static final int no_camera_prompt
-    public static final int no_photo
-    public static final int old_user
-    public static final int password
-    public static final int password_wrong
-    public static final int personNum
-    public static final int photo
-    public static final int photo_destination
-    public static final int photo_gallery
-    public static final int please_choose
-    public static final int post_to
-    public static final int preview
-    public static final int profile_alert
-    public static final int publish
-    public static final int publish_date
-    public static final int pull_to_load_earlier_pull_label
-    public static final int pull_to_load_earlier_release_label
-    public static final int pull_to_load_pull_label
-    public static final int pull_to_load_release_label
-    public static final int pull_to_refresh_pull_label
-    public static final int pull_to_refresh_refreshing_label
-    public static final int pull_to_refresh_release_label
-    public static final int pull_up_to_load_pull_label
-    public static final int rate
-    public static final int rb_date_filter_left
-    public static final int rb_date_filter_middle
-    public static final int rb_date_filter_right
-    public static final int receiver_confirmed
-    public static final int recommend_date
-    public static final int reply
-    public static final int responses
-    public static final int save
-    public static final int sb_send_msg
-    public static final int school
-    public static final int school_empty
     public static final int send
-    public static final int set_profile_photo
-    public static final int settings
-    public static final int share
+    public static final int app_name
+    public static final int close
+    public static final int hello
     public static final int share_dialog_title
-    public static final int share_to_timeline
-    public static final int share_weibo
-    public static final int sharing_settings
-    public static final int signup
-    public static final int sina_weibo
-    public static final int sms_content
-    public static final int start_app
-    public static final int studentNo
-    public static final int tap_to_retry
-    public static final int time_differentday_withminutes
-    public static final int time_is_wrong
-    public static final int time_proposedate
-    public static final int time_sameday
-    public static final int title_is_empty
-    public static final int title_list
-    public static final int upload
-    public static final int upload_photo_alert
-    public static final int upload_photo_earn_credit
-    public static final int wantNum
-    public static final int wantNum_is_empty
-    public static final int welcome_str
-    public static final int yes
-    545:545:public R$string()
+    31:31:public R$string()
 com.weibo.android.R$style:
-    public static final int AlertDialog
-    public static final int AnimationActivity
-    public static final int AnimationActivity1
-    public static final int AnimationFade
-    public static final int MyCheckBox
-    public static final int ProgressDialog
-    public static final int ThemeActivity
-    public static final int ThemeActivity1
-    public static final int radiobutton1
-    770:770:public R$style()
-com.weibo.android.R$styleable
+    23:23:public R$style()
 com.weibo.net.AccessToken:
     28:29:public AccessToken(java.lang.String)
 com.weibo.net.AccessTokenHeader
 com.weibo.net.AsyncWeiboRunner$RequestListener:
     public abstract void onIOException(java.io.IOException)
-com.weibo.net.DialogError
+com.weibo.net.DialogError:
+    private static final long serialVersionUID
+    34:34:int getErrorCode()
+    38:38:java.lang.String getFailingUrl()
 com.weibo.net.HttpHeaderFactory:
     public static final java.lang.String CONST_HMAC_SHA1
     public static final java.lang.String CONST_SIGNATURE_METHOD
@@ -1218,11 +791,8 @@ com.weibo.net.ShareActivity:
     249:249:public void onIOException(java.io.IOException)
 com.weibo.net.Token:
     protected javax.crypto.spec.SecretKeySpec mSecretKeySpec
-    40:42:public Token()
     49:49:public java.lang.String getRefreshToken()
     53:54:public void setRefreshToken(java.lang.String)
-    65:68:public void setExpiresIn(java.lang.String)
-    71:72:public void setToken(java.lang.String)
     75:76:public void setVerifier(java.lang.String)
     79:79:public java.lang.String getVerifier()
     83:83:public java.lang.String getSecret()
@@ -1244,8 +814,6 @@ com.weibo.net.Utility:
     164:165:public static void setRequestHeader(com.weibo.net.WeiboParameters)
     168:170:public static void clearRequestHeader()
     173:187:public static java.lang.String encodePostBody(android.os.Bundle,java.lang.String)
-    209:218:public static android.os.Bundle decodeUrl(java.lang.String)
-    230:237:public static android.os.Bundle parseUrl(java.lang.String)
     250:262:public static org.apache.http.client.entity.UrlEncodedFormEntity getPostParamters(android.os.Bundle)
     470:497:public static org.apache.http.client.HttpClient getHttpClient(android.content.Context)
     614:620:private static java.lang.String read(java.io.InputStream)
@@ -1261,7 +829,6 @@ com.weibo.net.Weibo:
     112:112:public static java.lang.String getSERVER()
     116:117:public static void setSERVER(java.lang.String)
     121:122:public void addOauthverifier(java.lang.String)
-    125:125:public java.lang.String getRedirectUrl()
     156:163:public com.weibo.net.RequestToken getRequestToken(android.content.Context,java.lang.String,java.lang.String,java.lang.String)
     168:176:public com.weibo.net.AccessToken generateAccessToken(android.content.Context,com.weibo.net.RequestToken)
     181:189:public com.weibo.net.AccessToken getXauthAccessToken(android.content.Context,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
@@ -1269,41 +836,16 @@ com.weibo.net.Weibo:
     229:246:public boolean share2weibo(android.app.Activity,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
     313:314:private void authorize(android.app.Activity,java.lang.String[],com.weibo.net.WeiboDialogListener)
     336:336:private void authorizeCallBack(int,int,android.content.Intent)
-    58:58:static synthetic com.weibo.net.Token access$0(com.weibo.net.Weibo)
-    58:58:static synthetic void access$1(com.weibo.net.Weibo,com.weibo.net.Token)
-com.weibo.net.Weibo$1:
-    264:280:public void onComplete(android.os.Bundle)
-    283:285:public void onError(com.weibo.net.DialogError)
-    288:290:public void onWeiboException(com.weibo.net.WeiboException)
 com.weibo.net.WeiboDialog:
     static final int MARGIN
     static final int PADDING
     private android.widget.ImageView mBtnClose
     private static final java.lang.String TAG
     108:131:private void setUpCloseBtn()
-    190:203:private void handleRedirectUrl(android.webkit.WebView,java.lang.String)
     209:239:private static java.lang.String getHtml(java.lang.String)
-    42:42:static synthetic com.weibo.net.Weibo access$0(com.weibo.net.WeiboDialog)
-    189:189:static synthetic void access$1(com.weibo.net.WeiboDialog,android.webkit.WebView,java.lang.String)
-    44:44:static synthetic com.weibo.net.WeiboDialogListener access$2(com.weibo.net.WeiboDialog)
-    45:45:static synthetic android.app.ProgressDialog access$3(com.weibo.net.WeiboDialog)
-    49:49:static synthetic android.widget.RelativeLayout access$4(com.weibo.net.WeiboDialog)
-    48:48:static synthetic android.widget.RelativeLayout access$5(com.weibo.net.WeiboDialog)
-    47:47:static synthetic android.webkit.WebView access$6(com.weibo.net.WeiboDialog)
 com.weibo.net.WeiboDialog$1
-com.weibo.net.WeiboDialog$WeiboWebViewClient:
-    137:146:public boolean shouldOverrideUrlLoading(android.webkit.WebView,java.lang.String)
-    152:155:public void onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String)
-    159:169:public void onPageStarted(android.webkit.WebView,java.lang.String,android.graphics.Bitmap)
-    173:181:public void onPageFinished(android.webkit.WebView,java.lang.String)
-    184:185:public void onReceivedSslError(android.webkit.WebView,android.webkit.SslErrorHandler,android.net.http.SslError)
-com.weibo.net.WeiboDialogListener:
-    public abstract void onComplete(android.os.Bundle)
-    public abstract void onWeiboException(com.weibo.net.WeiboException)
-    public abstract void onError(com.weibo.net.DialogError)
 com.weibo.net.WeiboException:
     private static final long serialVersionUID
-    132:133:public WeiboException(java.lang.String)
     145:146:public WeiboException(java.lang.String,java.lang.Exception)
     149:151:public WeiboException(java.lang.String,java.lang.Exception,int)
     163:164:public WeiboException(java.lang.String,java.lang.Throwable)
